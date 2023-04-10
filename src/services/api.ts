@@ -15,7 +15,7 @@ export const instanceNotLogin = axios.create({
   withCredentials: true,
 });
 
-export const getAllLecture = () =>
+export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
 export const getLectureDetail = (page: number) => {
   return instance.get(`lectures/${page}`).then((res) => res.data);

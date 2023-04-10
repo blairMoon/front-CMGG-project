@@ -11,11 +11,19 @@ import {
   Checkbox,
   Image,
 } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+
+import { getAllLectures } from "../../../services/api";
 import "./MyCart.scss";
 
 interface Props {}
 
 const MyCart: React.FC<Props> = (props: Props) => {
+  const { data: lectures, isLoading } = useQuery(["carts"], getAllLectures, {
+    onSuccess(data) {
+      console.log("data", data);
+    },
+  });
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
