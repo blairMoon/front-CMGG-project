@@ -67,6 +67,7 @@ const MyCart: React.FC<Props> = (props: Props) => {
           <Heading fontSize="27px" fontWeight="bold" mb="10">
             수강바구니
           </Heading>
+          <Checkbox>전체선택</Checkbox>
           <div className="checkbox-wrapper">
             <input
               type="checkbox"
