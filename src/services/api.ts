@@ -6,9 +6,6 @@ const instance = axios.create({
   withCredentials: false,
 });
 
-export const getAllCoins = () =>
-  instance.get("coins").then((res) => res.data.slice(0, 100));
-
 export const instanceNotLogin = axios.create({
   baseURL: "https://www.crazyform.store/api/v1/",
   headers: {
@@ -17,3 +14,6 @@ export const instanceNotLogin = axios.create({
 
   withCredentials: true,
 });
+
+export const getAllLecture = () =>
+  instance.get("lectures/all/all").then((res) => res.data);

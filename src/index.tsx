@@ -12,18 +12,21 @@ Sentry.init({
   integrations: [new Sentry.BrowserTracing(), new Sentry.Replay()],
   tracesSampleRate: 1.0,
 });
+try {
+  const client = new QueryClient();
 
-const client = new QueryClient();
-
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={client}>
-      <ChakraProvider>
-        <App />
-      </ChakraProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+  const root = ReactDOM.createRoot(
+    document.getElementById("root") as HTMLElement
+  );
+  root.render(
+    <React.StrictMode>
+      <QueryClientProvider client={client}>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+} catch (error) {
+  Sentry.captureException(error);
+}

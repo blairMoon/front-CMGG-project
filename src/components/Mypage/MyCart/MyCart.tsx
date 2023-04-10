@@ -9,36 +9,61 @@ import {
   Text,
   Divider,
   Checkbox,
-  IconButton,
-  useColorModeValue,
-  Card,
   Image,
-  CardBody,
-  CardFooter,
-  CheckboxGroup,
 } from "@chakra-ui/react";
-import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import "./MyCart.scss";
 
 interface Props {}
 
 const MyCart: React.FC<Props> = (props: Props) => {
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Product 1", price: 10.0 },
-    { id: 2, name: "Product 2", price: 15.0 },
-    { id: 3, name: "Product 3", price: 20.0 },
-    { id: 4, name: "Product 3", price: 20.0 },
+    {
+      id: 1,
+      lectureTitle: "지브러시 세계로 떠나는 여행자 가이드 (Zbrush)\n대시보드",
+      lectureFee: 66000,
+      lectureDifficulty: "입문자",
+      isChecked: true,
+      thumbnail:
+        "https://cdn.inflearn.com/public/courses/326174/cover/b0536120-7de3-4aa8-8266-97cf3881e87d",
+    },
+    {
+      id: 2,
+      lectureTitle: "비전공자를 위한 진짜 입문 올인원 개발 부트캠프\n대시보드",
+      lectureFee: 143000,
+      lectureDifficulty: "입문자",
+      isChecked: true,
+      thumbnail:
+        "https://cdn.inflearn.com/public/courses/326364/cover/99d3cdc2-e6fe-44f5-a235-0563c951bfde/326364-eng.jpg",
+    },
+    {
+      id: 3,
+      lectureTitle: "타입스크립트 입문 - 기초부터 실전까지\n대시보드",
+      lectureFee: 55000,
+      lectureDifficulty: "초급자",
+      isChecked: true,
+      thumbnail:
+        "https://cdn.inflearn.com/public/courses/326082/cover/c6519e92-f334-46ac-8a31-6290db19b32a",
+    },
+    {
+      id: 4,
+      lectureTitle: "HTML+CSS+JS 포트폴리오 실전 퍼블리싱(시즌1)\n대시보드",
+      lectureFee: 46200,
+      lectureDifficulty: "초급자",
+      isChecked: true,
+      thumbnail:
+        "https://cdn.inflearn.com/public/courses/325450/course_cover/a15141ac-4d33-4f6d-a38b-3a0b5773031c/webdesign-cover-03.png",
+    },
   ]);
 
   const handleItemDelete = (itemId: number) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
-  const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.lectureFee,
+    0
+  );
   const total = subtotal + 10;
-
-  // const borderColor = useColorModeValue("gray.200", "gray.600");
-  // const textColor = useColorModeValue("gray.700", "gray.400");
 
   const [isChecked, setIsChecked] = useState(true);
 
@@ -67,66 +92,52 @@ const MyCart: React.FC<Props> = (props: Props) => {
           <Heading fontSize="27px" fontWeight="bold" mb="10">
             수강바구니
           </Heading>
-          <Checkbox>전체선택</Checkbox>
-          <div className="checkbox-wrapper">
-            <input
-              type="checkbox"
-              name="myCheckbox"
-              id="myCheckbox"
-              className="checkbox"
-              checked={isChecked}
-              onChange={handleCheckboxChange}
-            />
-            <label htmlFor="myCheckbox" className="checkbox-label">
-              전체 선택 ({cartItems.length})
-            </label>
-          </div>
+          <Checkbox
+            size="lg"
+            borderColor="gray"
+            colorScheme="green"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          >
+            전체 선택 ({cartItems.length})
+          </Checkbox>
         </VStack>
         <HStack justifyContent="space-between" w="100%">
-          <VStack spacing={6} w="100%" mt="10">
+          <VStack spacing={6} w="100%" mt="5">
             {cartItems.map((item) => (
               <Box w="100%">
                 <HStack
                   key={item.id}
+                  alignItems="flex-start"
                   justifyContent="flex-start"
                   borderRadius="md"
                   w={"100%"}
-                  my="5"
+                  my="1"
                 >
+                  <Checkbox
+                    size="lg"
+                    borderColor="gray"
+                    colorScheme="green"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                  ></Checkbox>
                   <div className="card">
-                    <div className="checkbox-wrapper">
-                      <input
-                        type="checkbox"
-                        name="myCheckbox"
-                        id="myCheckbox"
-                        className="checkbox"
-                        checked={isChecked}
-                        onChange={handleCheckboxChange}
-                      />
-                    </div>
-                    <Image
-                      src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-                      alt="Card Image"
-                    />
+                    <Image src={item.thumbnail} alt="Card Image" />
                     <HStack w="100%" justifyContent="space-between">
                       <div className="card-center">
-                        <h3 className="card-title">Card Title</h3>
+                        <h3 className="card-title">{item.lectureTitle}</h3>
                         <p className="card-description">
-                          Card description goes here.
+                          {item.lectureDifficulty}
                         </p>
                         <Text fontSize="md" color="gray.500">
-                          Price: ${item.price.toFixed(2)}
+                          {item.lectureFee}원
                         </Text>
                       </div>
 
                       <div className="card-right">
                         <HStack>
-                          <a href="#" className="card-buy">
-                            Buy
-                          </a>
-                          <a href="#" className="card-delete">
-                            Delete
-                          </a>
+                          <Button colorScheme="green">Buy</Button>
+                          <Button>Delete</Button>
                         </HStack>
                       </div>
                     </HStack>
@@ -151,7 +162,7 @@ const MyCart: React.FC<Props> = (props: Props) => {
             justifyContent="space-between"
             boxShadow="0px 2px 4px rgba(0, 0, 0, 0.12), 0px 2px 8px rgba(0, 0, 0, 0.08)"
           >
-            <Text fontWeight="bold">{120000} 원</Text>
+            <Text fontWeight="bold">{subtotal} 원</Text>
             <Button
               bgColor="#00c471"
               w="85%"
