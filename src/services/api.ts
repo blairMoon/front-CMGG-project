@@ -62,7 +62,27 @@ export const instance: AxiosInstance = axios.create({
 
 //   withCredentials: true,
 // });
+export type QueryKey = [string, string, string, number?, string?];
 
+export const getLectureAndCategoryAndSearch = async ({
+  queryKey,
+}: {
+  queryKey: QueryKey;
+}) => {
+  const [_, bigCategory, smallCategory, page = 1, searchName] = queryKey;
+
+  if (searchName) {
+    return await instance
+      .get(
+        `lectures/${bigCategory}/${smallCategory}/?page=${page}&search=${searchName}`
+      )
+      .then((res) => res.data);
+  } else {
+    return await instance
+      .get(`lectures/${bigCategory}/${smallCategory}/?page=${page}`)
+      .then((res) => res.data);
+  }
+};
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
 export const getLectureDetail = (page: number) => {
