@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
-import { useNavigate } from "react-router-dom";
+
 export interface UserNameLoginParams {
   username: string;
   password: string;
@@ -166,9 +166,6 @@ export async function postRefreshToken(
   }
 }
 
-// export const signUpUser = (data) => {
-//   return instanceNotLogin.post("users/", data).then((res) => res.data);
-// };
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
 export const getLectureDetail = (page: number) => {
