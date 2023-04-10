@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-<<<<<<< HEAD
 import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
 
@@ -53,13 +52,6 @@ export const instance: AxiosInstance = axios.create({
     Authorization: "Bearer " + Cookies.get("access"),
   },
   withCredentials: true,
-=======
-import axios from "axios";
-// const value: string | undefined = Cookies.get("my-cookie");
-const instance = axios.create({
-  baseURL: `https://crazyform.store/api/v1/`,
-  withCredentials: false,
->>>>>>> 6485009547dd102dc17f9c16ae0900b4caf3d68f
 });
 
 // export const instanceNotLogin = axios.create({
