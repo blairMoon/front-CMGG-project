@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 // const value: string | undefined = Cookies.get("my-cookie");
 const instance = axios.create({
-  baseURL: `..`,
+  baseURL: `https://crazyform.store/api/v1/`,
   withCredentials: false,
 });
 
@@ -17,3 +17,7 @@ export const instanceNotLogin = axios.create({
 
   withCredentials: true,
 });
+
+export const getLectureDetail = (page: number) => {
+  return instance.get(`lectures/${page}`).then((res) => res.data);
+};

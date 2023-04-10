@@ -1,4 +1,6 @@
 import React from "react";
+<<<<<<< HEAD
+=======
 import { useState } from "react";
 import {
   Box,
@@ -19,10 +21,16 @@ import {
 } from "@chakra-ui/react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import "./MyCart.scss";
+>>>>>>> b8dc4a2f65a71f5f9bbfa8a846f49502ae8c013d
 
 interface Props {}
 
 const MyCart: React.FC<Props> = (props: Props) => {
+<<<<<<< HEAD
+  return <div>MyCart</div>;
+};
+
+=======
   const [cartItems, setCartItems] = useState([
     { id: 1, name: "Product 1", price: 10.0 },
     { id: 2, name: "Product 2", price: 15.0 },
@@ -170,4 +178,5 @@ const MyCart: React.FC<Props> = (props: Props) => {
     </VStack>
   );
 };
+>>>>>>> b8dc4a2f65a71f5f9bbfa8a846f49502ae8c013d
 export default MyCart;
