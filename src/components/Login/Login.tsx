@@ -1,10 +1,3 @@
-interface Props {}
-
-const Login: React.FC<Props> = (props: Props) => {
-  return <div></div>;
-};
-
-export default Login;
 import React, { useState, useEffect } from "react";
 import css from "./Login.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
