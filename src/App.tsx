@@ -1,8 +1,9 @@
 import * as Sentry from "@sentry/react";
-import Home from "./pages/Home/Home";
+import Home from "./pages/HomePage/HomePage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { withProfiler } from "@sentry/react";
-
+import { RouterProvider } from "react-router-dom";
+import router from "./Router";
 interface FallbackProps {
   error: Error;
 }
@@ -22,7 +23,7 @@ const App: React.FC = () => {
       fallback={({ error }) => <MyFallbackComponent error={error} />}
     >
       <div className="App">
-        <Home />
+        <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={true} />
       </div>
     </Sentry.ErrorBoundary>
