@@ -3,7 +3,8 @@ import App from "./App";
 import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import "../node_modules/scss-reset/src/scss/_reset.scss";
+import { ChakraProvider } from "@chakra-ui/react";
 Sentry.init({
   dsn: process.env.DSN,
   environment: "development",
@@ -19,7 +20,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={client}>
-      <App />
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );
