@@ -1,5 +1,10 @@
 {
-  "extends": ["react-app", "react-app/jest", "plugin:prettier/recommended"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
   "rules": {
     "no-var": "warn", // var 금지
     "no-multiple-empty-lines": "warn", // 여러 줄 공백 금지
