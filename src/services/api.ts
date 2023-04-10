@@ -54,14 +54,14 @@ export const instance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-export const instanceNotLogin = axios.create({
-  baseURL: "https://www.crazyform.store/api/v1/",
-  headers: {
-    "X-CSRFToken": Cookies.get("csrftoken"),
-  },
+// export const instanceNotLogin = axios.create({
+//   baseURL: "https://www.crazyform.store/api/v1/",
+//   headers: {
+//     "X-CSRFToken": Cookies.get("csrftoken"),
+//   },
 
-  withCredentials: true,
-});
+//   withCredentials: true,
+// });
 
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
