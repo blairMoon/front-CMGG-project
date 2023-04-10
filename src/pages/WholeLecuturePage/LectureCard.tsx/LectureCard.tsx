@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-
+import StarRating from "../StarRating/StarRating";
 // interface LectureCardProps {
 //   lectureNumber: number;
 //   img: string;
@@ -109,7 +109,7 @@ const LectureCard: React.FC<Props> = (props: Props) =>
           <Text py="2">오뚜니</Text>
 
           <HStack spacing="3px">
-            {/* <StarRating rating={rating} /> */}
+            <StarRating rating={4} />
             <Text fontSize="12" fontWeight="600">
               (12)
             </Text>

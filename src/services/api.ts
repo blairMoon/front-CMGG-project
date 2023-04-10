@@ -1,7 +1,7 @@
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
-import axios from "axios";
 
 interface UserNameLoginParams {
   username: string;
@@ -44,7 +44,6 @@ interface WatchedLectures80Params {
 interface FetchVideoListParams {
   queryKey: string[];
 }
-export type QueryKey = [string, string, string, number?, string?];
 
 export const instance: AxiosInstance = axios.create({
   baseURL: "https://crazyform.store/api/v1/",
@@ -64,25 +63,6 @@ export const instanceNotLogin = axios.create({
   withCredentials: true,
 });
 
-export const getLectureAndCategoryAndSearch = async ({
-  queryKey,
-}: {
-  queryKey: QueryKey;
-}) => {
-  const [, bigCategory, smallCategory, page = 1, searchName] = queryKey;
-
-  if (searchName) {
-    return await instanceNotLogin
-      .get(
-        `lectures/${bigCategory}/${smallCategory}/?page=${page}&search=${searchName}`
-      )
-      .then((res) => res.data);
-  } else {
-    return await instanceNotLogin
-      .get(`lectures/${bigCategory}/${smallCategory}/?page=${page}`)
-      .then((res) => res.data);
-  }
-};
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
 export const getLectureDetail = (page: number) => {
