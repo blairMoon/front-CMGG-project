@@ -3,6 +3,12 @@ import Cookies from "js-cookie";
 import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
 
+// const value: string | undefined = Cookies.get("my-cookie");
+
+export type QueryKey = [string, string, string, number?, string?];
+export const getAllCoins = () =>
+  instance.get("coins").then((res) => res.data.slice(0, 100));
+
 interface UserNameLoginParams {
   username: string;
   password: string;
@@ -54,31 +60,30 @@ export const instance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-// export const instanceNotLogin = axios.create({
-//   baseURL: "https://www.crazyform.store/api/v1/",
-//   headers: {
-//     "X-CSRFToken": Cookies.get("csrftoken"),
-//   },
+export const instanceNotLogin = axios.create({
+  baseURL: "https://www.crazyform.store/api/v1/",
+  headers: {
+    "X-CSRFToken": Cookies.get("csrftoken"),
+  },
 
-//   withCredentials: true,
-// });
-export type QueryKey = [string, string, string, number?, string?];
+  withCredentials: true,
+});
 
 export const getLectureAndCategoryAndSearch = async ({
   queryKey,
 }: {
   queryKey: QueryKey;
 }) => {
-  const [_, bigCategory, smallCategory, page = 1, searchName] = queryKey;
+  const [, bigCategory, smallCategory, page = 1, searchName] = queryKey;
 
   if (searchName) {
-    return await instance
+    return await instanceNotLogin
       .get(
         `lectures/${bigCategory}/${smallCategory}/?page=${page}&search=${searchName}`
       )
       .then((res) => res.data);
   } else {
-    return await instance
+    return await instanceNotLogin
       .get(`lectures/${bigCategory}/${smallCategory}/?page=${page}`)
       .then((res) => res.data);
   }
