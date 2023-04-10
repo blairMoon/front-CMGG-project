@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import css from "./Login.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-// import { isLoggedInVar } from "../../apollo";
-// import { getAccessToken, getRefreshToken } from "../../Token";
-// import { userNameLogin } from "../../api";
-// import { postRefreshToken } from "../../api";
+import { isLoggedInVar } from "../../services/apollo";
+import { getAccessToken, getRefreshToken } from "../../services/Token";
+import { userNameLogin } from "../../services/api";
+import { postRefreshToken } from "../../services/api";
 import { useMutation } from "@tanstack/react-query";
 
 import Cookies from "js-cookie";
@@ -14,40 +14,37 @@ import Cookies from "js-cookie";
 type FormData = {
   username: string;
   password: string;
+  headers: string;
 };
 
 const Login: React.FC = () => {
   const [failLogin, setFailLogin] = useState<boolean | null>(null);
   const [click, setClick] = useState<boolean>(false);
   const navigate = useNavigate();
-  // const mutation = useMutation(userNameLogin, {
-  //   onMutate: () => {
-  //     console.log("mutation start...");
-  //   },
-  //   onSuccess: (data: any) => {
-  //     console.log("API CALL success...");
-  //     setFailLogin(true);
-  //     isLoggedInVar(true);
-  //     navigate("/");
-  //     window.location.reload();
-  //   },
-  //   onError: (e: Error) => {
-  //     setFailLogin(false);
-  //     console.log(e);
-  //     console.log("API CALL error...");
-  //   },
-  //   headers: isLoggedInVar() && {
-  //     Authorization: `Bearer ${getAccessToken()}`,
-  //     "X-Refresh-Token": getRefreshToken(),
-  //   },
-  // });
+  const mutation = useMutation(userNameLogin, {
+    onMutate: () => {
+      console.log("mutation start...");
+    },
+    onSuccess: (data: any) => {
+      console.log("API CALL success...");
+      setFailLogin(true);
+      isLoggedInVar(true);
+      navigate("/");
+      window.location.reload();
+    },
+    onError: (e: Error) => {
+      setFailLogin(false);
+      console.log(e);
+      console.log("API CALL error...");
+    },
+  });
 
-  // useEffect(() => {
-  //   const token = Cookies.get("token");
-  //   if (token) {
-  //     isLoggedInVar(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      isLoggedInVar(true);
+    }
+  }, []);
 
   const {
     register,
@@ -55,14 +52,20 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  // const onSubmit: SubmitHandler<FormData> = ({ username, password }) => {
-  //   try {
-  //     mutation.mutate({ username, password });
-  //   } catch (error) {
-  //     console.error("login error", error);
-  //   }
-  // };
+  const onSubmit: SubmitHandler<FormData> = ({ username, password }) => {
+    try {
+      const headers = isLoggedInVar()
+        ? {
+            Authorization: `Bearer ${getAccessToken()}`,
+            "X-Refresh-Token": getRefreshToken(),
+          }
+        : undefined;
 
+      mutation.mutate({ username, password, headers });
+    } catch (error) {
+      console.error("login error", error);
+    }
+  };
   return (
     <>
       <div className={css.Container}>
@@ -70,8 +73,8 @@ const Login: React.FC = () => {
           <div className={css.TopBox}>
             <img src="/images/logo.png" alt="logo" width="200" />
 
-            {/* <form onSubmit={handleSubmit(onSubmit)} className={css.Form}> */}
-            <form className={css.Form}>
+            <form onSubmit={handleSubmit(onSubmit)} className={css.Form}>
+              {/* <form className={css.Form}> */}
               <div>
                 <input
                   className={css.IdPassword}
@@ -121,24 +124,8 @@ const Login: React.FC = () => {
                 로그인
               </button>
             </form>
-            {/* <div className={css.Seperater}>
-              <div></div>
-              <span>간편로그인</span>
-              <div></div>
-            </div> */}
           </div>
         </div>
-        {/* {click && failLogin != null && !failLogin ? (
-          <ModalBasic
-            isOpen={!failLogin}
-            successContent={"아이디랑 비밀번호를 확인해주세요"}
-            onClose={() => {
-              setClick(false);
-            }}
-          />
-        ) : (
-          ""
-        )} */}
       </div>
     </>
   );
