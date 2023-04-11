@@ -52,7 +52,6 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
       height={"310px"}
       direction={{ base: "column" }}
       variant="outline"
-      // _hover={{ background: 'rgba(0, 0, 0, 0.4 )', zIndex: 10 }}
       overflow="hidden"
     >
       <Box
@@ -62,7 +61,6 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
       >
         <Image
           objectFit="cover"
-          // maxW={{ base: '100%', sm: '100%' }}
           minH="160"
           height="160"
           src={img}
