@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
 
 export interface UserNameLoginParams {
@@ -167,7 +166,8 @@ export async function postRefreshToken(
 }
 
 export const getAllLectures = () =>
-  instance.get("lectures/all/all").then((res) => res.data);
+  instanceNotLogin.get("lectures/all/all").then((res) => res.data);
+
 export const getLectureDetail = (page: number) => {
   return instance.get(`lectures/${page}`).then((res) => res.data);
 };

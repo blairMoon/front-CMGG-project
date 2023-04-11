@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
-import { worker } from "./services/mocks/worker";
+import { worker } from "./services/mocks/browser";
 
 Sentry.init({
   dsn: "https://97f36cbf38094c0381c09337fd4bca6c@o4504964748345344.ingest.sentry.io/4504967641759744",
