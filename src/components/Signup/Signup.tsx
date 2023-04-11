@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import css from "../Signup/Signup.module.scss";
 
-// import { isLoggedInVar } from "../../apollo";
-// import { signUpUser, instanceNotLogin } from "../../api";
+import { signUpUser, instanceNotLogin } from "../../services/api";
 // import ModalBasic from "../../components/Modal/ModalBasic";
 
 interface SignupProps {
@@ -17,7 +16,7 @@ interface SignupProps {
   };
   onSubmit: (data: FormData) => void;
 }
-type FormValues = {
+type UserData = {
   username: string;
   email: string;
   password: string;
@@ -25,7 +24,7 @@ type FormValues = {
   name: string;
   dateBirth: string;
   gender: string;
-  phoneNumber: number;
+  phoneNumber: string;
   position: string;
   skill: string;
   termsOfUse: String;
@@ -40,46 +39,49 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
 
-  // const mutation = useMutation(signUpUser, {
-  //   onMutate: (data: FormData) => {
-  //     console.log("mutation start...");
-  //     console.log(data);
-  //   },
-  //   onSuccess: () => {
-  //     console.log("API CALL success...");
-  //     setShowModal(true);
-  //     setModalContent("회원가입에 성공하셨습니당당><><");
-  //     setSignUpSuccess(true);
-  //   },
-  //   onError: () => {
-  //     console.log("API CALL error...");
-  //   },
-  // });
+  const mutation = useMutation<UserData, unknown, UserData>(
+    (data: UserData) => signUpUser(data),
+    {
+      onMutate: (data: UserData) => {
+        console.log("mutation start...");
+        console.log(data);
+      },
+      onSuccess: () => {
+        console.log("API CALL success...");
+        setShowModal(true);
+        setModalContent("You have successfully registered as a member><><");
+        setSignUpSuccess(true);
+      },
+      onError: () => {
+        console.log("API CALL error...");
+      },
+    }
+  );
 
-  // const checkUsename = (id: string) => {
-  //   setIdChecked(null);
-  //   setIdCheck(id);
-  //   return instanceNotLogin
-  //     .get(`users/@${id}`)
-  //     .then((res) => res.data)
-  //     .then((res) => {
-  //       if (res === "중복된 아이디 입니다.") {
-  //         setIdChecked(true);
-  //         setIdCheckedGood(false);
-  //       } else {
-  //         setIdChecked(true);
-  //         setIdCheckedGood(true);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.status === 404) {
-  //         setIdChecked(false);
-  //       }
-  //     })
-  //     .finally(() => {
-  //       trigger("username");
-  //     });
-  // };
+  const checkUsename = (id: string) => {
+    setIdChecked(null);
+    setIdCheck(id);
+    return instanceNotLogin
+      .get(`users/@${id}`)
+      .then((res) => res.data)
+      .then((res) => {
+        if (res === "중복된 아이디 입니다.") {
+          setIdChecked(true);
+          setIdCheckedGood(false);
+        } else {
+          setIdChecked(true);
+          setIdCheckedGood(true);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          setIdChecked(false);
+        }
+      })
+      .finally(() => {
+        trigger("username");
+      });
+  };
 
   const {
     register,
@@ -87,7 +89,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
     watch,
     trigger,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<UserData>({
     defaultValues: initialValues,
   });
   const usernameRegisterOptions: RegisterOptions = {
@@ -98,14 +100,13 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
     },
   };
 
-  // const submitForm = (data: typeof initialValues) => {
-  //   if (idChecked) {
-  //     mutation.mutate(data);
-  //   } else {
-  //     alert("아이디 중복확인을 해주세용.");
-  //   }
-  // };
-
+  const submitForm = (data: UserData) => {
+    if (idChecked) {
+      mutation.mutate(data);
+    } else {
+      alert("아이디 중복확인을 해주세용.");
+    }
+  };
   return (
     <>
       <div className={css.Container}>
@@ -130,7 +131,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 <button
                   type="button"
                   className={css.checkButton}
-                  // onClick={() => checkUsename(watch("username"))}
+                  onClick={() => checkUsename(watch("username"))}
                 >
                   아이디 <br />
                   중복확인

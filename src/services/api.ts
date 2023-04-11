@@ -50,6 +50,19 @@ interface FetchVideoListParams {
 }
 type AccessToken = string;
 type RefreshToken = string;
+interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  passwordCheck: string;
+  name: string;
+  dateBirth: string;
+  gender: string;
+  phoneNumber: string;
+  position: string;
+  skill: string;
+  termsOfUse: String;
+}
 
 export const instance: AxiosInstance = axios.create({
   baseURL: "https://crazyform.store/api/v1/",
@@ -165,6 +178,9 @@ export async function postRefreshToken(
     return null;
   }
 }
+export const signUpUser = (data: UserData) => {
+  return instanceNotLogin.post("users/", data).then((res) => res.data);
+};
 
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
