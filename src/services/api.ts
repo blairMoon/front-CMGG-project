@@ -21,32 +21,34 @@ interface LectureAndCategoryAndSearchParams {
   queryKey: string[];
 }
 
-interface PostReviewParams {
-  lectureNum: string;
-  data: any;
+export interface PostReviewParams {
+  lectureNum: number;
+  data: FormData;
 }
 
-interface PostReplyParams {
-  lectureNum: string;
-  reviewNum: string;
-  data: any;
+export interface PostReplyParams {
+  lectureNum: number;
+  reviewNum: number;
+  data: {
+    content: string;
+  };
 }
 
 interface SavePlayedSecondsParams {
-  lectureId: string;
-  num: string;
+  lectureId: number;
+  num: number;
   lastPlayed: number;
 }
 
 interface WatchedLectures80Params {
-  lectureId: string;
-  num: string;
+  lectureId: number;
+  num: number;
   is_completed: boolean;
   lastPlayed: number;
 }
 
 interface FetchVideoListParams {
-  queryKey: string[];
+  queryKey: [number, number];
 }
 type AccessToken = string;
 type RefreshToken = string;
@@ -168,6 +170,43 @@ export async function postRefreshToken(
 
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
+
 export const getLectureDetail = (page: number) => {
   return instance.get(`lectures/${page}`).then((res) => res.data);
+};
+export const postReview = ({ lectureNum, data }: PostReviewParams) => {
+  return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
+};
+export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
+  return instance
+    .post(`reviews/${lectureNum}/${reviewNum}`, data)
+    .then((res) => res.data);
+};
+
+// export const fetchVideoList = async ({
+//   queryKey,
+// }: FetchVideoListParams): Promise<VideoData> => {
+//   const [lectureId, num] = queryKey;
+//   const response = await instance.get(`/videos/lectures/${lectureId}/${num}`);
+//   return response.data;
+// };
+
+export const savePlayedSeconds = async ({
+  lectureId,
+  num,
+  lastPlayed,
+}: SavePlayedSecondsParams): Promise<void> => {
+  await instance.put(`/watchedlectures/${lectureId}/${num}`, { lastPlayed });
+};
+
+export const watchedLectures80 = async ({
+  lectureId,
+  num,
+  is_completed,
+  lastPlayed,
+}: WatchedLectures80Params): Promise<void> => {
+  await instance.put(`/watchedlectures/${lectureId}/${num}`, {
+    is_completed,
+    lastPlayed,
+  });
 };

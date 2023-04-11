@@ -1,5 +1,5 @@
 import React from "react";
-import LectureCard from "./LectureCard.tsx/LectureCard";
+import LectureCard from "./LectureCard/LectureCard";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
