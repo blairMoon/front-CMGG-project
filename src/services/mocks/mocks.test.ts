@@ -1,83 +1,56 @@
-import { rest } from "msw";
+import { context } from "msw";
 import { setupServer } from "msw/node";
 
-const server = setupServer(
-  rest.get("/api/lecture", (req, res, ctx) => {
-    return res(
-      ctx.json({
-        LectureId: 27,
-        lectureTitle:
-          "A traveler's guide to the world of Zbrush (Zbrush)\nDashboard",
-        lectureDifficulty: "Introductory",
-        lectureDescription:
-          "resolution or higher with 32-bit color.\nVideo card: Most manufactured cards 2008 or newer. Must support OpenGL 3.3 or higher.\nTablet: Pentablet or LCD tablet (Wacom, XP-interest",
-        targetAudience: "Introductory audience",
-        lectureFee: 66000,
-        thumbnail:
-          "https://cdn.inflearn.com/public/courses/326364/cover/99d3cdc2-e6fe-44f5-a235-0563c951bfde/326364-eng.jpg",
-        isOpened: true,
-        grade: null,
-        instructor: {
-          username: "admin",
-          instructorField: null,
-          instructorAbout: "",
-          instructorCareer: "",
-        },
-        categories: {
-          parent: {
-            name: "basic coding",
-            classification: "basic",
-            parent: null,
-          },
-          name: "html",
-          classification: "html",
-        },
-        reviews_num: 6,
-        rating: 3.5,
-      })
-    );
-  })
-);
+import { handlers } from "./handler";
+import { mock_data } from "./mock_data";
 
+const server = setupServer(...handlers);
+
+// 'beforeAll'은 테스트 스위트의 모든 테스트 전에 한 번 실행되며
+// 테스트 스위트의 여러 테스트에서 사용되는 공유 리소스를 설정하는 데 유용합니다.
 beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
+
+// 'afterAll'은 테스트 스위트의 모든 테스트 실행이 완료된 후
+// 한 번 실행되며 테스트 스위트 중에 생성된 리소스를 정리하는 데 유용합니다.
 afterAll(() => server.close());
+
+// 'afterEach'는 테스트 스위트의 각 테스트 후에 실행되며
+// 테스트 중에 생성된 리소스를 정리하는 데 유용합니다.
+afterEach(() => server.resetHandlers());
 
 const axios = require("axios");
 
-test("fetches lecture data from API", async () => {
-  const response = await axios.get("/api/lecture");
-  const data = await response.data;
+describe("axioswith msw", () => {
+  it("mocks_data Length is 5", async () => {
+    const response = await axios.get("/carts");
+    const data = await response.data.mock_data.data;
+    expect(data).toHaveLength(5);
+  });
+  it("mocks_data first item LecutureId is 27", async () => {
+    const response = await axios.get("/carts");
+    const data = await response.data.mock_data.data;
+    expect(data[0].LectureId).toBe(27);
+  });
 
-  expect(data).toEqual({
-    LectureId: 27,
-    lectureTitle:
-      "A traveler's guide to the world of Zbrush (Zbrush)\nDashboard",
-    lectureDifficulty: "Introductory",
-    lectureDescription:
-      "resolution or higher with 32-bit color.\nVideo card: Most manufactured cards 2008 or newer. Must support OpenGL 3.3 or higher.\nTablet: Pentablet or LCD tablet (Wacom, XP-interest",
-    targetAudience: "Introductory audience",
-    lectureFee: 66000,
-    thumbnail:
-      "https://cdn.inflearn.com/public/courses/326364/cover/99d3cdc2-e6fe-44f5-a235-0563c951bfde/326364-eng.jpg",
-    isOpened: true,
-    grade: null,
-    instructor: {
-      username: "admin",
-      instructorField: null,
-      instructorAbout: "",
-      instructorCareer: "",
-    },
-    categories: {
+  it("mocks_data third item match categories", async () => {
+    const response = await axios.get("/carts");
+    const data = await response.data.mock_data.data;
+    const categories = {
       parent: {
-        name: "basic coding",
+        name: "기초코딩",
         classification: "basic",
         parent: null,
       },
       name: "html",
       classification: "html",
-    },
-    reviews_num: 6,
-    rating: 3.5,
+    };
+    expect(data[2].categories).toMatchObject(categories);
+  });
+
+  it("mocks_data is Equal", async () => {
+    const response = await axios.get("/carts");
+    const data = await response.data.mock_data.data;
+    console.log(data);
+    expect({ ...data }).toEqual({ ...mock_data.data });
   });
 });
