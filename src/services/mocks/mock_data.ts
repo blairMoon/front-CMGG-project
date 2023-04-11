@@ -1,38 +1,4 @@
-interface Category {
-  parent: {
-    name: string;
-    classification: string;
-    parent: null;
-  };
-  name: string;
-  classification: string;
-}
-
-interface Instructor {
-  username: string;
-  instructorField: null;
-  instructorAbout: string;
-  instructorCareer: string;
-}
-
-export interface Cart {
-  LectureId: number;
-  lectureTitle: string;
-  lectureDifficulty: string;
-  targetAudience: string;
-  lectureDescription: string;
-  lectureFee: number;
-  thumbnail: string;
-  isOpened: boolean;
-  grade: null;
-  instructor: Instructor;
-  categories: Category;
-  reviews_num: number;
-  rating: number;
-}
-export interface Carts {
-  data: Cart[];
-}
+import { Cart, Carts } from "./mock";
 
 export const mock_data: Carts = {
   data: [
@@ -188,4 +154,33 @@ export const mock_data: Carts = {
       rating: 0,
     },
   ],
+};
+
+export const default_cart: Cart = {
+  LectureId: 0,
+  lectureTitle: "",
+  lectureDifficulty: "",
+  lectureDescription: "",
+  targetAudience: "",
+  lectureFee: 0,
+  thumbnail: "",
+  isOpened: true,
+  grade: null,
+  instructor: {
+    username: "",
+    instructorField: null,
+    instructorAbout: "",
+    instructorCareer: "",
+  },
+  categories: {
+    parent: {
+      name: "",
+      classification: "",
+      parent: null,
+    },
+    name: "",
+    classification: "",
+  },
+  reviews_num: 0,
+  rating: 0,
 };

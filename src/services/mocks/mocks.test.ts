@@ -1,8 +1,8 @@
-import { context } from "msw";
 import { setupServer } from "msw/node";
 
 import { handlers } from "./handler";
-import { Cart, mock_data } from "./mock_data";
+import { Cart } from "./mock";
+import { mock_data } from "./mock_data";
 
 const server = setupServer(...handlers);
 
@@ -26,6 +26,7 @@ describe("axios with msw", () => {
     const data = await response.data.mock_data.data;
     expect(data).toHaveLength(5);
   });
+
   it("mocks_data first item LecutureId is 27", async () => {
     const response = await axios.get("/carts");
     const data = await response.data.mock_data.data;
