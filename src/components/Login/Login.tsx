@@ -25,7 +25,7 @@ const Login: React.FC = () => {
     onMutate: () => {
       console.log("mutation start...");
     },
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       console.log("API CALL success...");
       setFailLogin(true);
       isLoggedInVar(true);
