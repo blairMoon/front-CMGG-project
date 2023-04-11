@@ -182,6 +182,16 @@ export const signUpUser = (data: UserData) => {
   return instanceNotLogin.post("users/", data).then((res) => res.data);
 };
 
+export const getMyProfile = () => {
+  return instance.get("users/myprofile").then((res) => res.data);
+};
+export const changeProfileUser = (data: UserData) => {
+  return instance.put("users/myprofile", data).then((res) => res.data);
+};
+export const getLectureInfo = () => {
+  return instance.get(`users/myprofile`).then((res) => res.data);
+};
+
 export const getAllLectures = () =>
   instance.get("lectures/all/all").then((res) => res.data);
 export const getLectureDetail = (page: number) => {

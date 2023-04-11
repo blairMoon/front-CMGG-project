@@ -16,7 +16,7 @@ interface SignupProps {
   };
   onSubmit: (data: FormData) => void;
 }
-type UserData = {
+interface UserData {
   username: string;
   email: string;
   password: string;
@@ -28,7 +28,8 @@ type UserData = {
   position: string;
   skill: string;
   termsOfUse: String;
-};
+  funnel: string;
+}
 
 const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const navigate = useNavigate();
@@ -84,6 +85,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   };
 
   const {
+    getValues,
     register,
     handleSubmit,
     watch,
@@ -117,8 +119,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
             </h2>
 
             <h1 className={css.h1}>회원가입</h1>
-            {/* <form className={css.Form} onSubmit={handleSubmit(submitForm)}> */}
-            <form className={css.Form}>
+            <form className={css.Form} onSubmit={handleSubmit(submitForm)}>
+              {/* <form className={css.Form}> */}
               <h6 className={css.h6}>모든 값은 필수입력 값입니다.</h6>
               <label className={`${css.topborder} ${css.label}`}>아이디</label>
               <div className={css.buttonflex}>
@@ -181,8 +183,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   required: true,
                   validate: {
                     check: (val) => {
-                      console.log("password");
-                      if ("password" !== val) {
+                      console.log(getValues("password"));
+                      if (getValues("password") !== val) {
                         return "error";
                       }
                     },
@@ -266,25 +268,28 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               {errors.email && (
                 <p className={css.errors}>이메일 형식이 아닙니다.</p>
               )}
-              <label className={css.label}>유입경로</label>
+              {/* <label className={css.label}>유입경로</label>
               <div className={css.flexSelectContainer}>
                 <div className={css.selectContainer}>
                   <div className={css.selectlabel}>
-                    <label htmlFor="frontend">
+                    <label htmlFor="funnel">
                       CrazyForm을 어떤경로로 알게되셨나요?
                     </label>
                   </div>
                   <div>
-                    <select name="job" className={css.selectPath}>
+                    <select
+                      className={css.selectPath}
+                      {...register("funnel", { required: true })}
+                    >
                       <option value="">개발을 배우고 싶어서</option>
-                      <option value="학생">미친폼을 가지고 싶어서</option>
-                      <option value="회사원">금쪽이를 벗어나고 싶어서</option>
+                      <option value="미친폼">미친폼을 가지고 싶어서</option>
+                      <option value="금쪽이">금쪽이를 벗어나고 싶어서</option>
                       <option value="기타">기타</option>
                     </select>
                   </div>
                 </div>
               </div>
-              {errors.gender && (
+              {errors.funnel && (
                 <p className={css.errors}>유입경로 필수 입력값입니다.</p>
               )}
 
@@ -314,17 +319,17 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 </div>
                 <div className={css.genderContainer}>
                   <input
-                    id="backend"
+                    id="fullstack"
                     type="radio"
-                    value="backend"
+                    value="fullstack"
                     {...register("position", { required: true })}
                   />
-                  <label className={css.genderlabel} htmlFor="backend">
+                  <label className={css.genderlabel} htmlFor="fullstack">
                     풀스택
                   </label>
                 </div>
               </div>
-              {errors.gender && (
+              {errors.position && (
                 <p className={css.errors}>
                   선호 개발 포지션은 필수 입력값입니다.
                 </p>
@@ -334,49 +339,49 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 <div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="java"
                       type="checkbox"
-                      value="frontend"
+                      value="java"
                       className={`${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
+                    <label htmlFor="java" className={css.langlabel}>
                       자바
                     </label>
                   </div>
                   <div className={css.langContainer}>
                     <input
-                      id="backend"
+                      id="javascript"
                       type="checkbox"
-                      value="backend"
+                      value="javascript"
                       className={` ${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label className={css.langlabel} htmlFor="backend">
+                    <label className={css.langlabel} htmlFor="javascript">
                       자바스크립트
                     </label>
                   </div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="swift"
                       type="checkbox"
-                      value="frontend"
+                      value="swift"
                       className={`${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
+                    <label htmlFor="swift" className={css.langlabel}>
                       Swift
                     </label>
                   </div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="go"
                       type="checkbox"
-                      value="frontend"
+                      value="go"
                       className={`${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
+                    <label htmlFor="go" className={css.langlabel}>
                       Go
                     </label>
                   </div>
@@ -384,50 +389,50 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 <div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="c"
                       type="checkbox"
-                      value="frontend"
+                      value="c"
                       className={`${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
+                    <label htmlFor="c" className={css.langlabel}>
                       C
                     </label>
                   </div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="c++"
                       type="checkbox"
-                      value="frontend"
+                      value="c++"
                       className={`${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
+                    <label htmlFor="c++" className={css.langlabel}>
                       C++
                     </label>
                   </div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="kotlin"
                       type="checkbox"
-                      value="frontend"
+                      value="kotlin"
                       className={`${css.Margin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
+                    <label htmlFor="kotlin" className={css.langlabel}>
                       Kotlin
                     </label>
                   </div>
                   <div className={css.langContainer}>
                     <input
-                      id="frontend"
+                      id="typescript"
                       type="checkbox"
-                      value="frontend"
+                      value="typescript"
                       className={`${css.radioMargin}`}
                       {...register("position", { required: true })}
                     />
-                    <label htmlFor="frontend" className={css.langlabel}>
-                      typeScript
+                    <label htmlFor="typescript" className={css.langlabel}>
+                      TypeScript
                     </label>
                   </div>
                 </div>
@@ -446,7 +451,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     value="high"
                     {...register("skill", { required: true })}
                   />
-                  <label htmlFor="frontend" className={css.genderlabel}>
+                  <label htmlFor="high" className={css.genderlabel}>
                     상
                   </label>
                 </div>
@@ -457,25 +462,25 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     value="middle"
                     {...register("skill", { required: true })}
                   />
-                  <label className={css.genderlabel} htmlFor="backend">
+                  <label className={css.genderlabel} htmlFor="middle">
                     중
                   </label>
                 </div>
                 <div className={css.genderContainer}>
                   <input
-                    id="under"
+                    id="low"
                     type="radio"
-                    value="under"
+                    value="low"
                     {...register("skill", { required: true })}
                   />
-                  <label className={css.genderlabel} htmlFor="backend">
+                  <label className={css.genderlabel} htmlFor="low">
                     하
                   </label>
                 </div>
               </div>
               {errors.skill && (
                 <p className={css.errors}>내 개발수준 은 필수 입력값입니다.</p>
-              )}
+              )} */}
               <label className={`${css.label} ${css.question}`}>
                 이용약관 문의
               </label>
