@@ -10,7 +10,7 @@ const deleteHandler = rest.delete(`/carts/:id`, (req, res, ctx) => {
   const next_mocks = mock_data.data.filter(
     (cart) => cart.LectureId !== Number(id)
   );
-  return res(ctx.status(200), ctx.delay(500), ctx.json({ next_mocks }));
+  return res(ctx.status(204), ctx.json(next_mocks));
 });
 
 export const handlers = [getHandler, deleteHandler];

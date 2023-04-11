@@ -15,7 +15,7 @@ interface Instructor {
   instructorCareer: string;
 }
 
-interface Cart {
+export interface Cart {
   LectureId: number;
   lectureTitle: string;
   lectureDifficulty: string;
@@ -30,7 +30,7 @@ interface Cart {
   reviews_num: number;
   rating: number;
 }
-interface Carts {
+export interface Carts {
   data: Cart[];
 }
 

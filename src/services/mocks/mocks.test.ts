@@ -2,7 +2,7 @@ import { context } from "msw";
 import { setupServer } from "msw/node";
 
 import { handlers } from "./handler";
-import { mock_data } from "./mock_data";
+import { Cart, mock_data } from "./mock_data";
 
 const server = setupServer(...handlers);
 
@@ -20,7 +20,7 @@ afterEach(() => server.resetHandlers());
 
 const axios = require("axios");
 
-describe("axioswith msw", () => {
+describe("axios with msw", () => {
   it("mocks_data Length is 5", async () => {
     const response = await axios.get("/carts");
     const data = await response.data.mock_data.data;
@@ -50,7 +50,20 @@ describe("axioswith msw", () => {
   it("mocks_data is Equal", async () => {
     const response = await axios.get("/carts");
     const data = await response.data.mock_data.data;
-    console.log(data);
     expect({ ...data }).toEqual({ ...mock_data.data });
+  });
+
+  it("Deletes a carts item", async () => {
+    const idToDelete = "1";
+    const res = await axios.delete(`/carts/${idToDelete}`);
+    expect(res.status).toBe(204);
+
+    const updatedRes = await axios.get("/carts");
+    const updatedCarts = updatedRes.data.mock_data.data;
+
+    const deletedItem = updatedCarts.find(
+      (carts: Cart) => carts.LectureId === Number(idToDelete)
+    );
+    expect(deletedItem).toBeUndefined();
   });
 });
