@@ -1,14 +1,14 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
 import { QueryFunctionContext } from "@tanstack/react-query";
-// const value: string | undefined = Cookies.get("my-cookie");
-// export type QueryKey = [string, string, string, number?, string?];
-
-interface UserNameLoginParams {
+export interface UserNameLoginParams {
   username: string;
   password: string;
+  headers?: {
+    Authorization: string;
+    "X-Refresh-Token": string;
+  };
 }
 
 interface PostRefreshTokenParams {
@@ -20,32 +20,49 @@ interface LectureAndCategoryAndSearchParams {
   queryKey: string[];
 }
 
-interface PostReviewParams {
-  lectureNum: string;
-  data: any;
+export interface PostReviewParams {
+  lectureNum: number;
+  data: FormData;
 }
 
-interface PostReplyParams {
-  lectureNum: string;
-  reviewNum: string;
-  data: any;
+export interface PostReplyParams {
+  lectureNum: number;
+  reviewNum: number;
+  data: {
+    content: string;
+  };
 }
 
 interface SavePlayedSecondsParams {
-  lectureId: string;
-  num: string;
+  lectureId: number;
+  num: number;
   lastPlayed: number;
 }
 
 interface WatchedLectures80Params {
-  lectureId: string;
-  num: string;
+  lectureId: number;
+  num: number;
   is_completed: boolean;
   lastPlayed: number;
 }
 
 interface FetchVideoListParams {
-  queryKey: string[];
+  queryKey: [number, number];
+}
+type AccessToken = string;
+type RefreshToken = string;
+interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  passwordCheck: string;
+  name: string;
+  dateBirth: string;
+  gender: string;
+  phoneNumber: string;
+  position: string;
+  skill: string;
+  termsOfUse: String;
 }
 
 export const instance: AxiosInstance = axios.create({
@@ -57,45 +74,9 @@ export const instance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-interface LectureData {
-  queryKey: Params[];
-  LectureId: number;
-  lectureTitle: string;
-  lectureDifficulty: string;
-  lectureDescription: string;
-  targetAudience: string;
-  lectureFee: number;
-  thumbnail: string;
-  isOpened: boolean;
-  grade: null | string;
-  instructor: {
-    username: string;
-    instructorField: null | string;
-    instructorAbout: string;
-    instructorCareer: string;
-  };
-  categories: {
-    parent: null | {
-      name: string;
-      classification: string;
-      parent: null;
-    };
-    name: string;
-    classification: string;
-  };
-  reviews_num: number;
-  rating: number;
-}
-
-export interface Params {
-  bigCategory?: string;
-  smallCategory?: string;
-  pageNum: number;
-  searchName?: string;
-}
 export const instanceNotLogin = axios.create({
-  // baseURL: 'http://127.0.0.1:8000/api/v1/',
   baseURL: "https://crazyform.store/api/v1/",
+  // baseURL: 'http://115.85.182.132:8000/api/v1/',
 
   headers: {
     "X-CSRFToken": Cookies.get("csrftoken"),
@@ -120,8 +101,155 @@ export const getLectureAndCategoryAndSearch = ({
       .then((res) => res.data);
   }
 };
+instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const refreshToken = Cookies.get("refresh") || "";
+      const accessToken = Cookies.get("access") || "";
+
+      if (refreshToken && accessToken) {
+        const newAccessToken = await postRefreshToken(
+          refreshToken,
+          accessToken
+        );
+
+        if (newAccessToken) {
+          Cookies.set("access", newAccessToken);
+
+          // Update the Authorization header with the new access token
+          instance.defaults.headers["Authorization"] =
+            "Bearer " + newAccessToken;
+          originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
+
+          return instance(originalRequest);
+        } else {
+          window.location.href =
+            "https://crazyform.store/api/v1/users/jwt-token-auth/";
+          return Promise.reject(error);
+        }
+      } else {
+        window.location.href =
+          "https://crazyform.store/api/v1/users/jwt-token-auth/";
+        return Promise.reject(error);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export async function userNameLogin(
+  { username, password }: UserNameLoginParams,
+  headers?: {
+    Authorization: string;
+    "X-Refresh-Token": string;
+  }
+): Promise<boolean> {
+  const response = await fetch(
+    "https://crazyform.store/api/v1/users/jwt-token-auth/",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers, // Spread the headers object if it's not undefined
+      },
+      body: JSON.stringify({ username, password }),
+      credentials: "include",
+    }
+  );
+
+  if (response.ok) {
+    const data = await response.json();
+    const refresh = data.refresh;
+    const access = data.access;
+
+    Cookies.set("access", access);
+    Cookies.set("refresh", refresh);
+
+    return true;
+  } else {
+    const { message } = await response.json();
+    throw new Error(message);
+  }
+}
+export async function postRefreshToken(
+  refresh: RefreshToken,
+  access: AccessToken
+): Promise<string | null> {
+  try {
+    const response = await axios.post(
+      "https://crazyform.store/api/v1/users/jwt-token-auth/refresh/",
+      {
+        refresh,
+        access,
+      }
+    );
+    return response.data.access;
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    return null;
+  }
+}
+export const signUpUser = (data: UserData) => {
+  return instanceNotLogin.post("users/", data).then((res) => res.data);
+};
+
+export const getMyProfile = () => {
+  return instance.get("users/myprofile").then((res) => res.data);
+};
+export const changeProfileUser = (data: UserData) => {
+  return instance.put("users/myprofile", data).then((res) => res.data);
+};
+export const getLectureInfo = () => {
+  return instance.get(`users/myprofile`).then((res) => res.data);
+};
+
 export const getAllLectures = () =>
-  instance.get("lectures/all/all").then((res) => res.data);
+  instanceNotLogin.get("lectures/all/all").then((res) => res.data);
+
 export const getLectureDetail = (page: number) => {
   return instance.get(`lectures/${page}`).then((res) => res.data);
 };
+export const postReview = ({ lectureNum, data }: PostReviewParams) => {
+  return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
+};
+export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
+  return instance
+    .post(`reviews/${lectureNum}/${reviewNum}`, data)
+    .then((res) => res.data);
+};
+
+// export const fetchVideoList = async ({
+//   queryKey,
+// }: FetchVideoListParams): Promise<VideoData> => {
+//   const [lectureId, num] = queryKey;
+//   const response = await instance.get(`/videos/lectures/${lectureId}/${num}`);
+//   return response.data;
+// };
+
+// export const savePlayedSeconds = async ({
+//   lectureId,
+//   num,
+//   lastPlayed,
+// }: SavePlayedSecondsParams): Promise<void> => {
+//   await instance.put(`/watchedlectures/${lectureId}/${num}`, { lastPlayed });
+// };
+
+// export const watchedLectures80 = async ({
+//   lectureId,
+//   num,
+//   is_completed,
+//   lastPlayed,
+// }: WatchedLectures80Params): Promise<void> => {
+//   await instance.put(`/watchedlectures/${lectureId}/${num}`, {
+//     is_completed,
+//     lastPlayed,
+//   });
+// };

@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <SignupPage />,
       },
       {
-        path: "wholeLectures",
+        path: "lectures/:bigCategory/:smallCategory",
         element: <WholeLecturePage />,
       },
       {
