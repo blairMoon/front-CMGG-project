@@ -14,7 +14,7 @@ import {
 
 import { Link } from "react-router-dom";
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import StarRating from "../../pages/WholeLecuturePage/StarRating/StarRating";
+import StarRating from "../../WholeLectures/StarRating/StarRating";
 import { BsPlayCircle } from "react-icons/bs";
 
 interface MylectureCardProps {

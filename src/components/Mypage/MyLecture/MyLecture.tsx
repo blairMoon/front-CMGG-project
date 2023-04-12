@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import MylectureCard from "../../MyLectureCard/MyLectureCard";
+import MylectureCard from "../MyLectureCard/MyLectureCard";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLectureInfo } from "../../../services/api";
@@ -39,7 +39,7 @@ const MyLecture: React.FC = () => {
 
   // console.log(data.calculatedLecture);
   return (
-    <div>
+    <>
       <Grid>
         <GridItem w="800px" mx="auto" py="10">
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]} gap="5">
@@ -60,7 +60,7 @@ const MyLecture: React.FC = () => {
           </Grid>
         </GridItem>
       </Grid>
-    </div>
+    </>
   );
 };
 
