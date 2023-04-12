@@ -102,7 +102,7 @@ const DetailPage: React.FC<Props> = (props: Props) => {
   //   },
   // });
 
-  return <div>{data.lecture_data.lectureTitle}</div>;
+  return <div>{data?.lecture_data.lectureTitle}</div>;
 };
 
 export default DetailPage;

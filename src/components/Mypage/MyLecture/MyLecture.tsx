@@ -37,13 +37,13 @@ const MyLecture: React.FC = () => {
     }
   }, [isError, navigate]);
 
-  console.log(data.calculatedLecture);
+  // console.log(data.calculatedLecture);
   return (
     <>
       <Grid>
         <GridItem w="800px" mx="auto" py="10">
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]} gap="5">
-            {data.calculatedLecture?.map((item: CalculatedLectureItem) => (
+            {data?.calculatedLecture?.map((item: CalculatedLectureItem) => (
               <GridItem key={item.lecture.LectureId} mx="auto">
                 <MylectureCard
                   lectureNumber={item.lecture.LectureId}
