@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { getLectureDetail } from "../../services/api";
 // import ModalConfirm from "../../components/Modal/ModalConfirm";
-import StarRating from "../WholeLecuturePage/StarRating/StarRating";
+import StarRating from "../../components/WholeLectures/StarRating/StarRating";
 import Review from "../../components/Reviews/Review";
 
 import ReviewForm from "../../components/Reviews/ReviewForm";
