@@ -191,22 +191,22 @@ export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
 //   return response.data;
 // };
 
-export const savePlayedSeconds = async ({
-  lectureId,
-  num,
-  lastPlayed,
-}: SavePlayedSecondsParams): Promise<void> => {
-  await instance.put(`/watchedlectures/${lectureId}/${num}`, { lastPlayed });
-};
+// export const savePlayedSeconds = async ({
+//   lectureId,
+//   num,
+//   lastPlayed,
+// }: SavePlayedSecondsParams): Promise<void> => {
+//   await instance.put(`/watchedlectures/${lectureId}/${num}`, { lastPlayed });
+// };
 
-export const watchedLectures80 = async ({
-  lectureId,
-  num,
-  is_completed,
-  lastPlayed,
-}: WatchedLectures80Params): Promise<void> => {
-  await instance.put(`/watchedlectures/${lectureId}/${num}`, {
-    is_completed,
-    lastPlayed,
-  });
-};
+// export const watchedLectures80 = async ({
+//   lectureId,
+//   num,
+//   is_completed,
+//   lastPlayed,
+// }: WatchedLectures80Params): Promise<void> => {
+//   await instance.put(`/watchedlectures/${lectureId}/${num}`, {
+//     is_completed,
+//     lastPlayed,
+//   });
+// };
