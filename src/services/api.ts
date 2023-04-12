@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
 
 export interface UserNameLoginParams {
@@ -52,6 +51,19 @@ interface FetchVideoListParams {
 }
 type AccessToken = string;
 type RefreshToken = string;
+interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  passwordCheck: string;
+  name: string;
+  dateBirth: string;
+  gender: string;
+  phoneNumber: string;
+  position: string;
+  skill: string;
+  termsOfUse: String;
+}
 
 export const instance: AxiosInstance = axios.create({
   baseURL: "https://crazyform.store/api/v1/",
@@ -167,9 +179,22 @@ export async function postRefreshToken(
     return null;
   }
 }
+export const signUpUser = (data: UserData) => {
+  return instanceNotLogin.post("users/", data).then((res) => res.data);
+};
+
+export const getMyProfile = () => {
+  return instance.get("users/myprofile").then((res) => res.data);
+};
+export const changeProfileUser = (data: UserData) => {
+  return instance.put("users/myprofile", data).then((res) => res.data);
+};
+export const getLectureInfo = () => {
+  return instance.get(`users/myprofile`).then((res) => res.data);
+};
 
 export const getAllLectures = () =>
-  instance.get("lectures/all/all").then((res) => res.data);
+  instanceNotLogin.get("lectures/all/all").then((res) => res.data);
 
 export const getLectureDetail = (page: number) => {
   return instance.get(`lectures/${page}`).then((res) => res.data);
