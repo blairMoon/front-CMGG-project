@@ -5,6 +5,7 @@ export function getAccessToken() {
   console.log("Token before removal:", access);
   return access || undefined;
 }
+console.log(getAccessToken());
 export function getRefreshToken() {
   const refresh = Cookies.get("refresh");
   if (!refresh) throw new Error("No refresh token found");
