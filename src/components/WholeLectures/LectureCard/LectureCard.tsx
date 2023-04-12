@@ -11,6 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import StarRating from "../StarRating/StarRating";
+import { LectureData } from "../../../../typings/LectureData";
 // interface LectureCardProps {
 //   lectureNumber: number;
 //   img: string;
@@ -22,8 +23,10 @@ import StarRating from "../StarRating/StarRating";
 //   rating: number;
 //   reviewsNum: number;
 // }
-interface Props {}
-const LectureCard: React.FC<Props> = (props: Props) =>
+interface Props {
+  data: LectureData;
+}
+const LectureCard: React.FC<Props> = ({ data }) =>
   //   {
   //   lectureNumber,
   //   img,
@@ -36,86 +39,88 @@ const LectureCard: React.FC<Props> = (props: Props) =>
   //   reviewsNum,
   // }
   {
-    // const MAX_LENGTH = 100;
-    // let text = lectureDescription;
+    const MAX_LENGTH = 150;
+    let text = data.lectureDescription;
 
-    // if (text.length > MAX_LENGTH) {
-    //   text = text.slice(0, MAX_LENGTH) + "...";
-    // }
+    if (text.length > MAX_LENGTH) {
+      text = text.slice(0, MAX_LENGTH) + "...";
+    }
 
-    // const MAX_LENGTH2 = 20;
-    // let textTitle = lectureTitle;
+    const MAX_LENGTH2 = 30;
+    let textTitle = data.lectureTitle;
 
-    // if (textTitle.length > MAX_LENGTH2) {
-    //   textTitle = textTitle.slice(0, MAX_LENGTH2) + "...";
-    // }
+    if (textTitle.length > MAX_LENGTH2) {
+      textTitle = textTitle.slice(0, MAX_LENGTH2) + "...";
+    }
 
     // <Link to={`/lectures/${lectureNumber}`}>
     return (
-      <Card
-        width={"250px"}
-        height={"300px"}
-        direction={{ base: "column" }}
-        variant="outline"
-        _hover={{ background: "rgba(0, 0, 0, 0.4 )", zIndex: 10 }}
-        overflow="hidden"
-      >
-        <Box
-          display="flex"
-          flexDirection="column"
-          position="absolute"
-          zIndex={10}
-          width={"250px"}
-          height={"300px"}
-          cursor="pointer"
-          justifyContent="space-between"
-          opacity="0"
-          _hover={{
-            opacity: "1",
-            background: "rgba(0, 0, 0, 0.7)",
-            zIndex: 10,
-          }}
-          padding="15px"
+      <Link to={`/lectures/${data.LectureId}`}>
+        <Card
+          width="250px"
+          height="300px"
+          direction={{ base: "column" }}
+          variant="outline"
+          _hover={{ background: "rgba(0, 0, 0, 0.4 )", zIndex: 10 }}
+          overflow="hidden"
         >
-          <Stack>
-            <Heading size="md" color="white" pb="10px">
-              오뚜니의 리액트 강의
+          <Box
+            display="flex"
+            flexDirection="column"
+            position="absolute"
+            zIndex={10}
+            width="250px"
+            height="300px"
+            cursor="pointer"
+            justifyContent="space-between"
+            opacity="0"
+            _hover={{
+              opacity: "1",
+              background: "rgba(0, 0, 0, 0.7)",
+              zIndex: 10,
+            }}
+            padding="15px"
+          >
+            <Stack>
+              <Heading size="md" color="white" pb="10px">
+                {data.lectureTitle}
+              </Heading>
+              <Text
+                fontSize="14px"
+                color="white"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {text}
+              </Text>
+            </Stack>
+            <Text color="red">{data.targetAudience}</Text>
+          </Box>
+          <Image
+            objectFit="cover"
+            maxW={{ base: "100%", sm: "100%" }}
+            minH="160"
+            height="160"
+            src={data.thumbnail}
+            alt="Card"
+          />
+          <CardBody>
+            <Heading size="md" fontSize="17px" h="45">
+              {textTitle}
             </Heading>
-            <Text
-              fontSize="14px"
-              color="white"
-              sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              ㄴ밍;라ㅓ;매ㅑㄷ절;ㄴ미아ㅓㄹ;ㅁ니ㅏㅇ러;댜런이ㅏ런이ㅏㅓㄹ댜ㅓㄴㅁ;이람ㄴㅇ러댜ㅐㄹ;ㅓ
-            </Text>
-          </Stack>
-          <Text color="red">중급이지욜</Text>
-        </Box>
-        <Image
-          objectFit="cover"
-          maxW={{ base: "100%", sm: "100%" }}
-          minH="160"
-          height="160"
-          src="https://res.heraldm.com/content/image/2023/01/09/20230109000620_0.jpg"
-          alt="Card"
-        />
-        <CardBody>
-          <Heading size="md" fontSize="17px" h="45">
-            오뚜니의 리액트 강의
-          </Heading>
-          <Text py="2">오뚜니</Text>
+            <Text py="2">{data.instructor.username}</Text>
 
-          <HStack spacing="3px">
-            <StarRating rating={4} />
-            <Text fontSize="12" fontWeight="600">
-              (12)
-            </Text>
-          </HStack>
-        </CardBody>
-      </Card>
+            <HStack spacing="3px">
+              <StarRating rating={data.rating} />
+              <Text fontSize="12" fontWeight="600">
+                ({data.reviews_num})
+              </Text>
+            </HStack>
+          </CardBody>
+        </Card>
+      </Link>
     );
   };
 
