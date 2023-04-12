@@ -14,7 +14,7 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
-import StarRating from "../../pages/WholeLecuturePage/StarRating/StarRating";
+import StarRating from "../../components/WholeLectures/StarRating/StarRating";
 import StarScore from "./StarScore";
 import { postReview, PostReviewParams } from "../../services/api";
 import { useQueryClient, useMutation } from "@tanstack/react-query";

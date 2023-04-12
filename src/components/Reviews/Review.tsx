@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { RiHomeHeartLine } from "react-icons/ri";
-import StarRating from "../../pages/WholeLecuturePage/StarRating/StarRating";
+import StarRating from "../WholeLectures/StarRating/StarRating";
 import Reply from "./Reply";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postReply, PostReplyParams } from "../../services/api";
