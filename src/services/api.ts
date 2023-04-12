@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
-
+import { QueryFunctionContext } from "@tanstack/react-query";
 export interface UserNameLoginParams {
   username: string;
   password: string;
@@ -83,6 +83,24 @@ export const instanceNotLogin = axios.create({
   },
   withCredentials: true,
 });
+
+export const getLectureAndCategoryAndSearch = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [, bigCategory, smallCategory, pageNum, searchName] = queryKey;
+
+  if (searchName) {
+    return instanceNotLogin
+      .get(
+        `lectures/${bigCategory}/${smallCategory}/?page=${pageNum}&search=${searchName}`
+      )
+      .then((res) => res.data);
+  } else {
+    return instanceNotLogin
+      .get(`lectures/${bigCategory}/${smallCategory}/?page=${pageNum}`)
+      .then((res) => res.data);
+  }
+};
 instance.interceptors.response.use(
   (response) => {
     return response;
