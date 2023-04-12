@@ -34,24 +34,27 @@ export interface PostReplyParams {
   };
 }
 
-interface SavePlayedSecondsParams {
-  lectureId: number;
-  num: number;
+export interface FetchVideoListParams {
+  lectureId: string;
+  num: string;
+}
+
+export interface SavePlayedSecondsParams {
+  lectureId: string;
+  num: string;
   lastPlayed: number;
 }
 
-interface WatchedLectures80Params {
-  lectureId: number;
-  num: number;
+export interface WatchedLectures80Params {
+  lectureId: string;
+  num: string;
   is_completed: boolean;
-  lastPlayed: number;
+  lastPlayed?: number;
 }
 
-interface FetchVideoListParams {
-  queryKey: [number, number];
-}
 type AccessToken = string;
 type RefreshToken = string;
+
 interface UserData {
   username: string;
   email: string;
@@ -227,30 +230,35 @@ export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
     .then((res) => res.data);
 };
 
-// export const fetchVideoList = async ({
-//   queryKey,
-// }: FetchVideoListParams): Promise<VideoData> => {
-//   const [lectureId, num] = queryKey;
-//   const response = await instance.get(`/videos/lectures/${lectureId}/${num}`);
-//   return response.data;
-// };
+export const fetchVideoList = async ({
+  lectureId,
+  num,
+}: FetchVideoListParams) => {
+  return await instance
+    .get(`videos/lectures/${lectureId}/${num}`)
+    .then((res) => res.data);
+};
 
-// export const savePlayedSeconds = async ({
-//   lectureId,
-//   num,
-//   lastPlayed,
-// }: SavePlayedSecondsParams): Promise<void> => {
-//   await instance.put(`/watchedlectures/${lectureId}/${num}`, { lastPlayed });
-// };
+export const savePlayedSeconds = ({
+  lectureId,
+  num,
+  lastPlayed,
+}: SavePlayedSecondsParams) => {
+  // console.log("saveVideo", lectureId, num, lastPlayed);
+  return instance
+    .put(`watchedlectures/${lectureId}/${num}`, { lastPlayed })
+    .then((res) => res.data);
+};
 
-// export const watchedLectures80 = async ({
-//   lectureId,
-//   num,
-//   is_completed,
-//   lastPlayed,
-// }: WatchedLectures80Params): Promise<void> => {
-//   await instance.put(`/watchedlectures/${lectureId}/${num}`, {
-//     is_completed,
-//     lastPlayed,
-//   });
-// };
+export const watchedlectures80 = ({
+  lectureId,
+  num,
+  is_completed,
+  lastPlayed,
+}: WatchedLectures80Params) => {
+  // console.log("watchVideo", lectureId, num, is_completed, lastPlayed);
+
+  return instance
+    .put(`watchedlectures/${lectureId}/${num}`, { is_completed, lastPlayed })
+    .then((res) => res.data);
+};
