@@ -22,6 +22,7 @@ import {
   Progress,
 } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
+
 // import LectureHeader from "../../components/LectureHeader/LectureHeader";
 // import Notfound from "../Notfound/Notfound";
 import {
