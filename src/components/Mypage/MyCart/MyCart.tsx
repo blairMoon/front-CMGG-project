@@ -15,27 +15,33 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllLectures } from "../../../services/api";
 import { getMockCarts } from "../../../services/mocks/api";
 import { Cart, Carts } from "../../../services/mocks/mock";
-import { cartSelectAllState } from "../../../atoms";
+import { cartSelectAllState, SelectCartItems } from "../../../atoms";
 import CartItem from "./components/CartItem";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 
 interface Props {}
 
 const MyCart: React.FC<Props> = (props: Props) => {
-  const [initSelectedItems, setInitSelectedItems] = useState(
-    new Array<number>()
-  );
+  const [initSelectedItems, setInitSelectedItems] = useState<SelectCartItems>({
+    id: new Array<number>(),
+    total_price: 0,
+  });
   const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
   const [cartItems, setCartItems] = useState<Carts>();
   const { isLoading } = useQuery(["carts"], getMockCarts, {
     onSuccess(data) {
       setCartItems(data.mock_data);
+      let total_price = 0;
       const newInitSelectedItems = new Array<number>();
       data.mock_data?.data.map((item: Cart) => {
         newInitSelectedItems.push(item.LectureId);
+        total_price += item.lectureFee;
       });
-      setInitSelectedItems(newInitSelectedItems);
-      setSelectedItems(newInitSelectedItems);
+      setInitSelectedItems({
+        id: newInitSelectedItems,
+        total_price: total_price,
+      });
+      setSelectedItems({ id: newInitSelectedItems, total_price: total_price });
     },
   });
 
@@ -43,7 +49,7 @@ const MyCart: React.FC<Props> = (props: Props) => {
     if (e.target.checked) {
       setSelectedItems(initSelectedItems);
     } else {
-      setSelectedItems(new Array<number>());
+      setSelectedItems({ id: new Array<number>(), total_price: 0 });
     }
   };
 
@@ -51,7 +57,7 @@ const MyCart: React.FC<Props> = (props: Props) => {
     if (
       cartItems &&
       cartItems.data &&
-      cartItems.data.length > selectedItems.length
+      cartItems.data.length > selectedItems.id.length
     ) {
       return false;
     } else {
@@ -87,7 +93,8 @@ const MyCart: React.FC<Props> = (props: Props) => {
               isChecked={isAllCheck()}
               onChange={handleCheckboxChange}
             >
-              전체 선택 ({selectedItems?.length})
+              전체 선택 ({selectedItems?.id.length}) (
+              {selectedItems?.total_price})
             </Checkbox>
           </VStack>
           <HStack justifyContent="space-between" w="100%">

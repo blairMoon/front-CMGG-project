@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 
 import { Cart } from "../../../../services/mocks/mock";
 import { delMockCarts } from "../../../../services/mocks/api";
-import { cartSelectAllState } from "../../../../atoms";
+import { cartSelectAllState, SelectCartItems } from "../../../../atoms";
 
 const CartItem: React.FC<Cart> = ({
   LectureId,
@@ -24,17 +24,34 @@ const CartItem: React.FC<Cart> = ({
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedItems((items: number[]) => {
-      const selectedItems = items.filter((item: number) => item !== LectureId);
+    setSelectedItems((items: SelectCartItems) => {
+      let nextTotalPrice = items.total_price;
+
+      const isSelectedItem = items.id.findIndex(
+        (item: number) => item === LectureId
+      );
+      const selectedItemsId = items.id.filter(
+        (item: number) => item !== LectureId
+      );
+
       if (e.target.checked) {
-        selectedItems.push(LectureId);
+        selectedItemsId.push(LectureId);
+
+        if (isSelectedItem < 0) {
+          nextTotalPrice += lectureFee;
+        }
+      } else {
+        if (isSelectedItem > -1) {
+          nextTotalPrice -= lectureFee;
+        }
       }
-      return selectedItems;
+
+      return { id: selectedItemsId, total_price: nextTotalPrice };
     });
   };
 
   const isCheck = (): boolean =>
-    selectedItems.includes(LectureId) ? true : false;
+    selectedItems.id.includes(LectureId) ? true : false;
 
   return (
     <>
