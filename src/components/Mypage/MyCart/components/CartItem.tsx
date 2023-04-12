@@ -1,10 +1,13 @@
 import "../MyCart.scss";
-
-import React, { useState } from "react";
 import { TbLetterX } from "react-icons/tb";
 import { Box, HStack, Checkbox, Image, Text, Button } from "@chakra-ui/react";
+
+import React, { useState, useLayoutEffect, useEffect } from "react";
+import { useRecoilState } from "recoil";
+
 import { Cart } from "../../../../services/mocks/mock";
 import { delMockCarts } from "../../../../services/mocks/api";
+import { cartSelectAllState } from "../../../../atoms";
 
 const CartItem: React.FC<Cart> = ({
   LectureId,
@@ -13,15 +16,25 @@ const CartItem: React.FC<Cart> = ({
   lectureDifficulty,
   lectureFee,
 }: Cart) => {
-  const [isChecked, setIsChecked] = useState(true);
+  const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
 
   const handleItemDelete = () => {
     console.log(LectureId);
     delMockCarts({ LectureId });
   };
-  const handleCheckboxChange = () => {
-    console.log(LectureId);
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedItems((items: number[]) => {
+      const selectedItems = items.filter((item: number) => item !== LectureId);
+      if (e.target.checked) {
+        selectedItems.push(LectureId);
+      }
+      return selectedItems;
+    });
   };
+
+  const isCheck = (): boolean =>
+    selectedItems.includes(LectureId) ? true : false;
 
   return (
     <>
@@ -38,7 +51,7 @@ const CartItem: React.FC<Cart> = ({
             size="lg"
             borderColor="gray"
             colorScheme="green"
-            checked={isChecked}
+            isChecked={isCheck()}
             onChange={handleCheckboxChange}
           />
           <div className="card">
