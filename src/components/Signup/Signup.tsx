@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import css from "../Signup/Signup.module.scss";
 
 import { signUpUser, instanceNotLogin } from "../../services/api";
-// import ModalBasic from "../../components/Modal/ModalBasic";
+import ModalBasic from "../../components/Modal/ModalBasic";
 
 interface SignupProps {
   initialValues: {
@@ -268,7 +268,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               {errors.email && (
                 <p className={css.errors}>이메일 형식이 아닙니다.</p>
               )}
-              {/* <label className={css.label}>유입경로</label>
+              <label className={css.label}>유입경로</label>
               <div className={css.flexSelectContainer}>
                 <div className={css.selectContainer}>
                   <div className={css.selectlabel}>
@@ -294,39 +294,120 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               )}
 
               <label className={css.label}>선호 개발 포지션</label>
-              <div className={css.flexContainer}>
-                <div className={css.genderContainer}>
-                  <input
-                    id="frontend"
-                    type="radio"
-                    value="frontend"
-                    {...register("position", { required: true })}
-                  />
-                  <label htmlFor="frontend" className={css.genderlabel}>
-                    프론트엔드
-                  </label>
+              <div className={css.flexDevContainer}>
+                <div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="frontend"
+                      type="radio"
+                      value="frontend"
+                      {...register("position", { required: true })}
+                    />
+                    <label htmlFor="frontend" className={css.Devlabel}>
+                      프론트엔드
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="backend"
+                      type="radio"
+                      value="backend"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="backend">
+                      백엔드
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="fullstack"
+                      type="radio"
+                      value="fullstack"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="fullstack">
+                      풀스택
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="game"
+                      type="radio"
+                      value="game"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="game">
+                      게임
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="android"
+                      type="radio"
+                      value="android"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="android">
+                      안드로이드
+                    </label>
+                  </div>
                 </div>
-                <div className={css.genderContainer}>
-                  <input
-                    id="backend"
-                    type="radio"
-                    value="backend"
-                    {...register("position", { required: true })}
-                  />
-                  <label className={css.genderlabel} htmlFor="backend">
-                    백엔드
-                  </label>
-                </div>
-                <div className={css.genderContainer}>
-                  <input
-                    id="fullstack"
-                    type="radio"
-                    value="fullstack"
-                    {...register("position", { required: true })}
-                  />
-                  <label className={css.genderlabel} htmlFor="fullstack">
-                    풀스택
-                  </label>
+                <div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="ios"
+                      type="radio"
+                      value="ios"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="ios">
+                      iOS
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="publisher"
+                      type="radio"
+                      value="publisher"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="publisher">
+                      웹 퍼블리셔
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="data"
+                      type="radio"
+                      value="data"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="data">
+                      데이터 엔지니어
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="ai"
+                      type="radio"
+                      value="ai"
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="ai">
+                      AI
+                    </label>
+                  </div>
+                  <div className={css.DevContainer}>
+                    <input
+                      id="security "
+                      type="radio"
+                      value="security "
+                      {...register("position", { required: true })}
+                    />
+                    <label className={css.Devlabel} htmlFor="security ">
+                      보안 엔지니어
+                    </label>
+                  </div>
                 </div>
               </div>
               {errors.position && (
@@ -443,8 +524,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 </p>
               )}
               <label className={css.label}>내 수준</label>
-              <div className={css.flexContainer}>
-                <div className={css.genderContainer}>
+              <div className={css.flexLevelContainer}>
+                <div className={css.LevelContainer}>
                   <input
                     id="high"
                     type="radio"
@@ -455,32 +536,32 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     상
                   </label>
                 </div>
-                <div className={css.genderContainer}>
+                <div className={css.LevelContainer}>
                   <input
                     id="middle"
                     type="radio"
                     value="middle"
                     {...register("skill", { required: true })}
                   />
-                  <label className={css.genderlabel} htmlFor="middle">
+                  <label className={css.Levellabel} htmlFor="middle">
                     중
                   </label>
                 </div>
-                <div className={css.genderContainer}>
+                <div className={css.LevelContainer}>
                   <input
                     id="low"
                     type="radio"
                     value="low"
                     {...register("skill", { required: true })}
                   />
-                  <label className={css.genderlabel} htmlFor="low">
+                  <label className={css.Levellabel} htmlFor="low">
                     하
                   </label>
                 </div>
               </div>
               {errors.skill && (
                 <p className={css.errors}>내 개발수준 은 필수 입력값입니다.</p>
-              )} */}
+              )}
               <label className={`${css.label} ${css.question}`}>
                 이용약관 문의
               </label>
@@ -511,7 +592,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
             </form>
           </div>
         </div>
-        {/* {signUpSuccess && (
+        {signUpSuccess && (
           <ModalBasic
             isOpen={true}
             successContent={"회원가입에 성공하셨습니당당><><"}
@@ -540,7 +621,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               />
             )}
           </>
-        )} */}
+        )}
       </div>
     </>
   );

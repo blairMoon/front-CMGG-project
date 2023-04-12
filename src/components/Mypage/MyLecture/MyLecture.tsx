@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import MylectureCard from "../../MyLectureCard/MyLectureCard";
+import MylectureCard from "../MyLectureCard/MyLectureCard";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLectureInfo } from "../../../services/api";
