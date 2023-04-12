@@ -2,12 +2,9 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { UseQueryResult } from "react-query";
 import { getAccessToken } from "./Token";
-
+import { QueryFunctionContext } from "@tanstack/react-query";
 // const value: string | undefined = Cookies.get("my-cookie");
-
-export type QueryKey = [string, string, string, number?, string?];
-export const getAllCoins = () =>
-  instance.get("coins").then((res) => res.data.slice(0, 100));
+// export type QueryKey = [string, string, string, number?, string?];
 
 interface UserNameLoginParams {
   username: string;
@@ -60,31 +57,66 @@ export const instance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
+interface LectureData {
+  queryKey: Params[];
+  LectureId: number;
+  lectureTitle: string;
+  lectureDifficulty: string;
+  lectureDescription: string;
+  targetAudience: string;
+  lectureFee: number;
+  thumbnail: string;
+  isOpened: boolean;
+  grade: null | string;
+  instructor: {
+    username: string;
+    instructorField: null | string;
+    instructorAbout: string;
+    instructorCareer: string;
+  };
+  categories: {
+    parent: null | {
+      name: string;
+      classification: string;
+      parent: null;
+    };
+    name: string;
+    classification: string;
+  };
+  reviews_num: number;
+  rating: number;
+}
+
+export interface Params {
+  bigCategory?: string;
+  smallCategory?: string;
+  pageNum: number;
+  searchName?: string;
+}
 export const instanceNotLogin = axios.create({
-  baseURL: "https://www.crazyform.store/api/v1/",
+  // baseURL: 'http://127.0.0.1:8000/api/v1/',
+  baseURL: "https://crazyform.store/api/v1/",
+
   headers: {
     "X-CSRFToken": Cookies.get("csrftoken"),
   },
-
   withCredentials: true,
 });
 
-export const getLectureAndCategoryAndSearch = async ({
+export const getLectureAndCategoryAndSearch = ({
   queryKey,
-}: {
-  queryKey: QueryKey;
-}) => {
-  const [, bigCategory, smallCategory, page = 1, searchName] = queryKey;
+}: QueryFunctionContext) => {
+  const [, bigCategory, smallCategory, pageNum, searchName] = queryKey;
 
   if (searchName) {
-    return await instanceNotLogin
+    return instanceNotLogin
       .get(
-        `lectures/${bigCategory}/${smallCategory}/?page=${page}&search=${searchName}`
+        `lectures/${bigCategory}/${smallCategory}/?page=${pageNum}&search=${searchName}`
       )
       .then((res) => res.data);
   } else {
-    return await instanceNotLogin
-      .get(`lectures/${bigCategory}/${smallCategory}/?page=${page}`)
+    return instanceNotLogin
+      .get(`lectures/${bigCategory}/${smallCategory}/?page=${pageNum}`)
       .then((res) => res.data);
   }
 };
