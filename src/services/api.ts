@@ -218,9 +218,26 @@ export const getLectureInfo = () => {
 export const getAllLectures = () =>
   instanceNotLogin.get("lectures/all/all").then((res) => res.data);
 
-export const getLectureDetail = (page: number) => {
-  return instanceNotLogin.get(`lectures/${page}`).then((res) => res.data);
+// export const getLectureDetail = (page: number) => {
+//   return instanceNotLogin.get(`lectures/${page}`).then((res) => res.data);
+// };
+
+export const getLectureDetail = async (page: number) => {
+  const access = getAccessToken();
+  try {
+    if (access) {
+      const res = await instance.get(`lectures/${page}`);
+      return res.data;
+    } else {
+      const res = await instanceNotLogin.get(`lectures/${page}`);
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
+
 export const postReview = ({ lectureNum, data }: PostReviewParams) => {
   return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
 };
