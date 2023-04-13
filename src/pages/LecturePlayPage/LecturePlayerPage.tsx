@@ -112,7 +112,7 @@ const LecturePlayerPage: React.FC = () => {
         queryClient.invalidateQueries(queryKey);
       },
     }),
-    []
+    [queryKey, queryClient]
   );
 
   const handleProgress = (state: ProgressState) => {
@@ -238,6 +238,7 @@ const LecturePlayerPage: React.FC = () => {
                 controls={true}
                 light={false}
                 pip={true}
+                preload="auto"
                 played={[videoList?.lastPlayed || 0, undefined]}
                 onProgress={handleProgress}
                 onDuration={handleDuration}
