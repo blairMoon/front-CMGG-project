@@ -247,6 +247,12 @@ export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
     .then((res) => res.data);
 };
 
+export const registerLecture = (lectureNum: number) => {
+  return instance
+    .put(`users/calculated-lectures/${lectureNum}/`, "")
+    .then((res) => res.status);
+};
+
 export const fetchVideoList = async ({
   lectureId,
   num,
