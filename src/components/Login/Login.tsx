@@ -9,7 +9,7 @@ import { postRefreshToken } from "../../services/api";
 import { useMutation } from "@tanstack/react-query";
 
 import Cookies from "js-cookie";
-// import ModalBasic from "../../components/Modal/ModalBasic";
+import ModalBasic from "../../components/Modal/ModalBasic";
 
 type FormData = {
   username: string;
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
     onMutate: () => {
       console.log("mutation start...");
     },
-    onSuccess: (data: any) => {
+    onSuccess: () => {
       console.log("API CALL success...");
       setFailLogin(true);
       isLoggedInVar(true);
@@ -126,6 +126,17 @@ const Login: React.FC = () => {
             </form>
           </div>
         </div>
+        {click && failLogin != null && !failLogin ? (
+          <ModalBasic
+            isOpen={!failLogin}
+            successContent={"아이디랑 비밀번호를 확인해주세요"}
+            onClose={() => {
+              setClick(false);
+            }}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );

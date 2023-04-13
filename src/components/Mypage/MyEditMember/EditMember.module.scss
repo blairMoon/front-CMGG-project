@@ -73,6 +73,7 @@
 
 .p::before {
   display: inline;
+  // content: '⚠ ';
 }
 
 .input {
@@ -108,91 +109,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     .genderlabel {
       margin-left: 10px;
       // margin-bottom: 30px;
     }
   }
 }
-.flexLevelContainer {
-  display: flex;
-  justify-content: space-around;
-  .LevelContainer {
-    white-space: nowrap;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .Levellabel {
-      margin-left: 10px;
-      // margin-bottom: 30px;
-    }
-  }
-}
-.flexSelectContainer {
-  display: flex;
-  justify-content: space-around;
-
-  .selectContainer {
-    // white-space: nowrap;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .selectlabel {
-      margin-bottom: 10px;
-      // margin-bottom: 30px;
-    }
-    .selectPath {
-      border: 1px solid #999;
-      border-radius: 3px;
-      &:focus {
-        border-color: #003c93;
-        outline: none;
-      }
-    }
-  }
-}
-.flexLangContainer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  .langContainer {
-    display: flex;
-    // align-items: center;
-    // justify-content: center;
-    .langlabel {
-      margin-top: 2px;
-    }
-  }
-}
-
-.flexDevContainer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  .DevContainer {
-    display: flex;
-    // align-items: center;
-    // justify-content: center;
-    margin-left: 16px;
-    // margin-right: 20px;
-    .Devlabel {
-      margin-top: 8px;
-    }
-  }
-}
-
 .flex {
   display: flex;
   justify-content: space-between;
 }
-.radioMargin {
-  // margin-right: 20px;
-  // margin-bottom: 13px;
-  margin-top: 20px;
-}
+// .radioMargin {
+//   // margin-right: 20px;
+//   margin-bottom: 13px;
+//   margin-top: 20px;
+// }
 
 .errors {
   display: block;
@@ -223,23 +154,21 @@ input[type="radio"] {
   border: 1px solid #999;
   appearance: none;
   cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-bottom: 7px;
+  margin-right: 5px;
 }
 input[type="radio"]:checked {
   border: 6px solid #003c93;
 }
 input[type="checkbox"] {
+  margin-bottom: 23px;
   min-width: 20px;
   min-height: 20px;
   border-radius: 50%;
+  border-radius: 50%;
   border: 1px solid #999;
-  -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
-  margin-top: 3px;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 input[type="checkbox"]:checked {
   border: 6px solid #003c93;
@@ -265,4 +194,24 @@ input[type="checkbox"]:checked {
 .h6 {
   margin-top: 30px;
   font-size: 12px;
+}
+.color {
+  color: gray;
+}
+.color:focus {
+  outline: none !important;
+}
+.h6Id {
+  color: red;
+  margin-top: 10px;
+  font-size: 11px;
+}
+.h6Gender {
+  color: red;
+  margin-top: 30px;
+  font-size: 11px;
+}
+.none {
+  color: #999;
+  margin-left: 10px;
 }

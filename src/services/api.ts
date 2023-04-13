@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
 
+import { QueryFunctionContext } from "@tanstack/react-query";
 export interface UserNameLoginParams {
   username: string;
   password: string;
@@ -20,35 +21,53 @@ interface LectureAndCategoryAndSearchParams {
   queryKey: string[];
 }
 
-interface PostReviewParams {
-  lectureNum: string;
-  data: any;
+export interface PostReviewParams {
+  lectureNum: number;
+  data: FormData;
 }
 
-interface PostReplyParams {
-  lectureNum: string;
-  reviewNum: string;
-  data: any;
+export interface PostReplyParams {
+  lectureNum: number;
+  reviewNum: number;
+  data: {
+    content: string;
+  };
 }
 
-interface SavePlayedSecondsParams {
+export interface FetchVideoListParams {
+  lectureId: string;
+  num: string;
+}
+
+export interface SavePlayedSecondsParams {
   lectureId: string;
   num: string;
   lastPlayed: number;
 }
 
-interface WatchedLectures80Params {
+export interface WatchedLectures80Params {
   lectureId: string;
   num: string;
   is_completed: boolean;
-  lastPlayed: number;
+  lastPlayed?: number;
 }
 
-interface FetchVideoListParams {
-  queryKey: string[];
-}
 type AccessToken = string;
 type RefreshToken = string;
+
+interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  passwordCheck: string;
+  name: string;
+  dateBirth: string;
+  gender: string;
+  phoneNumber: string;
+  position: string;
+  skill: string;
+  termsOfUse: String;
+}
 
 export const instance: AxiosInstance = axios.create({
   baseURL: "https://crazyform.store/api/v1/",
@@ -68,6 +87,24 @@ export const instanceNotLogin = axios.create({
   },
   withCredentials: true,
 });
+
+export const getLectureAndCategoryAndSearch = ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [, bigCategory, smallCategory, pageNum, searchName] = queryKey;
+
+  if (searchName) {
+    return instanceNotLogin
+      .get(
+        `lectures/${bigCategory}/${smallCategory}/?page=${pageNum}&search=${searchName}`
+      )
+      .then((res) => res.data);
+  } else {
+    return instanceNotLogin
+      .get(`lectures/${bigCategory}/${smallCategory}/?page=${pageNum}`)
+      .then((res) => res.data);
+  }
+};
 instance.interceptors.response.use(
   (response) => {
     return response;
@@ -164,10 +201,87 @@ export async function postRefreshToken(
     return null;
   }
 }
+export const signUpUser = (data: UserData) => {
+  return instanceNotLogin.post("users/", data).then((res) => res.data);
+};
+
+export const getMyProfile = () => {
+  return instance.get("users/myprofile").then((res) => res.data);
+};
+export const changeProfileUser = (data: UserData) => {
+  return instance.put("users/myprofile", data).then((res) => res.data);
+};
+export const getLectureInfo = () => {
+  return instance.get(`users/myprofile`).then((res) => res.data);
+};
 
 export const getAllLectures = () =>
   instanceNotLogin.get("lectures/all/all").then((res) => res.data);
 
-export const getLectureDetail = (page: number) => {
-  return instance.get(`lectures/${page}`).then((res) => res.data);
+// export const getLectureDetail = (page: number) => {
+//   return instanceNotLogin.get(`lectures/${page}`).then((res) => res.data);
+// };
+
+export const getLectureDetail = async (page: number) => {
+  const access = getAccessToken();
+  try {
+    if (access) {
+      const res = await instance.get(`lectures/${page}`);
+      return res.data;
+    } else {
+      const res = await instanceNotLogin.get(`lectures/${page}`);
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const postReview = ({ lectureNum, data }: PostReviewParams) => {
+  return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
+};
+export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
+  return instance
+    .post(`reviews/${lectureNum}/${reviewNum}`, data)
+    .then((res) => res.data);
+};
+
+export const registerLecture = (lectureNum: number) => {
+  return instance
+    .put(`users/calculated-lectures/${lectureNum}/`, "")
+    .then((res) => res.status);
+};
+
+export const fetchVideoList = async ({
+  lectureId,
+  num,
+}: FetchVideoListParams) => {
+  return await instance
+    .get(`videos/lectures/${lectureId}/${num}`)
+    .then((res) => res.data);
+};
+
+export const savePlayedSeconds = ({
+  lectureId,
+  num,
+  lastPlayed,
+}: SavePlayedSecondsParams) => {
+  // console.log("saveVideo", lectureId, num, lastPlayed);
+  return instance
+    .put(`watchedlectures/${lectureId}/${num}`, { lastPlayed })
+    .then((res) => res.data);
+};
+
+export const watchedlectures80 = ({
+  lectureId,
+  num,
+  is_completed,
+  lastPlayed,
+}: WatchedLectures80Params) => {
+  // console.log("watchVideo", lectureId, num, is_completed, lastPlayed);
+
+  return instance
+    .put(`watchedlectures/${lectureId}/${num}`, { is_completed, lastPlayed })
+    .then((res) => res.data);
 };

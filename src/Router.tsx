@@ -17,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <NotFound />,
+    // errorElement: <NotFound />,
     children: [
       {
         path: "",
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
         element: <SignupPage />,
       },
       {
-        path: "wholeLectures",
+        path: "lectures/:bigCategory/:smallCategory",
         element: <WholeLecturePage />,
       },
       {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
-        path: "lectureplay",
+        path: "lectureplay/:lectureId/:num",
         element: <LecturePlayerPage />,
       },
       {
