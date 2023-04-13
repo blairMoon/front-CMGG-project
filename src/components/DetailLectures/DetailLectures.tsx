@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 // import Cookies from "js-cookie";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { getLectureDetail } from "../../services/api";
+import { useQuery } from "@tanstack/react-query";
+import { getLectureDetail, registerLecture } from "../../services/api";
 // import ModalConfirm from "../../components/Modal/ModalConfirm";
 import StarRating from "../../components/WholeLectures/StarRating/StarRating";
 import Review from "../../components/Reviews/Review";
-
 import ReviewForm from "../../components/Reviews/ReviewForm";
 import { faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
 import { BsShare } from "react-icons/bs";
@@ -45,7 +44,7 @@ interface Category {
 
 interface Review {
   id: number;
-  reply: any[]; // 필요에 따라서 reply의 타입을 정확하게 지정해줄 수 있습니다.
+  reply: any[];
   user: {
     username: string;
   };
@@ -83,7 +82,7 @@ interface VideoData {
 const DetailLectures: React.FC<Props> = (props: Props) => {
   const { id } = useParams<{ id: string }>();
   // const [registerLectureClick, setRegisterLectureClick] = useState(false);
-  // const [loginCheck, setLoginCheck] = useState(true);
+  const [loginCheck, setLoginCheck] = useState(true);
   const navigate = useNavigate();
   const [lectureData, setLectureData] = useState<LectureData | null>(null);
   const { isLoading, error, data, isError } = useQuery(
@@ -298,6 +297,19 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
           </GridItem>
         </Grid>
       )}
+      {/* {!data.is_enrolled && registerLectureClick && loginCheck ? (
+        <ModalLecture
+          onSubmit={onSubmit}
+          isOpen={registerLectureClick && loginCheck}
+          onClose={() => setRegisterLectureClick(false)}
+        />
+      ) : (
+        <ModalConfirm
+          onSubmit={onSubmit}
+          onClose={() => setRegisterLectureClick(false)}
+          isOpen={!loginCheck}
+        />
+      )} */}
     </div>
   );
 };
