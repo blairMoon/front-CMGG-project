@@ -2,7 +2,7 @@ import "../MyCart.scss";
 import { TbLetterX } from "react-icons/tb";
 import { Box, HStack, Checkbox, Image, Text, Button } from "@chakra-ui/react";
 
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 
 import { Cart } from "../../../../services/mocks/mock";
@@ -33,9 +33,13 @@ const CartItem: React.FC<Cart> = ({
       const selectedItemsId = items.id.filter(
         (item: number) => item !== LectureId
       );
+      const selectedItemsName = items.name.filter(
+        (item: string) => item !== lectureTitle
+      );
 
       if (e.target.checked) {
         selectedItemsId.push(LectureId);
+        selectedItemsName.push(lectureTitle);
 
         if (isSelectedItem < 0) {
           nextTotalPrice += lectureFee;
@@ -46,7 +50,11 @@ const CartItem: React.FC<Cart> = ({
         }
       }
 
-      return { id: selectedItemsId, total_price: nextTotalPrice };
+      return {
+        id: selectedItemsId,
+        name: selectedItemsName,
+        total_price: nextTotalPrice,
+      };
     });
   };
 
