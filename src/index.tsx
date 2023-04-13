@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
+import { RecoilRoot, RecoilRootProps } from "recoil";
 import { worker } from "./services/mocks/browser";
 
 Sentry.init({
@@ -20,6 +21,7 @@ try {
     worker.start();
   }
 
+  // const myRecoilRootProps: RecoilRootProps = {};
   const client = new QueryClient();
 
   const root = ReactDOM.createRoot(
@@ -28,11 +30,13 @@ try {
 
   root.render(
     <React.StrictMode>
-      <QueryClientProvider client={client}>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
-      </QueryClientProvider>
+      <RecoilRoot>
+        <QueryClientProvider client={client}>
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
+        </QueryClientProvider>
+      </RecoilRoot>
     </React.StrictMode>
   );
 } catch (error) {
