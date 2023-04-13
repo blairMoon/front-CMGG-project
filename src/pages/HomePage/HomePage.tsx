@@ -20,7 +20,7 @@ function HomePage(): React.ReactElement {
         <Link to="/mypage">마이페이지</Link>
       </div>
       <div>
-        <button onClick={handleLogout}>로그아웃임</button>
+        <button onClick={handleLogout}>로그아웃</button>
       </div>
     </>
   );
