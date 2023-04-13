@@ -5,7 +5,7 @@ function HomePage(): React.ReactElement {
   return (
     <>
       <div>home</div>
-      <Link to="lectures/all/all">전체강의</Link>
+      <Link to="lectures/all/all/?page=1">전체강의</Link>
     </>
   );
 }

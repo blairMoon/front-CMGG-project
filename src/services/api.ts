@@ -219,7 +219,7 @@ export const getAllLectures = () =>
   instanceNotLogin.get("lectures/all/all").then((res) => res.data);
 
 export const getLectureDetail = (page: number) => {
-  return instance.get(`lectures/${page}`).then((res) => res.data);
+  return instanceNotLogin.get(`lectures/${page}`).then((res) => res.data);
 };
 export const postReview = ({ lectureNum, data }: PostReviewParams) => {
   return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
