@@ -13,6 +13,7 @@ import MyLecture from "./components/Mypage/MyLecture/MyLecture";
 import MyPayment from "./components/Mypage/MyPayment/MyPayment";
 import MyCart from "./components/Mypage/MyCart/MyCart";
 import MyEditMember from "./components/Mypage/MyEditMember/MyEditMember";
+import { PaymentsResultPage } from "./pages/PaymentResultPage/PaymentsResultPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
             element: <MyEditMember />,
           },
         ],
+      },
+      {
+        path: "wasBuyed",
+        element: <PaymentsResultPage />,
       },
 
       // {

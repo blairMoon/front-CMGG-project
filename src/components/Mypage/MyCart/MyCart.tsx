@@ -11,26 +11,22 @@ import {
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 
-import { getAllLectures } from "../../../services/api";
 import { getMockCarts } from "../../../services/mocks/api";
 import { Cart, Carts } from "../../../services/mocks/mock";
 import { cartSelectAllState, SelectCartItems } from "../../../atoms";
+
+import { RequestPayment } from "./components/RequestPay";
 import CartItem from "./components/CartItem";
-import { requestPay } from "./components/Payments";
 
-interface Props {}
-
-const MyCart: React.FC<Props> = (props: Props) => {
-  const navigate = useNavigate();
+const MyCart: React.FC = () => {
   const [initSelectedItems, setInitSelectedItems] = useState<SelectCartItems>({
     id: new Array<number>(),
     name: new Array<string>(),
     total_price: 0,
   });
-  const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
   const [cartItems, setCartItems] = useState<Carts>();
+  const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
   const { isLoading } = useQuery(["carts"], getMockCarts, {
     onSuccess(data) {
       setCartItems(data.mock_data);
@@ -79,19 +75,18 @@ const MyCart: React.FC<Props> = (props: Props) => {
     }
   };
 
-  const handlePayment = (): void => {
+  const getPaymentData = () => {
     const name = selectedItems.name.join("/");
     const paymentData = {
       name: name,
       amount: selectedItems.total_price,
       buyer_email: "buyer@naver.com",
       buyer_name: "김현수",
-      buyer_tel: "01039002267",
+      buyer_tel: "01012345678",
       lectures: selectedItems.id,
       buyer_id: "buyerId",
     };
-    requestPay(paymentData);
-    // navigate()
+    return paymentData;
   };
 
   return (
@@ -149,7 +144,7 @@ const MyCart: React.FC<Props> = (props: Props) => {
               boxShadow="0px 2px 4px rgba(0, 0, 0, 0.12), 0px 2px 8px rgba(0, 0, 0, 0.08)"
             >
               <Text fontWeight="bold">{selectedItems.total_price} 원</Text>
-              <Button onClick={handlePayment}>구매하기</Button>
+              <RequestPayment {...getPaymentData()} />
             </HStack>
           </VStack>
         </VStack>
