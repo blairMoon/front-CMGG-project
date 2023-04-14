@@ -12,6 +12,7 @@ import { cartSelectAllState, SelectCartItems } from "../../../../atoms";
 const CartItem: React.FC<Cart> = ({
   LectureId,
   thumbnail,
+  instructor,
   lectureTitle,
   lectureDifficulty,
   lectureFee,
@@ -37,9 +38,18 @@ const CartItem: React.FC<Cart> = ({
         (item: string) => item !== lectureTitle
       );
 
+      const selectedItemsThumbnail = items.thumbnail.filter(
+        (item: string) => item !== thumbnail
+      );
+      const selectedItemsInstructor = items.instructor.filter(
+        (item: string) => item !== instructor.username
+      );
+
       if (e.target.checked) {
         selectedItemsId.push(LectureId);
         selectedItemsName.push(lectureTitle);
+        selectedItemsThumbnail.push(lectureTitle);
+        selectedItemsInstructor.push(lectureTitle);
 
         if (isSelectedItem < 0) {
           nextTotalPrice += lectureFee;
@@ -53,6 +63,8 @@ const CartItem: React.FC<Cart> = ({
       return {
         id: selectedItemsId,
         name: selectedItemsName,
+        thumbnail: selectedItemsThumbnail,
+        instructor: selectedItemsInstructor,
         total_price: nextTotalPrice,
       };
     });
