@@ -1,28 +1,30 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import {
-  Box,
   Heading,
   VStack,
   HStack,
-  Button,
   Text,
   Divider,
   Checkbox,
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { getMockCarts } from "../../../services/mocks/api";
 import { Cart, Carts } from "../../../services/mocks/mock";
 import { cartSelectAllState, SelectCartItems } from "../../../atoms";
 
 import { RequestPayment } from "./components/RequestPay";
+import { Lecture } from "../../../../typings/PaymentResult";
 import CartItem from "./components/CartItem";
+import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 
 const MyCart: React.FC = () => {
   const [initSelectedItems, setInitSelectedItems] = useState<SelectCartItems>({
     id: new Array<number>(),
     name: new Array<string>(),
+    thumbnail: new Array<string>(),
+    instructor: new Array<string>(),
     total_price: 0,
   });
   const [cartItems, setCartItems] = useState<Carts>();
@@ -33,23 +35,33 @@ const MyCart: React.FC = () => {
       let total_price = 0;
       const newInitSelectedIdArr = new Array<number>();
       const newInitSelectedNameArr = new Array<string>();
+      const newInitSelectedThumbnailArr = new Array<string>();
+      const newInitSelectedInstructorArr = new Array<string>();
       data.mock_data?.data.map((item: Cart) => {
         newInitSelectedIdArr.push(item.LectureId);
         newInitSelectedNameArr.push(item.lectureTitle);
+        newInitSelectedThumbnailArr.push(item.thumbnail);
+        newInitSelectedInstructorArr.push(item.instructor.username);
         total_price += item.lectureFee;
       });
       setInitSelectedItems({
         id: newInitSelectedIdArr,
         name: newInitSelectedNameArr,
+        thumbnail: newInitSelectedThumbnailArr,
+        instructor: newInitSelectedInstructorArr,
         total_price: total_price,
       });
       setSelectedItems({
         id: newInitSelectedIdArr,
         name: newInitSelectedNameArr,
+        thumbnail: newInitSelectedThumbnailArr,
+        instructor: newInitSelectedInstructorArr,
         total_price: total_price,
       });
     },
   });
+
+  console.log(1);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -58,6 +70,8 @@ const MyCart: React.FC = () => {
       setSelectedItems({
         id: new Array<number>(),
         name: new Array<string>(),
+        thumbnail: new Array<string>(),
+        instructor: new Array<string>(),
         total_price: 0,
       });
     }
@@ -77,13 +91,23 @@ const MyCart: React.FC = () => {
 
   const getPaymentData = () => {
     const name = selectedItems.name.join("/");
+    const lectures: Lecture[] = [];
+    selectedItems.id.map((item, idx) => {
+      const lecture = {
+        id: item,
+        title: selectedItems.name[idx],
+        instructor: selectedItems.instructor[idx],
+        thumbnail: selectedItems.thumbnail[idx],
+      };
+      lectures.push(lecture);
+    });
     const paymentData = {
       name: name,
       amount: selectedItems.total_price,
       buyer_email: "buyer@naver.com",
       buyer_name: "김현수",
       buyer_tel: "01012345678",
-      lectures: selectedItems.id,
+      lectures: lectures,
       buyer_id: "buyerId",
     };
     return paymentData;

@@ -1,14 +1,36 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
+import { Lecture, PayProps } from "../../../../../typings/PaymentResult";
 
-export interface PayProps {
-  name: string;
-  amount: number;
-  buyer_email: string;
-  buyer_name: string;
-  buyer_tel: string;
-  lectures: number[];
-  buyer_id: string;
+interface ProcessLectures {
+  id: string[];
+  title: string[];
+  thumbnail: string[];
+  instructor: string[];
+}
+
+function processLecture(lectures: Lecture[]): string {
+  let result = "";
+  let processedLectures: ProcessLectures = {
+    id: [],
+    title: [],
+    thumbnail: [],
+    instructor: [],
+  };
+
+  lectures.map((item, idx) => {
+    processedLectures["title"].push(item.title);
+    processedLectures["thumbnail"].push(item.thumbnail);
+    processedLectures["instructor"].push(item.instructor);
+    processedLectures["id"].push(item.id.toString());
+  });
+
+  result = processedLectures["id"].join(",");
+  result += "^@^" + processedLectures["title"].join(",");
+  result += "^@^" + processedLectures["thumbnail"].join(",");
+  result += "^@^" + processedLectures["instructor"].join(",");
+
+  return result;
 }
 
 export function RequestPayment(props: PayProps): React.ReactElement {
@@ -41,7 +63,8 @@ export function RequestPayment(props: PayProps): React.ReactElement {
       function (rsp) {
         // callback
         if (!rsp.error_code) {
-          sessionStorage.setItem("buy_lectures", props.lectures.toString());
+          const buyedLectures = processLecture(props.lectures);
+          sessionStorage.setItem("buy_lectures", buyedLectures);
           sessionStorage.setItem("buy_username", props.buyer_name);
           navigate("/wasBuyed");
         }
