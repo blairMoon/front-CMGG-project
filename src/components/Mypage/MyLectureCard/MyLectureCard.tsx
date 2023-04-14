@@ -39,7 +39,7 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
   rating,
 }) => {
   const navigate = useNavigate();
-  const MAX_LENGTH = 20;
+  const MAX_LENGTH = 37;
   let text = lectureTitle;
 
   if (text.length > MAX_LENGTH) {
@@ -48,8 +48,8 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
 
   return (
     <Card
-      width={"240px"}
-      height={"310px"}
+      width="230px"
+      height="260px"
       direction={{ base: "column" }}
       variant="outline"
       overflow="hidden"
@@ -61,36 +61,44 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
       >
         <Image
           objectFit="cover"
-          minH="160"
-          height="160"
+          maxW={{ base: "100%", sm: "100%" }}
+          maxH="150px"
+          height="100%"
           src={img}
-          alt="Caffe Latte"
+          alt="Card"
           _hover={{ cursor: "pointer" }}
         />
       </Box>
       <Stack>
-        <CardBody _hover={{ cursor: "pointer" }}>
+        <CardBody _hover={{ cursor: "pointer" }} px="1" py="0">
           <Box
             onClick={() => {
               navigate(`/lectures/${lectureNumber}`);
             }}
           >
             <Heading
-              size="md"
-              fontSize="17px"
-              h="45"
+              fontSize="14px"
+              h="45px"
+              py="2"
               _hover={{ cursor: "pointer" }}
             >
               {text}
             </Heading>
-            <Text py="2">{instructor}</Text>
+            <Text fontSize="14px" fontWeight="600" color="#666666">
+              {instructor}
+            </Text>
           </Box>
-          <HStack justify="space-between">
-            <StarRating rating={rating} />
+          <HStack justify="space-between" fontSize="12px">
+            <Box>
+              <StarRating rating={rating} />
+              <Text fontSize="16" fontWeight="600">
+                ₩10,000
+              </Text>
+            </Box>
 
             <Text>
               <Button
-                px="1"
+                p="0"
                 zIndex={100}
                 type="button"
                 bg="ghost"
