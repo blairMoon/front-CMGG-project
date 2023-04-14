@@ -46,7 +46,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
       text = text.slice(0, MAX_LENGTH) + "...";
     }
 
-    const MAX_LENGTH2 = 30;
+    const MAX_LENGTH2 = 37;
     let textTitle = data.lectureTitle;
 
     if (textTitle.length > MAX_LENGTH2) {
@@ -86,7 +86,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
                 {textTitle}
               </Heading>
               <Text
-                fontSize="10px"
+                fontSize="12px"
                 color="white"
                 sx={{
                   overflow: "hidden",

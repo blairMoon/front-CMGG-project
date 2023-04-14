@@ -119,12 +119,7 @@ const WholeLectures: React.FC<Props> = () => {
 
   return (
     <div>
-      <HStack
-        justify="space-between"
-        mx="auto"
-        alignItems="flex-start"
-        paddingLeft="10"
-      >
+      <HStack justify="space-between" mx="auto" alignItems="flex-start">
         <Box w="20%" fontSize="18px" fontWeight="600">
           {smallCategory === "all"
             ? `${categoriesNames[bigCategory ?? ""]} `
@@ -165,7 +160,7 @@ const WholeLectures: React.FC<Props> = () => {
         </InputGroup>
       </HStack>
 
-      <GridItem area={"main"} mx="auto" paddingLeft="10">
+      <GridItem area={"main"} mx="auto">
         {data?.data?.length === 0 || data === undefined ? (
           <Box>
             <Text>
