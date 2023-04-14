@@ -121,7 +121,7 @@ const WholeLectures: React.FC<Props> = () => {
     <div>
       <HStack
         justify="space-between"
-        w="800px"
+        w="830px"
         mx="auto"
         alignItems="flex-start"
       >
@@ -132,7 +132,7 @@ const WholeLectures: React.FC<Props> = () => {
         </Box>
         <InputGroup w="45%">
           <Input
-            marginBottom={"30px"}
+            marginBottom="30px"
             className="Input"
             variant="outline"
             value={searchResult}
@@ -165,13 +165,13 @@ const WholeLectures: React.FC<Props> = () => {
         </InputGroup>
       </HStack>
 
-      <GridItem area={"main"} w="800px" mx="auto">
+      <GridItem area="main" w="800px" mx="auto">
         {data?.data?.length === 0 || data === undefined ? (
           <Box>
             <Text>
               <Text as="span" color="red">
                 {searchName}
-              </Text>{" "}
+              </Text>
               에 대한 검색결과가 없습니다.
             </Text>
           </Box>

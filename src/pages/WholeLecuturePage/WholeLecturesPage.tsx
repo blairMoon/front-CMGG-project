@@ -28,8 +28,8 @@ const WholeLecturePage: React.FC<Props> = (props: Props) => {
       <Grid
         templateAreas={`"nav main"`}
         // gridTemplateRows={'100px 1fr'}
-        gridTemplateColumns={"220px 1fr"}
-        w="1200px"
+        gridTemplateColumns="220px 1fr"
+        w="1300px"
         h="100%"
         pt="120px"
         pb="10"
@@ -40,7 +40,7 @@ const WholeLecturePage: React.FC<Props> = (props: Props) => {
         <GridItem area={"nav"}>
           <MyCategory />
         </GridItem>
-        <GridItem area={"main"} p="2">
+        <GridItem area={"main"}>
           <WholeLectures />
         </GridItem>
       </Grid>
