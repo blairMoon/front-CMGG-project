@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { getLectureAndCategoryAndSearch } from "../../services/api";
 
-import { LectureData } from "../../../typings/LectureData";
+import { ILectureData } from "../../../typings/LectureData";
 
 interface Props {}
 interface CategoriesNames {
@@ -173,12 +173,12 @@ const WholeLectures: React.FC<Props> = () => {
         ) : (
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
             {searchName && !isLoading
-              ? data?.data?.map((lecture: LectureData) => (
+              ? data?.data?.map((lecture: ILectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">
                     <LectureCard data={lecture} />
                   </GridItem>
                 ))
-              : data?.data?.map((lecture: LectureData) => (
+              : data?.data?.map((lecture: ILectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">
                     <LectureCard data={lecture} />
                   </GridItem>

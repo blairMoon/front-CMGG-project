@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
-import { Lecture, PayProps } from "../../../../../typings/PaymentResult";
+import { ILecture, IPayProps } from "../../../../../typings/PaymentResult";
 
 interface ProcessLectures {
   id: string[];
@@ -9,7 +9,7 @@ interface ProcessLectures {
   instructor: string[];
 }
 
-function processLecture(lectures: Lecture[]): string {
+function processLecture(lectures: ILecture[]): string {
   let result = "";
   let processedLectures: ProcessLectures = {
     id: [],
@@ -33,7 +33,7 @@ function processLecture(lectures: Lecture[]): string {
   return result;
 }
 
-export function RequestPayment(props: PayProps): React.ReactElement {
+export function RequestPayment(props: IPayProps): React.ReactElement {
   const navigate = useNavigate();
   const requestPay = () => {
     if (!window.IMP) return;

@@ -14,6 +14,8 @@ import MyPayment from "./components/Mypage/MyPayment/MyPayment";
 import MyCart from "./components/Mypage/MyCart/MyCart";
 import MyEditMember from "./components/Mypage/MyEditMember/MyEditMember";
 import { PaymentsResultPage } from "./pages/PaymentResultPage/PaymentsResultPage";
+import InstructorPage from "./pages/InstructorPage/InstructorPage";
+import LectureRegister from "./components/InstructorPage/LectureRegister/LectureRegister";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,6 +65,28 @@ const router = createBrowserRouter([
           {
             path: "cart",
             element: <MyCart />,
+          },
+          {
+            path: "editMember",
+            element: <MyEditMember />,
+          },
+        ],
+      },
+      {
+        path: "instructor",
+        element: <InstructorPage />,
+        children: [
+          {
+            path: "",
+            element: <MyDashBoard />,
+          },
+          {
+            path: "lecture",
+            element: <MyLecture />,
+          },
+          {
+            path: "lecture/register",
+            element: <LectureRegister />,
           },
           {
             path: "editMember",
