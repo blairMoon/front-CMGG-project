@@ -18,21 +18,13 @@ import {
 } from "@chakra-ui/react";
 
 import css from "./LectureRegister.module.scss";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { imgTypes, videoTypes } from "../../../constant";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
 
-// lectureTitle: string;
-// lectureDifficulty: string;
-// lectureDescription: string;
-// targetAudience: string;
-// lectureFee: number;
-// thumbnail: string;
-// video: string[];
-// categories: string;
 const LectureRegister: React.FC = () => {
   const {
     handleSubmit,
@@ -80,21 +72,29 @@ const LectureRegister: React.FC = () => {
   const [_img, setImg] = useState<string>("");
   const [_videos, setVideos] = useState<string[]>([]);
 
-  const onSubmit = () => {};
+  const onSubmit = (formData: FieldValues) => {
+    console.log("formData", formData);
+
+    // create image url => new Image(img,url) => imgUrl
+    // create video url => new Video(video,url) => videoUrl
+
+    // process data
+    // post
+  };
 
   async function handleVideoChange() {
     const newVideos = await Promise.all(videoFiles.map(createVideoThumbnail));
     setVideos(newVideos);
   }
 
-  const img = imgFile.map((file: File) => {
+  const img = imgFile.map((file: File, idx: number) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImg(getSecureImgFile(reader.result));
     };
     reader.readAsDataURL(file);
     return (
-      <HStack alignItems={"flex-start"}>
+      <HStack alignItems={"flex-start"} key={idx}>
         <ChakraImg w="50%" src={_img} />
         <Text>
           {file.name} - {file.size} bytes
@@ -103,22 +103,25 @@ const LectureRegister: React.FC = () => {
     );
   });
 
-  const videos = videoFiles.map((file: File) => {
+  const videos = videoFiles.map((file: File, idx: number) => {
     return (
-      <Box mb="3" w="50%">
+      <Box mb="3" w="50%" key={idx}>
         <Text>
           {file.name} - {file.size} bytes
         </Text>
         <Input
           placeholder="제목을 입력해주세요"
           className={css.Input}
-          my="1"
-          {...register("videoTitle", { required: true })}
+          mt="4"
+          mb="1"
+          type="text"
+          {...register(`videoTitle[${idx}]`, { required: true })}
         />
         <Input
           placeholder="설명을 입력해주세요"
           className={css.Input}
-          {...register("videoDescription", { required: true })}
+          type="text"
+          {...register(`videoDescription[${idx}]`, { required: true })}
         />
       </Box>
     );
@@ -143,6 +146,7 @@ const LectureRegister: React.FC = () => {
           <input
             placeholder="강의명을 입력해주세요"
             className={css.Input}
+            type="text"
             {...register("lectureTitle", { required: true })}
           />
           <FormErrorMessage>{`${"강의명"}을 입력해주세요`}</FormErrorMessage>
@@ -156,6 +160,7 @@ const LectureRegister: React.FC = () => {
           <input
             placeholder="가격을 입력해주세요"
             className={css.Input}
+            type="number"
             {...register("lectureFee", { required: true })}
           />
           <FormErrorMessage>{`${"가격"}을 입력해주세요`}</FormErrorMessage>
@@ -169,6 +174,7 @@ const LectureRegister: React.FC = () => {
           <input
             placeholder="설명을 입력해주세요"
             className={css.Input}
+            type="text"
             {...register("lectureDescription", { required: true })}
           />
           <FormErrorMessage>{`${"설명"}을 입력해주세요`}</FormErrorMessage>
@@ -396,10 +402,10 @@ const LectureRegister: React.FC = () => {
           </RadioGroup>
           <FormErrorMessage>{`${"난이도"}를 선택해주세요`}</FormErrorMessage>
         </FormControl>
+        <Button type="submit" colorScheme="facebook" w="500px">
+          등록하기
+        </Button>
       </form>
-      <Button type="submit" colorScheme="facebook" w="500px">
-        등록하기
-      </Button>
     </VStack>
   );
 };

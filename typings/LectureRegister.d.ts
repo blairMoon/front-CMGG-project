@@ -8,3 +8,14 @@ export interface IRegisterLecture {
   video: string[];
   categories: string;
 }
+
+export interface ILectureFormData {
+  categories: string;
+  lectureDescription: string;
+  lectureDifficulty: string;
+  lectureFee: string;
+  lectureTitle: string;
+  targetAudience: string;
+  videoDescriptions: string[];
+  videoTitles: string[];
+}
