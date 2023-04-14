@@ -57,8 +57,8 @@ const LectureCard: React.FC<Props> = ({ data }) =>
     return (
       <Link to={`/lectures/${data.LectureId}`}>
         <Card
-          width="250px"
-          height="300px"
+          width="230px"
+          height="260px"
           direction={{ base: "column" }}
           variant="outline"
           _hover={{ background: "rgba(0, 0, 0, 0.4 )", zIndex: 10 }}
@@ -69,8 +69,8 @@ const LectureCard: React.FC<Props> = ({ data }) =>
             flexDirection="column"
             position="absolute"
             zIndex={10}
-            width="250px"
-            height="300px"
+            width="100%"
+            height="100%"
             cursor="pointer"
             justifyContent="space-between"
             opacity="0"
@@ -79,14 +79,14 @@ const LectureCard: React.FC<Props> = ({ data }) =>
               background: "rgba(0, 0, 0, 0.7)",
               zIndex: 10,
             }}
-            padding="15px"
+            padding="10px"
           >
             <Stack>
-              <Heading size="md" color="white" pb="10px">
-                {data.lectureTitle}
+              <Heading fontSize="14" color="white" pb="5px">
+                {textTitle}
               </Heading>
               <Text
-                fontSize="14px"
+                fontSize="10px"
                 color="white"
                 sx={{
                   overflow: "hidden",
@@ -96,28 +96,33 @@ const LectureCard: React.FC<Props> = ({ data }) =>
                 {text}
               </Text>
             </Stack>
-            <Text color="red">{data.targetAudience}</Text>
+            <Text fontSize="12px" color="red">
+              {data.targetAudience}
+            </Text>
           </Box>
           <Image
             objectFit="cover"
             maxW={{ base: "100%", sm: "100%" }}
-            minH="160"
-            height="160"
+            maxH="150px"
+            height="100%"
             src={data.thumbnail}
             alt="Card"
           />
-          <CardBody>
-            <Heading size="md" fontSize="17px" h="45">
+          <CardBody px="1" py="0">
+            <Heading fontSize="14px" h="45px" py="2">
               {textTitle}
             </Heading>
-            <Text py="2">{data.instructor.username}</Text>
+            <Text fontSize="14px" fontWeight="600" color="#666666">
+              {data.instructor.username}
+            </Text>
 
-            <HStack spacing="3px">
+            <HStack spacing="3px" fontSize="12px">
               <StarRating rating={data.rating} />
-              <Text fontSize="12" fontWeight="600">
-                ({data.reviews_num})
-              </Text>
+              <Text fontWeight="600">({data.reviews_num})</Text>
             </HStack>
+            <Text fontSize="16" fontWeight="600">
+              ₩10,000
+            </Text>
           </CardBody>
         </Card>
       </Link>

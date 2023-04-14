@@ -121,9 +121,13 @@ const WholeLectures: React.FC<Props> = () => {
     <div>
       <HStack
         justify="space-between"
+<<<<<<< HEAD
         w="830px"
+=======
+>>>>>>> d2d9a8aef838d15f496dfb60f94d80b6d090a8a9
         mx="auto"
         alignItems="flex-start"
+        paddingLeft="10"
       >
         <Box w="20%" fontSize="18px" fontWeight="600">
           {smallCategory === "all"
@@ -165,7 +169,11 @@ const WholeLectures: React.FC<Props> = () => {
         </InputGroup>
       </HStack>
 
+<<<<<<< HEAD
       <GridItem area="main" w="800px" mx="auto">
+=======
+      <GridItem area={"main"} mx="auto" paddingLeft="10">
+>>>>>>> d2d9a8aef838d15f496dfb60f94d80b6d090a8a9
         {data?.data?.length === 0 || data === undefined ? (
           <Box>
             <Text>
@@ -176,7 +184,7 @@ const WholeLectures: React.FC<Props> = () => {
             </Text>
           </Box>
         ) : (
-          <Grid templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]} gap="5">
+          <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
             {searchName && !isLoading
               ? data?.data?.map((lecture: LectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">

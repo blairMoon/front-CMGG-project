@@ -1,8 +1,19 @@
 import { atom } from "recoil";
-import { Cart } from "./services/mocks/mock";
-import { default_cart } from "./services/mocks/mock_data";
 
-export const cartState = atom<Cart>({
-  key: "cart",
-  default: default_cart,
+export interface SelectCartItems {
+  id: number[];
+  name: string[];
+  thumbnail: string[];
+  instructor: string[];
+  total_price: number;
+}
+
+export const cartSelectAllState = atom<SelectCartItems>({
+  key: "isSelectAll",
+  default: { id: [], name: [], thumbnail: [], instructor: [], total_price: 0 },
+});
+
+export const BuyState = atom<boolean>({
+  key: "wasBuyed",
+  default: false,
 });
