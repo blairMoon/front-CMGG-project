@@ -8,14 +8,13 @@ import {
   Text,
   Heading,
 } from "@chakra-ui/react";
-import { Lecture } from "../../../../typings/PaymentResult";
+import { ILecture } from "../../../../typings/PaymentResult";
 export function LectureCard({
   id,
   title,
   thumbnail,
   instructor,
-}: Lecture): React.ReactElement {
-  console.log(thumbnail);
+}: ILecture): React.ReactElement {
   return (
     <Card>
       <CardHeader>

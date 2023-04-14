@@ -1,0 +1,32 @@
+.Input {
+  width: 100%;
+  border-radius: 3px;
+  padding: 13px;
+  background-color: #fafafa;
+  border: 0.5px solid rgb(219, 219, 219);
+
+  box-sizing: border-box;
+  // max-width: 0px;
+}
+.Input:focus {
+  outline-color: #003c93;
+}
+
+.Button {
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  margin-top: 12px;
+  background-color: #003c93;
+  color: white;
+  text-align: center;
+  padding: 8px 0px;
+  font-weight: bold;
+  max-width: 350px;
+}
+
+.buttonContainer {
+  display: flex;
+  width: 75%;
+  justify-content: center;
+}
