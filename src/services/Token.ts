@@ -8,10 +8,9 @@ export function getAccessToken() {
 console.log(getAccessToken());
 export function getRefreshToken() {
   const refresh = Cookies.get("refresh");
-  if (!refresh) throw new Error("No refresh token found");
+  if (!refresh) return undefined;
   return refresh;
 }
-
 export const removeAccessToken = () => {
   Cookies.remove("access");
   Cookies.remove("refresh");
