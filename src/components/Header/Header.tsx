@@ -19,6 +19,8 @@ import {
   InputRightAddon,
   InputRightElement,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import {
   HamburgerIcon,
@@ -28,8 +30,19 @@ import {
 } from "@chakra-ui/icons";
 import css from "./Header.module.scss";
 export default function WithSubnavigation() {
+  const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
-
+  const [context, setContext] = useState("");
+  // 검색 기능
+  const gotoLectures = () => {
+    if (context === "") {
+      navigate("/lectures/all/all?page=1");
+    } else {
+      let url = "/lectures/all/all?page=1&search=" + context;
+      navigate(url);
+      window.location.reload();
+    }
+  };
   return (
     <div>
       <div className={css.headerContainer}>
@@ -39,11 +52,7 @@ export default function WithSubnavigation() {
             color={useColorModeValue("gray.600", "white")}
             minH={"60px"}
             pt="2"
-            // py={{ base: 2 }}
             px={{ base: 4 }}
-            // borderBottom={1}
-            // borderStyle={"solid"}
-            // borderColor={useColorModeValue("gray.200", "gray.900")}
             align={"center"}
           >
             <Flex
@@ -102,6 +111,16 @@ export default function WithSubnavigation() {
                     backgroundColor="rgb(247 247 250)"
                     _focus={{ outline: "none" }}
                     borderRadius="2xl"
+                    onChange={(e) => {
+                      setContext(e.target.value);
+                    }}
+                    onKeyDown={(
+                      event: React.KeyboardEvent<HTMLInputElement>
+                    ) => {
+                      if (event.keyCode === 13) {
+                        gotoLectures();
+                      }
+                    }}
                   />
 
                   <InputRightElement
@@ -118,6 +137,9 @@ export default function WithSubnavigation() {
                       backgroundColor="#003c93;"
                       size="sm"
                       width="30px"
+                      onClick={() => {
+                        gotoLectures();
+                      }}
                     >
                       <span
                         style={{ display: "inline-block", fontSize: "16px" }}
