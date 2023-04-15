@@ -15,7 +15,7 @@ import { Cart, Carts } from "../../../services/mocks/mock";
 import { cartSelectAllState, SelectCartItems } from "../../../atoms";
 
 import { RequestPayment } from "./components/RequestPay";
-import { Lecture } from "../../../../typings/PaymentResult";
+import { ILecture } from "../../../../typings/PaymentResult";
 import CartItem from "./components/CartItem";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 
@@ -91,7 +91,7 @@ const MyCart: React.FC = () => {
 
   const getPaymentData = () => {
     const name = selectedItems.name.join("/");
-    const lectures: Lecture[] = [];
+    const lectures: ILecture[] = [];
     selectedItems.id.map((item, idx) => {
       const lecture = {
         id: item,

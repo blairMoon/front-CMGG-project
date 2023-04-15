@@ -39,10 +39,10 @@ const MyLecture: React.FC = () => {
 
   // console.log(data.calculatedLecture);
   return (
-    <>
+    <div>
       <Grid>
-        <GridItem w="800px" mx="auto" py="10">
-          <Grid templateColumns={["repeat(1, 1fr)", "repeat(3, 1fr)"]} gap="5">
+        <GridItem mx="auto">
+          <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
             {data?.calculatedLecture?.map((item: CalculatedLectureItem) => (
               <GridItem key={item.lecture.LectureId} mx="auto">
                 <MylectureCard
@@ -60,7 +60,7 @@ const MyLecture: React.FC = () => {
           </Grid>
         </GridItem>
       </Grid>
-    </>
+    </div>
   );
 };
 

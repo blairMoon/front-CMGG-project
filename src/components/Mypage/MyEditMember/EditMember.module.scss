@@ -4,49 +4,35 @@
   align-items: center;
 }
 .Wrapper {
-  max-width: 550px;
+  // max-width: 550px;
   width: 100%;
 
   .TopBox {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 35px 40px 25px 40px;
-    margin-bottom: 10px;
   }
 }
 
-.h1 {
-  margin: 0;
-  font-weight: 600;
-  font-size: 25px;
-  color: black;
-  text-align: center;
-  padding-bottom: 10px;
-  margin-top: 10px;
-}
-.h2 {
-  margin: 0;
-  padding-top: 50px;
-  font-size: 30px;
-  color: #003c93;
-  text-align: center;
-  padding-bottom: 10px;
-  margin-top: 10px;
-  font-weight: 600;
-}
+// .h2 {
+//   margin: 0;
+//   padding-top: 50px;
+//   font-size: 30px;
+//   color: #003c93;
+//   text-align: center;
+//   padding-bottom: 10px;
+//   margin-top: 10px;
+//   font-weight: 600;
+// }
 
 .Form {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   width: 100%;
-  justify-items: center;
-  .topborder {
-    margin-top: 2px !important;
-    padding-top: 20px;
-    border-top: 1px solid #003c93;
+
+  .bottomborder {
+    border-bottom: 1px solid #003c93;
   }
   .buttonflex {
     display: flex;
@@ -59,7 +45,7 @@
   padding: 13px;
   background-color: #fafafa;
   border: 0.5px solid rgb(219, 219, 219);
-
+  margin-top: 10px;
   box-sizing: border-box;
   // max-width: 0px;
 }
@@ -83,7 +69,7 @@
   border-radius: 4px;
   border: 1px solid white;
   padding: 10px 15px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   font-size: 14px;
 }
 
@@ -104,14 +90,15 @@
 .flexContainer {
   display: flex;
   justify-content: space-around;
+  margin-top: 10px;
   .genderContainer {
     white-space: nowrap;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
     .genderlabel {
       margin-left: 10px;
-      // margin-bottom: 30px;
     }
   }
 }
@@ -119,31 +106,22 @@
   display: flex;
   justify-content: space-between;
 }
-// .radioMargin {
-//   // margin-right: 20px;
-//   margin-bottom: 13px;
-//   margin-top: 20px;
-// }
-
-.errors {
-  display: block;
-}
 
 .Button {
   width: 100%;
   border: none;
-  border-radius: 3px;
-  margin-top: 12px;
+  border-radius: 5px;
+
   background-color: #003c93;
   color: white;
   text-align: center;
-  padding: 8px 0px;
+  padding: 14px 0px;
   font-weight: bold;
-  max-width: 350px;
+  max-width: 300px;
 }
 .label {
-  margin-top: 24px;
-  margin-bottom: 14px;
+  // margin-top: 16px;
+  // margin-bottom: 10px;
   font-weight: 600;
 }
 input[type="radio"] {
@@ -174,16 +152,16 @@ input[type="checkbox"]:checked {
   border: 6px solid #003c93;
 }
 .errors {
-  margin-top: 15px;
+  font-size: 14px;
+  margin-top: 5px;
   color: #003c93;
 }
 .question {
   border-bottom: 1px solid #003c93;
   padding-bottom: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .buttonContainer {
-  margin: 40px 0;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -192,23 +170,24 @@ input[type="checkbox"]:checked {
   font-size: 16px;
 }
 .h6 {
-  margin-top: 30px;
+  // margin-top: 30px;
   font-size: 12px;
 }
 .color {
   color: gray;
 }
-.color:focus {
-  outline: none !important;
-}
+// .color:focus {
+//   outline: none !important;
+// }
 .h6Id {
   color: red;
   margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 11px;
 }
 .h6Gender {
   color: red;
-  margin-top: 30px;
+  margin-bottom: 10px;
   font-size: 11px;
 }
 .none {

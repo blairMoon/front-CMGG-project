@@ -1,11 +1,11 @@
-interface Instructor {
+interface IInstructor {
   username: string;
   instructorField: null | string;
   instructorAbout: string;
   instructorCareer: string;
 }
 
-interface Categories {
+interface ICategories {
   parent: null | {
     name: string;
     classification: string;
@@ -15,7 +15,7 @@ interface Categories {
   classification: string;
 }
 
-export interface LectureData {
+export interface ILectureData {
   LectureId: number;
   lectureTitle: string;
   lectureDifficulty: string;
@@ -25,8 +25,8 @@ export interface LectureData {
   thumbnail: string;
   isOpened: boolean;
   grade: null | string;
-  instructor: Instructor;
-  categories: Categories;
+  instructor: IInstructor;
+  categories: ICategories;
   reviews_num: number;
   rating: number;
 }

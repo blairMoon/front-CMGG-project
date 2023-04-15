@@ -3,7 +3,6 @@ import { LectureCard } from "./components/LectureCard";
 
 export function PaymentsResultPage() {
   const lectures = sessionStorage.getItem("buy_lectures")?.split("^@^");
-
   const name = sessionStorage.getItem("buy_username");
   const idArr =
     lectures &&
