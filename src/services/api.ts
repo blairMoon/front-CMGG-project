@@ -115,8 +115,8 @@ instance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = Cookies.get("refresh") || "";
-      const accessToken = Cookies.get("access") || "";
+      const refreshToken = Cookies.get("refresh");
+      const accessToken = Cookies.get("access");
 
       if (refreshToken && accessToken) {
         const newAccessToken = await postRefreshToken(

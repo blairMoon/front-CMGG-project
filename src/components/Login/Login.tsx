@@ -7,7 +7,8 @@ import { getAccessToken, getRefreshToken } from "../../services/Token";
 import { userNameLogin } from "../../services/api";
 import { postRefreshToken } from "../../services/api";
 import { useMutation } from "@tanstack/react-query";
-
+import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import SocialLogin from "../SocialLogin/SocialLogin";
 import Cookies from "js-cookie";
 import ModalBasic from "../../components/Modal/ModalBasic";
 
@@ -113,17 +114,23 @@ const Login: React.FC = () => {
                   <p>6자 이상 20자 이하로 입력하세요.</p>
                 )}
               </div>
-              <button
+              <Button
+                backgroundColor="#003c93"
                 type="submit"
                 value="로그인"
+                _hover={{
+                  backgroundColor: "none",
+                }}
                 className={css.Button}
                 onClick={() => {
                   setClick(true);
                 }}
+                isLoading={mutation.isLoading}
               >
                 로그인
-              </button>
+              </Button>
             </form>
+            <SocialLogin />
           </div>
         </div>
         {click && failLogin != null && !failLogin ? (
