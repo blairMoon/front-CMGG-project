@@ -14,7 +14,12 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Input,
+  InputGroup,
+  InputRightAddon,
+  InputRightElement,
 } from "@chakra-ui/react";
+import { AiOutlineSearch } from "react-icons/ai";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -28,27 +33,146 @@ export default function WithSubnavigation() {
   return (
     <div>
       <div className={css.headerContainer}>
-        <Text
-          py={{ base: 2 }}
-          px={{ base: 4 }}
-          textAlign={useBreakpointValue({ base: "center", md: "left" })}
-          fontFamily="heading"
-          color={useColorModeValue("gray.800", "white")}
-        >
-          Logo
-        </Text>
+        <Box>
+          <Flex
+            bg={useColorModeValue("white", "gray.800")}
+            color={useColorModeValue("gray.600", "white")}
+            minH={"60px"}
+            pt="2"
+            // py={{ base: 2 }}
+            px={{ base: 4 }}
+            // borderBottom={1}
+            // borderStyle={"solid"}
+            // borderColor={useColorModeValue("gray.200", "gray.900")}
+            align={"center"}
+          >
+            <Flex
+              flex={{ base: 1, md: "auto" }}
+              ml={{ base: -2 }}
+              display={{ base: "flex", md: "none" }}
+            >
+              <IconButton
+                onClick={onToggle}
+                icon={
+                  isOpen ? (
+                    <CloseIcon w={3} h={3} />
+                  ) : (
+                    <HamburgerIcon w={5} h={5} />
+                  )
+                }
+                variant="ghost"
+                aria-label="Toggle Navigation"
+              />
+            </Flex>
+            <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+              <Flex
+                display={{ base: "none", md: "flex" }}
+                ml={10}
+                w="50%"
+                mt={2}
+              >
+                {/* <Text
+                  mr="120px"
+                  pt="5px"
+                  pl="60px"
+                  // pt={0}
+                  // py={{ base: 2 }}
+                  px={{ base: 4 }}
+                  // textAlign={useBreakpointValue({ base: "center", md: "left" })}
+                  fontFamily="heading"
+                  color={useColorModeValue("gray.800", "white")}
+                > */}
+                <a href="/" className={css.a}>
+                  <img
+                    className={css.img}
+                    src="https://statics.goorm.io/logo/edu/goormedu-public.svg"
+                  />
+                </a>
+                {/* </Text> */}
+
+                <InputGroup w="150%">
+                  <Input
+                    w="100%"
+                    placeholder="보고싶은 강의를 검색하세용"
+                    fontSize="13px"
+                    // borderRadius="100%"
+                    type="text"
+                    className="Input"
+                    border="none"
+                    backgroundColor="rgb(247 247 250)"
+                    _focus={{ outline: "none" }}
+                    borderRadius="2xl"
+                  />
+
+                  <InputRightElement
+                    height="100%"
+                    justifyContent="center"
+                    alignItems="center"
+                    display="flex"
+                  >
+                    <Button
+                      borderRadius="50%"
+                      type="button"
+                      className="Button"
+                      border="none"
+                      backgroundColor="#003c93;"
+                      size="sm"
+                      width="30px"
+                    >
+                      <span
+                        style={{ display: "inline-block", fontSize: "16px" }}
+                      >
+                        <AiOutlineSearch color="white" />
+                      </span>
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </Flex>
+            </Flex>
+
+            <Stack
+              pr="30px"
+              flex={{ base: 1, md: 0 }}
+              justify="flex-end"
+              direction="row"
+              spacing={6}
+            >
+              <Button
+                as="a"
+                fontSize="sm"
+                fontWeight={600}
+                variant="link"
+                href="/login"
+                _hover={{ textDecoration: "none", color: "black" }}
+              >
+                Login
+              </Button>
+              <Button
+                color="rgb(255 191 203)"
+                as="a"
+                fontSize="sm"
+                fontWeight={600}
+                variant="link"
+                href="/signup"
+                _hover={{ textDecoration: "none", color: "black" }}
+              >
+                Sign Up
+              </Button>
+            </Stack>
+          </Flex>
+        </Box>
       </div>
-      <Box>
+      <Box h="20">
         <Flex
           bg={useColorModeValue("white", "gray.800")}
           color={useColorModeValue("gray.600", "white")}
-          minH={"60px"}
+          minH={"50px"}
           py={{ base: 2 }}
           px={{ base: 4 }}
           borderBottom={1}
           borderStyle={"solid"}
           borderColor={useColorModeValue("gray.200", "gray.900")}
-          align={"center"}
+          // align={"center"}
         >
           <Flex
             flex={{ base: 1, md: "auto" }}
@@ -69,12 +193,12 @@ export default function WithSubnavigation() {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-            <Flex display={{ base: "none", md: "flex" }} ml={10}>
+            <Flex display={{ base: "none", md: "flex" }} ml={10} pt="6px">
               <DesktopNav />
             </Flex>
           </Flex>
 
-          <Stack
+          {/* <Stack
             flex={{ base: 1, md: 0 }}
             justify={"flex-end"}
             direction={"row"}
@@ -103,7 +227,7 @@ export default function WithSubnavigation() {
             >
               Sign Up
             </Button>
-          </Stack>
+          </Stack> */}
         </Flex>
       </Box>
     </div>
@@ -122,14 +246,14 @@ const DesktopNav = () => {
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
-                p={2}
+                p={4}
                 href={navItem.href ?? "#"}
-                fontSize={"sm"}
+                fontSize="md"
                 fontWeight={500}
                 color={linkColor}
                 _hover={{
                   textDecoration: "none",
-                  color: linkHoverColor,
+                  color: "#003c93",
                 }}
               >
                 {navItem.label}
@@ -167,14 +291,20 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       display={"block"}
       p={2}
       rounded={"md"}
-      _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
+      _hover={{
+        bg: useColorModeValue("gray.50", "gray.900"),
+        color: "rgb(0 60 147)",
+      }}
     >
       <Stack direction={"row"} align={"center"}>
         <Box>
           <Text
             transition={"all .3s ease"}
-            _groupHover={{ color: "pink.400" }}
+            _groupHover={{ color: "#003c93" }}
             fontWeight={500}
+            _hover={{
+              fontWeight: "600",
+            }}
           >
             {label}
           </Text>
@@ -189,7 +319,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           align={"center"}
           flex={1}
         >
-          <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
+          <Icon color={"#769dd6"} w={5} h={5} as={ChevronRightIcon} />
         </Flex>
       </Stack>
     </Link>
@@ -205,7 +335,7 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Whole Lecutres",
+    label: "Whole Lectures",
     href: "/lectures/all/all/?page=1",
   },
   {
@@ -266,8 +396,8 @@ const NAV_ITEMS: Array<NavItem> = [
         href: "/lectures/mobile/swift/?page=1",
       },
       {
-        label: "Android",
-        subLabel: "애플에서 개발한 멀티 패러다임 프로그래밍 언어",
+        label: "Kotlin",
+        subLabel: "JetBrains사에서 개발한 안드로이드 앱 개발 언어",
         href: "/lectures/mobile/android/?page=1",
       },
     ],

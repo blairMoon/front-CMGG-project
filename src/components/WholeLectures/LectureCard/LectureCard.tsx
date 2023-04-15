@@ -86,7 +86,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
                 {textTitle}
               </Heading>
               <Text
-                fontSize="10px"
+                fontSize="12px"
                 color="white"
                 sx={{
                   overflow: "hidden",

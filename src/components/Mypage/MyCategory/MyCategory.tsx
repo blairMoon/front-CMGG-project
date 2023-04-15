@@ -17,7 +17,7 @@ const MyCategory: React.FC<Props> = (props: Props) => {
     smallCategory: string;
   }>();
   return (
-    <>
+    <div>
       <Stack w="100%" fontWeight="600">
         {/* <Box px="1" paddingBottom="3">
           메뉴
@@ -439,7 +439,7 @@ const MyCategory: React.FC<Props> = (props: Props) => {
           <Box>Android</Box>
         </HStack>
       </Stack>
-    </>
+    </div>
   );
 };
 

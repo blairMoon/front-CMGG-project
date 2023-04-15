@@ -62,11 +62,11 @@ const WholeLectures: React.FC<Props> = () => {
     mobile: "모바일",
     react: "프론트엔드/react",
     vue: "프론트엔드/vue.js",
-    html: "기초강의/html",
+    html: "기초코딩/html",
     spring: "백엔드/spring",
     django: "백엔드/django",
     swift: "모바일/swift",
-    css: "기초강의/css",
+    css: "기초코딩/css",
     android: "모바일/android",
   };
   const handleSearch = (newPage: number) => {
@@ -121,10 +121,6 @@ const WholeLectures: React.FC<Props> = () => {
     <div>
       <HStack
         justify="space-between"
-<<<<<<< HEAD
-        w="830px"
-=======
->>>>>>> d2d9a8aef838d15f496dfb60f94d80b6d090a8a9
         mx="auto"
         alignItems="flex-start"
         paddingLeft="10"
@@ -169,11 +165,7 @@ const WholeLectures: React.FC<Props> = () => {
         </InputGroup>
       </HStack>
 
-<<<<<<< HEAD
-      <GridItem area="main" w="800px" mx="auto">
-=======
       <GridItem area={"main"} mx="auto" paddingLeft="10">
->>>>>>> d2d9a8aef838d15f496dfb60f94d80b6d090a8a9
         {data?.data?.length === 0 || data === undefined ? (
           <Box>
             <Text>
