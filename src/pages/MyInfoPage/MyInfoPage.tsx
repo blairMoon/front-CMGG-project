@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Grid, GridItem } from "@chakra-ui/react";
-import MySideBar from "../../components/SideBar/MySideBar";
+import MySideBar from "../../components/Mypage/MySideBar/MySideBar";
 interface Props {}
 
 const MyInfoPage: React.FC<Props> = (props: Props) => {

@@ -19,9 +19,12 @@ import {
   InputRightAddon,
   InputRightElement,
 } from "@chakra-ui/react";
+import { removeAccessToken } from "../../services/Token";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { isLoggedInVar } from "../../../src/services/apollo";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -43,6 +46,21 @@ export default function WithSubnavigation() {
       window.location.reload();
     }
   };
+  const handleLogout = () => {
+    removeAccessToken();
+    isLoggedInVar(false);
+  };
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      isLoggedInVar(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", isLoggedInVar().toString());
+  }, [isLoggedInVar()]);
+
   return (
     <div>
       <div className={css.headerContainer}>
@@ -159,27 +177,35 @@ export default function WithSubnavigation() {
               direction="row"
               spacing={6}
             >
-              <Button
-                as="a"
-                fontSize="sm"
-                fontWeight={600}
-                variant="link"
-                href="/login"
-                _hover={{ textDecoration: "none", color: "black" }}
-              >
-                Login
-              </Button>
-              <Button
-                color="rgb(255 191 203)"
-                as="a"
-                fontSize="sm"
-                fontWeight={600}
-                variant="link"
-                href="/signup"
-                _hover={{ textDecoration: "none", color: "black" }}
-              >
-                Sign Up
-              </Button>
+              {isLoggedInVar() ? (
+                <div>
+                  <AiOutlineShoppingCart />
+                </div>
+              ) : (
+                <>
+                  <Button
+                    as="a"
+                    fontSize="sm"
+                    fontWeight={600}
+                    variant="link"
+                    href="/login"
+                    _hover={{ textDecoration: "none", color: "#003c93" }}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    color="#003c93"
+                    as="a"
+                    fontSize="sm"
+                    fontWeight={600}
+                    variant="link"
+                    href="/signup"
+                    _hover={{ textDecoration: "none", fontWeight: "700" }}
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              )}
             </Stack>
           </Flex>
         </Box>

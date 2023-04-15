@@ -39,7 +39,7 @@ const MyLecture: React.FC = () => {
 
   // console.log(data.calculatedLecture);
   return (
-    <>
+    <div>
       <Grid>
         <GridItem mx="auto">
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
@@ -60,7 +60,7 @@ const MyLecture: React.FC = () => {
           </Grid>
         </GridItem>
       </Grid>
-    </>
+    </div>
   );
 };
 
