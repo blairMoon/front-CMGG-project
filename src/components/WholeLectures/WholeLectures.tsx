@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { getLectureAndCategoryAndSearch } from "../../services/api";
 
-import { LectureData } from "../../../typings/LectureData";
+import { ILectureData } from "../../../typings/LectureData";
 
 interface Props {}
 interface CategoriesNames {
@@ -119,12 +119,7 @@ const WholeLectures: React.FC<Props> = () => {
 
   return (
     <div>
-      <HStack
-        justify="space-between"
-        mx="auto"
-        alignItems="flex-start"
-        paddingLeft="10"
-      >
+      <HStack justify="space-between" mx="auto" alignItems="flex-start">
         <Box w="20%" fontSize="18px" fontWeight="600">
           {smallCategory === "all"
             ? `${categoriesNames[bigCategory ?? ""]} `
@@ -165,7 +160,7 @@ const WholeLectures: React.FC<Props> = () => {
         </InputGroup>
       </HStack>
 
-      <GridItem area={"main"} mx="auto" paddingLeft="10">
+      <GridItem area={"main"} mx="auto">
         {data?.data?.length === 0 || data === undefined ? (
           <Box>
             <Text>
@@ -178,12 +173,12 @@ const WholeLectures: React.FC<Props> = () => {
         ) : (
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
             {searchName && !isLoading
-              ? data?.data?.map((lecture: LectureData) => (
+              ? data?.data?.map((lecture: ILectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">
                     <LectureCard data={lecture} />
                   </GridItem>
                 ))
-              : data?.data?.map((lecture: LectureData) => (
+              : data?.data?.map((lecture: ILectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">
                     <LectureCard data={lecture} />
                   </GridItem>

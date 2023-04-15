@@ -7,7 +7,7 @@ import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { CgDanger } from "react-icons/cg";
 
-const TeacherSideBar: React.FC = () => {
+const InstructorSideBar: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div>
@@ -16,15 +16,15 @@ const TeacherSideBar: React.FC = () => {
           px="5"
           py="2"
           fontSize="18px"
-          cursor="pointer"
-          _hover={{
-            borderRadius: "lg",
-            color: "white",
-            bg: "#003C93",
-          }}
-          onClick={() => {
-            navigate("");
-          }}
+          // cursor="pointer"
+          // _hover={{
+          //   borderRadius: "lg",
+          //   color: "white",
+          //   bg: "#003C93",
+          // }}
+          // onClick={() => {
+          //   navigate("");
+          // }}
         >
           <Box>마이 페이지</Box>
         </HStack>
@@ -73,7 +73,7 @@ const TeacherSideBar: React.FC = () => {
             bg: "#003C93",
           }}
           onClick={() => {
-            navigate("");
+            navigate("lecture");
           }}
         >
           <Box>내 강의</Box>
@@ -89,7 +89,7 @@ const TeacherSideBar: React.FC = () => {
             bg: "#769dd6",
           }}
           onClick={() => {
-            navigate("");
+            navigate("lecture");
           }}
         >
           <BsPlayCircle />
@@ -106,7 +106,7 @@ const TeacherSideBar: React.FC = () => {
             bg: "#769dd6",
           }}
           onClick={() => {
-            navigate("");
+            navigate("lecture/register");
           }}
         >
           <RiFolderUploadLine />
@@ -158,7 +158,7 @@ const TeacherSideBar: React.FC = () => {
             bg: "#003C93",
           }}
           onClick={() => {
-            navigate("");
+            navigate("editMember");
           }}
         >
           <Box>회원정보 수정</Box>
@@ -174,7 +174,7 @@ const TeacherSideBar: React.FC = () => {
             bg: "#769dd6",
           }}
           onClick={() => {
-            navigate("");
+            navigate("editMember");
           }}
         >
           <FiSettings />
@@ -213,4 +213,4 @@ const TeacherSideBar: React.FC = () => {
   );
 };
 
-export default TeacherSideBar;
+export default InstructorSideBar;

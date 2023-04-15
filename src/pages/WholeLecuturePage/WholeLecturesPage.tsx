@@ -39,7 +39,7 @@ const WholeLecturePage: React.FC<Props> = (props: Props) => {
         <GridItem area={"nav"}>
           <MyCategory />
         </GridItem>
-        <GridItem area={"main"} py="2">
+        <GridItem area={"main"} py="2" paddingLeft="10">
           <WholeLectures />
         </GridItem>
       </Grid>

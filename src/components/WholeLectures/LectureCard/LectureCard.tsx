@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import StarRating from "../StarRating/StarRating";
-import { LectureData } from "../../../../typings/LectureData";
+import { ILectureData } from "../../../../typings/LectureData";
 // interface LectureCardProps {
 //   lectureNumber: number;
 //   img: string;
@@ -24,7 +24,7 @@ import { LectureData } from "../../../../typings/LectureData";
 //   reviewsNum: number;
 // }
 interface Props {
-  data: LectureData;
+  data: ILectureData;
 }
 const LectureCard: React.FC<Props> = ({ data }) =>
   //   {
@@ -46,7 +46,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
       text = text.slice(0, MAX_LENGTH) + "...";
     }
 
-    const MAX_LENGTH2 = 30;
+    const MAX_LENGTH2 = 37;
     let textTitle = data.lectureTitle;
 
     if (textTitle.length > MAX_LENGTH2) {
