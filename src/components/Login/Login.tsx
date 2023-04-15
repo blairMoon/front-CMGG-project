@@ -55,12 +55,17 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormData> = ({ username, password }) => {
     try {
-      const headers = isLoggedInVar()
-        ? {
-            Authorization: `Bearer ${getAccessToken()}`,
-            "X-Refresh-Token": getRefreshToken(),
-          }
-        : undefined;
+      const accessToken = getAccessToken();
+      const refreshToken = getRefreshToken();
+      const isLoggedIn = isLoggedInVar();
+
+      const headers =
+        isLoggedIn && refreshToken
+          ? {
+              Authorization: `Bearer ${accessToken}`,
+              "X-Refresh-Token": refreshToken,
+            }
+          : undefined;
 
       mutation.mutate({ username, password, headers });
     } catch (error) {
