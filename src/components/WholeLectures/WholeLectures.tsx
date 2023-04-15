@@ -62,11 +62,11 @@ const WholeLectures: React.FC<Props> = () => {
     mobile: "모바일",
     react: "프론트엔드/react",
     vue: "프론트엔드/vue.js",
-    html: "기초강의/html",
+    html: "기초코딩/html",
     spring: "백엔드/spring",
     django: "백엔드/django",
     swift: "모바일/swift",
-    css: "기초강의/css",
+    css: "기초코딩/css",
     android: "모바일/android",
   };
   const handleSearch = (newPage: number) => {
@@ -127,7 +127,7 @@ const WholeLectures: React.FC<Props> = () => {
         </Box>
         <InputGroup w="45%">
           <Input
-            marginBottom={"30px"}
+            marginBottom="30px"
             className="Input"
             variant="outline"
             value={searchResult}
@@ -166,7 +166,7 @@ const WholeLectures: React.FC<Props> = () => {
             <Text>
               <Text as="span" color="red">
                 {searchName}
-              </Text>{" "}
+              </Text>
               에 대한 검색결과가 없습니다.
             </Text>
           </Box>

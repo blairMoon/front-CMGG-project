@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { useForm, RegisterOptions } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { Select } from "@chakra-ui/react";
+import { Divider } from "@chakra-ui/react";
 
 import css from "../Signup/Signup.module.scss";
 
@@ -110,7 +112,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
     }
   };
   return (
-    <>
+    <div>
       <div className={css.Container}>
         <div className={css.Wrapper}>
           <div className={css.TopBox}>
@@ -268,24 +270,35 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               {errors.email && (
                 <p className={css.errors}>이메일 형식이 아닙니다.</p>
               )}
+              <Divider
+                orientation="horizontal"
+                marginTop="40px"
+                // marginBottom="30px"
+              />
+              <h6 className={css.h6Under}>
+                선택 입력 사항이지만 입력하시면 마이페이지를 꾸며드립니다.
+              </h6>
               <label className={css.label}>유입경로</label>
               <div className={css.flexSelectContainer}>
                 <div className={css.selectContainer}>
                   <div className={css.selectlabel}>
-                    <label htmlFor="funnel">
+                    {/* <label htmlFor="funnel">
                       CrazyForm을 어떤경로로 알게되셨나요?
-                    </label>
+                    </label> */}
                   </div>
                   <div>
-                    <select
-                      className={css.selectPath}
-                      {...register("funnel", { required: true })}
+                    <Select
+                      placeholder="medium size"
+                      size="md"
+                      width="400px"
+                      marginTop="30px"
+                      marginBottom="30px"
+                      {...register("funnel", { required: false })}
                     >
-                      <option value="">개발을 배우고 싶어서</option>
-                      <option value="미친폼">미친폼을 가지고 싶어서</option>
-                      <option value="금쪽이">금쪽이를 벗어나고 싶어서</option>
-                      <option value="기타">기타</option>
-                    </select>
+                      <option value="option1">Option 1</option>
+                      <option value="option2">Option 2</option>
+                      <option value="option3">Option 3</option>
+                    </Select>
                   </div>
                 </div>
               </div>
@@ -293,7 +306,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 <p className={css.errors}>유입경로 필수 입력값입니다.</p>
               )}
 
-              <label className={css.label}>선호 개발 포지션</label>
+              <label className={css.label}>
+                선호 개발 포지션 (중복선택 가능)
+              </label>
               <div className={css.flexDevContainer}>
                 <div>
                   <div className={css.DevContainer}>
@@ -301,7 +316,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       id="frontend"
                       type="radio"
                       value="frontend"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="frontend" className={css.Devlabel}>
                       프론트엔드
@@ -310,9 +325,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="backend"
-                      type="radio"
+                      type="checkbox"
                       value="backend"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="backend">
                       백엔드
@@ -321,9 +336,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="fullstack"
-                      type="radio"
+                      type="checkbox"
                       value="fullstack"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="fullstack">
                       풀스택
@@ -332,9 +347,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="game"
-                      type="radio"
+                      type="checkbox"
                       value="game"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="game">
                       게임
@@ -343,9 +358,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="android"
-                      type="radio"
+                      type="checkbox"
                       value="android"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="android">
                       안드로이드
@@ -356,9 +371,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="ios"
-                      type="radio"
+                      type="checkbox"
                       value="ios"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="ios">
                       iOS
@@ -367,9 +382,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="publisher"
-                      type="radio"
+                      type="checkbox"
                       value="publisher"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="publisher">
                       웹 퍼블리셔
@@ -378,9 +393,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="data"
-                      type="radio"
+                      type="checkbox"
                       value="data"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="data">
                       데이터 엔지니어
@@ -389,9 +404,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="ai"
-                      type="radio"
+                      type="checkbox"
                       value="ai"
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="ai">
                       AI
@@ -400,9 +415,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="security "
-                      type="radio"
+                      type="checkbox"
                       value="security "
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.Devlabel} htmlFor="security ">
                       보안 엔지니어
@@ -415,7 +430,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   선호 개발 포지션은 필수 입력값입니다.
                 </p>
               )}
-              <label className={css.label}>선호하는 언어</label>
+              <label className={css.label}>
+                선호하는 언어 (중복 선택 가능)
+              </label>
               <div className={css.flexLangContainer}>
                 <div>
                   <div className={css.langContainer}>
@@ -424,7 +441,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="java"
                       className={`${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="java" className={css.langlabel}>
                       자바
@@ -436,7 +453,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="javascript"
                       className={` ${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label className={css.langlabel} htmlFor="javascript">
                       자바스크립트
@@ -448,7 +465,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="swift"
                       className={`${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="swift" className={css.langlabel}>
                       Swift
@@ -460,7 +477,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="go"
                       className={`${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="go" className={css.langlabel}>
                       Go
@@ -474,7 +491,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="c"
                       className={`${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="c" className={css.langlabel}>
                       C
@@ -486,7 +503,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="c++"
                       className={`${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="c++" className={css.langlabel}>
                       C++
@@ -498,7 +515,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="kotlin"
                       className={`${css.Margin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="kotlin" className={css.langlabel}>
                       Kotlin
@@ -510,7 +527,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       type="checkbox"
                       value="typescript"
                       className={`${css.radioMargin}`}
-                      {...register("position", { required: true })}
+                      {...register("position", { required: false })}
                     />
                     <label htmlFor="typescript" className={css.langlabel}>
                       TypeScript
@@ -530,7 +547,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     id="high"
                     type="radio"
                     value="high"
-                    {...register("skill", { required: true })}
+                    {...register("skill", { required: false })}
                   />
                   <label htmlFor="high" className={css.genderlabel}>
                     상
@@ -541,7 +558,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     id="middle"
                     type="radio"
                     value="middle"
-                    {...register("skill", { required: true })}
+                    {...register("skill", { required: false })}
                   />
                   <label className={css.Levellabel} htmlFor="middle">
                     중
@@ -552,7 +569,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     id="low"
                     type="radio"
                     value="low"
-                    {...register("skill", { required: true })}
+                    {...register("skill", { required: false })}
                   />
                   <label className={css.Levellabel} htmlFor="low">
                     하
@@ -623,7 +640,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
