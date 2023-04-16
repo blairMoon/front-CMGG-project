@@ -13,8 +13,7 @@ const InstructorPage: React.FC<Props> = (props: Props) => {
         gridTemplateColumns={"220px 1fr"}
         w="1150px"
         h="100%"
-        pt="120px"
-        pb="10"
+        py="10"
         px="4"
         gap="1"
         mx="auto"

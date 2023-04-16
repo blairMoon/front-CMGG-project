@@ -7,7 +7,6 @@ import {
   Divider,
   Text,
   RadioGroup,
-  Radio,
   HStack,
   Button,
   Input,
@@ -17,15 +16,23 @@ import {
   Image as ChakraImg,
 } from "@chakra-ui/react";
 
-import css from "./LectureRegister.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
+import { useMutation } from "@tanstack/react-query";
+
+import css from "./LectureRegister.module.scss";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { imgTypes, videoTypes } from "../../../constant";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
+import { postMockLecture } from "../../../services/mocks/api";
+import { MyRadio } from "../../Radio/MyRadio";
+//import { ILectureFormData } from "../../../../typings/LectureRegister";
 
 function LectureRegister(): React.ReactElement {
+  const [_img, setImg] = useState<string>("");
+  const [_videos, setVideos] = useState<string[]>([]);
+
   const {
     handleSubmit,
     register,
@@ -67,12 +74,29 @@ function LectureRegister(): React.ReactElement {
     },
   });
 
-  const [_img, setImg] = useState<string>("");
-  const [_videos, setVideos] = useState<string[]>([]);
+  const registerMutate = useMutation<unknown, Error, FieldValues>(
+    postMockLecture,
+    {
+      onSuccess(data) {
+        console.log("success", data);
+      },
+      onError(error) {
+        console.log("fail", error);
+      },
+    }
+  );
 
   const onSubmit = (formData: FieldValues) => {
-    console.log("formData", formData);
-
+    console.log("formData", {
+      ...formData,
+      thumbnail: _img,
+      videos: _videos,
+    });
+    try {
+      registerMutate.mutate(formData);
+    } catch (e) {
+      alert("모든 내용을 입력하고 다시 시도해주세요.");
+    }
     // create image url => new Image(img,url) => imgUrl
     // create video url => new Video(video,url) => videoUrl
 
@@ -93,7 +117,7 @@ function LectureRegister(): React.ReactElement {
     reader.readAsDataURL(file);
     return (
       <HStack alignItems={"flex-start"} key={idx}>
-        <ChakraImg w="50%" src={_img} />
+        <ChakraImg w="200px" h="150px" src={_img} />
         <Text>
           {file.name} - {file.size} bytes
         </Text>
@@ -132,7 +156,7 @@ function LectureRegister(): React.ReactElement {
   return (
     <VStack alignItems={"flex-start"} ml="10">
       <Text fontWeight={"bold"} fontSize={"35px"} mb="10">
-        강의 등록하기
+        강의 등록
       </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "500px" }}>
         <FormControl
@@ -278,23 +302,25 @@ function LectureRegister(): React.ReactElement {
             name="targetAudience"
             aria-labelledby="targetAudience"
           >
-            <Radio
+            <MyRadio
+              value="theory"
               width={`calc(100% / 3)`}
               borderColor={"blackAlpha.600"}
-              value="theory"
+              testId="target1"
               {...register("targetAudience", { required: true })}
             >
               이론
-            </Radio>
-            <Radio
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
+            </MyRadio>
+            <MyRadio
               ml="2"
               value="training"
+              width={`calc(100% / 3)`}
+              borderColor={"blackAlpha.600"}
+              testId="target2"
               {...register("targetAudience", { required: true })}
             >
               실습
-            </Radio>
+            </MyRadio>
           </RadioGroup>
           <FormErrorMessage>{`${"목적"}을 입력해주세요`}</FormErrorMessage>
         </FormControl>
@@ -307,37 +333,40 @@ function LectureRegister(): React.ReactElement {
             난이도
           </FormLabel>
           <RadioGroup
-            display={"flex"}
             pl="5"
+            display={"flex"}
             name="lectureDifficulty"
             aria-labelledby="lectureDifficulty"
           >
-            <Radio
+            <MyRadio
+              value="upper"
               width={`calc(100% / 3)`}
               borderColor={"blackAlpha.600"}
-              value="upper"
+              testId="difficulty1"
               {...register("lectureDifficulty", { required: true })}
             >
               상
-            </Radio>
-            <Radio
+            </MyRadio>
+            <MyRadio
+              ml="2"
+              value="middle"
               width={`calc(100% / 3)`}
               borderColor={"blackAlpha.600"}
-              value="middle"
-              ml="2"
+              testId="difficulty2"
               {...register("lectureDifficulty", { required: true })}
             >
               중
-            </Radio>
-            <Radio
+            </MyRadio>
+            <MyRadio
+              ml="2"
+              value="lower"
               width={`calc(100% / 3)`}
               borderColor={"blackAlpha.600"}
-              value="lower"
-              ml="2"
+              testId="difficulty3"
               {...register("lectureDifficulty", { required: true })}
             >
               하
-            </Radio>
+            </MyRadio>
           </RadioGroup>
           <FormErrorMessage>{`${"난이도"}를 선택해주세요`}</FormErrorMessage>
         </FormControl>
@@ -346,90 +375,104 @@ function LectureRegister(): React.ReactElement {
           id={"categories"}
           my="7"
         >
-          <FormLabel fontWeight={"bold"} aria-labelledby="categories">
+          <FormLabel fontWeight={"bold"} htmlFor="categories" id="categories">
             카테고리
           </FormLabel>
-          <RadioGroup display={"flex"} pl="5" name="categories">
+          <RadioGroup
+            pl="5"
+            id="categories"
+            display={"flex"}
+            name="categories"
+            aria-labelledby="categories"
+          >
             <VStack w="100%" alignItems={"flex-start"}>
               <HStack w="100%" my="3">
-                <Radio
+                <MyRadio
+                  value="html"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="html"
+                  testId="categories1"
                   {...register("categories", { required: true })}
                 >
                   HTML
-                </Radio>
-                <Radio
+                </MyRadio>
+                <MyRadio
+                  ml="2"
+                  value="css"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="css"
-                  ml="2"
+                  testId="categories2"
                   {...register("categories", { required: true })}
                 >
                   CSS
-                </Radio>
-                <Radio
+                </MyRadio>
+                <MyRadio
+                  ml="2"
+                  value="react"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="react"
-                  ml="2"
+                  testId="categories3"
                   {...register("categories", { required: true })}
                 >
                   REACT
-                </Radio>
-                <Radio
+                </MyRadio>
+                <MyRadio
+                  ml="2"
+                  value="vue"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="vue"
-                  ml="2"
+                  testId="categories4"
                   {...register("categories", { required: true })}
                 >
                   VUE
-                </Radio>
+                </MyRadio>
               </HStack>
               <HStack w="100%">
-                <Radio
+                <MyRadio
+                  value="spring"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="spring"
+                  testId="categories5"
                   {...register("categories", { required: true })}
                 >
                   SPRING
-                </Radio>
-                <Radio
+                </MyRadio>
+                <MyRadio
+                  ml="2"
+                  value="django"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="django"
-                  ml="2"
+                  testId="categories6"
                   {...register("categories", { required: true })}
                 >
                   DJANGO
-                </Radio>
-                <Radio
+                </MyRadio>
+                <MyRadio
+                  ml="2"
+                  value="swift"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="swift"
-                  ml="2"
+                  testId="categories7"
                   {...register("categories", { required: true })}
                 >
                   SWIFT
-                </Radio>
-                <Radio
+                </MyRadio>
+                <MyRadio
+                  ml="2"
+                  value="android"
                   width={`calc(100% / 3)`}
                   borderColor={"blackAlpha.600"}
-                  value="android"
-                  ml="2"
+                  testId="categories8"
                   {...register("categories", { required: true })}
                 >
                   ANDROID
-                </Radio>
+                </MyRadio>
               </HStack>
             </VStack>
           </RadioGroup>
           <FormErrorMessage>{`${"카테고리"}를 선택해주세요`}</FormErrorMessage>
         </FormControl>
-        <Button type="submit" colorScheme="facebook" w="500px">
+        <Button w="500px" type="submit" colorScheme="facebook">
           등록하기
         </Button>
       </form>

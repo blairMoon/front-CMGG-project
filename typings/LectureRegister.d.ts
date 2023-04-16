@@ -16,6 +16,8 @@ export interface ILectureFormData {
   lectureFee: string;
   lectureTitle: string;
   targetAudience: string;
+  thumbnail: string;
+  videos: string[];
   videoDescriptions: string[];
   videoTitles: string[];
 }
