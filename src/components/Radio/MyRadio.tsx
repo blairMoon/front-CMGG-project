@@ -8,8 +8,8 @@ interface MyRadioProps extends RadioProps {
 export const MyRadio = forwardRef<HTMLInputElement, MyRadioProps>(
   ({ testId, children, ...props }, ref) => {
     return (
-      <div data-testid={testId} style={{ width: "auto" }}>
-        <Radio {...props} ref={ref}>
+      <div data-testid={testId} style={{ width: "calc(100% / 3)" }}>
+        <Radio {...props} ref={ref} w="100%" borderColor={"blackAlpha.600"}>
           {children}
         </Radio>
       </div>
