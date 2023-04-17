@@ -5,7 +5,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import WholeLectures from "../../components/WholeLectures/WholeLectures";
-import MyCategory from "../../components/Mypage/MyCategory/MyCategory";
+import Category from "../../components/WholeLectures/Category/Category";
 import {
   Box,
   Grid,
@@ -37,7 +37,7 @@ const WholeLecturePage: React.FC<Props> = (props: Props) => {
         mx="auto"
       >
         <GridItem area={"nav"}>
-          <MyCategory />
+          <Category />
         </GridItem>
         <GridItem area={"main"} py="2" paddingLeft="10">
           <WholeLectures />

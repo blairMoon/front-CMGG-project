@@ -5,6 +5,8 @@ import Props from "../WholeLectures/LectureCard/LectureCard";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+
+import { GrPowerReset } from "react-icons/gr";
 import {
   Box,
   Grid,
@@ -16,10 +18,16 @@ import {
   HStack,
   VStack,
   Text,
+  Select,
+  Tag,
+  TagLabel,
+  TagCloseButton,
 } from "@chakra-ui/react";
 import { getLectureAndCategoryAndSearch } from "../../services/api";
 
-import { LectureData } from "../../../typings/LectureData";
+import { ILectureData } from "../../../typings/LectureData";
+import { FaLevelUpAlt } from "react-icons/fa";
+import { css } from "@emotion/react";
 
 interface Props {}
 interface CategoriesNames {
@@ -27,8 +35,7 @@ interface CategoriesNames {
 }
 
 const WholeLectures: React.FC<Props> = () => {
-  const [searchResult, setSearchResult] = useState("");
-
+  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   const [pages, setPages] = useState<number[]>([]);
   const { bigCategory, smallCategory } = useParams<{
     bigCategory: string;
@@ -41,12 +48,8 @@ const WholeLectures: React.FC<Props> = () => {
   const params = new URLSearchParams(location.search);
   const searchName: any = params.get("search") || "";
   const pageNum: number = Number(params.get("page"));
-  const queryClinet = useQueryClient();
-  const {
-    isLoading,
-    data,
-    refetch: refetchSearch,
-  } = useQuery(
+  const [tags, setTags] = useState<string[]>(["입문", "초급", "중급", "고급"]);
+  const { isLoading, data, refetch } = useQuery(
     ["lectureSearch", bigCategory, smallCategory, pageNum, searchName],
     getLectureAndCategoryAndSearch,
     {
@@ -62,29 +65,21 @@ const WholeLectures: React.FC<Props> = () => {
     mobile: "모바일",
     react: "프론트엔드/react",
     vue: "프론트엔드/vue.js",
-    html: "기초강의/html",
+    html: "기초코딩/html",
     spring: "백엔드/spring",
     django: "백엔드/django",
     swift: "모바일/swift",
-    css: "기초강의/css",
+    css: "기초코딩/css",
     android: "모바일/android",
   };
-  const handleSearch = (newPage: number) => {
-    queryClinet.resetQueries([
-      "lectureSearch",
-      bigCategory,
-      smallCategory,
-      pageNum,
-      searchName,
-    ]);
-    if (searchResult === "" || searchResult === undefined) {
-      alert("검색어를 입력해주세요");
-      // navigate(`/lectures/${bigCategory}/${smallCategory}?page=${newPage}`);
-    } else {
-      navigate(
-        `/lectures/${bigCategory}/${smallCategory}?page=${newPage}&search=${searchResult}`
-      );
-    }
+  useEffect(() => {
+    setTags(["입문", "초급", "중급", "고급"]);
+  }, [location.pathname]);
+  const handleTagReturn = () => {
+    setTags(["입문", "초급", "중급", "고급"]);
+  };
+  const handleTagClose = (index: number) => {
+    setTags((prevTags) => prevTags.filter((_, i) => i !== index));
   };
   useEffect(() => {
     const pageNumbers = [];
@@ -119,66 +114,67 @@ const WholeLectures: React.FC<Props> = () => {
 
   return (
     <div>
-      <HStack justify="space-between" mx="auto" alignItems="flex-start">
+      <HStack
+        justify="space-between"
+        mx="auto"
+        alignItems="flex-start"
+        marginBottom="25px"
+      >
         <Box w="20%" fontSize="18px" fontWeight="600">
           {smallCategory === "all"
             ? `${categoriesNames[bigCategory ?? ""]} `
             : `${categoriesNames[smallCategory ?? ""]} `}
         </Box>
-        <InputGroup w="45%">
-          <Input
-            marginBottom={"30px"}
-            className="Input"
-            variant="outline"
-            value={searchResult}
-            focusBorderColor="#003C93"
-            placeholder={
-              smallCategory === "all"
-                ? `${categoriesNames[bigCategory ?? ""]} 검색`
-                : `${categoriesNames[smallCategory ?? ""]} 검색`
-            }
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                handleSearch(1);
-              }
-            }}
-            onChange={(event) => {
-              setSearchResult(event.target.value);
-            }}
-          />
-          <InputRightAddon px="0">
-            <Button
-              fontSize="15px"
-              w="100%"
-              onClick={() => {
-                handleSearch(1);
-              }}
-            >
-              검색
-            </Button>
-          </InputRightAddon>
-        </InputGroup>
+
+        <Select
+          placeholder="강의 필터"
+          size="md"
+          width="200px"
+          marginTop="30px"
+        >
+          <option value="option1">최신순</option>
+          <option value="option2">인기순</option>
+          <option value="option3">평점순</option>
+          <option value="option3">가격순</option>
+        </Select>
+      </HStack>
+      <HStack spacing={4} paddingBottom="20px">
+        {tags.map((level, index) => (
+          <Tag
+            size="md"
+            key={index}
+            borderRadius="full"
+            variant="solid"
+            bg="#003c93"
+          >
+            <TagLabel>{level}</TagLabel>
+            <TagCloseButton onClick={() => handleTagClose(index)} />
+          </Tag>
+        ))}
+        <div style={{ cursor: "pointer" }}>
+          <GrPowerReset onClick={() => handleTagReturn()} />
+        </div>
       </HStack>
 
-      <GridItem area={"main"} mx="auto">
+      <GridItem area="main" mx="auto">
         {data?.data?.length === 0 || data === undefined ? (
           <Box>
             <Text>
               <Text as="span" color="red">
                 {searchName}
-              </Text>{" "}
+              </Text>
               에 대한 검색결과가 없습니다.
             </Text>
           </Box>
         ) : (
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
             {searchName && !isLoading
-              ? data?.data?.map((lecture: LectureData) => (
+              ? data?.data?.map((lecture: ILectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">
                     <LectureCard data={lecture} />
                   </GridItem>
                 ))
-              : data?.data?.map((lecture: LectureData) => (
+              : data?.data?.map((lecture: ILectureData) => (
                   <GridItem key={lecture.LectureId} mx="auto">
                     <LectureCard data={lecture} />
                   </GridItem>
