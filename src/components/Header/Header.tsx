@@ -18,13 +18,31 @@ import {
   InputGroup,
   InputRightAddon,
   InputRightElement,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuGroup,
+  MenuList,
 } from "@chakra-ui/react";
-import { removeAccessToken } from "../../services/Token";
+
+import { FiSettings } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
+import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
+import { MdPayment } from "react-icons/md";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { CgDanger } from "react-icons/cg";
+
+import { RiHomeHeartLine } from "react-icons/ri";
+import { IconContext } from "react-icons";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { IoCartOutline } from "react-icons/io5";
+import { BsPersonVideo3 } from "react-icons/bs";
 import { isLoggedInVar } from "../../../src/services/apollo";
+import { getAccessToken } from "../../../src/services/Token";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -32,10 +50,21 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import css from "./Header.module.scss";
+import { removeAccessToken } from "../../services/Token";
 export default function WithSubnavigation() {
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
+  const [isOpenToggle, setIsOpenToggle] = useState(false);
   const [context, setContext] = useState("");
+  const dividerColor = useColorModeValue("gray.300", "gray.700");
+  const handleMouseEnter = () => {
+    setIsOpenToggle(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsOpenToggle(false);
+  };
+
   // 검색 기능
   const gotoLectures = () => {
     if (context === "") {
@@ -48,18 +77,11 @@ export default function WithSubnavigation() {
   };
   const handleLogout = () => {
     removeAccessToken();
-    isLoggedInVar(false);
   };
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (isLoggedIn === "true") {
-      isLoggedInVar(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", isLoggedInVar().toString());
-  }, [isLoggedInVar()]);
+  const handleButtonClick = () => {
+    window.location.href = "/mypage";
+  };
+  const token = getAccessToken();
 
   return (
     <div>
@@ -177,10 +199,116 @@ export default function WithSubnavigation() {
               direction="row"
               spacing={6}
             >
-              {isLoggedInVar() ? (
-                <div>
-                  <AiOutlineShoppingCart />
-                </div>
+              {token ? (
+                <Flex>
+                  <a href="/mypage/cart">
+                    <IoCartOutline
+                      style={{
+                        fontSize: 30,
+                        marginRight: 20,
+                      }}
+                    />
+                  </a>
+                  {/* <BsPersonVideo3 style={{ fontSize: 30, color: "#003c93" }} /> */}
+
+                  <Menu
+                    isOpen={isOpenToggle}
+                    onClose={() => setIsOpenToggle(false)}
+                    placement="bottom-start"
+                  >
+                    <MenuButton
+                      as="span"
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => handleButtonClick()}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <a href="/mypage">
+                        <Avatar
+                          bg="#003c93"
+                          icon={<RiHomeHeartLine size={20} />}
+                          style={{ width: "32px", height: "32px" }}
+                        />
+                      </a>
+                    </MenuButton>
+
+                    <MenuList
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                      css={{
+                        position: "absolute",
+                        top: "calc(100% + -8px)",
+                        right: "-70px",
+                        boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
+                        border: `1px solid ${dividerColor}`,
+                        borderRadius: "0 0 10px 10px",
+                        overflow: "hidden",
+                        "::before": {
+                          content: '""',
+                          position: "absolute",
+                          top: "-10px",
+                          left: "20px",
+                          width: "20px",
+                          height: "20px",
+                          transform: "skew(-45deg)",
+                          background: "white",
+                          border: `1px solid ${dividerColor}`,
+                          borderBottom: "none",
+                          borderTop: "none",
+                        },
+                      }}
+                    >
+                      {" "}
+                      <div style={{ border: `1px solid ${dividerColor}` }}>
+                        <MenuGroup title="대시보드">
+                          <MenuItem fontSize="14px">
+                            {" "}
+                            <BsFileEarmarkText
+                              style={{ marginRight: "10px" }}
+                            />
+                            학습 관리
+                          </MenuItem>
+                        </MenuGroup>
+                        <MenuDivider color={dividerColor} />
+                        <MenuGroup title="수강강의">
+                          <MenuItem fontSize="14px">
+                            <BsPlayCircle style={{ marginRight: "10px" }} />
+                            수강중인 강의
+                          </MenuItem>
+                        </MenuGroup>
+                        <MenuDivider color={dividerColor} />
+                        <MenuGroup title="수강신청 관리">
+                          <MenuItem fontSize="14px">
+                            {" "}
+                            <MdPayment style={{ marginRight: "10px" }} />
+                            결제 내역
+                          </MenuItem>
+                          <MenuItem fontSize="14px">
+                            <AiOutlineShoppingCart
+                              style={{ marginRight: "10px" }}
+                            />
+                            수강바구니
+                          </MenuItem>
+                        </MenuGroup>
+                        <MenuDivider color={dividerColor} />
+                        <MenuGroup title="회원정보 수정">
+                          <MenuItem fontSize="14px">
+                            {" "}
+                            <FiSettings style={{ marginRight: "10px" }} />
+                            정보수정
+                          </MenuItem>
+                          <MenuItem fontSize="14px">
+                            <FiLogOut
+                              size={16}
+                              style={{ marginRight: "10px" }}
+                            />
+                            로그아웃
+                          </MenuItem>
+                        </MenuGroup>
+                      </div>
+                    </MenuList>
+                  </Menu>
+                </Flex>
               ) : (
                 <>
                   <Button
