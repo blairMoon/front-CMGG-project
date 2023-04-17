@@ -203,13 +203,13 @@ function LectureRegister(): React.ReactElement {
           <FormLabel fontWeight={"bold"} id={"lectureDescription"}>
             설명
           </FormLabel>
-          <input
-            type="text"
-            className={css.Input}
+          <textarea
+            className={css.TextArea}
             aria-labelledby="lectureDescription"
             placeholder="설명을 입력해주세요"
             {...register("lectureDescription", { required: true })}
           />
+
           <FormErrorMessage>{`${"설명"}을 입력해주세요`}</FormErrorMessage>
         </FormControl>
         <Divider my="5" mt="10" />
