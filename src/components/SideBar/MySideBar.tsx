@@ -165,7 +165,7 @@ const MySideBar: React.FC = () => {
           <Stack pl="2" spacing={0}>
             <Box fontSize="16">blairMoon</Box>
             <Box fontSize="14" color="#707070">
-              Developer
+              Student
             </Box>
           </Stack>
         </HStack>
