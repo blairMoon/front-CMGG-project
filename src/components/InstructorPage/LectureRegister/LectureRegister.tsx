@@ -48,7 +48,8 @@ function LectureRegister(): React.ReactElement {
     onDrop: (acceptedFiles: File[]) => {
       const isRightType = acceptedFiles
         .map((file: File) => file.type.replace("video/", ""))
-        .some((elem) => videoTypes.includes(elem));
+        .some((elem) => videoTypes.includes("." + elem));
+
       if (!isRightType) {
         alert(
           "비디오 파일만 등록이 가능합니다! \n(mp4, mov, wmv, avi, mkv, webm)"
@@ -67,7 +68,8 @@ function LectureRegister(): React.ReactElement {
     onDrop: (acceptedFiles: File[]) => {
       const isRightType = acceptedFiles
         .map((file: File) => file.type.replace("image/", ""))
-        .some((elem) => imgTypes.includes(elem));
+        .some((elem) => imgTypes.includes("." + elem));
+
       if (!isRightType || acceptedFiles.length > 1) {
         alert("이미지 파일 하나만 등록이 가능합니다! \n(jpg, png, jpeg, webp)");
       }
@@ -304,8 +306,6 @@ function LectureRegister(): React.ReactElement {
           >
             <MyRadio
               value="theory"
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
               testId="target1"
               {...register("targetAudience", { required: true })}
             >
@@ -314,8 +314,6 @@ function LectureRegister(): React.ReactElement {
             <MyRadio
               ml="2"
               value="training"
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
               testId="target2"
               {...register("targetAudience", { required: true })}
             >
@@ -340,8 +338,6 @@ function LectureRegister(): React.ReactElement {
           >
             <MyRadio
               value="upper"
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
               testId="difficulty1"
               {...register("lectureDifficulty", { required: true })}
             >
@@ -350,8 +346,6 @@ function LectureRegister(): React.ReactElement {
             <MyRadio
               ml="2"
               value="middle"
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
               testId="difficulty2"
               {...register("lectureDifficulty", { required: true })}
             >
@@ -360,8 +354,6 @@ function LectureRegister(): React.ReactElement {
             <MyRadio
               ml="2"
               value="lower"
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
               testId="difficulty3"
               {...register("lectureDifficulty", { required: true })}
             >
@@ -389,8 +381,6 @@ function LectureRegister(): React.ReactElement {
               <HStack w="100%" my="3">
                 <MyRadio
                   value="html"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories1"
                   {...register("categories", { required: true })}
                 >
@@ -399,8 +389,6 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   ml="2"
                   value="css"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories2"
                   {...register("categories", { required: true })}
                 >
@@ -409,8 +397,6 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   ml="2"
                   value="react"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories3"
                   {...register("categories", { required: true })}
                 >
@@ -419,8 +405,6 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   ml="2"
                   value="vue"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories4"
                   {...register("categories", { required: true })}
                 >
@@ -430,8 +414,6 @@ function LectureRegister(): React.ReactElement {
               <HStack w="100%">
                 <MyRadio
                   value="spring"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories5"
                   {...register("categories", { required: true })}
                 >
@@ -440,8 +422,6 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   ml="2"
                   value="django"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories6"
                   {...register("categories", { required: true })}
                 >
@@ -450,8 +430,6 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   ml="2"
                   value="swift"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories7"
                   {...register("categories", { required: true })}
                 >
@@ -460,8 +438,6 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   ml="2"
                   value="android"
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
                   testId="categories8"
                   {...register("categories", { required: true })}
                 >
