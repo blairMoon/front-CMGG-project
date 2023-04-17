@@ -8,7 +8,12 @@ export const lectureRegisterData = {
   lectureDifficulty: "upper",
   categories: "html",
   thumbnail: "img1",
-  videos: ["vidoe1", "vidoe2"],
-  videoTitle: ["vidoeTitle1", "vidoeTitle2"],
-  videoDescription: ["vidoeDescription1", "vidoeDescription2"],
+  videos: [
+    {
+      url: "vidoe1",
+      title: "vidoeTitle1",
+      description: "vidoeDescription1",
+    },
+    { url: "vidoe2", title: "vidoeTitle2", description: "vidoeDescription2" },
+  ],
 };
