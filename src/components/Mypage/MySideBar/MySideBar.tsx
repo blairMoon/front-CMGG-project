@@ -1,6 +1,13 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Box, HStack, Stack, Divider, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Stack,
+  Divider,
+  Avatar,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 import { FiSettings } from "react-icons/fi";
 
@@ -15,14 +22,14 @@ const MySideBar: React.FC = () => {
   const location = useLocation();
   const pathSegments = location.pathname.split("/");
   const lastSegment = pathSegments[pathSegments.length - 1];
-
+  const dividerColor = useColorModeValue("gray.300", "gray.700");
   return (
     <div>
       <Stack w="100%" fontWeight="600">
         <HStack px="5" py="2" fontSize="18px">
           <Box>마이 페이지</Box>
         </HStack>
-        <Divider />
+        <Divider color={dividerColor} />
         <HStack px="5" py="2">
           <Box>대시보드</Box>
         </HStack>
@@ -47,7 +54,7 @@ const MySideBar: React.FC = () => {
           <Box>학습 관리</Box>
         </HStack>
 
-        <Divider />
+        <Divider color={dividerColor} />
         <HStack px="5" py="2">
           <Box>수강 강의</Box>
         </HStack>
@@ -73,7 +80,7 @@ const MySideBar: React.FC = () => {
           <Box>수강중인 강의</Box>
         </HStack>
 
-        <Divider />
+        <Divider color={dividerColor} />
         <HStack px="5" py="2">
           <Box>수강신청 관리</Box>
         </HStack>
@@ -117,7 +124,7 @@ const MySideBar: React.FC = () => {
           <AiOutlineShoppingCart />
           <Box>수강바구니</Box>
         </HStack>
-        <Divider />
+        <Divider color={dividerColor} />
         <HStack px="5" py="2">
           <Box>회원정보 수정</Box>
         </HStack>

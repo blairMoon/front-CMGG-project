@@ -7,7 +7,6 @@ import {
   Divider,
   Text,
   RadioGroup,
-  Radio,
   HStack,
   Button,
   Input,
@@ -17,15 +16,23 @@ import {
   Image as ChakraImg,
 } from "@chakra-ui/react";
 
-import css from "./LectureRegister.module.scss";
 import { FieldValues, useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
+import { useMutation } from "@tanstack/react-query";
+
+import css from "./LectureRegister.module.scss";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { imgTypes, videoTypes } from "../../../constant";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
+import { postMockLecture } from "../../../services/mocks/api";
+import { MyRadio } from "../../Radio/MyRadio";
+//import { ILectureFormData } from "../../../../typings/LectureRegister";
 
-const LectureRegister: React.FC = () => {
+function LectureRegister(): React.ReactElement {
+  const [_img, setImg] = useState<string>("");
+  const [_videos, setVideos] = useState<string[]>([]);
+
   const {
     handleSubmit,
     register,
@@ -41,7 +48,7 @@ const LectureRegister: React.FC = () => {
     onDrop: (acceptedFiles: File[]) => {
       const isRightType = acceptedFiles
         .map((file: File) => file.type.replace("video/", ""))
-        .some((elem) => videoTypes.includes(elem));
+        .some((elem) => videoTypes.includes("." + elem));
 
       if (!isRightType) {
         alert(
@@ -61,7 +68,7 @@ const LectureRegister: React.FC = () => {
     onDrop: (acceptedFiles: File[]) => {
       const isRightType = acceptedFiles
         .map((file: File) => file.type.replace("image/", ""))
-        .some((elem) => imgTypes.includes(elem));
+        .some((elem) => imgTypes.includes("." + elem));
 
       if (!isRightType || acceptedFiles.length > 1) {
         alert("이미지 파일 하나만 등록이 가능합니다! \n(jpg, png, jpeg, webp)");
@@ -69,12 +76,29 @@ const LectureRegister: React.FC = () => {
     },
   });
 
-  const [_img, setImg] = useState<string>("");
-  const [_videos, setVideos] = useState<string[]>([]);
+  const registerMutate = useMutation<unknown, Error, FieldValues>(
+    postMockLecture,
+    {
+      onSuccess(data) {
+        console.log("success", data);
+      },
+      onError(error) {
+        console.log("fail", error);
+      },
+    }
+  );
 
   const onSubmit = (formData: FieldValues) => {
-    console.log("formData", formData);
-
+    console.log("formData", {
+      ...formData,
+      thumbnail: _img,
+      videos: _videos,
+    });
+    try {
+      registerMutate.mutate(formData);
+    } catch (e) {
+      alert("모든 내용을 입력하고 다시 시도해주세요.");
+    }
     // create image url => new Image(img,url) => imgUrl
     // create video url => new Video(video,url) => videoUrl
 
@@ -95,7 +119,7 @@ const LectureRegister: React.FC = () => {
     reader.readAsDataURL(file);
     return (
       <HStack alignItems={"flex-start"} key={idx}>
-        <ChakraImg w="50%" src={_img} />
+        <ChakraImg w="200px" h="150px" src={_img} />
         <Text>
           {file.name} - {file.size} bytes
         </Text>
@@ -134,7 +158,7 @@ const LectureRegister: React.FC = () => {
   return (
     <VStack alignItems={"flex-start"} ml="10">
       <Text fontWeight={"bold"} fontSize={"35px"} mb="10">
-        강의 등록하기
+        강의 등록
       </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "500px" }}>
         <FormControl
@@ -142,11 +166,14 @@ const LectureRegister: React.FC = () => {
           id={"lectureTitle"}
           mb="5"
         >
-          <FormLabel fontWeight={"bold"}>강의명</FormLabel>
+          <FormLabel fontWeight={"bold"} id="lectureTitle">
+            강의명
+          </FormLabel>
           <input
-            placeholder="강의명을 입력해주세요"
-            className={css.Input}
             type="text"
+            className={css.Input}
+            aria-labelledby="lectureTitle"
+            placeholder="강의명을 입력해주세요"
             {...register("lectureTitle", { required: true })}
           />
           <FormErrorMessage>{`${"강의명"}을 입력해주세요`}</FormErrorMessage>
@@ -156,11 +183,14 @@ const LectureRegister: React.FC = () => {
           id={"lectureFee"}
           my="5"
         >
-          <FormLabel fontWeight={"bold"}>가격</FormLabel>
+          <FormLabel fontWeight={"bold"} id={"lectureFee"}>
+            가격
+          </FormLabel>
           <input
-            placeholder="가격을 입력해주세요"
-            className={css.Input}
             type="number"
+            className={css.Input}
+            aria-labelledby="lectureFee"
+            placeholder="가격을 입력해주세요"
             {...register("lectureFee", { required: true })}
           />
           <FormErrorMessage>{`${"가격"}을 입력해주세요`}</FormErrorMessage>
@@ -170,22 +200,27 @@ const LectureRegister: React.FC = () => {
           id={"lectureDescription"}
           my="5"
         >
-          <FormLabel fontWeight={"bold"}>설명</FormLabel>
+          <FormLabel fontWeight={"bold"} id={"lectureDescription"}>
+            설명
+          </FormLabel>
           <input
-            placeholder="설명을 입력해주세요"
-            className={css.Input}
             type="text"
+            className={css.Input}
+            aria-labelledby="lectureDescription"
+            placeholder="설명을 입력해주세요"
             {...register("lectureDescription", { required: true })}
           />
           <FormErrorMessage>{`${"설명"}을 입력해주세요`}</FormErrorMessage>
         </FormControl>
         <Divider my="5" mt="10" />
         <FormControl
-          isInvalid={!!errors["lectureVideos"]}
-          id={"lectureVideos"}
+          isInvalid={!!errors["lectureImg"]}
+          id={"lectureImg"}
           my="8"
         >
-          <FormLabel fontWeight={"bold"}>대표 이미지 올리기</FormLabel>
+          <FormLabel fontWeight={"bold"} id={"lectureImg"}>
+            대표 이미지 올리기
+          </FormLabel>
           <VStack
             backgroundColor={"#fafafa"}
             border="1px dashed gray"
@@ -193,7 +228,7 @@ const LectureRegister: React.FC = () => {
             p="10"
             {...getImgRootProps({ className: "dropzone" })}
           >
-            <input {...getImgInputProps()} />
+            <input {...getImgInputProps()} aria-labelledby="lectureImg" />
             <p style={{ color: "#777" }}>
               이미지는 클릭 또는 드래그해서 올려주세요 <br />
               (jpg, png, jpeg, webp)
@@ -213,7 +248,9 @@ const LectureRegister: React.FC = () => {
           id={"lectureVideos"}
           my="8"
         >
-          <FormLabel fontWeight={"bold"}>영상 올리기</FormLabel>
+          <FormLabel fontWeight={"bold"} id={"lectureVideos"}>
+            영상 올리기
+          </FormLabel>
           <VStack
             backgroundColor={"#fafafa"}
             border="1px dashed gray"
@@ -221,7 +258,7 @@ const LectureRegister: React.FC = () => {
             p="10"
             {...getVideoRootProps({ className: "dropzone" })}
           >
-            <input {...getVideoInputProps()} />
+            <input {...getVideoInputProps()} aria-labelledby="lectureVideos" />
             <p style={{ color: "#777" }}>
               영상은 클릭 또는 드래그해서 올려주세요 <br /> (mp4, mov, wmv, avi,
               mkv, webm)
@@ -258,25 +295,30 @@ const LectureRegister: React.FC = () => {
           w="100%"
           my="7"
         >
-          <FormLabel fontWeight={"bold"}>목적</FormLabel>
-          <RadioGroup display={"flex"} pl="5" name="targetAudience">
-            <Radio
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
+          <FormLabel fontWeight={"bold"} id={"targetAudience"}>
+            목적
+          </FormLabel>
+          <RadioGroup
+            display={"flex"}
+            pl="5"
+            name="targetAudience"
+            aria-labelledby="targetAudience"
+          >
+            <MyRadio
               value="theory"
+              testId="target1"
               {...register("targetAudience", { required: true })}
             >
               이론
-            </Radio>
-            <Radio
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
+            </MyRadio>
+            <MyRadio
               ml="2"
               value="training"
+              testId="target2"
               {...register("targetAudience", { required: true })}
             >
               실습
-            </Radio>
+            </MyRadio>
           </RadioGroup>
           <FormErrorMessage>{`${"목적"}을 입력해주세요`}</FormErrorMessage>
         </FormControl>
@@ -285,129 +327,133 @@ const LectureRegister: React.FC = () => {
           id={"lectureDifficulty"}
           my="7"
         >
-          <FormLabel fontWeight={"bold"}>난이도</FormLabel>
-          <RadioGroup display={"flex"} pl="5" name="lectureDifficulty">
-            <Radio
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
+          <FormLabel fontWeight={"bold"} id={"lectureDifficulty"}>
+            난이도
+          </FormLabel>
+          <RadioGroup
+            pl="5"
+            display={"flex"}
+            name="lectureDifficulty"
+            aria-labelledby="lectureDifficulty"
+          >
+            <MyRadio
               value="upper"
+              testId="difficulty1"
               {...register("lectureDifficulty", { required: true })}
             >
               상
-            </Radio>
-            <Radio
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
-              value="middle"
+            </MyRadio>
+            <MyRadio
               ml="2"
+              value="middle"
+              testId="difficulty2"
               {...register("lectureDifficulty", { required: true })}
             >
               중
-            </Radio>
-            <Radio
-              width={`calc(100% / 3)`}
-              borderColor={"blackAlpha.600"}
-              value="lower"
+            </MyRadio>
+            <MyRadio
               ml="2"
+              value="lower"
+              testId="difficulty3"
               {...register("lectureDifficulty", { required: true })}
             >
               하
-            </Radio>
+            </MyRadio>
           </RadioGroup>
           <FormErrorMessage>{`${"난이도"}를 선택해주세요`}</FormErrorMessage>
         </FormControl>
         <FormControl
-          isInvalid={!!errors["lectureDifficulty"]}
-          id={"lectureDifficulty"}
+          isInvalid={!!errors["categories"]}
+          id={"categories"}
           my="7"
         >
-          <FormLabel fontWeight={"bold"}>카테고리</FormLabel>
-          <RadioGroup display={"flex"} pl="5" name="categories">
+          <FormLabel fontWeight={"bold"} htmlFor="categories" id="categories">
+            카테고리
+          </FormLabel>
+          <RadioGroup
+            pl="5"
+            id="categories"
+            display={"flex"}
+            name="categories"
+            aria-labelledby="categories"
+          >
             <VStack w="100%" alignItems={"flex-start"}>
               <HStack w="100%" my="3">
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
+                <MyRadio
                   value="html"
+                  testId="categories1"
                   {...register("categories", { required: true })}
                 >
                   HTML
-                </Radio>
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
-                  value="css"
+                </MyRadio>
+                <MyRadio
                   ml="2"
+                  value="css"
+                  testId="categories2"
                   {...register("categories", { required: true })}
                 >
                   CSS
-                </Radio>
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
-                  value="react"
+                </MyRadio>
+                <MyRadio
                   ml="2"
+                  value="react"
+                  testId="categories3"
                   {...register("categories", { required: true })}
                 >
                   REACT
-                </Radio>
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
-                  value="vue"
+                </MyRadio>
+                <MyRadio
                   ml="2"
+                  value="vue"
+                  testId="categories4"
                   {...register("categories", { required: true })}
                 >
                   VUE
-                </Radio>
+                </MyRadio>
               </HStack>
               <HStack w="100%">
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
+                <MyRadio
                   value="spring"
+                  testId="categories5"
                   {...register("categories", { required: true })}
                 >
                   SPRING
-                </Radio>
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
-                  value="django"
+                </MyRadio>
+                <MyRadio
                   ml="2"
+                  value="django"
+                  testId="categories6"
                   {...register("categories", { required: true })}
                 >
                   DJANGO
-                </Radio>
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
-                  value="swift"
+                </MyRadio>
+                <MyRadio
                   ml="2"
+                  value="swift"
+                  testId="categories7"
                   {...register("categories", { required: true })}
                 >
                   SWIFT
-                </Radio>
-                <Radio
-                  width={`calc(100% / 3)`}
-                  borderColor={"blackAlpha.600"}
-                  value="android"
+                </MyRadio>
+                <MyRadio
                   ml="2"
+                  value="android"
+                  testId="categories8"
                   {...register("categories", { required: true })}
                 >
                   ANDROID
-                </Radio>
+                </MyRadio>
               </HStack>
             </VStack>
           </RadioGroup>
-          <FormErrorMessage>{`${"난이도"}를 선택해주세요`}</FormErrorMessage>
+          <FormErrorMessage>{`${"카테고리"}를 선택해주세요`}</FormErrorMessage>
         </FormControl>
-        <Button type="submit" colorScheme="facebook" w="500px">
+        <Button w="500px" type="submit" colorScheme="facebook">
           등록하기
         </Button>
       </form>
     </VStack>
   );
-};
+}
 
 export default LectureRegister;
