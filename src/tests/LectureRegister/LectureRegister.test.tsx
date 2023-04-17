@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { lectureRegisterData } from "../../constant";
 import { handlers } from "../../services/mocks/handler";
 import { postMockLecture } from "../../services/mocks/api";
-import LectureRegister from "../../components/InstructorPage/LectureRegister/LectureRegister";
+import LectureRegister from "../../pages/InstructorPage/LectureRegister/LectureRegister";
 
 const queryClient = new QueryClient();
 const server = setupServer(...handlers);
