@@ -9,6 +9,21 @@ const SocialLogin = () => {
     response_type: "code",
   };
   const paramsKakao = new URLSearchParams(kakaoParams).toString();
+
+  // const googleParams = {
+  //   client_id: "69ba16ba77556c01d4a4ea9911fc06ad",
+  //   redirect_uri: "https://bangsam.site/social/kakao",
+  //   response_type: "code",
+  // };
+  // const paramsGoogle = new URLSearchParams(googleParams).toString();
+
+  // const githubParams = {
+  //   client_id: "69ba16ba77556c01d4a4ea9911fc06ad",
+  //   redirect_uri: "https://bangsam.site/social/kakao",
+  //   response_type: "code",
+  // };
+  // const ParamsGithub = new URLSearchParams(githubParams).toString();
+
   const naverParams = {
     response_type: "code",
     client_id: "1Vm0j0Ggt3_VZer8jmHA",

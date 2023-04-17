@@ -314,7 +314,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   <div className={css.DevContainer}>
                     <input
                       id="frontend"
-                      type="radio"
+                      type="checkbox"
                       value="frontend"
                       {...register("position", { required: false })}
                     />
@@ -329,7 +329,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       value="backend"
                       {...register("position", { required: false })}
                     />
-                    <label className={css.Devlabel} htmlFor="backend">
+                    <label htmlFor="backend" className={css.Devlabel}>
                       백엔드
                     </label>
                   </div>

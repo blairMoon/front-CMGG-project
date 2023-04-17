@@ -11,7 +11,8 @@ import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import Cookies from "js-cookie";
 import ModalBasic from "../../components/Modal/ModalBasic";
-
+import { useRecoilState } from "recoil";
+import { userState } from "../../atoms";
 type FormData = {
   username: string;
   password: string;
@@ -21,6 +22,7 @@ type FormData = {
 const Login: React.FC = () => {
   const [failLogin, setFailLogin] = useState<boolean | null>(null);
   const [click, setClick] = useState<boolean>(false);
+  const [user, setUser] = useRecoilState(userState);
   const navigate = useNavigate();
   const mutation = useMutation(userNameLogin, {
     onMutate: () => {
@@ -30,6 +32,8 @@ const Login: React.FC = () => {
       console.log("API CALL success...");
       setFailLogin(true);
       isLoggedInVar(true);
+      setUser(user);
+
       navigate("/");
       window.location.reload();
     },
@@ -124,7 +128,7 @@ const Login: React.FC = () => {
                 type="submit"
                 value="로그인"
                 _hover={{
-                  backgroundColor: "none",
+                  bg: "#012f70",
                 }}
                 className={css.Button}
                 onClick={() => {
