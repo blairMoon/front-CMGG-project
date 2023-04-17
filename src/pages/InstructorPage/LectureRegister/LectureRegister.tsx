@@ -26,8 +26,8 @@ import { imgTypes, videoTypes } from "../../../constant";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
 import { postMockLecture } from "../../../services/mocks/api";
-import { MyRadio } from "../../Radio/MyRadio";
-import { MyErrorText } from "../../Text/MyErrorText";
+import { MyRadio } from "../../../components/Radio/MyRadio";
+import { MyErrorText } from "../../../components/Text/MyErrorText";
 //import { ILectureFormData } from "../../../../typings/LectureRegister";
 
 function LectureRegister(): React.ReactElement {
