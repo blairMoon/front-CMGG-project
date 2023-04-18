@@ -1,13 +1,22 @@
 import css from "./CartItem.module.scss";
 import { TbLetterX } from "react-icons/tb";
-import { Box, HStack, Checkbox, Image, Text, Button } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Checkbox,
+  Image,
+  Text,
+  Button,
+  Flex,
+  Divider,
+} from "@chakra-ui/react";
 
 import React from "react";
 import { useRecoilState } from "recoil";
 
-import { Cart } from "../../../../../services/mocks/mock";
-import { delMockCarts } from "../../../../../services/mocks/api";
-import { cartSelectAllState, SelectCartItems } from "../../../../../atoms";
+import { Cart } from "../../../../services/mocks/mock";
+import { delMockCarts } from "../../../../services/mocks/api";
+import { cartSelectAllState, SelectCartItems } from "../../../../atoms";
 
 const CartItem: React.FC<Cart> = ({
   LectureId,
@@ -75,7 +84,7 @@ const CartItem: React.FC<Cart> = ({
 
   return (
     <div>
-      <Box w="100%" key={LectureId}>
+      <Box w="100%" key={LectureId} paddingBottom="30px" margin="0">
         <HStack
           key={LectureId}
           alignItems="flex-start"
@@ -85,8 +94,8 @@ const CartItem: React.FC<Cart> = ({
           my="1"
         >
           <Checkbox
-            size="md"
             borderColor="gray"
+            size="md"
             colorScheme={mainColor}
             isChecked={isCheck()}
             onChange={handleCheckboxChange}
@@ -97,8 +106,10 @@ const CartItem: React.FC<Cart> = ({
               <div className={css.cardCenter}>
                 <h3 className={css.cardTitle}>{lectureTitle}</h3>
                 <p className={css.cardDescription}>{lectureDifficulty}</p>
-                <Text fontSize="md" color="rgb(247 247 250)">
-                  {lectureFee}원
+                <Text fontSize="md">
+                  <Flex>
+                    <Text fontWeight="700">{lectureFee}</Text>원
+                  </Flex>
                 </Text>
               </div>
 
@@ -118,6 +129,7 @@ const CartItem: React.FC<Cart> = ({
           </div>
         </HStack>
       </Box>
+      <Divider color="rgb(226 232 241)" />
     </div>
   );
 };
