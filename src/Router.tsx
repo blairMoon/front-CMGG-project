@@ -42,10 +42,7 @@ const router = createBrowserRouter([
         path: "lectures/:id",
         element: <DetailPage />,
       },
-      {
-        path: "lectureplay/:lectureId/:num",
-        element: <LecturePlayerPage />,
-      },
+
       {
         path: "mypage",
         element: <MyInfoPage />,
@@ -113,6 +110,10 @@ const router = createBrowserRouter([
       //   ],
       // },
     ],
+  },
+  {
+    path: "lectureplay/:lectureId/:num",
+    element: <LecturePlayerPage />,
   },
 ]);
 

@@ -16,7 +16,7 @@ import { cartSelectAllState, SelectCartItems } from "../../../atoms";
 
 import { RequestPayment } from "./components/RequestPay";
 import { ILecture } from "../../../../typings/PaymentResult";
-import CartItem from "./components/CartItem";
+import CartItem from "./components/CartItem/CartItem";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 
 const MyCart: React.FC = () => {
@@ -27,6 +27,7 @@ const MyCart: React.FC = () => {
     instructor: new Array<string>(),
     total_price: 0,
   });
+  const mainColor = "#003c93;";
   const [cartItems, setCartItems] = useState<Carts>();
   const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
   const { isLoading } = useQuery(["carts"], getMockCarts, {
@@ -131,13 +132,11 @@ const MyCart: React.FC = () => {
             textAlign="center"
             boxShadow="0 5px 5px -5px"
           >
-            <Heading fontSize="27px" fontWeight="bold" mb="10">
-              수강바구니
-            </Heading>
             <Checkbox
-              size="lg"
+              fontSize="10px"
+              size="md"
               borderColor="gray"
-              colorScheme="green"
+              colorScheme={mainColor}
               isChecked={isAllCheck()}
               onChange={handleCheckboxChange}
             >
@@ -152,7 +151,7 @@ const MyCart: React.FC = () => {
               ))}
             </VStack>
           </HStack>
-          <Divider w="100%" />
+          <Divider />
           <VStack w="100%">
             <HStack
               pos="fixed"

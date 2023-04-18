@@ -1,13 +1,13 @@
-import "../MyCart.scss";
+import css from "./CartItem.module.scss";
 import { TbLetterX } from "react-icons/tb";
 import { Box, HStack, Checkbox, Image, Text, Button } from "@chakra-ui/react";
 
 import React from "react";
 import { useRecoilState } from "recoil";
 
-import { Cart } from "../../../../services/mocks/mock";
-import { delMockCarts } from "../../../../services/mocks/api";
-import { cartSelectAllState, SelectCartItems } from "../../../../atoms";
+import { Cart } from "../../../../../services/mocks/mock";
+import { delMockCarts } from "../../../../../services/mocks/api";
+import { cartSelectAllState, SelectCartItems } from "../../../../../atoms";
 
 const CartItem: React.FC<Cart> = ({
   LectureId,
@@ -23,7 +23,7 @@ const CartItem: React.FC<Cart> = ({
     console.log(LectureId);
     delMockCarts({ LectureId });
   };
-
+  const mainColor = "#003c93;";
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedItems((items: SelectCartItems) => {
       let nextTotalPrice = items.total_price;
@@ -74,7 +74,7 @@ const CartItem: React.FC<Cart> = ({
     selectedItems.id.includes(LectureId) ? true : false;
 
   return (
-    <>
+    <div>
       <Box w="100%" key={LectureId}>
         <HStack
           key={LectureId}
@@ -85,24 +85,24 @@ const CartItem: React.FC<Cart> = ({
           my="1"
         >
           <Checkbox
-            size="lg"
+            size="md"
             borderColor="gray"
-            colorScheme="green"
+            colorScheme={mainColor}
             isChecked={isCheck()}
             onChange={handleCheckboxChange}
           />
-          <div className="card">
-            <Image src={thumbnail} alt="Card Image" />
+          <div className={css.card}>
+            <Image src={thumbnail} alt="Card Image" className={css.img} />
             <HStack w="100%" justifyContent="space-between">
-              <div className="card-center">
-                <h3 className="card-title">{lectureTitle}</h3>
-                <p className="card-description">{lectureDifficulty}</p>
-                <Text fontSize="md" color="gray.500">
+              <div className={css.cardCenter}>
+                <h3 className={css.cardTitle}>{lectureTitle}</h3>
+                <p className={css.cardDescription}>{lectureDifficulty}</p>
+                <Text fontSize="md" color="rgb(247 247 250)">
                   {lectureFee}원
                 </Text>
               </div>
 
-              <div className="card-right">
+              <div className={css.cardRight}>
                 <Button
                   size={"lg"}
                   backgroundColor="transparent"
@@ -118,7 +118,7 @@ const CartItem: React.FC<Cart> = ({
           </div>
         </HStack>
       </Box>
-    </>
+    </div>
   );
 };
 
