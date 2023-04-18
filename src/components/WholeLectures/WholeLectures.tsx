@@ -6,7 +6,6 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-import { GrPowerReset } from "react-icons/gr";
 import {
   Box,
   Grid,
