@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HStack, Box } from "@chakra-ui/react";
+import { HStack, Box, useColorMode } from "@chakra-ui/react";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 
 interface Props {
@@ -15,6 +15,7 @@ const VideoList: React.FC<Props> = ({ videoLength, videoTitle }) => {
   const displayTime = `${minutes < 10 ? "0" : ""}${minutes}:${
     seconds < 10 ? "0" : ""
   }${seconds}`; // 1:05와 같은 형태로 표시
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <div>
@@ -28,7 +29,7 @@ const VideoList: React.FC<Props> = ({ videoLength, videoTitle }) => {
           bg="rgba(238,238,238,0.3)"
           my="1"
           fontWeight="bold"
-          color="#575757"
+          color={colorMode === "light" ? "#575757" : "#eee"}
         >
           <HStack>
             <Box>
