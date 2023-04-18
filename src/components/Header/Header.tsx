@@ -25,6 +25,7 @@ import {
   MenuItem,
   MenuGroup,
   MenuList,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { FiSettings } from "react-icons/fi";
@@ -57,6 +58,7 @@ export default function WithSubnavigation() {
   const [isOpenToggle, setIsOpenToggle] = useState(false);
   const [context, setContext] = useState("");
   const dividerColor = useColorModeValue("gray.300", "gray.700");
+  const { colorMode, toggleColorMode } = useColorMode();
   const handleMouseEnter = () => {
     setIsOpenToggle(true);
   };
@@ -199,6 +201,25 @@ export default function WithSubnavigation() {
               direction="row"
               spacing={6}
             >
+              <IconButton
+                icon={
+                  colorMode === "light" ? (
+                    <div>🌙&nbsp; Dark</div>
+                  ) : (
+                    <div>🌞&nbsp; Light</div>
+                  )
+                }
+                px="3"
+                fontSize="13px"
+                aria-label="Toggle color mode"
+                onClick={toggleColorMode}
+                marginLeft="1rem"
+                _hover={
+                  colorMode === "light"
+                    ? { backgroundColor: "#333", color: "#eee" }
+                    : { backgroundColor: "#eee", color: "#333" }
+                }
+              />
               {token ? (
                 <Flex>
                   <a href="/mypage/cart">

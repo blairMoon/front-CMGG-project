@@ -26,16 +26,19 @@ import { imgTypes, videoTypes } from "../../../constant";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
 import { postMockLecture } from "../../../services/mocks/api";
-import { MyRadio } from "../../Radio/MyRadio";
+import { MyRadio } from "../../../components/Radio/MyRadio";
+import { MyErrorText } from "../../../components/Text/MyErrorText";
 //import { ILectureFormData } from "../../../../typings/LectureRegister";
 
 function LectureRegister(): React.ReactElement {
   const [_img, setImg] = useState<string>("");
   const [_videos, setVideos] = useState<string[]>([]);
+  const [submitFlag, setSubmitFlag] = useState(false);
 
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -94,11 +97,8 @@ function LectureRegister(): React.ReactElement {
       thumbnail: _img,
       videos: _videos,
     });
-    try {
-      registerMutate.mutate(formData);
-    } catch (e) {
-      alert("모든 내용을 입력하고 다시 시도해주세요.");
-    }
+    registerMutate.mutate(formData);
+
     // create image url => new Image(img,url) => imgUrl
     // create video url => new Video(video,url) => videoUrl
 
@@ -134,19 +134,39 @@ function LectureRegister(): React.ReactElement {
           {file.name} - {file.size} bytes
         </Text>
         <Input
-          placeholder="제목을 입력해주세요"
-          className={css.Input}
           mt="4"
           mb="1"
           type="text"
-          {...register(`videoTitle[${idx}]`, { required: true })}
+          maxLength={30}
+          placeholder="제목을 입력해주세요"
+          className={css.Input}
+          {...register(`videoTitle[${idx}]`, {
+            required: { value: true, message: "제목을 입력해주세요" },
+            maxLength: {
+              value: 30,
+              message: "최대 30 자까지 가능합니다",
+            },
+          })}
         />
+        {submitFlag && !watch(`videoTitle[${idx}]`) ? (
+          <MyErrorText message="제목을 입력해주세요" />
+        ) : null}
         <Input
+          type="text"
+          maxLength={300}
           placeholder="설명을 입력해주세요"
           className={css.Input}
-          type="text"
-          {...register(`videoDescription[${idx}]`, { required: true })}
+          {...register(`videoDescription[${idx}]`, {
+            required: { value: true, message: "설명을 입력해주세요" },
+            maxLength: {
+              value: 300,
+              message: "최대 300 자까지 가능합니다",
+            },
+          })}
         />
+        {submitFlag && !watch(`videoDescription[${idx}]`) ? (
+          <MyErrorText message="설명을 입력해주세요" />
+        ) : null}
       </Box>
     );
   });
@@ -167,16 +187,25 @@ function LectureRegister(): React.ReactElement {
           mb="5"
         >
           <FormLabel fontWeight={"bold"} id="lectureTitle">
-            강의명
+            강의명 ({`${watch("lectureTitle")?.length} / 30`})
           </FormLabel>
           <input
             type="text"
             className={css.Input}
             aria-labelledby="lectureTitle"
             placeholder="강의명을 입력해주세요"
-            {...register("lectureTitle", { required: true })}
+            maxLength={30}
+            {...register("lectureTitle", {
+              required: { value: true, message: "강의명을 입력해주세요" },
+              maxLength: { value: 30, message: "최대 30 자까지 가능합니다" },
+            })}
           />
-          <FormErrorMessage>{`${"강의명"}을 입력해주세요`}</FormErrorMessage>
+          {errors["lectureTitle"] && (
+            <FormErrorMessage>
+              {typeof errors["lectureTitle"].message === "string" &&
+                errors["lectureTitle"].message}
+            </FormErrorMessage>
+          )}
         </FormControl>
         <FormControl
           isInvalid={!!errors["lectureFee"]}
@@ -191,9 +220,21 @@ function LectureRegister(): React.ReactElement {
             className={css.Input}
             aria-labelledby="lectureFee"
             placeholder="가격을 입력해주세요"
-            {...register("lectureFee", { required: true })}
+            {...register("lectureFee", {
+              required: { value: true, message: "가격을 입력해주세요" },
+              min: { value: 0, message: "최소 0원 이상부터 등록 가능합니다" },
+              max: {
+                value: 1000000,
+                message: "최대 100만원까지 등록 가능합니다",
+              },
+            })}
           />
-          <FormErrorMessage>{`${"가격"}을 입력해주세요`}</FormErrorMessage>
+          {errors["lectureFee"] && (
+            <FormErrorMessage>
+              {typeof errors["lectureFee"].message === "string" &&
+                errors["lectureFee"].message}
+            </FormErrorMessage>
+          )}
         </FormControl>
         <FormControl
           isInvalid={!!errors["lectureDescription"]}
@@ -201,16 +242,27 @@ function LectureRegister(): React.ReactElement {
           my="5"
         >
           <FormLabel fontWeight={"bold"} id={"lectureDescription"}>
-            설명
+            설명 ({`${watch("lectureDescription")?.length} / 1000`})
           </FormLabel>
-          <input
-            type="text"
-            className={css.Input}
+          <textarea
+            className={css.TextArea}
             aria-labelledby="lectureDescription"
             placeholder="설명을 입력해주세요"
-            {...register("lectureDescription", { required: true })}
+            maxLength={1000}
+            {...register("lectureDescription", {
+              required: { value: true, message: "설명을 입력해주세요" },
+              maxLength: {
+                value: 1000,
+                message: "최대 1000 자까지 가능합니다",
+              },
+            })}
           />
-          <FormErrorMessage>{`${"설명"}을 입력해주세요`}</FormErrorMessage>
+          {errors["lectureDescription"] && (
+            <FormErrorMessage>
+              {typeof errors["lectureDescription"].message === "string" &&
+                errors["lectureDescription"].message}
+            </FormErrorMessage>
+          )}
         </FormControl>
         <Divider my="5" mt="10" />
         <FormControl
@@ -240,7 +292,11 @@ function LectureRegister(): React.ReactElement {
             </Text>
             {img}
           </aside>
-          <FormErrorMessage>{`${"이미지"}를 등록해주세요`}</FormErrorMessage>
+          {!submitFlag
+            ? null
+            : !(_img.length > 0) && (
+                <MyErrorText message="대표 이미지를 등록해주세요" />
+              )}
         </FormControl>
         <Divider my="5" />
         <FormControl
@@ -265,7 +321,7 @@ function LectureRegister(): React.ReactElement {
             </p>
           </VStack>
           <aside>
-            <Text fontWeight={"bold"} mt="6">
+            <Text fontWeight={"bold"} mt="6" mb="2">
               영상파일 ({videoFiles?.length})
             </Text>
             <List>
@@ -286,7 +342,11 @@ function LectureRegister(): React.ReactElement {
               })}
             </List>
           </aside>
-          <FormErrorMessage>{`${"영상"}을 등록해주세요`}</FormErrorMessage>
+          {!submitFlag
+            ? null
+            : _videos.length <= 0 && (
+                <MyErrorText message="강의 영상을 등록해주세요" />
+              )}
         </FormControl>
         <Divider my="5" />
         <FormControl
@@ -320,7 +380,7 @@ function LectureRegister(): React.ReactElement {
               실습
             </MyRadio>
           </RadioGroup>
-          <FormErrorMessage>{`${"목적"}을 입력해주세요`}</FormErrorMessage>
+          <FormErrorMessage>{`${"목적"}을 선택해주세요`}</FormErrorMessage>
         </FormControl>
         <FormControl
           isInvalid={!!errors["lectureDifficulty"]}
@@ -337,27 +397,35 @@ function LectureRegister(): React.ReactElement {
             aria-labelledby="lectureDifficulty"
           >
             <MyRadio
-              value="upper"
+              value="start"
               testId="difficulty1"
               {...register("lectureDifficulty", { required: true })}
             >
-              상
-            </MyRadio>
-            <MyRadio
-              ml="2"
-              value="middle"
-              testId="difficulty2"
-              {...register("lectureDifficulty", { required: true })}
-            >
-              중
+              입문
             </MyRadio>
             <MyRadio
               ml="2"
               value="lower"
+              testId="difficulty2"
+              {...register("lectureDifficulty", { required: true })}
+            >
+              초급
+            </MyRadio>
+            <MyRadio
+              ml="2"
+              value="middle"
               testId="difficulty3"
               {...register("lectureDifficulty", { required: true })}
             >
-              하
+              중급
+            </MyRadio>
+            <MyRadio
+              ml="2"
+              value="upper"
+              testId="difficulty4"
+              {...register("lectureDifficulty", { required: true })}
+            >
+              고급
             </MyRadio>
           </RadioGroup>
           <FormErrorMessage>{`${"난이도"}를 선택해주세요`}</FormErrorMessage>
@@ -448,7 +516,12 @@ function LectureRegister(): React.ReactElement {
           </RadioGroup>
           <FormErrorMessage>{`${"카테고리"}를 선택해주세요`}</FormErrorMessage>
         </FormControl>
-        <Button w="500px" type="submit" colorScheme="facebook">
+        <Button
+          w="500px"
+          type="submit"
+          colorScheme="facebook"
+          onClick={() => setSubmitFlag(true)}
+        >
           등록하기
         </Button>
       </form>
