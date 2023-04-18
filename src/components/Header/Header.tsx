@@ -212,6 +212,13 @@ export default function WithSubnavigation() {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                <button
+                  onClick={() =>
+                    window.open("http://localhost:3000/admin", "_blank")
+                  }
+                >
+                  AdminPage
+                </button>
               </Flex>
             </Flex>
 
