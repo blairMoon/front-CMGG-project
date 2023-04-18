@@ -20,12 +20,15 @@ import {
   Button,
   Divider,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import ModalLecture from "../../components/Modal/ModalLecture";
 // import StartButton from "../../components/Button/StartButton";
 import { useNavigate } from "react-router-dom";
 import VideoList from "../../components/DetailLectures/VideoIndex/VideoIndex";
+import { hsl, parseToHsl, rgb } from "polished";
+import { HslColor } from "polished/lib/types/color";
 
 interface Props {}
 
@@ -107,6 +110,14 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
   //   },
   // });
   const [loadMoreCount, setLoadMoreCount] = useState(0);
+  const { colorMode, toggleColorMode } = useColorMode();
+  const hslaColor: HslColor = parseToHsl(rgb(240, 245, 252));
+
+  // L 값을 10% 낮춤
+  const darkerColor = hsl({
+    ...hslaColor,
+    lightness: hslaColor.lightness - 0.7,
+  });
 
   const handleLoadMore = () => {
     setLoadMoreCount(loadMoreCount + 1);
@@ -151,7 +162,7 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
                   "reviews"`}
         >
           <GridItem
-            bg="#f0f5fc"
+            bgColor={colorMode === "light" ? rgb(240, 245, 252) : darkerColor}
             borderRadius="3xl"
             h="400px"
             area={"info"}

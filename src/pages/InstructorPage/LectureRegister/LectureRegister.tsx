@@ -14,11 +14,12 @@ import {
   ListItem,
   Box,
   Image as ChakraImg,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { FieldValues, useForm } from "react-hook-form";
-import { useDropzone } from "react-dropzone";
 import { useMutation } from "@tanstack/react-query";
+import { useDropzone } from "react-dropzone";
 
 import css from "./LectureRegister.module.scss";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
@@ -34,6 +35,7 @@ function LectureRegister(): React.ReactElement {
   const [_img, setImg] = useState<string>("");
   const [_videos, setVideos] = useState<string[]>([]);
   const [submitFlag, setSubmitFlag] = useState(false);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const {
     handleSubmit,
@@ -139,7 +141,7 @@ function LectureRegister(): React.ReactElement {
           type="text"
           maxLength={30}
           placeholder="제목을 입력해주세요"
-          className={css.Input}
+          className={colorMode === "light" ? css.Input : css.DarkInput}
           {...register(`videoTitle[${idx}]`, {
             required: { value: true, message: "제목을 입력해주세요" },
             maxLength: {
@@ -155,7 +157,7 @@ function LectureRegister(): React.ReactElement {
           type="text"
           maxLength={300}
           placeholder="설명을 입력해주세요"
-          className={css.Input}
+          className={colorMode === "light" ? css.Input : css.DarkInput}
           {...register(`videoDescription[${idx}]`, {
             required: { value: true, message: "설명을 입력해주세요" },
             maxLength: {
@@ -191,7 +193,7 @@ function LectureRegister(): React.ReactElement {
           </FormLabel>
           <input
             type="text"
-            className={css.Input}
+            className={colorMode === "light" ? css.Input : css.DarkInput}
             aria-labelledby="lectureTitle"
             placeholder="강의명을 입력해주세요"
             maxLength={30}
@@ -217,7 +219,7 @@ function LectureRegister(): React.ReactElement {
           </FormLabel>
           <input
             type="number"
-            className={css.Input}
+            className={colorMode === "light" ? css.Input : css.DarkInput}
             aria-labelledby="lectureFee"
             placeholder="가격을 입력해주세요"
             {...register("lectureFee", {
@@ -245,7 +247,7 @@ function LectureRegister(): React.ReactElement {
             설명 ({`${watch("lectureDescription")?.length} / 1000`})
           </FormLabel>
           <textarea
-            className={css.TextArea}
+            className={colorMode === "light" ? css.TextArea : css.DarkTextArea}
             aria-labelledby="lectureDescription"
             placeholder="설명을 입력해주세요"
             maxLength={1000}
