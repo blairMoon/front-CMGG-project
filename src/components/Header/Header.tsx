@@ -160,6 +160,15 @@ export default function WithSubnavigation() {
                         ? "blackAlpha.800"
                         : "blackAlpha.800"
                     }
+                    _placeholder={
+                      colorMode === "light"
+                        ? {
+                            color: "rgb(155, 155, 155)",
+                          }
+                        : {
+                            color: "rgb(155, 155, 155)",
+                          }
+                    }
                     _focus={{ outline: "none" }}
                     borderRadius="2xl"
                     onChange={(e) => {
