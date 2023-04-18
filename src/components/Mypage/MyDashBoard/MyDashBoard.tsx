@@ -1,9 +1,12 @@
 import React from "react";
+import LangChart, { data } from "../../LangChart/LangChart";
 
-interface Props {}
-
-const MyDashBoard: React.FC<Props> = (props: Props) => {
-  return <div>MyDashBoard</div>;
+const MyDashBoard: React.FC = () => {
+  return (
+    <div>
+      <LangChart data={data} />
+    </div>
+  );
 };
 
 export default MyDashBoard;
