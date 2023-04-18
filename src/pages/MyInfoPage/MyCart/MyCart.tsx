@@ -14,7 +14,7 @@ import { getMockCarts } from "../../../services/mocks/api";
 import { Cart, Carts } from "../../../services/mocks/mock";
 import { cartSelectAllState, SelectCartItems } from "../../../atoms";
 
-import { RequestPayment } from "../../../pages/MyInfoPage/MyCart/components/RequestPay";
+import { RequestPayment } from "./components/RequestPay";
 import { ILecture } from "../../../../typings/PaymentResult";
 import CartItem from "./components/CartItem/CartItem";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";

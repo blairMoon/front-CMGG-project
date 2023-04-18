@@ -25,6 +25,7 @@ import {
   MenuItem,
   MenuGroup,
   MenuList,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { FiSettings } from "react-icons/fi";
@@ -57,6 +58,7 @@ export default function WithSubnavigation() {
   const [isOpenToggle, setIsOpenToggle] = useState(false);
   const [context, setContext] = useState("");
   const dividerColor = useColorModeValue("gray.300", "gray.700");
+  const { colorMode, toggleColorMode } = useColorMode();
   const handleMouseEnter = () => {
     setIsOpenToggle(true);
   };
@@ -151,7 +153,16 @@ export default function WithSubnavigation() {
                     type="text"
                     className="Input"
                     border="none"
-                    backgroundColor="rgb(247 247 250)"
+                    backgroundColor={
+                      colorMode === "light"
+                        ? "rgb(247 247 250)"
+                        : "rgb(247 247 250)"
+                    }
+                    color={
+                      colorMode === "light"
+                        ? "blackAlpha.800"
+                        : "blackAlpha.800"
+                    }
                     _focus={{ outline: "none" }}
                     borderRadius="2xl"
                     onChange={(e) => {
@@ -202,6 +213,25 @@ export default function WithSubnavigation() {
               direction="row"
               spacing={6}
             >
+              <IconButton
+                icon={
+                  colorMode === "light" ? (
+                    <div>🌙&nbsp; Dark</div>
+                  ) : (
+                    <div>🌞&nbsp; Light</div>
+                  )
+                }
+                px="3"
+                fontSize="13px"
+                aria-label="Toggle color mode"
+                onClick={toggleColorMode}
+                marginLeft="1rem"
+                _hover={
+                  colorMode === "light"
+                    ? { backgroundColor: "#333", color: "#eee" }
+                    : { backgroundColor: "#eee", color: "#333" }
+                }
+              />
               {token ? (
                 <Flex>
                   <BsPlay

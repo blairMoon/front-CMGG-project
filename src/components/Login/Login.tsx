@@ -7,7 +7,15 @@ import { getAccessToken, getRefreshToken } from "../../services/Token";
 import { userNameLogin } from "../../services/api";
 import { postRefreshToken } from "../../services/api";
 import { useMutation } from "@tanstack/react-query";
-import { Box, Button, Divider, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  HStack,
+  Text,
+  VStack,
+  useColorMode,
+} from "@chakra-ui/react";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import Cookies from "js-cookie";
 import ModalBasic from "../../components/Modal/ModalBasic";
@@ -21,6 +29,8 @@ type FormData = {
 const Login: React.FC = () => {
   const [failLogin, setFailLogin] = useState<boolean | null>(null);
   const [click, setClick] = useState<boolean>(false);
+  const { colorMode, toggleColorMode } = useColorMode();
+
   const navigate = useNavigate();
   const mutation = useMutation(userNameLogin, {
     onMutate: () => {
@@ -83,7 +93,9 @@ const Login: React.FC = () => {
               {/* <form className={css.Form}> */}
               <div>
                 <input
-                  className={css.IdPassword}
+                  className={
+                    colorMode === "light" ? css.IdPassword : css.DarkIdPassword
+                  }
                   placeholder="아이디"
                   type="text"
                   {...register("username", {
@@ -100,7 +112,9 @@ const Login: React.FC = () => {
               </div>
               <div>
                 <input
-                  className={css.IdPassword}
+                  className={
+                    colorMode === "light" ? css.IdPassword : css.DarkIdPassword
+                  }
                   placeholder="비밀번호"
                   type="password"
                   {...register("password", {

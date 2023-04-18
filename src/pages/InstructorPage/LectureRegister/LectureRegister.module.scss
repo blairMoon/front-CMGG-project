@@ -6,10 +6,40 @@
   border: 0.5px solid rgb(219, 219, 219);
 
   box-sizing: border-box;
-  // max-width: 0px;
 }
 .Input:focus {
   outline-color: #003c93;
+}
+
+.DarkInput {
+  @extend .Input;
+  color: rgb(49, 49, 49);
+  &::placeholder {
+    color: rgb(119, 119, 119);
+  }
+}
+
+.TextArea {
+  width: 100%;
+  height: 100px;
+  border-radius: 3px;
+  padding: 13px;
+  background-color: #fafafa;
+  border: 0.5px solid rgb(219, 219, 219);
+
+  box-sizing: border-box;
+  resize: none;
+}
+.TextArea:focus {
+  outline-color: #003c93;
+}
+
+.DarkTextArea {
+  @extend .TextArea;
+  color: rgb(49, 49, 49);
+  &::placeholder {
+    color: rgb(49, 49, 49);
+  }
 }
 
 .Button {
