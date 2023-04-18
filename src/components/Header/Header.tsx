@@ -150,7 +150,16 @@ export default function WithSubnavigation() {
                     type="text"
                     className="Input"
                     border="none"
-                    backgroundColor="rgb(247 247 250)"
+                    backgroundColor={
+                      colorMode === "light"
+                        ? "rgb(247 247 250)"
+                        : "rgb(247 247 250)"
+                    }
+                    color={
+                      colorMode === "light"
+                        ? "blackAlpha.800"
+                        : "blackAlpha.800"
+                    }
                     _focus={{ outline: "none" }}
                     borderRadius="2xl"
                     onChange={(e) => {

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useForm, RegisterOptions } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { Select } from "@chakra-ui/react";
+import { Select, useColorMode } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
 
 import css from "../Signup/Signup.module.scss";
@@ -41,6 +41,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const [signUpSuccess, setSignUpSuccess] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const mutation = useMutation<UserData, unknown, UserData>(
     (data: UserData) => signUpUser(data),
@@ -120,7 +121,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <img src="/images/logo.png" alt="logo" width="200" />
             </h2>
 
-            <h1 className={css.h1}>회원가입</h1>
+            <h1 className={colorMode === "light" ? css.h1 : css.darkH1}>
+              회원가입
+            </h1>
             <form className={css.Form} onSubmit={handleSubmit(submitForm)}>
               {/* <form className={css.Form}> */}
               <h6 className={css.h6}>모든 값은 필수입력 값입니다.</h6>
@@ -128,13 +131,17 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <div className={css.buttonflex}>
                 <input
                   placeholder="아이디를 입력해주세용"
-                  className={css.Input}
+                  className={colorMode === "light" ? css.Input : css.DarkInput}
                   {...register("username", usernameRegisterOptions)}
                 />
 
                 <button
                   type="button"
-                  className={css.checkButton}
+                  className={
+                    colorMode === "light"
+                      ? css.checkButton
+                      : css.darkCheckButton
+                  }
                   onClick={() => checkUsename(watch("username"))}
                 >
                   아이디 <br />
@@ -159,7 +166,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 placeholder="비밀번호를 입력해주세용"
                 type="password"
                 autoComplete="off"
-                className={css.Input}
+                className={colorMode === "light" ? css.Input : css.DarkInput}
                 {...register("password", {
                   required: true,
                   pattern:
@@ -180,7 +187,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 placeholder="비밀번호를 한번 더 치세용"
                 type="password"
                 autoComplete="off"
-                className={css.Input}
+                className={colorMode === "light" ? css.Input : css.DarkInput}
                 {...register("passwordCheck", {
                   required: true,
                   validate: {
@@ -200,7 +207,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <label className={css.label}>이름</label>
               <input
                 placeholder="이름을 입력해주세용"
-                className={css.Input}
+                className={colorMode === "light" ? css.Input : css.DarkInput}
                 {...register("name", { required: true })}
               />
               {errors.name && (
@@ -210,7 +217,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <label className={css.label}>생년월일</label>
               <input
                 type="date"
-                className={css.Input}
+                className={colorMode === "light" ? css.Input : css.DarkInput}
                 {...register("dateBirth", { required: true })}
               />
               {errors.dateBirth && (
@@ -248,7 +255,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <input
                 placeholder="전화번호를 입력해주세용"
                 type="tel"
-                className={css.Input}
+                className={colorMode === "light" ? css.Input : css.DarkInput}
                 {...register("phoneNumber", { required: true })}
               />
               {errors.phoneNumber && (
@@ -261,7 +268,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <input
                 placeholder="이메일를 입력해주세용"
                 type="text"
-                className={css.Input}
+                className={colorMode === "light" ? css.Input : css.DarkInput}
                 {...register("email", {
                   required: true,
                   pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
