@@ -288,7 +288,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                   </div>
                   <div>
                     <Select
-                      placeholder="medium size"
+                      placeholder="엄마가 시켜서"
                       size="md"
                       width="400px"
                       marginTop="30px"
@@ -344,7 +344,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       풀스택
                     </label>
                   </div>
-                  <div className={css.DevContainer}>
+                  {/* <div className={css.DevContainer}>
                     <input
                       id="game"
                       type="checkbox"
@@ -354,7 +354,9 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     <label className={css.Devlabel} htmlFor="game">
                       게임
                     </label>
-                  </div>
+                  </div> */}
+                </div>
+                <div>
                   <div className={css.DevContainer}>
                     <input
                       id="android"
@@ -366,8 +368,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       안드로이드
                     </label>
                   </div>
-                </div>
-                <div>
+
                   <div className={css.DevContainer}>
                     <input
                       id="ios"
@@ -390,6 +391,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       웹 퍼블리셔
                     </label>
                   </div>
+                </div>
+                <div>
                   <div className={css.DevContainer}>
                     <input
                       id="data"
@@ -550,7 +553,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     {...register("skill", { required: false })}
                   />
                   <label htmlFor="high" className={css.genderlabel}>
-                    상
+                    입문
                   </label>
                 </div>
                 <div className={css.LevelContainer}>
@@ -561,7 +564,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     {...register("skill", { required: false })}
                   />
                   <label className={css.Levellabel} htmlFor="middle">
-                    중
+                    초급
                   </label>
                 </div>
                 <div className={css.LevelContainer}>
@@ -572,7 +575,18 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     {...register("skill", { required: false })}
                   />
                   <label className={css.Levellabel} htmlFor="low">
-                    하
+                    중급
+                  </label>
+                </div>
+                <div className={css.LevelContainer}>
+                  <input
+                    id="low"
+                    type="radio"
+                    value="low"
+                    {...register("skill", { required: false })}
+                  />
+                  <label className={css.Levellabel} htmlFor="low">
+                    고급
                   </label>
                 </div>
               </div>

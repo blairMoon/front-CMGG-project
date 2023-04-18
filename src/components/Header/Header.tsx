@@ -301,6 +301,7 @@ export default function WithSubnavigation() {
                             <FiLogOut
                               size={16}
                               style={{ marginRight: "10px" }}
+                              onClick={handleLogout}
                             />
                             로그아웃
                           </MenuItem>
