@@ -3,13 +3,17 @@ import Highcharts, { SeriesLineOptions } from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { useColorMode } from "@chakra-ui/react";
 
-const StockChart: React.FC = () => {
+interface StockProps {
+  names: string[];
+  data?: [];
+}
+
+const StockChart: React.FC<StockProps> = ({ names, data }) => {
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({});
   const { colorMode } = useColorMode();
 
   useEffect(() => {
     const seriesOptions: SeriesLineOptions[] = [];
-    const names = ["MSFT", "AAPL", "GOOG"];
     const colors = ["rgb(254,215,0)", "rgb(10,246,213)", "rgb(190,20,248)"];
     const success = (name: string, data: any) => {
       const i = names.indexOf(name);

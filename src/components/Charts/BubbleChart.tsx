@@ -35,7 +35,7 @@ const PackedBubbleChart: React.FC<PackedBubbleChartProps> = ({ id }) => {
       backgroundColor: "transparent",
     },
     title: {
-      text: "CMGG 의 선호하는 언어",
+      text: "CMGG 회원의 선호하는 언어 비율",
       align: "left",
       style: {
         color: colorMode === "light" ? "black" : "white",

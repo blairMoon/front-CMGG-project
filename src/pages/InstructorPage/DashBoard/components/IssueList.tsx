@@ -17,12 +17,7 @@ const IssueList: React.FC<IssueListProps> = ({ issues }) => {
           Issues
         </Text>
         {issues.map((issue) => (
-          <Box
-            key={issue.id}
-            borderWidth="1px"
-            borderRadius="lg"
-            padding="1rem"
-          >
+          <Box key={issue.id} borderWidth="1px" borderRadius="lg" px="3" py="2">
             <Text fontWeight="bold">{issue.title}</Text>
             <Text fontSize="sm" color="gray.500">
               {issue.description}

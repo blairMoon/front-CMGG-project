@@ -16,6 +16,8 @@ const Dashboard: React.FC = () => {
   const issues = [
     { id: 1, title: "Issue 1", description: "This is a sample issue." },
     { id: 2, title: "Issue 2", description: "This is another sample issue." },
+    { id: 3, title: "Issue 3", description: "This is another sample issue." },
+    { id: 4, title: "Issue 4", description: "This is another sample issue." },
   ];
 
   const radarData = [
@@ -66,6 +68,8 @@ const Dashboard: React.FC = () => {
     },
   ];
 
+  const stockNames = ["MSFT", "AAPL", "GOOG"];
+
   return (
     <Box>
       <Navbar />
@@ -73,7 +77,7 @@ const Dashboard: React.FC = () => {
         <Grid templateColumns="repeat(3, 1fr)" gap={6} mb="2rem">
           <GridItem>
             <DashboardCard
-              title="총 수강자"
+              title="총 수강생"
               value="1,023"
               bgColor="rgb(254,215,215)"
             />
@@ -87,7 +91,7 @@ const Dashboard: React.FC = () => {
           </GridItem>
           <GridItem>
             <DashboardCard
-              title="신규 수강자"
+              title="신규 수강생"
               value="250"
               bgColor="rgb(198,246,213)"
             />
@@ -105,11 +109,11 @@ const Dashboard: React.FC = () => {
             />
           </GridItem>
         </Grid>
-        <StockChart />
+        <StockChart names={stockNames} />
         <Grid templateColumns="repeat(4, 1fr)" gap={6} marginTop="3rem">
           <GridItem>
             <DashboardChartCard
-              title="Example"
+              title="연 수입"
               value="123"
               bgColor="rgb(255,255,255)"
               data={[
@@ -123,7 +127,7 @@ const Dashboard: React.FC = () => {
           </GridItem>
           <GridItem>
             <DashboardChartCard
-              title="Example"
+              title="월 수입"
               value="23"
               bgColor="rgb(255,255,255)"
               data={[
@@ -137,7 +141,7 @@ const Dashboard: React.FC = () => {
           </GridItem>
           <GridItem>
             <DashboardChartCard
-              title="Example"
+              title="월 리뷰 개수"
               value="221"
               bgColor="rgb(255,255,255)"
               data={[
@@ -151,7 +155,7 @@ const Dashboard: React.FC = () => {
           </GridItem>
           <GridItem>
             <DashboardChartCard
-              title="Example"
+              title="월 평점 평균"
               value="401"
               bgColor="rgb(255,255,255)"
               data={[
@@ -167,9 +171,9 @@ const Dashboard: React.FC = () => {
         <Grid templateColumns="repeat(2, 1fr)" gap={6} marginTop="3rem">
           <GridItem>
             <DashboardChartCard
-              title="Example"
+              title="내 강의의 유령회원"
               value="4011"
-              bgColor="rgb(255,255,255)"
+              bgColor="rgb(160,160,160)"
               data={[
                 [1, 12],
                 [2, 23],
@@ -181,9 +185,9 @@ const Dashboard: React.FC = () => {
           </GridItem>
           <GridItem>
             <DashboardChartCard
-              title="Example"
+              title="월 신규 수강생"
               value="2401"
-              bgColor="rgb(255,255,255)"
+              bgColor="rgb(160,160,160)"
               data={[
                 [1, 12],
                 [2, 323],
