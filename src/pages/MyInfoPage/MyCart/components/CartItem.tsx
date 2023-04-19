@@ -1,6 +1,15 @@
-import "../MyCart.scss";
+import css from "./CartItem.module.scss";
 import { TbLetterX } from "react-icons/tb";
-import { Box, HStack, Checkbox, Image, Text, Button } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Checkbox,
+  Image,
+  Text,
+  Button,
+  Flex,
+  Divider,
+} from "@chakra-ui/react";
 
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -23,7 +32,7 @@ const CartItem: React.FC<Cart> = ({
     console.log(LectureId);
     delMockCarts({ LectureId });
   };
-
+  const mainColor = "#003c93;";
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedItems((items: SelectCartItems) => {
       let nextTotalPrice = items.total_price;
@@ -74,8 +83,8 @@ const CartItem: React.FC<Cart> = ({
     selectedItems.id.includes(LectureId) ? true : false;
 
   return (
-    <>
-      <Box w="100%" key={LectureId}>
+    <div>
+      <Box w="100%" key={LectureId} paddingBottom="30px" margin="0">
         <HStack
           key={LectureId}
           alignItems="flex-start"
@@ -85,24 +94,26 @@ const CartItem: React.FC<Cart> = ({
           my="1"
         >
           <Checkbox
-            size="lg"
             borderColor="gray"
-            colorScheme="green"
+            size="md"
+            colorScheme={mainColor}
             isChecked={isCheck()}
             onChange={handleCheckboxChange}
           />
-          <div className="card">
-            <Image src={thumbnail} alt="Card Image" />
+          <div className={css.card}>
+            <Image src={thumbnail} alt="Card Image" className={css.img} />
             <HStack w="100%" justifyContent="space-between">
-              <div className="card-center">
-                <h3 className="card-title">{lectureTitle}</h3>
-                <p className="card-description">{lectureDifficulty}</p>
-                <Text fontSize="md" color="gray.500">
-                  {lectureFee}원
+              <div className={css.cardCenter}>
+                <h3 className={css.cardTitle}>{lectureTitle}</h3>
+                <p className={css.cardDescription}>{lectureDifficulty}</p>
+                <Text fontSize="md">
+                  <Flex>
+                    <Text fontWeight="700">{lectureFee}</Text>원
+                  </Flex>
                 </Text>
               </div>
 
-              <div className="card-right">
+              <div className={css.cardRight}>
                 <Button
                   size={"lg"}
                   backgroundColor="transparent"
@@ -118,7 +129,8 @@ const CartItem: React.FC<Cart> = ({
           </div>
         </HStack>
       </Box>
-    </>
+      <Divider color="rgb(226 232 241)" />
+    </div>
   );
 };
 
