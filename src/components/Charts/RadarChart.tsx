@@ -50,7 +50,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
         bgColor={colorMode === "light" ? "gray.600" : "gray.300"}
         color={colorMode === "light" ? "white" : "blackAlpha.700"}
         borderRadius="md"
-        p="4"
+        p="3"
         boxShadow="md"
       >
         <Text fontSize="lg" fontWeight="bold" mb="1">

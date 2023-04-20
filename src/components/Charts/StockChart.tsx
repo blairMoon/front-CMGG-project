@@ -87,7 +87,9 @@ const StockChart: React.FC<StockProps> = ({ names, data }) => {
         `https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/${name.toLowerCase()}-c.json`
       )
         .then((response) => response.json())
-        .then((data) => success(name, data));
+        .then((data) => {
+          return success(name, data);
+        });
     });
   }, [colorMode]);
 

@@ -10,13 +10,23 @@ type PackedBubbleSeriesOptionsType = SeriesOptionsType & {
   packedbubble?: Highcharts.SeriesPackedbubbleOptions;
 };
 
-interface PackedBubbleChartProps {
-  id?: string;
+interface BubbleDatum {
+  name: string;
+  value: number;
+}
+interface BubbleData {
+  name: string;
+  data: BubbleDatum[];
 }
 
-const PackedBubbleChart: React.FC<PackedBubbleChartProps> = ({ id }) => {
+interface PackedBubbleChartProps {
+  id?: string;
+  data: BubbleData[];
+}
+
+const PackedBubbleChart: React.FC<PackedBubbleChartProps> = ({ id, data }) => {
   const { colorMode } = useColorMode();
-  const series: PackedBubbleSeriesOptionsType[] = data.map((region) => {
+  const series: PackedBubbleSeriesOptionsType[] = data?.map((region) => {
     return {
       name: region.name,
       type: "packedbubble",
@@ -88,94 +98,5 @@ const PackedBubbleChart: React.FC<PackedBubbleChartProps> = ({ id }) => {
     </div>
   );
 };
-
-const data = [
-  {
-    name: "Java",
-    data: [
-      {
-        name: "SpringBoot",
-        value: 767.1,
-      },
-      {
-        name: "Android",
-        value: 74.2,
-      },
-    ],
-  },
-  {
-    name: "Python",
-    data: [
-      {
-        name: "DJango",
-        value: 409.4,
-      },
-      {
-        name: "AI",
-        value: 237.1,
-      },
-    ],
-  },
-  {
-    name: "JavaScript",
-    data: [
-      {
-        name: "React",
-        value: 566,
-      },
-      {
-        name: "TypeScript",
-        value: 456.3,
-      },
-      {
-        name: "Redux",
-        value: 56.3,
-      },
-      {
-        name: "Next.js",
-        value: 156.3,
-      },
-      {
-        name: "Vue",
-        value: 256.3,
-      },
-    ],
-  },
-  {
-    name: "Basic",
-    data: [
-      {
-        name: "HTML",
-        value: 199,
-      },
-      {
-        name: "CSS",
-        value: 195.2,
-      },
-    ],
-  },
-  {
-    name: "Kotlin",
-    data: [
-      {
-        name: "Android",
-        value: 336.5,
-      },
-      {
-        name: "iOS",
-        value: 236.5,
-      },
-    ],
-  },
-  {
-    name: "Swift",
-    data: [
-      {
-        name: "iOS",
-        value: 136.5,
-      },
-    ],
-  },
-];
 
 export default PackedBubbleChart;

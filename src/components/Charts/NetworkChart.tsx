@@ -38,7 +38,7 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
   data = defaultProps.data,
   nodes = defaultProps.nodes,
 }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   if (data.length === 0 || nodes.length === 0) {
     return <div>No data available.</div>;

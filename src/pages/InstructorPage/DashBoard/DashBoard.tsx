@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
   const radarKeys = ["나", "평균"];
   const radarIndexBy = "category";
 
-  const title = "나의 수강생들이 강의를 시청하는 관련 강사의 비율";
+  const title = "나의 수강생들이 보는 관련 강사의 비율";
   const subtitle =
     "해당 자료를 통해 주제, 강의 품질, 교육 스타일 및 대체 학습 리소스의 가용성과 같은 다양한 요인에 따라 크게 달라질 수 있습니다.";
   const data = [
@@ -85,6 +85,95 @@ const Dashboard: React.FC = () => {
   ];
 
   const stockNames = ["MSFT", "AAPL", "GOOG"];
+
+  const bubbleData = [
+    {
+      name: "Java",
+      data: [
+        {
+          name: "SpringBoot",
+          value: 767.1,
+        },
+        {
+          name: "Android",
+          value: 74.2,
+        },
+      ],
+    },
+    {
+      name: "Python",
+      data: [
+        {
+          name: "DJango",
+          value: 409.4,
+        },
+        {
+          name: "AI",
+          value: 237.1,
+        },
+      ],
+    },
+    {
+      name: "JavaScript",
+      data: [
+        {
+          name: "React",
+          value: 566,
+        },
+        {
+          name: "TypeScript",
+          value: 456.3,
+        },
+        {
+          name: "Redux",
+          value: 56.3,
+        },
+        {
+          name: "Next.js",
+          value: 156.3,
+        },
+        {
+          name: "Vue",
+          value: 256.3,
+        },
+      ],
+    },
+    {
+      name: "Basic",
+      data: [
+        {
+          name: "HTML",
+          value: 199,
+        },
+        {
+          name: "CSS",
+          value: 195.2,
+        },
+      ],
+    },
+    {
+      name: "Kotlin",
+      data: [
+        {
+          name: "Android",
+          value: 336.5,
+        },
+        {
+          name: "iOS",
+          value: 236.5,
+        },
+      ],
+    },
+    {
+      name: "Swift",
+      data: [
+        {
+          name: "iOS",
+          value: 136.5,
+        },
+      ],
+    },
+  ];
 
   return (
     <Box>
@@ -224,7 +313,7 @@ const Dashboard: React.FC = () => {
             />
           </GridItem>
           <GridItem>
-            <PackedBubbleChart id="container" />
+            <PackedBubbleChart id="container" data={bubbleData} />
           </GridItem>
         </Grid>
       </Box>
