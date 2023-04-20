@@ -14,21 +14,37 @@ import DashboardChartCard from "../../../components/Card/DashboardChartCard";
 
 const Dashboard: React.FC = () => {
   const issues = [
-    { id: 1, title: "Issue 1", description: "This is a sample issue." },
-    { id: 2, title: "Issue 2", description: "This is another sample issue." },
-    { id: 3, title: "Issue 3", description: "This is another sample issue." },
-    { id: 4, title: "Issue 4", description: "This is another sample issue." },
+    {
+      id: 1,
+      title: "Issue 1",
+      description: "백관열님이 타입스크립트 강의에 댓글을 달았습니다.",
+    },
+    {
+      id: 2,
+      title: "Issue 2",
+      description: "김남욱님이 Docker 강의에 신규 등록했습니다.",
+    },
+    {
+      id: 3,
+      title: "Issue 3",
+      description: "김현수님이 DJango 강의에 댓글을 달았습니다..",
+    },
+    {
+      id: 4,
+      title: "Issue 4",
+      description: "김수람님이 Redux 강의에 신규 등록했습니다.",
+    },
   ];
 
   const radarData = [
-    { category: "수입률", value1: 30, value2: 10 },
-    { category: "완강률", value1: 20, value2: 30 },
-    { category: "점유율", value1: 30, value2: 10 },
-    { category: "재수강률", value1: 20, value2: 30 },
-    { category: "신규수강률", value1: 30, value2: 10 },
+    { category: "수입률", 나: 30, 평균: 10 },
+    { category: "완강률", 나: 20, 평균: 30 },
+    { category: "점유율", 나: 30, 평균: 10 },
+    { category: "재수강률", 나: 20, 평균: 30 },
+    { category: "신규수강률", 나: 30, 평균: 10 },
   ];
 
-  const radarKeys = ["value1", "value2"];
+  const radarKeys = ["나", "평균"];
   const radarIndexBy = "category";
 
   const title = "나의 수강생들이 강의를 시청하는 관련 강사의 비율";
@@ -97,7 +113,7 @@ const Dashboard: React.FC = () => {
             />
           </GridItem>
         </Grid>
-        <Grid templateColumns="1fr 2fr" gap={6} marginTop="2rem">
+        <Grid templateColumns="2fr 3fr" gap={6} pl="1" my="3rem">
           <GridItem>
             <IssueList issues={issues} />
           </GridItem>
@@ -110,7 +126,7 @@ const Dashboard: React.FC = () => {
           </GridItem>
         </Grid>
         <StockChart names={stockNames} />
-        <Grid templateColumns="repeat(4, 1fr)" gap={6} marginTop="3rem">
+        <Grid templateColumns="repeat(4, 1fr)" gap={6} marginTop="5rem">
           <GridItem>
             <DashboardChartCard
               title="연 수입"
@@ -168,7 +184,7 @@ const Dashboard: React.FC = () => {
             />
           </GridItem>
         </Grid>
-        <Grid templateColumns="repeat(2, 1fr)" gap={6} marginTop="3rem">
+        <Grid templateColumns="repeat(2, 1fr)" mt="3rem" mb="5rem" gap={6}>
           <GridItem>
             <DashboardChartCard
               title="내 강의의 유령회원"
