@@ -3,9 +3,16 @@ import {
   ResponsiveRadar,
   RadarCustomLayerProps,
   RadarLayerId,
+  RadarSliceTooltipDatum,
 } from "@nivo/radar";
-import { Tooltip } from "@chakra-ui/react";
-import { useColorMode } from "@chakra-ui/react";
+import {
+  useColorMode,
+  Box,
+  Text,
+  VStack,
+  Badge,
+  HStack,
+} from "@chakra-ui/react";
 
 interface RadarChartData {
   [key: string]: string | number;
@@ -16,24 +23,6 @@ interface RadarChartProps {
   keys: string[];
   indexBy: string;
 }
-
-const CustomTooltip = ({
-  id,
-  value,
-  color,
-}: {
-  id: string;
-  value: number;
-  color: string;
-}) => {
-  return (
-    <Tooltip>
-      <div style={{ color }}>
-        <strong>{id}</strong>: {value}
-      </div>
-    </Tooltip>
-  );
-};
 
 const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   const { colorMode } = useColorMode();
@@ -49,6 +38,43 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
     } else {
       return { x: 160, y: 160 };
     }
+  };
+
+  const CustomTooltip = ({
+    data,
+  }: {
+    data: { data: RadarSliceTooltipDatum[]; index: string | number };
+  }) => {
+    return (
+      <Box
+        bgColor={colorMode === "light" ? "gray.600" : "gray.300"}
+        color={colorMode === "light" ? "white" : "blackAlpha.700"}
+        borderRadius="md"
+        p="4"
+        boxShadow="md"
+      >
+        <Text fontSize="lg" fontWeight="bold" mb="1">
+          {data.index}
+        </Text>
+        <VStack alignItems="start" spacing="1">
+          {data.data.map((item: any, index: number) => (
+            <HStack>
+              <Badge variant="solid" bgColor={item.color} color={item.color}>
+                {"cmgg"}
+              </Badge>
+              <Text
+                key={index}
+                color={
+                  colorMode === "light" ? "whiteAlpha.700" : "blackAlpha.700"
+                }
+              >
+                {item.id} : {item.formattedValue}
+              </Text>
+            </HStack>
+          ))}
+        </VStack>
+      </Box>
+    );
   };
 
   const customLabelsLayer: React.FC<RadarCustomLayerProps<RadarChartData>> = ({
@@ -129,7 +155,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
                   stroke={
                     colorMode === "light"
                       ? "rgb(50,50,50,0.5)"
-                      : "rgb(215,215,215,0.5)"
+                      : "rgb(215,215,215,0.9)"
                   }
                   fill="transparent"
                 />
@@ -189,12 +215,13 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
         dotLabel="value"
         dotLabelYOffset={-12}
         colors={colorMode === "light" ? lightAreaColors : darkAreaColors}
-        fillOpacity={0.9}
-        blendMode="multiply"
+        blendMode="normal"
+        fillOpacity={0.5}
         animate={true}
         motionConfig="wobbly"
         isInteractive={true}
         layers={layers}
+        sliceTooltip={(data) => <CustomTooltip data={data} />}
       />
     </div>
   );

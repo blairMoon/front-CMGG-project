@@ -1,10 +1,9 @@
 // src/components/Navbar.tsx
 import { RepeatIcon } from "@chakra-ui/icons";
-import { Box, Flex, Spacer, IconButton, useColorMode } from "@chakra-ui/react";
+import { Box, Flex, Text, Spacer, IconButton } from "@chakra-ui/react";
 import { FaSistrix, FaBell } from "react-icons/fa";
 
 const Navbar: React.FC = () => {
-  const { colorMode } = useColorMode();
   return (
     <Flex
       as="nav"
@@ -16,7 +15,9 @@ const Navbar: React.FC = () => {
     >
       {/* 로고 및 프로젝트 이름 */}
       <Box>
-        <h1>Your DATA</h1>
+        <Text fontSize="2xl" fontWeight={600}>
+          Your Data
+        </Text>
       </Box>
 
       {/* 검색, 알림 및 테마 변경 버튼 */}
