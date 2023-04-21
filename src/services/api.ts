@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
-
+import { FieldValues } from "react-hook-form";
 import { QueryFunctionContext } from "@tanstack/react-query";
 export interface UserNameLoginParams {
   username: string;
@@ -127,7 +127,6 @@ instance.interceptors.response.use(
         if (newAccessToken) {
           Cookies.set("access", newAccessToken);
 
-          // Update the Authorization header with the new access token
           instance.defaults.headers["Authorization"] =
             "Bearer " + newAccessToken;
           originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
@@ -162,7 +161,7 @@ export async function userNameLogin(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...headers, // Spread the headers object if it's not undefined
+        ...headers,
       },
       body: JSON.stringify({ username, password }),
       credentials: "include",
@@ -183,6 +182,7 @@ export async function userNameLogin(
     throw new Error(message);
   }
 }
+
 export async function postRefreshToken(
   refresh: RefreshToken,
   access: AccessToken
@@ -284,4 +284,11 @@ export const watchedlectures80 = ({
   return instance
     .put(`watchedlectures/${lectureId}/${num}`, { is_completed, lastPlayed })
     .then((res) => res.data);
+};
+
+export const postVideoTest = ({ thumbnail }: FieldValues) => {
+  console.log("thumbnail", thumbnail);
+  return instance.post("images/test", {
+    file: thumbnail,
+  });
 };

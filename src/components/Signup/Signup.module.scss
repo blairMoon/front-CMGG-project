@@ -179,6 +179,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: 25px;
   .langContainer {
     display: flex;
     // align-items: center;
@@ -193,14 +194,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: 15px;
   .DevContainer {
     display: flex;
-    // align-items: center;
-    // justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
     margin-left: 16px;
-    // margin-right: 20px;
+    
     .Devlabel {
-      margin-top: 8px;
+      margin-top: 2px;
     }
   }
 }

@@ -17,3 +17,14 @@ export const BuyState = atom<boolean>({
   key: "wasBuyed",
   default: false,
 });
+
+export const userState = atom({
+  key: "userState",
+  default: {
+    username: "",
+    email: "",
+    password: "",
+
+    name: "",
+  },
+});

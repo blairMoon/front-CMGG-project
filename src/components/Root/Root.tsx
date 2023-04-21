@@ -8,7 +8,6 @@ export default function Root() {
     <Box>
       <Abc />
       <Outlet />
-      <ReactQueryDevtools />
       <Footer />
     </Box>
   );
