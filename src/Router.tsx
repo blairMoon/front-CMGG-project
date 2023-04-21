@@ -18,6 +18,8 @@ import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
 import AdminPage from "./pages/AdminPage/AdminPage";
+
+import User from "./pages/AdminPage/Components/User/User";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -97,20 +99,6 @@ const router = createBrowserRouter([
         path: "wasBuyed",
         element: <PaymentsResultPage />,
       },
-
-      // {
-      //   path: "social",
-      //   children: [
-      //     {
-      //       path: "github",
-      //       element: <GitgubConfirm />,
-      //     },
-      //     {
-      //       path: "kakao",
-      //       element: <KakaoConfirm />,
-      //     },
-      //   ],
-      // },
     ],
   },
   {
@@ -120,6 +108,12 @@ const router = createBrowserRouter([
   {
     path: "admin",
     element: <AdminPage />,
+    children: [
+      { path: "user", element: <User /> },
+      { path: "lectures", element: <User /> },
+      { path: "instrctor", element: <User /> },
+      { path: "pay", element: <User /> },
+    ],
   },
 ]);
 
