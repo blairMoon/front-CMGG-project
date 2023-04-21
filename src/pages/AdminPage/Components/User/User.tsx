@@ -33,7 +33,7 @@ const User: React.FC<Props> = (props: Props) => {
         <div className={css.chartContainer}>
           <span className={css.h1}>Gender Chart</span>
           <GenderChart
-            theme={customTheme}
+            // theme={customTheme}
             data={dataGender}
             colors={["#ff0000", "#00ff00", "#0000ff"]}
           />
