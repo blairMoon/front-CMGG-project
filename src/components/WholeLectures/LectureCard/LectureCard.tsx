@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -9,6 +8,7 @@ import {
   Image,
   Stack,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import StarRating from "../StarRating/StarRating";
 import { ILectureData } from "../../../../typings/LectureData";
@@ -52,6 +52,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
     if (textTitle.length > MAX_LENGTH2) {
       textTitle = textTitle.slice(0, MAX_LENGTH2) + "...";
     }
+    const { colorMode, toggleColorMode } = useColorMode();
 
     // <Link to={`/lectures/${lectureNumber}`}>
     return (
@@ -112,7 +113,11 @@ const LectureCard: React.FC<Props> = ({ data }) =>
             <Heading fontSize="14px" h="45px" py="2">
               {textTitle}
             </Heading>
-            <Text fontSize="14px" fontWeight="600" color="#666666">
+            <Text
+              fontSize="14px"
+              fontWeight="600"
+              color={colorMode === "light" ? "#666666" : "#bbb"}
+            >
               {data.instructor.username}
             </Text>
 

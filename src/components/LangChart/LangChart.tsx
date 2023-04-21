@@ -1,49 +1,45 @@
 import { ResponsivePie } from "@nivo/pie";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 
-interface PieChartData {
+interface LangChartData {
   id: string | number;
   value: number;
-  color?: string;
+
   [key: string]: any;
 }
 
-interface MyResponsivePieProps {
-  data: PieChartData[];
+interface LangChartProps {
+  data: LangChartData[];
 }
-export const data: PieChartData[] = [
+export const data: LangChartData[] = [
   {
-    id: "python",
-    label: "python",
-    value: 170,
-    color: "hsl(144, 70%, 50%)",
+    id: "Python",
+    // label: "python",
+    value: 4,
   },
   {
     id: "django",
-    // label: "django",
-    value: 440,
-    color: "hsl(13, 70%, 50%)",
+    label: "django",
+    value: 8,
   },
   {
-    id: "react",
+    id: "React",
     label: "react",
-    value: 500,
-    color: "hsl(320, 70%, 50%)",
+    value: 6,
   },
   {
-    id: "swift",
+    id: "Swift",
     label: "swift",
-    value: 300,
-    color: "hsl(242, 70%, 50%)",
+    value: 2,
   },
   {
-    id: "javascript",
+    id: "JS",
     label: "javascript",
-    value: 100,
-    color: "hsl(195, 70%, 50%)",
+    value: 4,
   },
 ];
-const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
+const LangChart: React.FC<LangChartProps> = ({ data }) => (
   <div style={{ height: "300px", margin: "0 auto" }}>
     <ResponsivePie
       data={data}
@@ -55,70 +51,38 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({ data }) => (
       colors={{ scheme: "blues" }}
       borderWidth={1}
       borderColor={{
-        from: "color",
-        modifiers: [["darker", 0]],
+        theme: "grid.line.stroke",
       }}
-      arcLinkLabelsSkipAngle={8}
-      arcLinkLabelsTextOffset={0}
-      arcLinkLabelsTextColor={{ theme: "background" }}
-      arcLinkLabelsOffset={7}
-      arcLinkLabelsDiagonalLength={24}
-      arcLinkLabelsStraightLength={21}
-      arcLinkLabelsThickness={0}
-      arcLinkLabelsColor={{ from: "color", modifiers: [] }}
-      arcLabelsSkipAngle={10}
-      arcLabelsTextColor={{
-        from: "color",
-        modifiers: [["darker", 0]],
-      }}
-      defs={[
-        {
-          id: "dots",
-          type: "patternDots",
-          background: "inherit",
-          color: "rgba(255, 255, 255, 0.3)",
-          size: 4,
-          padding: 1,
-          stagger: true,
-        },
-        {
-          id: "lines",
-          type: "patternLines",
-          background: "inherit",
-          color: "rgba(255, 255, 255, 0.3)",
-          rotation: -45,
+      tooltip={({ datum }) => {
+        const totalValue = data.reduce((acc, item) => acc + item.value, 0);
 
-          lineWidth: 6,
-          spacing: 10,
-        },
-      ]}
-      // legends={[
-      //   {
-      //     anchor: "bottom",
-      //     direction: "row",
-      //     justify: false,
-      //     translateX: 0,
-      //     translateY: 56,
-      //     itemsSpacing: 0,
-      //     itemWidth: 100,
-      //     itemHeight: 18,
-      //     itemTextColor: "#999",
-      //     itemDirection: "left-to-right",
-      //     itemOpacity: 1,
-      //     symbolSize: 18,
-      //     symbolShape: "circle",
-      //     effects: [
-      //       {
-      //         on: "hover",
-      //         style: {
-      //           itemTextColor: "#000",
-      //         },
-      //       },
-      //     ],
-      //   },
-      // ]}
+        const percentage = ((datum.data.value / totalValue) * 100).toFixed(2);
+
+        return (
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "6px",
+              fontSize: "12px",
+              borderRadius: "4px",
+              boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.24)",
+              lineHeight: "1.5",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div>
+                {datum.data.id} : {percentage}%
+              </div>
+            </div>
+          </div>
+        );
+      }}
+      enableArcLinkLabels={false}
+      arcLabel="id"
+      arcLabelsSkipAngle={10}
+      arcLabelsTextColor="#606fa4"
     />
   </div>
 );
 
-export default MyResponsivePie;
+export default LangChart;

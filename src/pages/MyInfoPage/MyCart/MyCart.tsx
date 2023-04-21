@@ -6,6 +6,9 @@ import {
   Text,
   Divider,
   Checkbox,
+  Flex,
+  Box,
+  Stack,
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { useQuery } from "@tanstack/react-query";
@@ -27,6 +30,7 @@ const MyCart: React.FC = () => {
     instructor: new Array<string>(),
     total_price: 0,
   });
+  const mainColor = "#003c93;";
   const [cartItems, setCartItems] = useState<Carts>();
   const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
   const { isLoading } = useQuery(["carts"], getMockCarts, {
@@ -124,26 +128,18 @@ const MyCart: React.FC = () => {
           px="20"
           pos="relative"
         >
-          <VStack
-            w="100%"
-            alignItems="flex-start"
-            pb={15}
-            textAlign="center"
-            boxShadow="0 5px 5px -5px"
-          >
-            <Heading fontSize="27px" fontWeight="bold" mb="10">
-              수강바구니
-            </Heading>
+          <VStack w="100%" alignItems="flex-start" pb={15} textAlign="center">
             <Checkbox
-              size="lg"
+              fontSize="10px"
+              size="sm"
               borderColor="gray"
-              colorScheme="green"
+              colorScheme={mainColor}
               isChecked={isAllCheck()}
               onChange={handleCheckboxChange}
             >
-              전체 선택 ({selectedItems?.id.length}) (
-              {selectedItems?.total_price})
+              전체 선택 ({selectedItems?.id.length})
             </Checkbox>
+            <Divider />
           </VStack>
           <HStack justifyContent="space-between" w="100%">
             <VStack spacing={6} w="100%" mt="5">
@@ -152,25 +148,26 @@ const MyCart: React.FC = () => {
               ))}
             </VStack>
           </HStack>
-          <Divider w="100%" />
-          <VStack w="100%">
+          <VStack w="100%" padding="20px 0px">
             <HStack
-              pos="fixed"
-              h="8vh"
               px="20"
               pl="45"
-              bottom="0"
-              right="0"
-              w="80%"
-              minW="650px"
-              bgColor="white"
-              justifyContent="space-between"
-              boxShadow="0px 2px 4px rgba(0, 0, 0, 0.12), 0px 2px 8px rgba(0, 0, 0, 0.08)"
+              minW="100%" // 수정된 부분
             >
-              <Text fontWeight="bold">{selectedItems.total_price} 원</Text>
-              <RequestPayment {...getPaymentData()} />
+              <Flex justifyContent="space-between" minW="800px" padding="20px">
+                <Flex>
+                  <Text fontWeight="bold" fontSize="20px" paddingRight="10px">
+                    총 결제 금액:
+                  </Text>
+                  <Text fontWeight="bold" fontSize="20px">
+                    {selectedItems.total_price}원
+                  </Text>
+                </Flex>
+                <RequestPayment {...getPaymentData()} />
+              </Flex>
             </HStack>
           </VStack>
+          <Divider color="rgb(226 232 241)" />
         </VStack>
       ) : null}
     </VStack>

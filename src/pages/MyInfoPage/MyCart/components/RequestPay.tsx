@@ -35,6 +35,7 @@ function processLecture(lectures: ILecture[]): string {
 
 export function RequestPayment(props: IPayProps): React.ReactElement {
   const navigate = useNavigate();
+  const mainColor = "#003c93;";
   const requestPay = () => {
     if (!window.IMP) return;
     var IMP = window.IMP;
@@ -71,5 +72,15 @@ export function RequestPayment(props: IPayProps): React.ReactElement {
       }
     );
   };
-  return <Button onClick={requestPay}>구매하기</Button>;
+  return (
+    <Button
+      bg={mainColor}
+      onClick={requestPay}
+      color="white"
+      minW="150px"
+      minH="40px"
+    >
+      구매하기
+    </Button>
+  );
 }

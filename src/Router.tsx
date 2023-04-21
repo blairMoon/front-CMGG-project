@@ -17,6 +17,7 @@ import { PaymentsResultPage } from "./pages/PaymentResultPage/PaymentsResultPage
 import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
+import AdminPage from "./pages/AdminPage/AdminPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,10 +44,7 @@ const router = createBrowserRouter([
         path: "lectures/:id",
         element: <DetailPage />,
       },
-      {
-        path: "lectureplay/:lectureId/:num",
-        element: <LecturePlayerPage />,
-      },
+
       {
         path: "mypage",
         element: <MyInfoPage />,
@@ -114,6 +112,14 @@ const router = createBrowserRouter([
       //   ],
       // },
     ],
+  },
+  {
+    path: "lectureplay/:lectureId/:num",
+    element: <LecturePlayerPage />,
+  },
+  {
+    path: "admin",
+    element: <AdminPage />,
   },
 ]);
 
