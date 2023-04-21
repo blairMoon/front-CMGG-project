@@ -110,7 +110,7 @@ const Login: React.FC = () => {
                   <p>아이디를 입력하세요!</p>
                 )}
                 {errors.username && errors.username.type === "maxLength" && (
-                  <p>20자 이하로 입력하세요.</p>
+                  <p>20자 이하로 입력하세요!</p>
                 )}
               </div>
               <div>
