@@ -25,6 +25,7 @@ import {
   MenuItem,
   MenuGroup,
   MenuList,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { FiSettings } from "react-icons/fi";
@@ -33,7 +34,7 @@ import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgDanger } from "react-icons/cg";
-
+import { BsPlay } from "react-icons/bs";
 import { RiHomeHeartLine } from "react-icons/ri";
 import { IconContext } from "react-icons";
 import { useNavigate } from "react-router-dom";
@@ -57,6 +58,7 @@ export default function WithSubnavigation() {
   const [isOpenToggle, setIsOpenToggle] = useState(false);
   const [context, setContext] = useState("");
   const dividerColor = useColorModeValue("gray.300", "gray.700");
+  const { colorMode, toggleColorMode } = useColorMode();
   const handleMouseEnter = () => {
     setIsOpenToggle(true);
   };
@@ -82,6 +84,9 @@ export default function WithSubnavigation() {
     window.location.href = "/mypage";
   };
   const token = getAccessToken();
+  function handleCallback() {
+    console.log("Callback called");
+  }
 
   return (
     <div>
@@ -148,7 +153,25 @@ export default function WithSubnavigation() {
                     type="text"
                     className="Input"
                     border="none"
-                    backgroundColor="rgb(247 247 250)"
+                    backgroundColor={
+                      colorMode === "light"
+                        ? "rgb(247 247 250)"
+                        : "rgb(247 247 250)"
+                    }
+                    color={
+                      colorMode === "light"
+                        ? "blackAlpha.800"
+                        : "blackAlpha.800"
+                    }
+                    _placeholder={
+                      colorMode === "light"
+                        ? {
+                            color: "rgb(155, 155, 155)",
+                          }
+                        : {
+                            color: "rgb(155, 155, 155)",
+                          }
+                    }
                     _focus={{ outline: "none" }}
                     borderRadius="2xl"
                     onChange={(e) => {
@@ -189,6 +212,13 @@ export default function WithSubnavigation() {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                <button
+                  onClick={() =>
+                    window.open("http://localhost:3000/admin", "_blank")
+                  }
+                >
+                  AdminPage
+                </button>
               </Flex>
             </Flex>
 
@@ -199,8 +229,33 @@ export default function WithSubnavigation() {
               direction="row"
               spacing={6}
             >
+              <IconButton
+                icon={
+                  colorMode === "light" ? (
+                    <div>🌙&nbsp; Dark</div>
+                  ) : (
+                    <div>🌞&nbsp; Light</div>
+                  )
+                }
+                px="3"
+                fontSize="13px"
+                aria-label="Toggle color mode"
+                onClick={toggleColorMode}
+                marginLeft="1rem"
+                _hover={
+                  colorMode === "light"
+                    ? { backgroundColor: "#333", color: "#eee" }
+                    : { backgroundColor: "#eee", color: "#333" }
+                }
+              />
               {token ? (
                 <Flex>
+                  <BsPlay
+                    style={{
+                      fontSize: 33,
+                      marginRight: 14,
+                    }}
+                  />
                   <a href="/mypage/cart">
                     <IoCartOutline
                       style={{
@@ -210,7 +265,6 @@ export default function WithSubnavigation() {
                     />
                   </a>
                   {/* <BsPersonVideo3 style={{ fontSize: 30, color: "#003c93" }} /> */}
-
                   <Menu
                     isOpen={isOpenToggle}
                     onClose={() => setIsOpenToggle(false)}
@@ -241,7 +295,7 @@ export default function WithSubnavigation() {
                         right: "-70px",
                         boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
                         border: `1px solid ${dividerColor}`,
-                        borderRadius: "0 0 10px 10px",
+                        borderRadius: "14px",
                         overflow: "hidden",
                         "::before": {
                           content: '""',
@@ -258,52 +312,105 @@ export default function WithSubnavigation() {
                         },
                       }}
                     >
-                      {" "}
                       <div style={{ border: `1px solid ${dividerColor}` }}>
-                        <MenuGroup title="대시보드">
-                          <MenuItem fontSize="14px">
-                            {" "}
-                            <BsFileEarmarkText
-                              style={{ marginRight: "10px" }}
-                            />
-                            학습 관리
-                          </MenuItem>
+                        <MenuGroup title="대시보드" fontSize="15px">
+                          <Link
+                            href="/mypage"
+                            style={{ textDecoration: "none", border: "none" }}
+                          >
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <BsFileEarmarkText
+                                style={{ marginRight: "10px" }}
+                              />
+                              학습 관리
+                            </MenuItem>
+                          </Link>
                         </MenuGroup>
                         <MenuDivider color={dividerColor} />
-                        <MenuGroup title="수강강의">
-                          <MenuItem fontSize="14px">
-                            <BsPlayCircle style={{ marginRight: "10px" }} />
-                            수강중인 강의
-                          </MenuItem>
+                        <MenuGroup title="수강강의" fontSize="15px">
+                          <Link
+                            href="/mypage/lecture"
+                            style={{ textDecoration: "none", border: "none" }}
+                          >
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <BsPlayCircle style={{ marginRight: "10px" }} />
+                              수강중인 강의
+                            </MenuItem>
+                          </Link>
                         </MenuGroup>
                         <MenuDivider color={dividerColor} />
-                        <MenuGroup title="수강신청 관리">
-                          <MenuItem fontSize="14px">
-                            {" "}
-                            <MdPayment style={{ marginRight: "10px" }} />
-                            결제 내역
-                          </MenuItem>
-                          <MenuItem fontSize="14px">
-                            <AiOutlineShoppingCart
-                              style={{ marginRight: "10px" }}
-                            />
-                            수강바구니
-                          </MenuItem>
+                        <MenuGroup title="수강신청 관리" fontSize="15px">
+                          <Link
+                            href="/mypage/payment"
+                            style={{ textDecoration: "none", border: "none" }}
+                          >
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <MdPayment style={{ marginRight: "10px" }} />
+                              결제 내역
+                            </MenuItem>
+                          </Link>
+                          <Link
+                            href="/mypage/cart"
+                            style={{ textDecoration: "none", border: "none" }}
+                          >
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <AiOutlineShoppingCart
+                                style={{ marginRight: "10px" }}
+                              />
+                              수강바구니
+                            </MenuItem>
+                          </Link>
                         </MenuGroup>
                         <MenuDivider color={dividerColor} />
-                        <MenuGroup title="회원정보 수정">
-                          <MenuItem fontSize="14px">
-                            {" "}
-                            <FiSettings style={{ marginRight: "10px" }} />
-                            정보수정
-                          </MenuItem>
-                          <MenuItem fontSize="14px">
+                        <MenuGroup title="회원정보 수정" fontSize="15px">
+                          <Link
+                            href="/mypage/editMember"
+                            style={{ textDecoration: "none", border: "none" }}
+                          >
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <FiSettings style={{ marginRight: "10px" }} />
+                              정보수정
+                            </MenuItem>
+                          </Link>
+                          {/* <Link
+                            href="/"
+                            style={{ textDecoration: "none", border: "none" }}
+                          > */}
+                          <MenuItem
+                            fontSize="15px"
+                            fontWeight="500"
+                            padding="10px 10px"
+                            onClick={() => {
+                              removeAccessToken();
+                            }}
+                          >
                             <FiLogOut
                               size={16}
                               style={{ marginRight: "10px" }}
                             />
                             로그아웃
                           </MenuItem>
+                          {/* </Link> */}
                         </MenuGroup>
                       </div>
                     </MenuList>

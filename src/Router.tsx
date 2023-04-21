@@ -11,11 +11,13 @@ import MyInfoPage from "./pages/MyInfoPage/MyInfoPage";
 import MyDashBoard from "./components/Mypage/MyDashBoard/MyDashBoard";
 import MyLecture from "./components/Mypage/MyLecture/MyLecture";
 import MyPayment from "./components/Mypage/MyPayment/MyPayment";
-import MyCart from "./components/Mypage/MyCart/MyCart";
+import MyCart from "./pages/MyInfoPage/MyCart/MyCart";
 import MyEditMember from "./components/Mypage/MyEditMember/MyEditMember";
 import { PaymentsResultPage } from "./pages/PaymentResultPage/PaymentsResultPage";
 import InstructorPage from "./pages/InstructorPage/InstructorPage";
-import LectureRegister from "./components/InstructorPage/LectureRegister/LectureRegister";
+import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
+import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
+import AdminPage from "./pages/AdminPage/AdminPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,10 +44,7 @@ const router = createBrowserRouter([
         path: "lectures/:id",
         element: <DetailPage />,
       },
-      {
-        path: "lectureplay/:lectureId/:num",
-        element: <LecturePlayerPage />,
-      },
+
       {
         path: "mypage",
         element: <MyInfoPage />,
@@ -78,7 +77,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <MyDashBoard />,
+            element: <DashBoard />,
           },
           {
             path: "lecture",
@@ -113,6 +112,14 @@ const router = createBrowserRouter([
       //   ],
       // },
     ],
+  },
+  {
+    path: "lectureplay/:lectureId/:num",
+    element: <LecturePlayerPage />,
+  },
+  {
+    path: "admin",
+    element: <AdminPage />,
   },
 ]);
 

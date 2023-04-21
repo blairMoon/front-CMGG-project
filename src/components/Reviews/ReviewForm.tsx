@@ -12,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  useColorMode,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import StarRating from "../../components/WholeLectures/StarRating/StarRating";
@@ -42,6 +43,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       queryClient.invalidateQueries(["lectureInfo"]);
     },
   });
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
 
@@ -145,6 +147,18 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
                 h="100px"
                 bg="white"
                 resize="none"
+                color={
+                  colorMode === "light" ? "rgb(66,66,66)" : "rgb(66,66,66)"
+                }
+                _placeholder={
+                  colorMode === "light"
+                    ? {
+                        color: "rgb(155, 155, 155)",
+                      }
+                    : {
+                        color: "rgb(155, 155, 155)",
+                      }
+                }
               />
             </Box>
             <Button
