@@ -179,21 +179,21 @@ const Dashboard: React.FC = () => {
           <GridItem>
             <DashboardCard
               title="총 수강생"
-              value="1,023"
+              value={1023}
               bgColor="rgb(254,215,215)"
             />
           </GridItem>
           <GridItem>
             <DashboardCard
               title="총 수입"
-              value="52,620,000"
+              value={52620000}
               bgColor="rgb(190,227,248)"
             />
           </GridItem>
           <GridItem>
             <DashboardCard
               title="신규 수강생"
-              value="250"
+              value={250}
               bgColor="rgb(198,246,213)"
             />
           </GridItem>

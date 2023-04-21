@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client";
 import * as Sentry from "@sentry/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
-import { RecoilRoot, RecoilRootProps } from "recoil";
+import { RecoilRoot } from "recoil";
 import { worker } from "./services/mocks/browser";
 
 Sentry.init({
@@ -40,5 +40,6 @@ try {
     </React.StrictMode>
   );
 } catch (error) {
+  console.log(error);
   Sentry.captureException(error);
 }
