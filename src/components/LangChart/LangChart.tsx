@@ -23,7 +23,7 @@ export const data: LangChartData[] = [
     value: 4,
   },
   {
-    id: "Django",
+    id: "django",
     label: "django",
     value: 8,
   },
