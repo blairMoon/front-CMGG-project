@@ -202,7 +202,7 @@ const LecturePlayer: React.FC = () => {
       return Math.round((completedCount / videoList?.list.length) * 100);
     }
   }, [completedCount, videoList]);
-
+  console.log(videoList);
   const handlePrevClick = () => {
     const prevNum = parseInt(num) - 1;
     if (prevNum > 0) {
