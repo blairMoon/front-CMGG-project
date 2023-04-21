@@ -145,8 +145,8 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
             const x = centerX + Math.cos(startAngle) * radius;
             const y = centerY + Math.sin(startAngle) * radius;
 
-            const textOffsetX = pointData.key === "value1" ? -10 : 10;
-            const textOffsetY = pointData.key === "value1" ? -10 : 10;
+            const textOffsetX = pointData.key === "나" ? -10 : 10;
+            const textOffsetY = pointData.key === "나" ? -10 : 10;
 
             return (
               <g key={`${key}.${i}`} transform={`translate(${x},${y})`}>

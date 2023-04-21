@@ -1,13 +1,9 @@
-// src/pages/Dashboard.tsx
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import DashboardCard from "../../../components/Card/DashboardCard";
 import IssueList from "./components/IssueList";
 import RadarChart from "../../../components/Charts/RadarChart";
-import LineChart from "../../../components/Charts/LineChart";
-import Highcharts from "highcharts";
 import HighchartsNetwork from "../../../components/Charts/NetworkChart";
-import { HiUser } from "react-icons/hi";
 import StockChart from "../../../components/Charts/StockChart";
 import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
