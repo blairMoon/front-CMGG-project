@@ -9,7 +9,6 @@ const MyInfoPage: React.FC<Props> = (props: Props) => {
     <div>
       <Grid
         templateAreas={`"nav main"`}
-        // gridTemplateRows={'100px 1fr'}
         gridTemplateColumns={"220px 1fr"}
         w="1300px"
         pt="20"
@@ -20,12 +19,9 @@ const MyInfoPage: React.FC<Props> = (props: Props) => {
       >
         <GridItem area={"nav"}>
           <MySideBar />
-          {/* <TeacherSideBar /> */}
         </GridItem>
         <GridItem area={"main"} py="2" paddingLeft="10">
           <Outlet />
-          {/* <MyLecture /> */}
-          {/* <EditMember /> */}
         </GridItem>
       </Grid>
     </div>

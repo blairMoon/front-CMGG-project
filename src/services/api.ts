@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
-
+import { FieldValues } from "react-hook-form";
 import { QueryFunctionContext } from "@tanstack/react-query";
 export interface UserNameLoginParams {
   username: string;
@@ -284,4 +284,11 @@ export const watchedlectures80 = ({
   return instance
     .put(`watchedlectures/${lectureId}/${num}`, { is_completed, lastPlayed })
     .then((res) => res.data);
+};
+
+export const postVideoTest = ({ thumbnail }: FieldValues) => {
+  console.log("thumbnail", thumbnail);
+  return instance.post("images/test", {
+    file: thumbnail,
+  });
 };

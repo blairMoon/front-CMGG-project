@@ -1,11 +1,13 @@
 import React from "react";
-import LangChart, { data as langChartData } from "../../LangChart/LangChart";
-import DayChart, { data as DayChartData } from "../../DayChart/DayChart";
+import LangChart from "../../LangChart/LangChart";
+import DayChart from "../../WeekChart/WeekChart";
+import GrassCalendar from "./GrassCalendar/GrassCalendar";
 const MyDashBoard: React.FC = () => {
   return (
     <div>
-      <LangChart data={langChartData} />
-      <DayChart data={DayChartData} />
+      <LangChart />
+      <DayChart />
+      <GrassCalendar />
     </div>
   );
 };

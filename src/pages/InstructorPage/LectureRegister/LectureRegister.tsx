@@ -24,18 +24,22 @@ import { useDropzone } from "react-dropzone";
 import css from "./LectureRegister.module.scss";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import { imgTypes, videoTypes } from "../../../constant";
+import { getDataURItoBlob } from "../../../utils/getDataUriToBlob";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
 import { postMockLecture } from "../../../services/mocks/api";
 import { MyRadio } from "../../../components/Radio/MyRadio";
 import { MyErrorText } from "../../../components/Text/MyErrorText";
+import { Buffer } from "buffer";
+import { getFormData } from "../../../utils/getLectureFormData";
 //import { ILectureFormData } from "../../../../typings/LectureRegister";
 
 function LectureRegister(): React.ReactElement {
   const [_img, setImg] = useState<string>("");
-  const [_videos, setVideos] = useState<string[]>([]);
+  const [_videoThumnails, setVideoThumbnails] = useState<string[]>([]);
+  const [_videoThumnailFiles, setVideoThumbnailFiles] = useState<File[]>([]);
   const [submitFlag, setSubmitFlag] = useState(false);
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   const {
     handleSubmit,
@@ -94,13 +98,14 @@ function LectureRegister(): React.ReactElement {
   );
 
   const onSubmit = (formData: FieldValues) => {
-    console.log("formData", {
-      ...formData,
-      thumbnail: _img,
-      videos: _videos,
+    const data = getFormData({
+      formData,
+      img: imgFile[0],
+      thumbnails: _videoThumnailFiles,
+      videoFiles,
     });
-    registerMutate.mutate(formData);
-
+    console.log("formData", data);
+    registerMutate.mutate(data);
     // create image url => new Image(img,url) => imgUrl
     // create video url => new Video(video,url) => videoUrl
 
@@ -109,8 +114,17 @@ function LectureRegister(): React.ReactElement {
   };
 
   async function handleVideoChange() {
+    const newThumbnails: File[] = [];
     const newVideos = await Promise.all(videoFiles.map(createVideoThumbnail));
-    setVideos(newVideos);
+    setVideoThumbnails(newVideos);
+    newVideos.map((v: string, idx: number) =>
+      newThumbnails.push(
+        new File([getDataURItoBlob(v)], videoFiles[idx]?.name, {
+          type: "image/png",
+        })
+      )
+    );
+    setVideoThumbnailFiles(newThumbnails);
   }
 
   const img = imgFile.map((file: File, idx: number) => {
@@ -141,7 +155,11 @@ function LectureRegister(): React.ReactElement {
           type="text"
           maxLength={30}
           placeholder="제목을 입력해주세요"
-          className={colorMode === "light" ? css.Input : css.DarkInput}
+          backgroundColor={"#FAFAFA"}
+          color={"rgb(49, 49, 49)"}
+          _placeholder={{
+            color: "rgb(49, 49, 49,0.8)",
+          }}
           {...register(`videoTitle[${idx}]`, {
             required: { value: true, message: "제목을 입력해주세요" },
             maxLength: {
@@ -157,7 +175,11 @@ function LectureRegister(): React.ReactElement {
           type="text"
           maxLength={300}
           placeholder="설명을 입력해주세요"
-          className={colorMode === "light" ? css.Input : css.DarkInput}
+          backgroundColor={"#FAFAFA"}
+          color={"rgb(49, 49, 49)"}
+          _placeholder={{
+            color: "rgb(49, 49, 49,0.8)",
+          }}
           {...register(`videoDescription[${idx}]`, {
             required: { value: true, message: "설명을 입력해주세요" },
             maxLength: {
@@ -183,46 +205,38 @@ function LectureRegister(): React.ReactElement {
         강의 등록
       </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "500px" }}>
-        <FormControl
-          isInvalid={!!errors["lectureTitle"]}
-          id={"lectureTitle"}
-          mb="5"
-        >
-          <FormLabel fontWeight={"bold"} id="lectureTitle">
-            강의명 ({`${watch("lectureTitle")?.length} / 30`})
+        <FormControl isInvalid={!!errors["title"]} id={"title"} mb="5">
+          <FormLabel fontWeight={"bold"} id="title">
+            강의명 ({`${watch("title")?.length} / 30`})
           </FormLabel>
           <input
             type="text"
             className={colorMode === "light" ? css.Input : css.DarkInput}
-            aria-labelledby="lectureTitle"
+            aria-labelledby="title"
             placeholder="강의명을 입력해주세요"
             maxLength={30}
-            {...register("lectureTitle", {
+            {...register("title", {
               required: { value: true, message: "강의명을 입력해주세요" },
               maxLength: { value: 30, message: "최대 30 자까지 가능합니다" },
             })}
           />
-          {errors["lectureTitle"] && (
+          {errors["title"] && (
             <FormErrorMessage>
-              {typeof errors["lectureTitle"].message === "string" &&
-                errors["lectureTitle"].message}
+              {typeof errors["title"].message === "string" &&
+                errors["title"].message}
             </FormErrorMessage>
           )}
         </FormControl>
-        <FormControl
-          isInvalid={!!errors["lectureFee"]}
-          id={"lectureFee"}
-          my="5"
-        >
-          <FormLabel fontWeight={"bold"} id={"lectureFee"}>
+        <FormControl isInvalid={!!errors["fee"]} id={"fee"} my="5">
+          <FormLabel fontWeight={"bold"} id={"fee"}>
             가격
           </FormLabel>
           <input
             type="number"
             className={colorMode === "light" ? css.Input : css.DarkInput}
-            aria-labelledby="lectureFee"
+            aria-labelledby="fee"
             placeholder="가격을 입력해주세요"
-            {...register("lectureFee", {
+            {...register("fee", {
               required: { value: true, message: "가격을 입력해주세요" },
               min: { value: 0, message: "최소 0원 이상부터 등록 가능합니다" },
               max: {
@@ -231,27 +245,27 @@ function LectureRegister(): React.ReactElement {
               },
             })}
           />
-          {errors["lectureFee"] && (
+          {errors["fee"] && (
             <FormErrorMessage>
-              {typeof errors["lectureFee"].message === "string" &&
-                errors["lectureFee"].message}
+              {typeof errors["fee"].message === "string" &&
+                errors["fee"].message}
             </FormErrorMessage>
           )}
         </FormControl>
         <FormControl
-          isInvalid={!!errors["lectureDescription"]}
-          id={"lectureDescription"}
+          isInvalid={!!errors["description"]}
+          id={"description"}
           my="5"
         >
-          <FormLabel fontWeight={"bold"} id={"lectureDescription"}>
-            설명 ({`${watch("lectureDescription")?.length} / 1000`})
+          <FormLabel fontWeight={"bold"} id={"description"}>
+            설명 ({`${watch("description")?.length} / 1000`})
           </FormLabel>
           <textarea
             className={colorMode === "light" ? css.TextArea : css.DarkTextArea}
-            aria-labelledby="lectureDescription"
+            aria-labelledby="description"
             placeholder="설명을 입력해주세요"
             maxLength={1000}
-            {...register("lectureDescription", {
+            {...register("description", {
               required: { value: true, message: "설명을 입력해주세요" },
               maxLength: {
                 value: 1000,
@@ -259,20 +273,16 @@ function LectureRegister(): React.ReactElement {
               },
             })}
           />
-          {errors["lectureDescription"] && (
+          {errors["description"] && (
             <FormErrorMessage>
-              {typeof errors["lectureDescription"].message === "string" &&
-                errors["lectureDescription"].message}
+              {typeof errors["description"].message === "string" &&
+                errors["description"].message}
             </FormErrorMessage>
           )}
         </FormControl>
         <Divider my="5" mt="10" />
-        <FormControl
-          isInvalid={!!errors["lectureImg"]}
-          id={"lectureImg"}
-          my="8"
-        >
-          <FormLabel fontWeight={"bold"} id={"lectureImg"}>
+        <FormControl isInvalid={!!errors["img"]} id={"img"} my="8">
+          <FormLabel fontWeight={"bold"} id={"img"}>
             대표 이미지 올리기
           </FormLabel>
           <VStack
@@ -282,7 +292,7 @@ function LectureRegister(): React.ReactElement {
             p="10"
             {...getImgRootProps({ className: "dropzone" })}
           >
-            <input {...getImgInputProps()} aria-labelledby="lectureImg" />
+            <input {...getImgInputProps()} aria-labelledby="img" />
             <p style={{ color: "#777" }}>
               이미지는 클릭 또는 드래그해서 올려주세요 <br />
               (jpg, png, jpeg, webp)
@@ -301,12 +311,8 @@ function LectureRegister(): React.ReactElement {
               )}
         </FormControl>
         <Divider my="5" />
-        <FormControl
-          isInvalid={!!errors["lectureVideos"]}
-          id={"lectureVideos"}
-          my="8"
-        >
-          <FormLabel fontWeight={"bold"} id={"lectureVideos"}>
+        <FormControl isInvalid={!!errors["videos"]} id={"videos"} my="8">
+          <FormLabel fontWeight={"bold"} id={"videos"}>
             영상 올리기
           </FormLabel>
           <VStack
@@ -316,7 +322,7 @@ function LectureRegister(): React.ReactElement {
             p="10"
             {...getVideoRootProps({ className: "dropzone" })}
           >
-            <input {...getVideoInputProps()} aria-labelledby="lectureVideos" />
+            <input {...getVideoInputProps()} aria-labelledby="videos" />
             <p style={{ color: "#777" }}>
               영상은 클릭 또는 드래그해서 올려주세요 <br /> (mp4, mov, wmv, avi,
               mkv, webm)
@@ -335,7 +341,7 @@ function LectureRegister(): React.ReactElement {
                       <ChakraImg
                         w="200px"
                         h="150px"
-                        src={_videos[idx]}
+                        src={_videoThumnails[idx]}
                         border="1px solid gray"
                       />
                     </HStack>
@@ -346,7 +352,7 @@ function LectureRegister(): React.ReactElement {
           </aside>
           {!submitFlag
             ? null
-            : _videos.length <= 0 && (
+            : _videoThumnails.length <= 0 && (
                 <MyErrorText message="강의 영상을 등록해주세요" />
               )}
         </FormControl>
@@ -384,48 +390,44 @@ function LectureRegister(): React.ReactElement {
           </RadioGroup>
           <FormErrorMessage>{`${"목적"}을 선택해주세요`}</FormErrorMessage>
         </FormControl>
-        <FormControl
-          isInvalid={!!errors["lectureDifficulty"]}
-          id={"lectureDifficulty"}
-          my="7"
-        >
-          <FormLabel fontWeight={"bold"} id={"lectureDifficulty"}>
+        <FormControl isInvalid={!!errors["level"]} id={"level"} my="7">
+          <FormLabel fontWeight={"bold"} id={"level"}>
             난이도
           </FormLabel>
           <RadioGroup
             pl="5"
             display={"flex"}
-            name="lectureDifficulty"
-            aria-labelledby="lectureDifficulty"
+            name="level"
+            aria-labelledby="level"
           >
             <MyRadio
               value="start"
-              testId="difficulty1"
-              {...register("lectureDifficulty", { required: true })}
+              testId="level1"
+              {...register("level", { required: true })}
             >
               입문
             </MyRadio>
             <MyRadio
               ml="2"
               value="lower"
-              testId="difficulty2"
-              {...register("lectureDifficulty", { required: true })}
+              testId="level2"
+              {...register("level", { required: true })}
             >
               초급
             </MyRadio>
             <MyRadio
               ml="2"
               value="middle"
-              testId="difficulty3"
-              {...register("lectureDifficulty", { required: true })}
+              testId="level3"
+              {...register("level", { required: true })}
             >
               중급
             </MyRadio>
             <MyRadio
               ml="2"
               value="upper"
-              testId="difficulty4"
-              {...register("lectureDifficulty", { required: true })}
+              testId="level4"
+              {...register("level", { required: true })}
             >
               고급
             </MyRadio>
