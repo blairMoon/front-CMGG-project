@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { HiUser } from "react-icons/hi";
+import { useColorMode } from "@chakra-ui/react";
+
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
-import { HiUser } from "react-icons/hi";
-import { useColorMode } from "@chakra-ui/react";
+import { useDidMountEffect } from "../../hooks/useDidMountEffect";
 
 // Initialize the networkgraph module
 HighchartsNetworkgraph(Highcharts);
@@ -25,6 +28,11 @@ interface HighchartsNetworkProps {
   nodes: NetWorkNode[];
 }
 
+interface NodeRatio {
+  name: string;
+  ratio: number;
+}
+
 const defaultProps: HighchartsNetworkProps = {
   title: "",
   subtitle: "",
@@ -39,8 +47,8 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
   nodes = defaultProps.nodes,
 }) => {
   const { colorMode } = useColorMode();
-  const [hoveredNode, setHoveredNode] = useState<NetWorkNode | null>(null);
   const [showInfoBox, setShowInfoBox] = useState(false);
+  const [hoveredNode, setHoveredNode] = useState<NetWorkNode | null>(null);
 
   if (data.length === 0 || nodes.length === 0) {
     return <div>Nothing</div>;
