@@ -10,7 +10,7 @@ import { RecoilRoot } from "recoil";
 import { worker } from "./services/mocks/browser";
 
 Sentry.init({
-  dsn: "https://97f36cbf38094c0381c09337fd4bca6c@o4504964748345344.ingest.sentry.io/4504967641759744",
+  dsn: process.env.REACT_APP_DSN,
   environment: "development",
   integrations: [new Sentry.BrowserTracing(), new Sentry.Replay()],
   tracesSampleRate: 1.0,
