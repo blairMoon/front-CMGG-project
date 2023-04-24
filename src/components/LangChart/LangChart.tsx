@@ -68,13 +68,14 @@ const LangChart: React.FC<Props> = () => {
           return (
             <div
               style={{
-                backgroundColor: "white",
                 color: colorMode === "light" ? "black" : "black",
-                padding: "6px",
+                backgroundColor: "white",
+                padding: "8px",
                 fontSize: "12px",
                 borderRadius: "4px",
                 boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.24)",
-                lineHeight: "1.5",
+                lineHeight: "1.6",
+                fontWeight: "600",
               }}
             >
               <div style={{ display: "flex", alignItems: "center" }}>
