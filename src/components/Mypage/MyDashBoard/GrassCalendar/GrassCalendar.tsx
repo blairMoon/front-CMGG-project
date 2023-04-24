@@ -158,7 +158,6 @@ const GrassCalendar: React.FC<Props> = () => {
                   "legend legend"`}
         gridTemplateRows={"1fr 170px 1fr "}
         gridTemplateColumns={"24px 1fr"}
-        h="320px"
       >
         <GridItem
           area={"header"}
@@ -167,15 +166,16 @@ const GrassCalendar: React.FC<Props> = () => {
           fontWeight="600"
           style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
         >
-          <HStack justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <Box>연간학습</Box>
-            <HStack>
+            <Box display="flex" alignItems="flex-start">
               <Button
                 variant="ghost"
                 borderRadius="xl"
                 px="0"
                 color="#858585"
                 onClick={goToPreviousYear}
+                h="27px"
               >
                 <FaChevronLeft />
               </Button>
@@ -186,11 +186,12 @@ const GrassCalendar: React.FC<Props> = () => {
                 px="0"
                 color="#858585"
                 onClick={goToNextYear}
+                h="27px"
               >
                 <FaChevronRight />
               </Button>
-            </HStack>
-          </HStack>
+            </Box>
+          </Box>
         </GridItem>
         <GridItem area={"day"} pt="24px">
           <Box

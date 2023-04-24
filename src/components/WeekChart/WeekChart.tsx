@@ -91,10 +91,10 @@ export const data: DayChartData[] = [
 const DayChart: React.FC<Props> = () => {
   const { colorMode } = useColorMode();
   return (
-    <div style={{ height: "300px", margin: "0 auto" }}>
+    <div style={{ height: "300px" }}>
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 30, right: 20, bottom: 30, left: 20 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
