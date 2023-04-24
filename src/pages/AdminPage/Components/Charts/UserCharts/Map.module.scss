@@ -1,0 +1,20 @@
+.path {
+  path {
+    fill: lightgrey;
+    stroke: white;
+    transition: fill 0.2s ease-out;
+  }
+
+  path:hover {
+    fill: var(--color-blue);
+  }
+}
+.tooltip {
+  background-color: #333;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}

@@ -22,6 +22,7 @@ import {
   MenuList,
   Spacer,
   Button,
+  Link,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -42,49 +43,66 @@ import { BsPersonVcard } from "react-icons/bs";
 import { RiMoneyCnyCircleLine } from "react-icons/ri";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { FiChevronDown } from "react-icons/fi";
+
+type SubItem = {
+  title: string;
+  url: string;
+};
+
 interface LinkItemProps {
   name: string;
   icon: IconType;
-  subItems: {
-    [key: string]: string;
-  };
+  subItems: Record<string, SubItem>;
+  url: string;
 }
-const LinkItems: Array<LinkItemProps> = [
+
+const LinkItems: LinkItemProps[] = [
   {
     name: "Dashboard",
     icon: AiOutlineUser,
-    subItems: { sub1: "sub1", sub2: "sub2", sub3: "sub3" },
+    subItems: {
+      sub1: { title: "Subitem 1", url: "/admin/sub1" },
+      sub2: { title: "Subitem 2", url: "/admin/sub2" },
+      sub3: { title: "Subitem 3", url: "/admin/sub3" },
+    },
+    url: "/admin",
   },
   {
     name: "User",
     icon: AiOutlineUser,
-    subItems: { sub1: "sub1", sub2: "sub2", sub3: "sub3" },
+    subItems: {
+      sub1: { title: "Subitem 1", url: "/admin/user/sub1" },
+      sub2: { title: "Subitem 2", url: "/admin/user/sub2" },
+    },
+    url: "/admin/user",
   },
-  // {
-  //   name: "Lecture",
-  //   icon: BiMoviePlay,
-  //   subItems: { sub1: "sub1", sub2: "sub2", sub3: "sub3" },
-  // },
   {
     name: "Lecture",
     icon: MdPersonalVideo,
-    subItems: { sub1: "sub1", sub2: "sub2", sub3: "sub3" },
-  },
-  {
-    name: "Instructor",
-    icon: BsPersonVcard,
-    subItems: { sub1: "sub1", sub2: "sub2", sub3: "sub3" },
+    subItems: {
+      sub1: { title: "Subitem 1", url: "/admin/lecture/sub1" },
+      sub2: { title: "Subitem 2", url: "/admin/lecture/sub2" },
+      sub3: { title: "Subitem 3", url: "/admin/lecture/sub3" },
+    },
+    url: "/admin/lecture",
   },
   {
     name: "Pay",
     icon: RiMoneyCnyCircleLine,
-    subItems: { sub1: "sub1", sub2: "sub2", sub3: "sub3" },
+    subItems: {
+      sub1: { title: "Subitem 1", url: "/admin/pay/sub1" },
+      sub2: { title: "Subitem 2", url: "/admin/pay/sub2" },
+      sub3: { title: "Subitem 3", url: "/admin/pay/sub3" },
+    },
+    url: "/admin/pay",
   },
 ];
 
 export default function SimpleSidebar({ children }: { children: ReactNode }) {
   const mainColor = "#003c93;";
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
@@ -136,14 +154,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem
-          key={link.name}
-          icon={link.icon}
-          subItems={link.subItems}
-          name={link.name}
-        >
-          {link.name}
-        </NavItem>
+        <Link href={link.url} _hover={{ outline: "none" }}>
+          <Box key={link.name}>
+            <NavItem icon={link.icon} name={link.name} subItems={link.subItems}>
+              {link.name}
+            </NavItem>
+          </Box>
+        </Link>
       ))}
     </Box>
   );
@@ -152,19 +169,30 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 interface NavItemProps extends FlexProps {
   icon: IconType;
   name: string;
-  subItems: Record<string, string>;
+  subItems: Record<string, SubItem>;
 }
+
 const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = () => {
-    setIsOpen(!isOpen);
+  const [isHovered, setIsHovered] = useState(false);
+  const handleMouseEnter = (name: string) => {
+    setIsHovered(true);
+    if (name === "Dashboard") {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setIsOpen(false);
   };
 
   return (
     <Box>
       <Flex
-        // border="1px"
         justify="center"
         align="center"
         p="4"
@@ -176,7 +204,8 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
           bg: "#003c93;",
           color: "white",
         }}
-        onClick={handleClick}
+        onMouseEnter={() => handleMouseEnter(name)}
+        onMouseLeave={handleMouseLeave}
         {...rest}
       >
         {icon && (
@@ -189,9 +218,16 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
             as={icon}
           />
         )}
-        <Text>{name}</Text>
+        <Text
+          _hover={{
+            color: "white",
+            outline: "none",
+          }}
+        >
+          {name}
+        </Text>
         <Spacer />
-        {Object.keys(subItems).length > 0 && (
+        {name !== "Dashboard" && Object.keys(subItems).length > 0 && (
           <IconButton
             color="black"
             _hover={{
@@ -205,7 +241,6 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
             ml={2}
             transform={isOpen ? "rotate(180deg)" : ""}
             transition="transform 0.2s"
-            onClick={handleClick}
           />
         )}
       </Flex>
@@ -215,38 +250,42 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
           w="100%"
           alignItems="flex-start"
           justifyContent="center"
+          onMouseEnter={() => handleMouseEnter(name)}
+          onMouseLeave={handleMouseLeave}
+          {...rest}
         >
-          {Object.keys(subItems).map((subItem) => (
-            <Button
-              w="90%"
-              bg="white"
-              p="4"
-              mx="4"
-              key={subItem}
-              // w="100%"
-              fontWeight="400"
-              textAlign="left"
-              _hover={{ bg: "rgb(236 243 253)" }}
-            >
-              <Icon
-                mr="4"
-                fontSize="16"
-                _groupHover={{
-                  color: "white",
-                }}
-                zIndex={-1}
-                // style={{ display: "none" }}
-              />
-              <Text textAlign="left" w="100%">
-                {subItems[subItem]}
-              </Text>
-            </Button>
+          {Object.keys(subItems).map((subItemKey, idx) => (
+            <Link key={idx} href={subItems[subItemKey]["url"]}>
+              <Button
+                w="120%"
+                bg="white"
+                p="4"
+                mx="4"
+                fontWeight="400"
+                textAlign="left"
+                _hover={{ bg: "rgb(236 243 253)", outLine: "none" }}
+                onClick={() => console.log("1", subItems)}
+              >
+                <Icon
+                  mr="4"
+                  fontSize="16"
+                  _groupHover={{
+                    color: "white",
+                  }}
+                  zIndex={-1}
+                />
+                <Text textAlign="left" w="100%">
+                  {subItems[subItemKey]["title"]}
+                </Text>
+              </Button>
+            </Link>
           ))}
         </Flex>
       )}
     </Box>
   );
 };
+
 interface MobileProps extends FlexProps {
   onOpen: () => void;
 }
