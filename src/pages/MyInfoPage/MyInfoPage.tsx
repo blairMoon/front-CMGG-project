@@ -20,7 +20,7 @@ const MyInfoPage: React.FC<Props> = (props: Props) => {
         <GridItem area={"nav"}>
           <MySideBar />
         </GridItem>
-        <GridItem area={"main"} py="2" paddingLeft="10">
+        <GridItem area={"main"} paddingLeft="10">
           <Outlet />
         </GridItem>
       </Grid>

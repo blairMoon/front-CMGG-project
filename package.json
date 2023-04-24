@@ -101,6 +101,7 @@
     "@types/react-dropzone": "^5.1.0",
     "@types/react-helmet": "^6.1.6",
     "@types/react-query": "^1.2.9",
+    "@types/react-transition-group": "^4.4.5",
     "@types/recoil": "^0.0.9",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
