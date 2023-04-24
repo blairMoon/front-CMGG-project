@@ -23,6 +23,7 @@
     "jest.config.ts",
     "typings/**/*",
     "react-app-env.d.ts",
-    "setupJest.js"
+    "setupJest.js",
+    "webpack.config.ts"
   ]
 }

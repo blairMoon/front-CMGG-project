@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useQuery } from "@tanstack/react-query";
 import { useColorMode } from "@chakra-ui/react";
@@ -191,8 +191,18 @@ const DayChart: React.FC<Props> = () => {
     const days = lastDateOfMonth + (6 - lastDayOfWeek);
     return Math.ceil(days / 7);
   };
+  const getCurrentMonthAndWeek = () => {
+    const now = new Date();
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const pastDaysOfMonth =
+      (now.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
+    const currentWeekNumber = Math.ceil(
+      (pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7
+    );
+    return { month: now.getMonth() + 1, week: currentWeekNumber };
+  };
 
-  const todayXCoordinate = () => {
+  const today = () => {
     const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     const dayIndex = dayNames.indexOf(todayDayOfWeek);
     const dataPoint = currentData[0]?.data[dayIndex];
@@ -202,10 +212,16 @@ const DayChart: React.FC<Props> = () => {
     return null;
   };
 
+  useEffect(() => {
+    const { month, week } = getCurrentMonthAndWeek();
+    setCurrentMonth(month);
+    setCurrentWeek(week);
+  }, []);
+
   const CustomLayer: Layer = (props: CustomLayerProps & any) => {
     const { xScale } = props;
     const { colorMode } = useColorMode();
-    const todayX = todayXCoordinate();
+    const todayX = today();
     if (todayX === null) {
       return null;
     }
@@ -228,17 +244,16 @@ const DayChart: React.FC<Props> = () => {
     <div>
       <Grid
         templateAreas={`"header header"
-                  "day weekchart"`}
-        gridTemplateRows={"1fr 250px "}
-        gridTemplateColumns={"24px 1fr"}
-        h="300px"
+                  "weekchart weekchart"`}
+        gridTemplateRows={"1fr 220px "}
+        gridTemplateColumns={"1fr 1fr"}
       >
         <GridItem
           area={"header"}
-          pl="3px"
           fontSize="18px"
           color="#3d3d3d"
           fontWeight="600"
+          pb="30px"
         >
           <HStack justifyContent="space-between">
             <Box>주간학습</Box>
@@ -284,7 +299,7 @@ const DayChart: React.FC<Props> = () => {
               "mesh",
               "legends",
             ]}
-            margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+            margin={{ top: 20, right: 10, bottom: 30, left: 25 }}
             xScale={{ type: "point" }}
             yScale={{
               type: "linear",
@@ -315,9 +330,13 @@ const DayChart: React.FC<Props> = () => {
                     textAnchor="middle"
                     dominantBaseline="middle"
                     style={{
-                      fontSize: 12,
-                      fontWeight: isToday ? "bold" : "normal",
-                      fill: colorMode === "light" ? "#3d3d3d" : "white",
+                      fontSize: 13,
+                      fontWeight: isToday ? "900" : "normal",
+                      fill: isToday
+                        ? "#003c93"
+                        : colorMode === "light"
+                        ? "#3d3d3d"
+                        : "white",
                     }}
                   >
                     {tickValue}

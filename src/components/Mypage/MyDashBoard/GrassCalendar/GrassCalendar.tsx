@@ -15,6 +15,7 @@ import {
   Grid,
   GridItem,
   Button,
+  useColorMode,
 } from "@chakra-ui/react";
 import { BsPlayCircle, BsAlarm } from "react-icons/bs";
 import { AiOutlineFileDone } from "react-icons/ai";
@@ -100,6 +101,7 @@ const GrassCalendar: React.FC<Props> = () => {
   const [currentYear, setCurrentYear] = useState<number>(
     new Date().getFullYear()
   );
+  const { colorMode } = useColorMode();
 
   const goToPreviousYear = () => setCurrentYear(currentYear - 1);
   const goToNextYear = () => setCurrentYear(currentYear + 1);
@@ -143,7 +145,7 @@ const GrassCalendar: React.FC<Props> = () => {
   const customTheme = {
     labels: {
       text: {
-        fill: "#858585",
+        fill: colorMode === "light" ? "#858585" : "#858585",
       },
     },
   };
@@ -156,24 +158,24 @@ const GrassCalendar: React.FC<Props> = () => {
                   "legend legend"`}
         gridTemplateRows={"1fr 170px 1fr "}
         gridTemplateColumns={"24px 1fr"}
-        h="320px"
       >
         <GridItem
           area={"header"}
           pl="3px"
           fontSize="18px"
-          color="#3d3d3d"
           fontWeight="600"
+          style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
         >
-          <HStack justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <Box>연간학습</Box>
-            <HStack>
+            <Box display="flex" alignItems="flex-start">
               <Button
                 variant="ghost"
                 borderRadius="xl"
                 px="0"
                 color="#858585"
                 onClick={goToPreviousYear}
+                h="27px"
               >
                 <FaChevronLeft />
               </Button>
@@ -184,14 +186,17 @@ const GrassCalendar: React.FC<Props> = () => {
                 px="0"
                 color="#858585"
                 onClick={goToNextYear}
+                h="27px"
               >
                 <FaChevronRight />
               </Button>
-            </HStack>
-          </HStack>
+            </Box>
+          </Box>
         </GridItem>
         <GridItem area={"day"} pt="24px">
-          <Box color="#858585">
+          <Box
+            style={{ color: colorMode === "light" ? "#858585" : " #858585" }}
+          >
             {weekDays.map((day, index) => (
               <Box
                 key={index}
@@ -213,12 +218,12 @@ const GrassCalendar: React.FC<Props> = () => {
             data={dataWithColors}
             from={`${currentYear}-01-01`}
             to={`${currentYear}-12-31`}
-            emptyColor="#f7f7f7"
+            emptyColor={colorMode === "light" ? "#f7f7f7" : "#313038"}
             // yearSpacing={40}
             daySpacing={4}
             dayBorderWidth={0.5}
-            dayBorderColor="#bababa"
-            monthBorderColor="#ffffff"
+            dayBorderColor={colorMode === "light" ? "#bababa" : "#4e4e52"}
+            monthBorderColor={colorMode === "light" ? "#ffffff" : "#171c36"}
             monthLegend={(year, month) => {
               const date = new Date(year, month, 1);
               return date.toLocaleString("ko-KR", { month: "long" });
@@ -230,6 +235,7 @@ const GrassCalendar: React.FC<Props> = () => {
             tooltip={({ day, value, color }) => (
               <div
                 style={{
+                  color: colorMode === "light" ? "black" : "black",
                   backgroundColor: "white",
                   padding: "8px",
                   fontSize: "12px",
@@ -274,9 +280,6 @@ const GrassCalendar: React.FC<Props> = () => {
             <Box>완료 수업 수</Box>
             <HStack display="flex" spacing={3}>
               <HStack>
-                <Text>0</Text>
-              </HStack>
-              <HStack>
                 <FaSquare color="#d1e5f7" />
                 <Text>1~5</Text>
               </HStack>
@@ -300,7 +303,11 @@ const GrassCalendar: React.FC<Props> = () => {
                 <BsPlayCircle />
                 <Text>완료 수업</Text>
               </HStack>
-              <Box fontSize="14" fontWeight="600" color="#3d3d3d">
+              <Box
+                fontSize="14"
+                fontWeight="600"
+                style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
+              >
                 14
               </Box>
             </Stack>
@@ -309,7 +316,11 @@ const GrassCalendar: React.FC<Props> = () => {
                 <BsAlarm />
                 <Text>총 학습</Text>
               </HStack>
-              <Box fontSize="14" fontWeight="600" color="#3d3d3d">
+              <Box
+                fontSize="14"
+                fontWeight="600"
+                style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
+              >
                 1시간 53분
               </Box>
             </Stack>
@@ -318,7 +329,11 @@ const GrassCalendar: React.FC<Props> = () => {
                 <AiOutlineFileDone size={13} />
                 <Text>완강</Text>
               </HStack>
-              <Box fontSize="14" fontWeight="600" color="#3d3d3d">
+              <Box
+                fontSize="14"
+                fontWeight="600"
+                style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
+              >
                 0
               </Box>
             </Stack>

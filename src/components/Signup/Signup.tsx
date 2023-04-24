@@ -9,7 +9,7 @@ import css from "../Signup/Signup.module.scss";
 
 import { signUpUser, instanceNotLogin } from "../../services/api";
 import ModalBasic from "../../components/Modal/ModalBasic";
-
+import Post from "./post";
 interface SignupProps {
   initialValues: {
     username: string;
@@ -31,6 +31,7 @@ interface UserData {
   skill: string;
   termsOfUse: String;
   funnel: string;
+  address: string;
 }
 
 const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
@@ -42,6 +43,11 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
   const { colorMode, toggleColorMode } = useColorMode();
+  const [popup, setPopup] = useState<boolean>(false);
+  const [addressBtn, setAddressBtn] = useState<boolean>(false);
+  const [enroll_company, setEnroll_company] = useState({
+    address: "",
+  });
 
   const mutation = useMutation<UserData, unknown, UserData>(
     (data: UserData) => signUpUser(data),
@@ -111,6 +117,18 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
     } else {
       alert("아이디 중복확인을 해주세용.");
     }
+  };
+  const handleComplete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setPopup(!popup);
+    setAddressBtn(true);
+  };
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(enroll_company);
+    setEnroll_company({
+      ...enroll_company,
+      [e.target.name]: e.target.value,
+    });
   };
   return (
     <div>
@@ -277,6 +295,41 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               {errors.email && (
                 <p className={css.errors}>이메일 형식이 아닙니다.</p>
               )}
+              <label className={css.label}>주소</label>
+              <div className={css.buttonflex}>
+                <input
+                  type={"text"}
+                  value={enroll_company.address}
+                  placeholder="주소를 입력해주세용"
+                  className={colorMode === "light" ? css.Input : css.DarkInput}
+                  {...register("address", { required: true })}
+                  onChange={handleInput}
+                />
+
+                <button
+                  type="button"
+                  name="address"
+                  onClick={handleComplete}
+                  className={
+                    colorMode === "light"
+                      ? css.checkButton
+                      : css.darkCheckButton
+                  }
+                >
+                  주소 <br />
+                  찾기
+                </button>
+              </div>
+              {popup && (
+                <Post
+                  company={enroll_company}
+                  setcompany={setEnroll_company}
+                ></Post>
+              )}
+              {errors.address && (
+                <p className={css.errors}>주소는 필수 입력값입니다.</p>
+              )}
+
               <Divider
                 orientation="horizontal"
                 marginTop="40px"
