@@ -1,14 +1,13 @@
-.chartContainer {
-  width: 120%;
-}
-.h1 {
-  color: gray;
-  font-weight: 700;
-  padding: 5px;
-  border-bottom: 1.5px solid gray;
-}
-.userContainer {
-  width: 100%;
+.path {
+  path {
+    fill: lightgrey;
+    stroke: white;
+    transition: fill 0.2s ease-out;
+  }
+
+  path:hover {
+    fill: var(--color-blue);
+  }
 }
 .tooltip {
   background-color: #333;

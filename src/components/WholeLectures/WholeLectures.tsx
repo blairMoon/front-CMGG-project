@@ -51,7 +51,7 @@ const WholeLectures: React.FC<Props> = () => {
   const searchName: any = params.get("search") || "";
   const pageNum: number = Number(params.get("page"));
   const [tags, setTags] = useState<string[]>(["입문", "초급", "중급", "고급"]);
-  const { isLoading, data, refetch } = useQuery(
+  const { isLoading, data } = useQuery(
     ["lectureSearch", bigCategory, smallCategory, pageNum, searchName],
     getLectureAndCategoryAndSearch,
     {
