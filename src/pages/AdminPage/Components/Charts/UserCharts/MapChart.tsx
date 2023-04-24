@@ -68,7 +68,7 @@ const KoreaMap: React.FC<Props> = () => {
   };
 
   return (
-    <div id="map-container" style={{ position: "relative" }}>
+    <div id="map-container" style={{ position: "relative", width: "500px" }}>
       <Tooltip
         id="tooltip"
         isOpen={true}
