@@ -8,25 +8,9 @@ interface Props {}
 const KoreaMap: React.FC<Props> = () => {
   const [tooltipContent, setTooltipContent] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-  const cityMap = {
-    seoul: "서울",
-    busan: "부산",
-    daegu: "대구",
-    incheon: "인천",
-    gwangju: "광주",
-    daejeon: "대전",
-    ulsan: "울산",
-    sejong: "세종",
-    gyeonggi: "경기",
-    gangwon: "강원",
-    "north-chungcheong": "충북",
-    "south-chungcheong": "충남",
-    "north-jeolla": "전북",
-    "south-jeolla": "전남",
-    "north-gyeongsang": "경북",
-    "south-gyeongsang": "경남",
-    jeju: "제주",
-  };
+
+  // ...
+
   const onMouseOver = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     const id = e.currentTarget?.getAttribute("id");
     const rect = e.currentTarget?.getBoundingClientRect();
@@ -34,36 +18,39 @@ const KoreaMap: React.FC<Props> = () => {
     if (e.target instanceof Element && e.target.id) {
       const pos = e.target.getBoundingClientRect();
       const container = document.getElementById("map-container");
-      console.log(e.target.id);
       if (container) {
-        if (e.target.id == "north-gyeongsang") {
-          const containerPos = container.getBoundingClientRect();
-          setTooltipPosition({
-            x: pos.right - containerPos.left - 450,
-            y: pos.top - containerPos.top + 80,
-          });
-        } else if (e.target.id == "gangwon") {
-          const containerPos = container.getBoundingClientRect();
-          setTooltipPosition({
-            x: pos.right - containerPos.left - 360,
-            y: pos.top - containerPos.top + 80,
-          });
-        } else if (e.target.id == "gyeonggi") {
-          const containerPos = container.getBoundingClientRect();
-          setTooltipPosition({
-            x: pos.right - containerPos.left - 290,
-            y: pos.top - containerPos.top + 80,
-          });
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        const svgWidth = 500; // South Korea 컴포넌트의 너비
+        const svgHeight = 600; // South Korea 컴포넌트의 높이
+        const widthRatio = containerWidth / svgWidth;
+        const heightRatio = containerHeight / svgHeight;
+
+        const containerPos = container.getBoundingClientRect();
+        let offsetX, offsetY;
+
+        if (e.target.id === "north-gyeongsang") {
+          offsetX = -450;
+          offsetY = 80;
+        } else if (e.target.id === "gangwon") {
+          offsetX = -360;
+          offsetY = 80;
+        } else if (e.target.id === "gyeonggi") {
+          offsetX = -290;
+          offsetY = 80;
         } else {
-          const containerPos = container.getBoundingClientRect();
-          setTooltipPosition({
-            x: pos.right - containerPos.left - 275,
-            y: pos.top - containerPos.top + 10,
-          });
+          offsetX = -275;
+          offsetY = 10;
         }
+
+        // 다양한 화면에서 동일한 위치에 툴팁이 표시되도록 상대적인 위치를 계산합니다.
+        setTooltipPosition({
+          x: (pos.right - containerPos.left + offsetX) * widthRatio,
+          y: (pos.top - containerPos.top + offsetY) * heightRatio,
+        });
       }
 
-      setTooltipContent(`${e.target.id}\n총 12명`);
+      setTooltipContent(`${e.target.id}\nTotal 12 people`);
     }
   };
 
