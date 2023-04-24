@@ -1,10 +1,12 @@
-import { Box, Text, VStack, useColorMode } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Box, Text, VStack, useColorMode, HStack } from "@chakra-ui/react";
 import { hsl, parseToHsl } from "polished";
 import { HslColor } from "polished/lib/types/color";
+import getAddCommas from "../../utils/getAddCommas";
 
 interface DashboardCardProps {
   title: string;
-  value: string;
+  value: number;
   bgColor: string;
   boxShadow?: string;
 }
@@ -15,10 +17,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   bgColor,
   boxShadow,
 }) => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const [num, setNum] = useState(value);
+  const { colorMode } = useColorMode();
   const hslaColor: HslColor = parseToHsl(bgColor);
-
-  // L 값을 10% 낮춤
   const darkerColor = hsl({
     ...hslaColor,
     lightness: hslaColor.lightness - 0.3,
@@ -36,7 +37,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
     >
       <VStack>
         <Text fontWeight="bold">{title}</Text>
-        <Text fontSize="2xl">{value}</Text>
+        <Text fontSize="2xl">{getAddCommas(value)}</Text>
       </VStack>
     </Box>
   );
