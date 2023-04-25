@@ -12,7 +12,7 @@ import MyLecture from "./components/Mypage/MyLecture/MyLecture";
 import MyPayment from "./components/Mypage/MyPayment/MyPayment";
 import MyCart from "./pages/MyInfoPage/MyCart/MyCart";
 import MyEditMember from "./components/Mypage/MyEditMember/MyEditMember";
-import { PaymentsResultPage } from "./pages/PaymentResultPage/PaymentsResultPage";
+import PaymentsResultPage from "./pages/PaymentResultPage/PaymentsResultPage";
 import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";

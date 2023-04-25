@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as SouthKorea } from "@svg-maps/south-korea/south-korea.svg";
 import css from "./Map.module.scss";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, Box } from "@chakra-ui/react";
 
 interface Props {}
 
@@ -31,57 +31,56 @@ const KoreaMap: React.FC<Props> = () => {
   const onMouseOut = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     setTooltip(false);
   };
+  const tooltipOffsetX = 80; // 툴팁의 X축 위치를 조절합니다.
+  const tooltipOffsetY = 100; // 툴팁의 Y축 위치를 조절합니다.
   const onMouseOver = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-    const id = e.currentTarget?.getAttribute("id");
-    const rect = e.currentTarget?.getBoundingClientRect();
-
     if (e.target instanceof Element && e.target.id) {
-      const pos = e.target.getBoundingClientRect();
-      const container = document.getElementById("map-container");
+      // const container = document.getElementById("map-container");
 
-      if (container) {
-        const containerPos = container.getBoundingClientRect();
-        setTooltipPosition({
-          x: e.clientX - containerPos.left - 1200,
-          y: e.clientY - containerPos.top - 200,
-        });
-      }
+      // console.log("x,y", e.clientX, e.clientY);
+
+      // const scrollLeft =
+      //   window.pageXOffset | document.documentElement.scrollLeft;
+      // const scrollTop = window.pageYOffset | document.documentElement.scrollTop;
+
+      // console.log("left", scrollLeft);
+      // console.log("top", scrollTop);
 
       setTooltipContent(`${e.target.id}\n총 12명`);
       setTooltip(true);
     }
   };
-
   return (
     <div id="map-container" style={{ position: "relative", width: "500px" }}>
-      <Tooltip
-        hasArrow={false}
+      <Box
         id="tooltip"
-        isOpen={tooltip}
-        label={tooltipContent}
-        top={tooltipPosition.y}
-        left={tooltipPosition.x}
         w="140px"
-        height="70px"
-        // bg="gray.300"
+        height="120px"
+        color="white"
+        background="gray"
         border="1px solid"
         borderColor="gray.500"
         borderRadius="0"
+        boxShadow="md"
+        position="absolute"
+        top="-10"
+        left="350"
+        visibility={tooltip ? "visible" : "hidden"}
       >
-        <SouthKorea
-          fill="gray"
-          width="500px"
-          height="600px"
-          className={css.path}
-          onMouseOver={onMouseOver}
-          onMouseOut={onMouseOut}
-          data-tip
-          data-html={true}
-          data-for="korea"
-        />
-      </Tooltip>
+        {tooltipContent}
+      </Box>
+      <SouthKorea
+        fill="gray"
+        width="500px"
+        height="600px"
+        className={css.path}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
+        data-tip
+        data-html={true}
+        data-for="korea"
+      />
     </div>
   );
 };
-
 export default KoreaMap;
