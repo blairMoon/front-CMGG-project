@@ -1,6 +1,6 @@
 import React from "react";
-import LangChart from "../../LangChart/LangChart";
-import DayChart from "../../WeekChart/WeekChart";
+import LangChart from "../../Charts/LangChart";
+import DayChart from "../../Charts/WeekChart";
 import GrassCalendar from "../../Charts/GrassCalendar";
 import RecentLectureCard from "../../Card/RecentLectureCard";
 import { Grid, GridItem, Text, Box, HStack } from "@chakra-ui/react";
@@ -14,7 +14,7 @@ const MyDashBoard: React.FC = () => {
                   "item1 item2 item3"
                   "item4 item4 item6"
                   "grasschart grasschart grasschart"`}
-        gridTemplateRows={"30px 1fr 1fr 370px"}
+        gridTemplateRows={"30px 1fr 340px 370px"}
         gridTemplateColumns={"1fr 1fr 1fr"}
         h="1200px"
         w="100%"
@@ -41,10 +41,20 @@ const MyDashBoard: React.FC = () => {
         <GridItem border="1px solid #d9d9d9" borderRadius="lg" area={"item2"}>
           유저 로그 or 아무 차트
         </GridItem>
-        <GridItem border="1px solid #d9d9d9" borderRadius="lg" area={"item3"}>
+        <GridItem
+          border="1px solid #d9d9d9"
+          borderRadius="lg"
+          area={"item3"}
+          p="20px"
+        >
           <LangChart />
         </GridItem>
-        <GridItem border="1px solid #d9d9d9" borderRadius="lg" area={"item4"}>
+        <GridItem
+          border="1px solid #d9d9d9"
+          borderRadius="lg"
+          area={"item4"}
+          p="20px"
+        >
           <DayChart />
         </GridItem>
         <GridItem border="1px solid #d9d9d9" borderRadius="lg" area={"item6"}>
