@@ -28,3 +28,8 @@ export const userState = atom({
     name: "",
   },
 });
+
+export const stockMenuState = atom<{ name: string; value: string }>({
+  key: "stockSelectMenu",
+  default: { name: "newStudentsRatio", value: "신규수강률" },
+});

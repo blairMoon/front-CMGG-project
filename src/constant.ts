@@ -17,3 +17,5 @@ export const lectureRegisterData = {
     { url: "vidoe2", title: "vidoeTitle2", description: "vidoeDescription2" },
   ],
 };
+
+export const skeletonArray = new Array(24).fill(0);
