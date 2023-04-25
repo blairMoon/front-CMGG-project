@@ -25,7 +25,6 @@ const App: React.FC = () => {
     <Sentry.ErrorBoundary
       fallback={({ error }) => <MyFallbackComponent error={error} />}
     >
-    
       <div className="App">
         <RouterProvider router={router} />
         <ReactQueryDevtools initialIsOpen={true} />
