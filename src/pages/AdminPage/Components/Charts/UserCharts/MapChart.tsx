@@ -1,84 +1,86 @@
 import React, { useState, useEffect } from "react";
 import { ReactComponent as SouthKorea } from "@svg-maps/south-korea/south-korea.svg";
 import css from "./Map.module.scss";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, Box } from "@chakra-ui/react";
 
 interface Props {}
 
 const KoreaMap: React.FC<Props> = () => {
+  const [tooltip, setTooltip] = useState(false);
   const [tooltipContent, setTooltipContent] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-
-  // ...
-
+  const cityMap = {
+    seoul: "서울",
+    busan: "부산",
+    daegu: "대구",
+    incheon: "인천",
+    gwangju: "광주",
+    daejeon: "대전",
+    ulsan: "울산",
+    sejong: "세종",
+    gyeonggi: "경기",
+    gangwon: "강원",
+    "north-chungcheong": "충북",
+    "south-chungcheong": "충남",
+    "north-jeolla": "전북",
+    "south-jeolla": "전남",
+    "north-gyeongsang": "경북",
+    "south-gyeongsang": "경남",
+    jeju: "제주",
+  };
+  const onMouseOut = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    setTooltip(false);
+  };
+  const tooltipOffsetX = 80; // 툴팁의 X축 위치를 조절합니다.
+  const tooltipOffsetY = 100; // 툴팁의 Y축 위치를 조절합니다.
   const onMouseOver = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-    const id = e.currentTarget?.getAttribute("id");
-    const rect = e.currentTarget?.getBoundingClientRect();
-
     if (e.target instanceof Element && e.target.id) {
-      const pos = e.target.getBoundingClientRect();
-      const container = document.getElementById("map-container");
-      if (container) {
-        const containerWidth = container.clientWidth;
-        const containerHeight = container.clientHeight;
-        const svgWidth = 500; // South Korea 컴포넌트의 너비
-        const svgHeight = 600; // South Korea 컴포넌트의 높이
-        const widthRatio = containerWidth / svgWidth;
-        const heightRatio = containerHeight / svgHeight;
+      // const container = document.getElementById("map-container");
 
-        const containerPos = container.getBoundingClientRect();
-        let offsetX, offsetY;
+      // console.log("x,y", e.clientX, e.clientY);
 
-        if (e.target.id === "north-gyeongsang") {
-          offsetX = -450;
-          offsetY = 80;
-        } else if (e.target.id === "gangwon") {
-          offsetX = -360;
-          offsetY = 80;
-        } else if (e.target.id === "gyeonggi") {
-          offsetX = -290;
-          offsetY = 80;
-        } else {
-          offsetX = -275;
-          offsetY = 10;
-        }
+      // const scrollLeft =
+      //   window.pageXOffset | document.documentElement.scrollLeft;
+      // const scrollTop = window.pageYOffset | document.documentElement.scrollTop;
 
-        // 다양한 화면에서 동일한 위치에 툴팁이 표시되도록 상대적인 위치를 계산합니다.
-        setTooltipPosition({
-          x: (pos.right - containerPos.left + offsetX) * widthRatio,
-          y: (pos.top - containerPos.top + offsetY) * heightRatio,
-        });
-      }
+      // console.log("left", scrollLeft);
+      // console.log("top", scrollTop);
 
-      setTooltipContent(`${e.target.id}\nTotal 12 people`);
+      setTooltipContent(`${e.target.id}\n총 12명`);
+      setTooltip(true);
     }
   };
-
   return (
     <div id="map-container" style={{ position: "relative", width: "500px" }}>
-      <Tooltip
+      <Box
         id="tooltip"
-        isOpen={true}
-        hasArrow
-        label={tooltipContent}
-        top={tooltipPosition.y > 0 ? tooltipPosition.y : -tooltipPosition.y}
-        left={tooltipPosition.x > 0 ? tooltipPosition.x : -tooltipPosition.x}
         w="140px"
-        height="70px"
+        height="120px"
+        color="white"
+        background="gray"
+        border="1px solid"
+        borderColor="gray.500"
+        borderRadius="0"
+        boxShadow="md"
+        position="absolute"
+        top="-10"
+        left="350"
+        visibility={tooltip ? "visible" : "hidden"}
       >
-        <SouthKorea
-          fill="gray"
-          width="500px"
-          height="600px"
-          className={css.path}
-          onMouseOver={onMouseOver}
-          data-tip
-          data-html={true}
-          data-for="korea"
-        />
-      </Tooltip>
+        {tooltipContent}
+      </Box>
+      <SouthKorea
+        fill="gray"
+        width="500px"
+        height="600px"
+        className={css.path}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
+        data-tip
+        data-html={true}
+        data-for="korea"
+      />
     </div>
   );
 };
-
 export default KoreaMap;

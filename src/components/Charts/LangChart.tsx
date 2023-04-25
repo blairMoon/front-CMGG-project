@@ -68,12 +68,12 @@ const LangChart: React.FC<Props> = () => {
         <GridItem
           area={"header"}
           fontSize="18px"
-          color="#3d3d3d"
+          style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
           fontWeight="600"
           pb="30px"
         >
           <HStack justifyContent="space-between">
-            <Box>수강언어</Box>
+            <Box>수강 언어</Box>
           </HStack>
         </GridItem>
         <GridItem area={"langchart"}>

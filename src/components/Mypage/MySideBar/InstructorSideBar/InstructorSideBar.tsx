@@ -112,41 +112,6 @@ const InstructorSideBar: React.FC = () => {
           <RiFolderUploadLine />
           <Box>강의 업로드</Box>
         </HStack>
-
-        <Divider />
-        <HStack
-          px="5"
-          py="2"
-          cursor="pointer"
-          _hover={{
-            borderRadius: "lg",
-            color: "white",
-            bg: "#003C93",
-          }}
-          onClick={() => {
-            navigate("");
-          }}
-        >
-          <Box>수강신청 관리</Box>
-        </HStack>
-        <HStack
-          fontSize="14px"
-          px="5"
-          py="2"
-          cursor="pointer"
-          _hover={{
-            borderRadius: "lg",
-            color: "white",
-            bg: "#769dd6",
-          }}
-          onClick={() => {
-            navigate("");
-          }}
-        >
-          <MdPayment />
-          <Box>결제 내역</Box>
-        </HStack>
-
         <Divider />
         <HStack
           px="5"
@@ -204,7 +169,7 @@ const InstructorSideBar: React.FC = () => {
           <Stack pl="2" spacing={0}>
             <Box fontSize="16">blairMoon</Box>
             <Box fontSize="14" color="#707070">
-              Developer
+              Instructor
             </Box>
           </Stack>
         </HStack>

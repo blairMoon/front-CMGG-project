@@ -22,7 +22,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   const hslaColor: HslColor = parseToHsl(bgColor);
   const darkerColor = hsl({
     ...hslaColor,
-    lightness: hslaColor.lightness - 0.3,
+    lightness: hslaColor.lightness - 0.25,
   });
 
   return (

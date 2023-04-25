@@ -15,6 +15,7 @@ interface CalculatedLectureItem {
     lectureDescription: string;
     lectureTitle: string;
     targetAudience: string;
+    lectureFee: number;
     instructor: {
       username: string;
     };
@@ -54,6 +55,7 @@ const MyLecture: React.FC = () => {
                   targetAudience={item.lecture.targetAudience}
                   instructor={item.lecture.instructor.username}
                   rating={data.ratings[item.lecture.lectureTitle]}
+                  lectureFee={item.lecture.lectureFee}
                 />
               </GridItem>
             ))}

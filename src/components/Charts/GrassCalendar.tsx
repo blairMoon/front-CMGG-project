@@ -166,16 +166,19 @@ const GrassCalendar: React.FC<Props> = () => {
           fontWeight="600"
           style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
         >
-          <Box display="flex" justifyContent="space-between">
-            <Box>연간학습</Box>
-            <Box display="flex" alignItems="flex-start">
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>연간 학습</Box>
+            <Box display="flex" alignItems="center">
               <Button
                 variant="ghost"
                 borderRadius="xl"
                 px="0"
                 color="#858585"
                 onClick={goToPreviousYear}
-                h="27px"
               >
                 <FaChevronLeft />
               </Button>
@@ -186,7 +189,6 @@ const GrassCalendar: React.FC<Props> = () => {
                 px="0"
                 color="#858585"
                 onClick={goToNextYear}
-                h="27px"
               >
                 <FaChevronRight />
               </Button>
