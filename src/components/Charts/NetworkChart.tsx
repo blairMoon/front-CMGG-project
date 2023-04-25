@@ -1,14 +1,13 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { HiUser } from "react-icons/hi";
-import { useColorMode, Text, Flex, VStack } from "@chakra-ui/react";
+import { useColorMode, Text, Flex, VStack, Box } from "@chakra-ui/react";
 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
 
-// Initialize the networkgraph module
 HighchartsNetworkgraph(Highcharts);
 
 interface NetWorkData {
@@ -23,7 +22,6 @@ interface NetWorkNode {
 }
 
 interface HighchartsNetworkProps {
-  // options?: Highcharts.Options;
   title: string;
   subtitle: string;
   data: NetWorkData[];
@@ -69,7 +67,7 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
         ...list,
         {
           id: item.to,
-          color: `yellow`,
+          color: `rgb(175,155,240)`,
           ratio: item.value ? (item.value / total) * 100 : 0,
         },
       ]);
@@ -83,7 +81,7 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
   const options: Highcharts.Options = {
     chart: {
       type: "networkgraph",
-      height: "100%",
+      height: "80%",
       backgroundColor: "transparent",
       events: {
         load: updateSvgViewBox,
@@ -93,9 +91,8 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
       text: title,
       align: "left",
       style: {
-        color:
-          colorMode === "light" ? "rgb(40,40,40,0.7)" : "rgb(240,240,240,0.9)",
-        fontSize: "25px",
+        color: colorMode === "light" ? "rgb(0,0,0)" : "rgb(240,240,240,0.9)",
+        fontSize: "18px",
         fontWeight: "500",
       },
     },
@@ -106,7 +103,7 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
       style: {
         fontSize: "11px",
         color:
-          colorMode === "light" ? "rgb(40,40,40,0.6)" : "rgb(240,240,240,0.7)",
+          colorMode === "light" ? "rgb(40,40,40,0.8)" : "rgb(240,240,240,0.7)",
       },
     },
     tooltip: {
@@ -180,7 +177,7 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
         style={{
           position: "absolute",
           left: "20px",
-          top: "80px",
+          top: "50px",
           width: "140px",
           height: "70px",
           border: "1px solid gray",
@@ -199,7 +196,7 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
         }}
       >
         {hoveredNode ? (
-          <>
+          <Box bgColor={"transoarent"}>
             <Flex alignItems="center" justifyContent="space-around" w="100%">
               <Text fontSize="md" fontWeight="bold">
                 {hoveredNode.id}
@@ -208,16 +205,17 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
             </Flex>
             <Text
               fontWeight="bold"
-              color="facebook.500"
+              color={colorMode === "light" ? "facebook.300" : "facebook.500"}
               cursor="pointer"
+              bgColor="transparent"
               onClick={() => navigate(`/`)}
             >
               대표강의 보기
             </Text>
-          </>
+          </Box>
         ) : (
           <VStack width={"100%"} height="100%" justifyContent={"center"}>
-            <HiUser fill="yellow" />
+            <HiUser fill="rgb(175,155,240)" />
             <Text
               fontSize={"xs"}
               color={

@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root/Root";
-import NotFound from "./pages/ErrorPage/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -18,6 +17,7 @@ import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import InstructorLecture from "./pages/InstructorPage/MyLecture/MyLecture";
 
 import User from "./pages/AdminPage/Components/User/User";
 const router = createBrowserRouter([
@@ -80,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <DashBoard />,
+          },
+          {
+            path: "lecture",
+            element: <InstructorLecture />,
           },
           {
             path: "lecture/register",
