@@ -207,6 +207,7 @@ const LecturePlayer: React.FC = () => {
     const prevNum = parseInt(num) - 1;
     if (prevNum > 0) {
       navigate(`/lectureplay/${lectureId}/${prevNum}`);
+      resetCompleted();
     }
   };
 
@@ -214,6 +215,7 @@ const LecturePlayer: React.FC = () => {
     const nextNum = parseInt(num) + 1;
     if (nextNum <= (videoList?.list.length ?? 0)) {
       navigate(`/lectureplay/${lectureId}/${nextNum}`);
+      resetCompleted();
     }
   };
 
@@ -243,7 +245,7 @@ const LecturePlayer: React.FC = () => {
               </Box>
             </Box>
 
-            <Tooltip label="Show SideBar" fontSize="md">
+            <Tooltip label="목차 열기" fontSize="md">
               <Button
                 ref={btnRef}
                 colorScheme="ghost"
@@ -344,7 +346,7 @@ const LecturePlayer: React.FC = () => {
             blockScrollOnMount={false}
           >
             <DrawerContent>
-              <Tooltip label="Hide SideBar" fontSize="md">
+              <Tooltip label="목차 닫기" fontSize="md">
                 <DrawerCloseButton tabIndex={-1} />
               </Tooltip>
               <DrawerHeader>

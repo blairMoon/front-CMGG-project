@@ -99,11 +99,11 @@ const router = createBrowserRouter([
         path: "wasBuyed",
         element: <PaymentsResultPage />,
       },
+      {
+        path: "lectureplay/:lectureId/:num",
+        element: <LecturePlayerPage />,
+      },
     ],
-  },
-  {
-    path: "lectureplay/:lectureId/:num",
-    element: <LecturePlayerPage />,
   },
   {
     path: "admin",
