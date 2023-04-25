@@ -53,6 +53,7 @@ interface Review {
   };
   created_at: string;
   updated_at: string;
+  is_same_user: boolean;
   rating: number;
   content: string;
 }
@@ -141,7 +142,7 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (!isLoading && !error) {
       setLectureData(data);
-      console.log(data);
+      // console.log(data);
     }
   }, [data, isLoading, error]);
 
@@ -289,6 +290,7 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
                     reply={review.reply}
                     lectureNum={data.lecture_data.LectureId}
                     reviewNum={review.id}
+                    is_same_user={review.is_same_user}
                   />
                 ))}
               {data.lecture_data.reviews.length > reviewsToShow && (
