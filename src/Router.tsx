@@ -18,7 +18,8 @@ import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
 import AdminPage from "./pages/AdminPage/AdminPage";
-
+import FindId from "./components/Find/FindId";
+import FindPassword from "./components/Find/FindPassword";
 import User from "./pages/AdminPage/Components/User/User";
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
       {
         path: "lectures/:id",
         element: <DetailPage />,
+      },
+      {
+        path: "find/id",
+        element: <FindId />,
+      },
+      {
+        path: "find/password",
+        element: <FindPassword />,
       },
 
       {

@@ -28,3 +28,8 @@ export const userState = atom({
     name: "",
   },
 });
+
+export const addressState = atom<string>({
+  key: "address",
+  default: "",
+});

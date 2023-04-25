@@ -4,7 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Select, useColorMode } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
-
+import { useRecoilState } from "recoil";
+import { addressState } from "../../atoms";
 import css from "../Signup/Signup.module.scss";
 
 import { signUpUser, instanceNotLogin } from "../../services/api";
@@ -42,12 +43,13 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const [signUpSuccess, setSignUpSuccess] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const [popup, setPopup] = useState<boolean>(false);
   const [addressBtn, setAddressBtn] = useState<boolean>(false);
-  const [enroll_company, setEnroll_company] = useState({
+  const [enroll_myAddress, setEnroll_myAddress] = useState({
     address: "",
   });
+  const [address, setaddress] = useRecoilState<string>(addressState);
 
   const mutation = useMutation<UserData, unknown, UserData>(
     (data: UserData) => signUpUser(data),
@@ -124,11 +126,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
     setAddressBtn(true);
   };
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(enroll_company);
-    setEnroll_company({
-      ...enroll_company,
-      [e.target.name]: e.target.value,
-    });
+    setaddress(e.target.value);
   };
   return (
     <div>
@@ -299,14 +297,14 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <div className={css.buttonflex}>
                 <input
                   type={"text"}
-                  value={enroll_company.address}
+                  value={address}
                   placeholder="주소를 입력해주세용"
                   className={colorMode === "light" ? css.Input : css.DarkInput}
                   {...register("address", { required: true })}
                   onChange={handleInput}
                 />
 
-                <button
+                {/* <button
                   type="button"
                   name="address"
                   onClick={handleComplete}
@@ -318,14 +316,18 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 >
                   주소 <br />
                   찾기
-                </button>
-              </div>
-              {popup && (
+                </button> */}
                 <Post
-                  company={enroll_company}
-                  setcompany={setEnroll_company}
+                  myAddress={enroll_myAddress}
+                  setmyAddress={setEnroll_myAddress}
                 ></Post>
-              )}
+              </div>
+              {/* {popup && (
+                <Post
+                  myAddress={enroll_myAddress}
+                  setmyAddress={setEnroll_myAddress}
+                ></Post>
+              )} */}
               {errors.address && (
                 <p className={css.errors}>주소는 필수 입력값입니다.</p>
               )}

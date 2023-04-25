@@ -12,9 +12,10 @@ export interface UserNameLoginParams {
   };
 }
 
-interface PostRefreshTokenParams {
-  refresh: string;
-  access: string;
+export interface FormIdData {
+  name: string;
+  email: string;
+  phone_number: string;
 }
 
 interface LectureAndCategoryAndSearchParams {
@@ -148,6 +149,34 @@ instance.interceptors.response.use(
   }
 );
 
+export const kakaoLogin = (code: string) =>
+  instance
+    .post(
+      "users/kakao/",
+      { code },
+      {
+        headers: {
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+      }
+    )
+    .then((response) => {
+      return response.status;
+    });
+
+export const naverLogin = ({ code, state }: { code: string; state: string }) =>
+  instance
+    .post(
+      "users/naver/",
+      { code, state },
+      {
+        headers: {
+          "X-CSRFToken": Cookies.get("csrftoken"),
+        },
+      }
+    )
+    .then((response) => response.status);
+
 export async function userNameLogin(
   { username, password }: UserNameLoginParams,
   headers?: {
@@ -201,6 +230,38 @@ export async function postRefreshToken(
     return null;
   }
 }
+export const findId = (data: FormIdData) =>
+  instance
+    .post("users/find/id", data, {
+      headers: {
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+    })
+    .then((response) => response.data);
+export const findPassword = (data: string) =>
+  instance
+    .post("users/find/password", data, {
+      headers: {
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+    })
+    .then((response) => response.data);
+export const newPassword = (data: string) =>
+  instance
+    .put("users/new-password", data, {
+      headers: {
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+    })
+    .then((response) => response.data);
+export const changePassword = (data: string) =>
+  instance
+    .put("users/changepassword/", data, {
+      headers: {
+        "X-CSRFToken": Cookies.get("csrftoken"),
+      },
+    })
+    .then((res) => res.status);
 export const signUpUser = (data: UserData) => {
   return instanceNotLogin.post("users/", data).then((res) => res.data);
 };
