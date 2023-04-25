@@ -24,7 +24,8 @@ interface MylectureCardProps {
   lectureTitle: string;
   targetAudience: string;
   instructor: string;
-  rating: number;
+  rating?: number;
+  isInstructor?: boolean;
   img: string;
 }
 
@@ -35,6 +36,7 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
   lectureTitle,
   instructor,
   targetAudience,
+  isInstructor,
   lectureFee,
   rating,
 }) => {
@@ -93,10 +95,12 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
           </Box>
           <HStack justify="space-between" fontSize="12px">
             <Box>
-              <StarRating rating={rating} />
-              <Text fontSize="16" fontWeight="600">
-                ₩{formattedFee}
-              </Text>
+              {rating ? <StarRating rating={rating} /> : null}
+              {isInstructor ? null : (
+                <Text fontSize="16" fontWeight="600">
+                  ₩{formattedFee}
+                </Text>
+              )}
             </Box>
 
             <Text>

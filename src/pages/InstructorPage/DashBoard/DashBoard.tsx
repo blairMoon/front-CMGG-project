@@ -7,8 +7,12 @@ import HighchartsNetwork from "../../../components/Charts/NetworkChart";
 import StockChart from "../../../components/Charts/StockChart";
 import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
+import { useRecoilValue } from "recoil";
+import { stockMenuState } from "../../../atoms";
 
 const Dashboard: React.FC = () => {
+  const stockMenuItem = useRecoilValue(stockMenuState);
+
   const issues = [
     {
       id: 1,
@@ -43,41 +47,14 @@ const Dashboard: React.FC = () => {
   const radarKeys = ["나", "평균"];
   const radarIndexBy = "category";
 
-  const title = "나의 수강생들이 보는 관련 강사의 비율";
+  const title = "나의 수강생들이 보는 관련 강사 일치율";
   const subtitle =
     "해당 자료를 통해 주제, 강의 품질, 교육 스타일 및 대체 학습 리소스의 가용성과 같은 다양한 요인에 따라 크게 달라질 수 있습니다.";
-  const data = [
-    { from: "나", to: "B" },
-    { from: "나", to: "C" },
-    { from: "나", to: "D" },
-    { from: "B", to: "E" },
-    { from: "B", to: "F" },
-    { from: "C", to: "G" },
-    { from: "C", to: "H" },
-    { from: "C", to: "I" },
-    { from: "D", to: "J" },
-    { from: "D", to: "K" },
-    { from: "D", to: "L" },
-    { from: "D", to: "M" },
-  ];
 
-  const nodes = [
-    {
-      id: "나",
-      color: "red",
-    },
-    {
-      id: "B",
-      color: "rgb(230,150,0)",
-    },
-    {
-      id: "C",
-      color: "rgb(230,150,0)",
-    },
-    {
-      id: "D",
-      color: "rgb(230,150,0)",
-    },
+  const networkData = [
+    { from: "나", to: "백관열", value: 300 },
+    { from: "나", to: "김수람", value: 450 },
+    { from: "나", to: "오수빈", value: 100 },
   ];
 
   const stockNames = ["MSFT", "AAPL", "GOOG"];
@@ -304,8 +281,8 @@ const Dashboard: React.FC = () => {
             <HighchartsNetwork
               title={title}
               subtitle={subtitle}
-              data={data}
-              nodes={nodes}
+              data={networkData}
+              total={1023}
             />
           </GridItem>
           <GridItem>

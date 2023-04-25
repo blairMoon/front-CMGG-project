@@ -207,7 +207,7 @@ function LectureRegister(): React.ReactElement {
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "500px" }}>
         <FormControl isInvalid={!!errors["title"]} id={"title"} mb="5">
           <FormLabel fontWeight={"bold"} id="title">
-            강의명 ({`${watch("title")?.length} / 30`})
+            강의명 ({watch("title") ? `${watch("title")?.length}` : 0} / 30)
           </FormLabel>
           <input
             type="text"
@@ -258,7 +258,8 @@ function LectureRegister(): React.ReactElement {
           my="5"
         >
           <FormLabel fontWeight={"bold"} id={"description"}>
-            설명 ({`${watch("description")?.length} / 1000`})
+            설명 ({watch("description") ? `${watch("description")?.length}` : 0}{" "}
+            / 1000)
           </FormLabel>
           <textarea
             className={colorMode === "light" ? css.TextArea : css.DarkTextArea}

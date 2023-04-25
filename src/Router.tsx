@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root/Root";
-import NotFound from "./pages/ErrorPage/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -13,11 +12,12 @@ import MyLecture from "./components/Mypage/MyLecture/MyLecture";
 import MyPayment from "./components/Mypage/MyPayment/MyPayment";
 import MyCart from "./pages/MyInfoPage/MyCart/MyCart";
 import MyEditMember from "./components/Mypage/MyEditMember/MyEditMember";
-import { PaymentsResultPage } from "./pages/PaymentResultPage/PaymentsResultPage";
+import PaymentsResultPage from "./pages/PaymentResultPage/PaymentsResultPage";
 import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import InstructorLecture from "./pages/InstructorPage/MyLecture/MyLecture";
 
 import User from "./pages/AdminPage/Components/User/User";
 const router = createBrowserRouter([
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
           },
           {
             path: "lecture",
-            element: <MyLecture />,
+            element: <InstructorLecture />,
           },
           {
             path: "lecture/register",
