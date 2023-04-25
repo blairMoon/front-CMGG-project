@@ -254,9 +254,10 @@ const DayChart: React.FC<Props> = () => {
           color="#3d3d3d"
           fontWeight="600"
           pb="30px"
+          style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
         >
           <HStack justifyContent="space-between">
-            <Box>주간학습</Box>
+            <Box>주간 학습</Box>
             <HStack>
               <Button
                 variant="ghost"
