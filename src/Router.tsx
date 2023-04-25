@@ -82,10 +82,6 @@ const router = createBrowserRouter([
             element: <DashBoard />,
           },
           {
-            path: "lecture",
-            element: <MyLecture />,
-          },
-          {
             path: "lecture/register",
             element: <LectureRegister />,
           },
