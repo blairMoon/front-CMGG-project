@@ -25,6 +25,17 @@ export interface PostReviewParams {
   lectureNum: number;
   data: FormData;
 }
+export interface UpdateReviewParams {
+  lectureNum: number;
+  reviewNum: number;
+  data: {
+    content: string;
+  };
+}
+export interface DeleteReviewParams {
+  lectureNum: number;
+  reviewNum: number;
+}
 
 export interface PostReplyParams {
   lectureNum: number;
@@ -32,6 +43,20 @@ export interface PostReplyParams {
   data: {
     content: string;
   };
+}
+
+export interface UpdateReplyParams {
+  lectureNum: number;
+  reviewNum: number;
+  replyNum: number;
+  data: {
+    content: string;
+  };
+}
+export interface DeleteReplyParams {
+  lectureNum: number;
+  reviewNum: number;
+  replyNum: number;
 }
 
 export interface FetchVideoListParams {
@@ -245,6 +270,44 @@ export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
   return instance
     .post(`reviews/${lectureNum}/${reviewNum}`, data)
     .then((res) => res.data);
+};
+
+export const updateReview = ({
+  lectureNum,
+  reviewNum,
+  data,
+}: UpdateReviewParams) => {
+  return instance
+    .put(`reviews/detail/${lectureNum}/${reviewNum}`, data)
+    .then((res) => res.data);
+};
+
+export const deleteReview = async ({
+  lectureNum,
+  reviewNum,
+}: DeleteReviewParams): Promise<void> => {
+  await instance.delete(`reviews/detail/${lectureNum}/${reviewNum}`);
+};
+
+export const updateReply = ({
+  lectureNum,
+  reviewNum,
+  replyNum,
+  data,
+}: UpdateReplyParams) => {
+  return instance
+    .put(`reviews/detail/${lectureNum}/${reviewNum}/${replyNum}`, data)
+    .then((res) => res.data);
+};
+
+export const deleteReply = async ({
+  lectureNum,
+  reviewNum,
+  replyNum,
+}: DeleteReplyParams): Promise<void> => {
+  await instance.delete(
+    `reviews/detail/${lectureNum}/${reviewNum}/${replyNum}`
+  );
 };
 
 export const registerLecture = (lectureNum: number) => {

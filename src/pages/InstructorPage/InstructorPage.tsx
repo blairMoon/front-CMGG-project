@@ -9,7 +9,6 @@ const InstructorPage: React.FC<Props> = (props: Props) => {
     <div>
       <Grid
         templateAreas={`"nav main"`}
-        // gridTemplateRows={'100px 1fr'}
         gridTemplateColumns={"220px 1fr"}
         w="1150px"
         h="100%"

@@ -29,15 +29,13 @@ try {
   );
 
   root.render(
-    <React.StrictMode>
-      <RecoilRoot>
-        <QueryClientProvider client={client}>
-          <ChakraProvider>
-            <App />
-          </ChakraProvider>
-        </QueryClientProvider>
-      </RecoilRoot>
-    </React.StrictMode>
+    <RecoilRoot>
+      <QueryClientProvider client={client}>
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 } catch (error) {
   console.log(error);
