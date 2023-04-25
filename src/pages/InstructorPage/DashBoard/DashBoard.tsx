@@ -7,8 +7,12 @@ import HighchartsNetwork from "../../../components/Charts/NetworkChart";
 import StockChart from "../../../components/Charts/StockChart";
 import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
+import { useRecoilValue } from "recoil";
+import { stockMenuState } from "../../../atoms";
 
 const Dashboard: React.FC = () => {
+  const stockMenuItem = useRecoilValue(stockMenuState);
+
   const issues = [
     {
       id: 1,

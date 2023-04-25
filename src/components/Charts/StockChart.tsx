@@ -1,16 +1,45 @@
 import React, { useEffect, useState } from "react";
 import Highcharts, { SeriesLineOptions } from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import { useColorMode } from "@chakra-ui/react";
+import {
+  useColorMode,
+  HStack,
+  Button,
+  Text,
+  Box,
+  Menu,
+  MenuItem,
+  MenuButton,
+  MenuList,
+} from "@chakra-ui/react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useRecoilState } from "recoil";
+import { stockMenuState } from "../../atoms";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface StockProps {
   names: string[];
   data?: [];
 }
 
+const menu = [
+  { name: "newStudentsRatio", value: "신규수강률" },
+  { name: "completeLectureRatio", value: "완강률" },
+  { name: "incomesRatio", value: "수입률" },
+];
+
 const StockChart: React.FC<StockProps> = ({ names, data }) => {
-  const [chartOptions, setChartOptions] = useState<Highcharts.Options>({});
   const { colorMode } = useColorMode();
+  const [selectedMenu, setSelectMenu] = useRecoilState(stockMenuState);
+  const [chartOptions, setChartOptions] = useState<Highcharts.Options>({});
+
+  const onSelect = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const { name } = e.currentTarget;
+    const selectItem = menu.find((item) => item.name === name);
+    if (selectItem) {
+      setSelectMenu(selectItem);
+    }
+  };
 
   useEffect(() => {
     const seriesOptions: SeriesLineOptions[] = [];
@@ -94,7 +123,29 @@ const StockChart: React.FC<StockProps> = ({ names, data }) => {
   }, [colorMode]);
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      <Box w="100%" pr="7" pos="absolute">
+        <HStack w="100%" justifyContent={"flex-end"}>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />} zIndex={10}>
+              {selectedMenu.value}
+            </MenuButton>
+            <MenuList>
+              {menu.map((item, idx) => {
+                if (item.value !== selectedMenu.value) {
+                  return (
+                    <MenuItem key={idx} name={item.name} onClick={onSelect}>
+                      {item.value}
+                    </MenuItem>
+                  );
+                } else {
+                  return null;
+                }
+              })}
+            </MenuList>
+          </Menu>
+        </HStack>
+      </Box>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
     </div>
   );

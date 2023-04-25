@@ -60,6 +60,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BsCheckCircle } from "react-icons/bs";
 
 import { getAllLectures } from "../../services/api";
+import SkeletonCard from "../../components/WholeLectures/LectureCard/SkeletonCard";
 
 interface CalculatedLectureItem {
   img: string;
@@ -77,11 +78,20 @@ interface CalculatedLectureItem {
 const PaymentsResultPage: React.FC = () => {
   const navigate = useNavigate();
 
+  const bg = useColorModeValue("gray.50", "gray.800");
   const { isLoading, data, isError } = useQuery(["lecturex"], getAllLectures, {
     onSuccess(data) {
       console.log("all", data.data);
     },
   });
+
+  const onMyPage = () => {
+    navigate(`/mypage/lecture`);
+  };
+  const onWholeLectures = () => {
+    navigate(`/lectures/all/all/?page=1`);
+  };
+
   if (isError) {
     navigate("/notfound");
     console.log("hello");
@@ -91,7 +101,6 @@ const PaymentsResultPage: React.FC = () => {
       navigate("/notfound");
     }
   }, [isError, navigate]);
-  const bg = useColorModeValue("gray.50", "gray.800");
 
   return (
     <div>
@@ -119,8 +128,12 @@ const PaymentsResultPage: React.FC = () => {
             </VStack>
             <VStack bg={bg} pb="5" mb="5">
               <HStack mt="6">
-                <Button colorScheme="green">Mypage</Button>
-                <Button colorScheme="green">Continue Shopping</Button>
+                <Button colorScheme="green" onClick={onMyPage}>
+                  Mypage
+                </Button>
+                <Button colorScheme="green" onClick={onWholeLectures}>
+                  Continue Shopping
+                </Button>
               </HStack>
             </VStack>
           </Container>
