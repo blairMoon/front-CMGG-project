@@ -7,30 +7,45 @@ import {
   Avatar,
   Button,
   Textarea,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { RiHomeHeartLine } from "react-icons/ri";
 import StarRating from "../WholeLectures/StarRating/StarRating";
 import Reply from "./Reply";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postReply, PostReplyParams } from "../../services/api";
+import {
+  postReply,
+  PostReplyParams,
+  updateReview,
+  UpdateReviewParams,
+  deleteReview,
+  DeleteReviewParams,
+} from "../../services/api";
 
 interface ReviewProps {
   username: string;
   rating: number;
   content: string;
   created_at: string;
+  is_same_user: boolean;
   reply?: {
     id: number;
     user: { username: string };
     content: string;
     created_at: string;
+    is_same_user: boolean;
   }[];
   lectureNum: number;
   reviewNum: number;
 }
 
-interface FormData {
+interface reviewData {
   content: string;
 }
 
@@ -39,15 +54,22 @@ const Review: React.FC<ReviewProps> = ({
   rating,
   content,
   created_at,
+  is_same_user,
   reply,
   lectureNum,
   reviewNum,
 }) => {
   const [showReplyForm, setShowReplyForm] = useState<boolean>(false);
-  const [visible, setVisible] = useState<number>(5); // 5개씩 보이도록 설정
-  const { register, handleSubmit, reset } = useForm<{
-    content: string;
-  }>();
+  // const [visible, setVisible] = useState<number>(5); // 5개씩 보이도록 설정
+  // const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<reviewData>();
 
   const handleReplyButtonClick = () => {
     setShowReplyForm(!showReplyForm);
@@ -57,9 +79,40 @@ const Review: React.FC<ReviewProps> = ({
     setShowReplyForm(false);
   };
 
+  const handleUpdateButtonClick = () => {
+    setShowUpdateModal(true);
+  };
+
+  const onCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+  };
+
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation<void, Error, PostReplyParams>(postReply, {
+  const { mutate: postReplyMutate } = useMutation<void, Error, PostReplyParams>(
+    postReply,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["lectureInfo"]);
+      },
+    }
+  );
+
+  const { mutate: updateReviewMutate } = useMutation<
+    void,
+    Error,
+    UpdateReviewParams
+  >(updateReview, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["lectureInfo"]);
+    },
+  });
+
+  const { mutate: deleteReviewMutate } = useMutation<
+    void,
+    Error,
+    DeleteReviewParams
+  >(deleteReview, {
     onSuccess: () => {
       queryClient.invalidateQueries(["lectureInfo"]);
     },
@@ -67,7 +120,7 @@ const Review: React.FC<ReviewProps> = ({
 
   const onSubmit = async (data: { content: string }) => {
     try {
-      await mutate({
+      await postReplyMutate({
         lectureNum,
         reviewNum,
         data,
@@ -79,7 +132,22 @@ const Review: React.FC<ReviewProps> = ({
     }
   };
 
-  // console.log('reply', reply);
+  const onUpdate = async (data: { content: string }) => {
+    try {
+      await updateReviewMutate({ lectureNum, reviewNum, data });
+      setShowUpdateModal(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteButtonClick = async () => {
+    try {
+      await deleteReviewMutate({ lectureNum, reviewNum });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Stack pt="4">
@@ -96,13 +164,33 @@ const Review: React.FC<ReviewProps> = ({
           </Stack>
         </HStack>
         <Box>{content}</Box>
-        <HStack color="#A6A6A6" fontWeight="600" py="2">
-          <Box>{created_at}</Box>{" "}
-          <Button variant="ghost" onClick={handleReplyButtonClick}>
-            답글 작성
-          </Button>
+        <HStack
+          color="#A6A6A6"
+          fontWeight="600"
+          py="2"
+          justifyContent="space-between"
+        >
+          <HStack>
+            <Box>{created_at}</Box>
+            <Button variant="ghost" onClick={handleReplyButtonClick}>
+              답글 작성
+            </Button>
+          </HStack>
+          <HStack>
+            {is_same_user && (
+              <>
+                <Button variant="ghost" onClick={handleUpdateButtonClick}>
+                  수정
+                </Button>
+                <Button variant="ghost" onClick={handleDeleteButtonClick}>
+                  삭제
+                </Button>
+              </>
+            )}
+          </HStack>
         </HStack>
       </Stack>
+
       {showReplyForm && (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack
@@ -113,9 +201,6 @@ const Review: React.FC<ReviewProps> = ({
             bg="rgba(238,238,238,0.3)"
             rounded="5"
           >
-            {/* <Box fontWeight="700" color="#958E96" fontSize="14">
-              로그인한 유저네임
-            </Box> */}
             <Box maxH="100px" overflowY="auto" w="100%" h="100%">
               <Textarea
                 {...register("content", { required: true })}
@@ -155,6 +240,42 @@ const Review: React.FC<ReviewProps> = ({
           </Stack>
         </form>
       )}
+      <Modal isOpen={showUpdateModal} onClose={onCloseUpdateModal} isCentered>
+        <ModalOverlay />
+        <form onSubmit={handleSubmit(onUpdate)}>
+          <ModalContent>
+            <ModalHeader textAlign="center">
+              힘이 되는 수강평을 남겨주세요!
+            </ModalHeader>
+            <ModalBody>
+              <Stack spacing="20px">
+                <Textarea
+                  {...register("content", { required: true })}
+                  placeholder="후기를 작성해주세요"
+                  size="lg"
+                  focusBorderColor="blue.700"
+                  borderColor="gray.300"
+                  h="100px"
+                  defaultValue={content}
+                />
+              </Stack>
+            </ModalBody>
+            <ModalFooter>
+              <Button variant="ghost" mr={3} onClick={onCloseUpdateModal}>
+                취소
+              </Button>
+              <Button
+                colorScheme="blue"
+                type="submit"
+                _hover={{ bg: "blue.700" }}
+                // isLoading={isUpdating}
+              >
+                수정
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </form>
+      </Modal>
       <Box pb="5">
         {reply &&
           reply.map((reply) => (
@@ -163,6 +284,10 @@ const Review: React.FC<ReviewProps> = ({
               username={reply.user.username}
               content={reply.content}
               created_at={reply.created_at.slice(0, 10)}
+              lectureNum={lectureNum}
+              reviewNum={reviewNum}
+              replyNum={reply.id}
+              is_same_user={reply.is_same_user}
             />
           ))}
       </Box>
