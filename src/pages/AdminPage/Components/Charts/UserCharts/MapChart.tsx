@@ -42,8 +42,8 @@ const KoreaMap: React.FC<Props> = () => {
       if (container) {
         const containerPos = container.getBoundingClientRect();
         setTooltipPosition({
-          x: e.clientX - containerPos.left - 290,
-          y: e.clientY - containerPos.top + 10,
+          x: e.clientX - containerPos.left - 1200,
+          y: e.clientY - containerPos.top - 200,
         });
       }
 
