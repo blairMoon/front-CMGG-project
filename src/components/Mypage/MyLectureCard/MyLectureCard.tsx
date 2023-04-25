@@ -19,7 +19,7 @@ import { BsPlayCircle } from "react-icons/bs";
 
 interface MylectureCardProps {
   lectureNumber: number;
-  lectureFee: number;
+  lectureFee?: number;
   lectureDescription: string;
   lectureTitle: string;
   targetAudience: string;
@@ -49,7 +49,7 @@ const MylectureCard: React.FC<MylectureCardProps> = ({
   }
 
   const fee = lectureFee; // assume amount is 10000
-  const formattedFee = fee.toLocaleString(); // "10,000"
+  const formattedFee = fee?.toLocaleString(); // "10,000"
 
   return (
     <Card
