@@ -5,6 +5,8 @@ import MylectureCard from "../../../components/Mypage//MyLectureCard/MyLectureCa
 import { Grid, GridItem } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLectures } from "../../../services/api";
+import { skeletonArray } from "../../../constant";
+import SkeletonCard from "../../../components/WholeLectures/LectureCard/SkeletonCard";
 
 interface CalculatedLectureItem {
   img: string;
@@ -29,7 +31,6 @@ const MyLecture: React.FC = () => {
   });
   if (isError) {
     navigate("/notfound");
-    console.log("hello");
   }
   useEffect(() => {
     if (isError) {
@@ -39,31 +40,32 @@ const MyLecture: React.FC = () => {
 
   return (
     <div>
-      {!isLoading ? (
-        <Grid>
-          <GridItem mx="auto">
-            <Grid
-              templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]}
-              gap="5"
-            >
-              {data?.data?.map((lecture: CalculatedLectureItem) => (
-                <GridItem key={lecture.LectureId} mx="auto">
-                  <MylectureCard
-                    lectureNumber={lecture.LectureId}
-                    img={lecture.thumbnail}
-                    lectureDescription={lecture.lectureDescription}
-                    lectureTitle={lecture.lectureTitle}
-                    targetAudience={lecture.targetAudience}
-                    instructor={lecture.instructor.username}
-                    isInstructor={true}
-                    // rating={lecture.rating}
-                  />
-                </GridItem>
-              ))}
-            </Grid>
-          </GridItem>
-        </Grid>
-      ) : null}
+      <Grid>
+        <GridItem mx="auto">
+          <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
+            {!isLoading
+              ? data?.data?.map((lecture: CalculatedLectureItem) => (
+                  <GridItem key={lecture.LectureId} mx="auto">
+                    <MylectureCard
+                      lectureNumber={lecture.LectureId}
+                      img={lecture.thumbnail}
+                      lectureDescription={lecture.lectureDescription}
+                      lectureTitle={lecture.lectureTitle}
+                      targetAudience={lecture.targetAudience}
+                      instructor={lecture.instructor.username}
+                      isInstructor={true}
+                      // rating={lecture.rating}
+                    />
+                  </GridItem>
+                ))
+              : skeletonArray.map((_: number, idx: number) => (
+                  <GridItem key={idx} mx="auto">
+                    <SkeletonCard />
+                  </GridItem>
+                ))}
+          </Grid>
+        </GridItem>
+      </Grid>
     </div>
   );
 };

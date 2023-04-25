@@ -129,10 +129,10 @@ const PaymentsResultPage: React.FC = () => {
             <VStack bg={bg} pb="5" mb="5">
               <HStack mt="6">
                 <Button colorScheme="green" onClick={onMyPage}>
-                  Mypage
+                  마이페이지
                 </Button>
                 <Button colorScheme="green" onClick={onWholeLectures}>
-                  Continue Shopping
+                  강의 더 찾아보기
                 </Button>
               </HStack>
             </VStack>
