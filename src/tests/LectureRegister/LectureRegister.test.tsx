@@ -53,7 +53,7 @@ describe("LectureRegister", () => {
     ).toBeInTheDocument();
     expect(await screen.findByText(/가격을 입력해주세요/i)).toBeInTheDocument();
     expect(await screen.findByText(/설명을 입력해주세요/i)).toBeInTheDocument();
-    expect(await screen.findByText(/목적을 입력해주세요/i)).toBeInTheDocument();
+    expect(await screen.findByText(/목적을 선택해주세요/i)).toBeInTheDocument();
     expect(
       await screen.findByText(/난이도를 선택해주세요/i)
     ).toBeInTheDocument();
