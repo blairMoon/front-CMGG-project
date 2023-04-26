@@ -24,6 +24,7 @@ import InstructorLecture from "./pages/InstructorPage/MyLecture/MyLecture";
 import User from "./pages/AdminPage/Components/User/User";
 import User2 from "./pages/AdminPage/Components/User2/User2";
 import Register from "./pages/AdminPage/Components/Instructor/Register/Register";
+import InstructorChart from "./pages/AdminPage/Components/Instructor/InstrouctorChart/InstructorChart";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -124,6 +125,7 @@ const router = createBrowserRouter([
       { path: "user/1", element: <User /> },
       { path: "user/2", element: <User2 /> },
       { path: "instructor/1", element: <Register /> },
+      { path: "instructor/2", element: <InstructorChart /> },
       { path: "lectures", element: <User /> },
 
       { path: "pay", element: <User /> },

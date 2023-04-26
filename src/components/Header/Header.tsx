@@ -395,16 +395,16 @@ export default function WithSubnavigation() {
                               정보수정
                             </MenuItem>
                           </Link>
-
+                          {/* 
                           <MenuItem
                             fontSize="15px"
                             fontWeight="500"
                             padding="10px 10px"
                           >
                             {/* <BiRegistered style={{ marginRight: "10px" }} /> */}
-                            {/* 강사 신청 */}
-                            <ModalRegister />
-                          </MenuItem>
+                          {/* 강사 신청 */}
+                          {/* <ModalRegister /> */}
+                          {/* </MenuItem>  */}
 
                           {/* <Link
                             href="/"
