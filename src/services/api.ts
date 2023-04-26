@@ -174,33 +174,65 @@ instance.interceptors.response.use(
   }
 );
 
-export const kakaoLogin = (code: string) =>
-  instance
-    .post(
-      "users/kakao/",
-      { code },
-      {
-        headers: {
-          "X-CSRFToken": Cookies.get("csrftoken"),
-        },
-      }
-    )
-    .then((response) => {
-      return response.status;
+export const kakaoLogin = async ({ code }: { code: string }) => {
+  try {
+    const headers: HeadersInit = new Headers({
+      "Content-Type": "application/json",
+      "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-export const naverLogin = ({ code, state }: { code: string; state: string }) =>
-  instance
-    .post(
-      "users/naver/",
-      { code, state },
+    const response = await fetch(
+      "http://127.0.0.1:8000/accounts/login/kakao/callback",
       {
-        headers: {
-          "X-CSRFToken": Cookies.get("csrftoken"),
-        },
+        method: "POST",
+        headers,
+        body: JSON.stringify({ code }),
       }
-    )
-    .then((response) => response.status);
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.status;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const naverLogin = async ({
+  code,
+  state,
+}: {
+  code: string;
+  state: string;
+}) => {
+  try {
+    const headers: HeadersInit = new Headers({
+      "Content-Type": "application/json",
+      "X-CSRFToken": Cookies.get("csrftoken") || "",
+    });
+
+    const response = await fetch(
+      "http://127.0.0.1:8000/accounts/naver/login/",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ code, state }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.status;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 export async function userNameLogin(
   { username, password }: UserNameLoginParams,

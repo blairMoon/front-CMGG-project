@@ -5,6 +5,7 @@ import css from "../Signup/Signup.module.scss";
 import { useColorMode } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { addressState } from "../../atoms";
+
 interface PostProps {
   myAddress: {
     address: string;
