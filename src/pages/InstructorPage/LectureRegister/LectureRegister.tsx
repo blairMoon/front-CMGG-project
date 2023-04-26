@@ -30,7 +30,6 @@ import { createVideoThumbnail } from "../../../utils/createVideoThumbnail";
 import { postMockLecture } from "../../../services/mocks/api";
 import { MyRadio } from "../../../components/Radio/MyRadio";
 import { MyErrorText } from "../../../components/Text/MyErrorText";
-import { Buffer } from "buffer";
 import { getFormData } from "../../../utils/getLectureFormData";
 //import { ILectureFormData } from "../../../../typings/LectureRegister";
 

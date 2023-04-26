@@ -3,8 +3,10 @@ import Highcharts, { SeriesOptionsType } from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HichartsMore from "highcharts/highcharts-more";
 import { useColorMode } from "@chakra-ui/react";
+import accessibility from "highcharts/modules/accessibility";
 
 HichartsMore(Highcharts);
+accessibility(Highcharts);
 
 type PackedBubbleSeriesOptionsType = SeriesOptionsType & {
   packedbubble?: Highcharts.SeriesPackedbubbleOptions;

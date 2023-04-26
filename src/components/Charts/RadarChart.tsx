@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ResponsiveRadar,
   RadarCustomLayerProps,
@@ -13,6 +13,7 @@ import {
   Badge,
   HStack,
 } from "@chakra-ui/react";
+import ResizeObserver from "resize-observer-polyfill";
 
 interface RadarChartData {
   [key: string]: string | number;
@@ -29,6 +30,20 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   const customColors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"];
   const lightAreaColors = ["rgb(44, 160, 44,0.5)", "rgb(255, 127, 14,0.7)"];
   const darkAreaColors = ["rgb(195,100,190)", "rgb(160,255,55)"];
+
+  useEffect(() => {
+    const ro = new ResizeObserver(() => {
+      window.dispatchEvent(new Event("resize"));
+    });
+
+    const container = document.getElementById("radar-chart-container");
+    if (container) {
+      ro.observe(container);
+    }
+    return () => {
+      ro.disconnect();
+    };
+  }, []);
 
   const getOffSet = (index: number) => {
     if (index === 4) {
@@ -196,7 +211,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   };
 
   return (
-    <div style={{ height: "400px" }}>
+    <div id="radar-chart-container" style={{ height: "400px" }}>
       <ResponsiveRadar
         data={data}
         keys={keys}
