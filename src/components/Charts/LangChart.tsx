@@ -19,7 +19,7 @@ interface Props {}
 interface LangChartData {
   id: string | number;
   value: number;
-
+  category: string;
   [key: string]: any;
 }
 
@@ -31,38 +31,73 @@ export const data: LangChartData[] = [
   {
     id: "Python",
     // label: "python",
-    value: 4,
+    value: 3,
+    category: "backend",
   },
   {
     id: "django",
     label: "django",
-    value: 8,
+    value: 6,
+    category: "backend",
   },
   {
     id: "React",
     label: "react",
     value: 6,
+    category: "frontend",
   },
   {
     id: "Swift",
     label: "swift",
     value: 2,
+    category: "backend",
   },
   {
     id: "JS",
     label: "javascript",
-    value: 4,
+    value: 5,
+    category: "frontend",
   },
 ];
 
 const LangChart: React.FC<Props> = () => {
+  const getCategoryPercentage = (category: string) => {
+    const categoryTotal = data
+      .filter((item) => item.category === category)
+      .reduce((acc, item) => acc + item.value, 0);
+    const totalValue = data.reduce((acc, item) => acc + item.value, 0);
+    return Math.round((categoryTotal / totalValue) * 100);
+  };
+  const frontendPercentage = getCategoryPercentage("frontend");
+  const backendPercentage = getCategoryPercentage("backend");
+  const fullstackPercentage = getCategoryPercentage("fullstack");
+
+  const getMaxCategory = () => {
+    const categories = [
+      { name: "프론트엔드", percentage: frontendPercentage },
+      { name: "백엔드", percentage: backendPercentage },
+      { name: "풀스택", percentage: fullstackPercentage },
+    ];
+
+    const maxCategory = categories.reduce((prev, current) =>
+      prev.percentage > current.percentage ? prev : current
+    );
+    if (Math.abs(frontendPercentage - backendPercentage) <= 5) {
+      maxCategory.name = "풀스택";
+    }
+
+    return maxCategory;
+  };
+  const maxCategory = getMaxCategory();
+
   const { colorMode } = useColorMode();
   return (
     <div>
       <Grid
         templateAreas={`"header header"
-                  "langchart langchart"`}
-        gridTemplateRows={"1fr 250px "}
+                  "langchart langchart"
+                  "text text"`}
+        gridTemplateRows={"45px 200px 1fr "}
         gridTemplateColumns={"1fr 1fr"}
       >
         <GridItem
@@ -95,15 +130,14 @@ const LangChart: React.FC<Props> = () => {
                 0
               );
 
-              const percentage = (
-                (datum.data.value / totalValue) *
-                100
-              ).toFixed(2);
+              const percentage = Math.round(
+                (datum.data.value / totalValue) * 100
+              );
 
               return (
                 <div
                   style={{
-                    color: colorMode === "light" ? "black" : "black",
+                    color: colorMode === "light" ? "#575757" : "#575757",
                     backgroundColor: "white",
                     padding: "8px",
                     fontSize: "12px",
@@ -115,7 +149,8 @@ const LangChart: React.FC<Props> = () => {
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <div>
-                      {datum.data.id} : {percentage}%
+                      {datum.data.id} :{" "}
+                      <span style={{ color: "#000000" }}>{percentage}%</span>
                     </div>
                   </div>
                 </div>
@@ -126,6 +161,19 @@ const LangChart: React.FC<Props> = () => {
             arcLabelsSkipAngle={10}
             arcLabelsTextColor="#222877"
           />
+          <Box>
+            <Text textAlign="center" p={1} fontWeight={600}>
+              열심히 학습중 (●'◡'●)
+            </Text>
+            <Text
+              textAlign="center"
+              fontSize="14px"
+              fontWeight={600}
+              color="#b2b2b2"
+            >
+              곧 {maxCategory.name} 개발자가 될 수 있어요!
+            </Text>
+          </Box>
         </GridItem>
       </Grid>
     </div>

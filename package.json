@@ -32,6 +32,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/d3": "^7.4.0",
+    "@types/daum-postcode": "^2.0.0",
     "@types/js-cookie": "^3.0.3",
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.33",
