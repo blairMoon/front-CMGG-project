@@ -41,6 +41,8 @@ function LectureRegister(): React.ReactElement {
   const [submitFlag, setSubmitFlag] = useState(false);
   const { colorMode } = useColorMode();
 
+  const mainColor = "#003c93;";
+
   const {
     handleSubmit,
     register,
@@ -376,6 +378,7 @@ function LectureRegister(): React.ReactElement {
             <MyRadio
               value="theory"
               testId="target1"
+              colorScheme={mainColor}
               {...register("targetAudience", { required: true })}
             >
               이론
@@ -384,6 +387,7 @@ function LectureRegister(): React.ReactElement {
               ml="2"
               value="training"
               testId="target2"
+              colorScheme={mainColor}
               {...register("targetAudience", { required: true })}
             >
               실습
@@ -404,6 +408,7 @@ function LectureRegister(): React.ReactElement {
             <MyRadio
               value="start"
               testId="level1"
+              colorScheme={mainColor}
               {...register("level", { required: true })}
             >
               입문
@@ -412,6 +417,7 @@ function LectureRegister(): React.ReactElement {
               ml="2"
               value="lower"
               testId="level2"
+              colorScheme={mainColor}
               {...register("level", { required: true })}
             >
               초급
@@ -420,6 +426,7 @@ function LectureRegister(): React.ReactElement {
               ml="2"
               value="middle"
               testId="level3"
+              colorScheme={mainColor}
               {...register("level", { required: true })}
             >
               중급
@@ -428,6 +435,7 @@ function LectureRegister(): React.ReactElement {
               ml="2"
               value="upper"
               testId="level4"
+              colorScheme={mainColor}
               {...register("level", { required: true })}
             >
               고급
@@ -455,6 +463,7 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   value="html"
                   testId="categories1"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   HTML
@@ -463,6 +472,7 @@ function LectureRegister(): React.ReactElement {
                   ml="2"
                   value="css"
                   testId="categories2"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   CSS
@@ -471,6 +481,7 @@ function LectureRegister(): React.ReactElement {
                   ml="2"
                   value="react"
                   testId="categories3"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   REACT
@@ -479,6 +490,7 @@ function LectureRegister(): React.ReactElement {
                   ml="2"
                   value="vue"
                   testId="categories4"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   VUE
@@ -488,6 +500,7 @@ function LectureRegister(): React.ReactElement {
                 <MyRadio
                   value="spring"
                   testId="categories5"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   SPRING
@@ -496,6 +509,7 @@ function LectureRegister(): React.ReactElement {
                   ml="2"
                   value="django"
                   testId="categories6"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   DJANGO
@@ -504,6 +518,7 @@ function LectureRegister(): React.ReactElement {
                   ml="2"
                   value="swift"
                   testId="categories7"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   SWIFT
@@ -512,6 +527,7 @@ function LectureRegister(): React.ReactElement {
                   ml="2"
                   value="android"
                   testId="categories8"
+                  colorScheme={mainColor}
                   {...register("categories", { required: true })}
                 >
                   ANDROID
