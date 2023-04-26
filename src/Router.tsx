@@ -20,6 +20,8 @@ import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
 import AdminPage from "./pages/AdminPage/AdminPage";
 
 import User from "./pages/AdminPage/Components/User/User";
+import User2 from "./pages/AdminPage/Components/User2/User2";
+import Register from "./pages/AdminPage/Components/Instructor/Register/Register";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -105,9 +107,11 @@ const router = createBrowserRouter([
     path: "admin",
     element: <AdminPage />,
     children: [
-      { path: "user", element: <User /> },
+      { path: "user/1", element: <User /> },
+      { path: "user/2", element: <User2 /> },
+      { path: "instructor/1", element: <Register /> },
       { path: "lectures", element: <User /> },
-      { path: "instrctor", element: <User /> },
+
       { path: "pay", element: <User /> },
     ],
   },

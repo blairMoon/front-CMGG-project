@@ -27,7 +27,7 @@ import {
   MenuList,
   useColorMode,
 } from "@chakra-ui/react";
-
+import { BsFillPersonVcardFill } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
 import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
@@ -42,6 +42,8 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoCartOutline } from "react-icons/io5";
 import { BsPersonVideo3 } from "react-icons/bs";
+import { BiRegistered } from "react-icons/bi";
+
 import { isLoggedInVar } from "../../../src/services/apollo";
 import { getAccessToken } from "../../../src/services/Token";
 import {
@@ -52,6 +54,7 @@ import {
 } from "@chakra-ui/icons";
 import css from "./Header.module.scss";
 import { removeAccessToken } from "../../services/Token";
+import ModalRegister from "./ModalRegister/ModalResister";
 export default function WithSubnavigation() {
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
@@ -378,7 +381,7 @@ export default function WithSubnavigation() {
                           </Link>
                         </MenuGroup>
                         <MenuDivider color={dividerColor} />
-                        <MenuGroup title="회원정보 수정" fontSize="15px">
+                        <MenuGroup title="회원정보" fontSize="15px">
                           <Link
                             href="/mypage/editMember"
                             style={{ textDecoration: "none", border: "none" }}
@@ -392,6 +395,17 @@ export default function WithSubnavigation() {
                               정보수정
                             </MenuItem>
                           </Link>
+
+                          <MenuItem
+                            fontSize="15px"
+                            fontWeight="500"
+                            padding="10px 10px"
+                          >
+                            {/* <BiRegistered style={{ marginRight: "10px" }} /> */}
+                            {/* 강사 신청 */}
+                            <ModalRegister />
+                          </MenuItem>
+
                           {/* <Link
                             href="/"
                             style={{ textDecoration: "none", border: "none" }}
@@ -477,41 +491,24 @@ export default function WithSubnavigation() {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-            <Flex display={{ base: "none", md: "flex" }} ml={10} pt="6px">
+            <Flex
+              display={{ base: "none", md: "flex" }}
+              ml={10}
+              pt="6px"
+              justifyContent="space-between"
+            >
               <DesktopNav />
             </Flex>
           </Flex>
 
-          {/* <Stack
+          <Stack
             flex={{ base: 1, md: 0 }}
             justify={"flex-end"}
             direction={"row"}
             spacing={6}
           >
-            <Button
-              as={"a"}
-              fontSize={"sm"}
-              fontWeight={400}
-              variant={"link"}
-              href={"#"}
-            >
-              Sign In
-            </Button>
-            <Button
-              as={"a"}
-              display={{ base: "none", md: "inline-flex" }}
-              fontSize={"sm"}
-              fontWeight={600}
-              color={"white"}
-              bg={"pink.400"}
-              href={"#"}
-              _hover={{
-                bg: "pink.300",
-              }}
-            >
-              Sign Up
-            </Button>
-          </Stack> */}
+            <ModalRegister />
+          </Stack>
         </Flex>
       </Box>
     </div>
