@@ -154,139 +154,167 @@ const Dashboard: React.FC = () => {
       <Box padding="2rem">
         <Grid templateColumns="repeat(3, 1fr)" gap={6} mb="2rem">
           <GridItem>
-            <DashboardCard
-              title="총 수강생"
-              value={1023}
-              bgColor="rgb(254,215,215)"
-            />
+            <div data-testid={"dashboard-card"}>
+              <DashboardCard
+                title="총 수강생"
+                value={1023}
+                bgColor="rgb(254,215,215)"
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <DashboardCard
-              title="총 수입"
-              value={52620000}
-              bgColor="rgb(190,227,248)"
-            />
+            <div data-testid={"dashboard-card"}>
+              <DashboardCard
+                title="총 수입"
+                value={52620000}
+                bgColor="rgb(190,227,248)"
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <DashboardCard
-              title="신규 수강생"
-              value={250}
-              bgColor="rgb(198,246,213)"
-            />
+            <div data-testid={"dashboard-card"}>
+              <DashboardCard
+                title="신규 수강생"
+                value={250}
+                bgColor="rgb(198,246,213)"
+              />
+            </div>
           </GridItem>
         </Grid>
         <Grid templateColumns="2fr 3fr" gap={6} pl="1" my="3rem">
           <GridItem>
-            <IssueList issues={issues} />
+            <div data-testid={"issues"}>
+              <IssueList issues={issues} />
+            </div>
           </GridItem>
           <GridItem>
-            <RadarChart
-              data={radarData}
-              keys={radarKeys}
-              indexBy={radarIndexBy}
-            />
+            <div data-testid={"radar-chart"}>
+              <RadarChart
+                data={radarData}
+                keys={radarKeys}
+                indexBy={radarIndexBy}
+              />
+            </div>
           </GridItem>
         </Grid>
+        {/* <div data-testid={"stock-chart"}> */}
         <StockChart names={stockNames} />
+        {/* </div> */}
         <Grid templateColumns="repeat(4, 1fr)" gap={6} marginTop="5rem">
           <GridItem>
-            <DashboardChartCard
-              title="연 수입"
-              value="123"
-              bgColor="rgb(255,255,255)"
-              data={[
-                [1, 12],
-                [2, 5],
-                [3, 23],
-                [4, 28],
-              ]}
-              boxShadow="md"
-            />
+            <div data-testid={`dashboard-chart-card-1`}>
+              <DashboardChartCard
+                title="연 수입"
+                value="123"
+                bgColor="rgb(255,255,255)"
+                data={[
+                  [1, 12],
+                  [2, 5],
+                  [3, 23],
+                  [4, 28],
+                ]}
+                boxShadow="md"
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <DashboardChartCard
-              title="월 수입"
-              value="23"
-              bgColor="rgb(255,255,255)"
-              data={[
-                [1, 12],
-                [2, 23],
-                [3, 21],
-                [4, 8],
-              ]}
-              boxShadow="md"
-            />
+            <div data-testid={`dashboard-chart-card-2`}>
+              <DashboardChartCard
+                title="월 수입"
+                value="23"
+                bgColor="rgb(255,255,255)"
+                data={[
+                  [1, 12],
+                  [2, 23],
+                  [3, 21],
+                  [4, 8],
+                ]}
+                boxShadow="md"
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <DashboardChartCard
-              title="월 리뷰 개수"
-              value="221"
-              bgColor="rgb(255,255,255)"
-              data={[
-                [1, 12],
-                [2, 23],
-                [3, 3],
-                [4, 8],
-              ]}
-              boxShadow="md"
-            />
+            <div data-testid={`dashboard-chart-card-3`}>
+              <DashboardChartCard
+                title="월 리뷰 개수"
+                value="221"
+                bgColor="rgb(255,255,255)"
+                data={[
+                  [1, 12],
+                  [2, 23],
+                  [3, 3],
+                  [4, 8],
+                ]}
+                boxShadow="md"
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <DashboardChartCard
-              title="월 평점 평균"
-              value="401"
-              bgColor="rgb(255,255,255)"
-              data={[
-                [1, 12],
-                [2, 23],
-                [3, 215],
-                [4, 128],
-              ]}
-              boxShadow="md"
-            />
+            <div data-testid={`dashboard-chart-card-4`}>
+              <DashboardChartCard
+                title="월 평점 평균"
+                value="401"
+                bgColor="rgb(255,255,255)"
+                data={[
+                  [1, 12],
+                  [2, 23],
+                  [3, 215],
+                  [4, 128],
+                ]}
+                boxShadow="md"
+              />
+            </div>
           </GridItem>
         </Grid>
         <Grid templateColumns="repeat(2, 1fr)" mt="3rem" mb="5rem" gap={6}>
           <GridItem>
-            <DashboardChartCard
-              title="내 강의의 유령회원"
-              value="4011"
-              bgColor="rgb(160,160,160)"
-              data={[
-                [1, 12],
-                [2, 23],
-                [3, 215],
-                [4, 128],
-              ]}
-              boxShadow="md"
-            />
+            <div data-testid={"dashboard-chart-bigcard"}>
+              <DashboardChartCard
+                title="내 강의의 유령회원"
+                value="4011"
+                bgColor="rgb(160,160,160)"
+                data={[
+                  [1, 12],
+                  [2, 23],
+                  [3, 215],
+                  [4, 128],
+                ]}
+                boxShadow="md"
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <DashboardChartCard
-              title="월 신규 수강생"
-              value="2401"
-              bgColor="rgb(160,160,160)"
-              data={[
-                [1, 12],
-                [2, 323],
-                [3, 215],
-                [4, 428],
-              ]}
-              boxShadow="md"
-            />
+            <div data-testid={"dashboard-chart-bigcard"}>
+              <DashboardChartCard
+                title="월 신규 수강생"
+                value="2401"
+                bgColor="rgb(160,160,160)"
+                data={[
+                  [1, 12],
+                  [2, 323],
+                  [3, 215],
+                  [4, 428],
+                ]}
+                boxShadow="md"
+              />
+            </div>
           </GridItem>
         </Grid>
         <Grid templateColumns="repeat(2, 1fr)" gap={6} marginTop="2rem">
           <GridItem>
-            <HighchartsNetwork
-              title={title}
-              subtitle={subtitle}
-              data={networkData}
-              total={1023}
-            />
+            <div data-testid={"network-chart"}>
+              <HighchartsNetwork
+                title={title}
+                subtitle={subtitle}
+                data={networkData}
+                total={1023}
+              />
+            </div>
           </GridItem>
           <GridItem>
-            <PackedBubbleChart id="container" data={bubbleData} />
+            <div data-testid={"bubble-chart"}>
+              <PackedBubbleChart id="container" data={bubbleData} />
+            </div>
           </GridItem>
         </Grid>
       </Box>
