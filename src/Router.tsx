@@ -17,9 +17,14 @@ import InstructorPage from "./pages/InstructorPage/InstructorPage";
 import LectureRegister from "./pages/InstructorPage/LectureRegister/LectureRegister";
 import DashBoard from "./pages/InstructorPage/DashBoard/DashBoard";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import FindId from "./components/Find/FindId";
+import FindPassword from "./components/Find/FindPassword";
 import InstructorLecture from "./pages/InstructorPage/MyLecture/MyLecture";
 
 import User from "./pages/AdminPage/Components/User/User";
+import User2 from "./pages/AdminPage/Components/User2/User2";
+import Register from "./pages/AdminPage/Components/Instructor/Register/Register";
+import InstructorChart from "./pages/AdminPage/Components/Instructor/InstrouctorChart/InstructorChart";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,6 +50,14 @@ const router = createBrowserRouter([
       {
         path: "lectures/:id",
         element: <DetailPage />,
+      },
+      {
+        path: "find/id",
+        element: <FindId />,
+      },
+      {
+        path: "find/password",
+        element: <FindPassword />,
       },
 
       {
@@ -109,9 +122,12 @@ const router = createBrowserRouter([
     path: "admin",
     element: <AdminPage />,
     children: [
-      { path: "user", element: <User /> },
+      { path: "user/1", element: <User /> },
+      { path: "user/2", element: <User2 /> },
+      { path: "instructor/1", element: <Register /> },
+      { path: "instructor/2", element: <InstructorChart /> },
       { path: "lectures", element: <User /> },
-      { path: "instrctor", element: <User /> },
+
       { path: "pay", element: <User /> },
     ],
   },
