@@ -54,6 +54,9 @@ const LectureCard: React.FC<Props> = ({ data }) =>
     }
     const { colorMode, toggleColorMode } = useColorMode();
 
+    const fee = data.lectureFee; // assume amount is 10000
+    const formattedFee = fee.toLocaleString(); // "10,000"
+
     // <Link to={`/lectures/${lectureNumber}`}>
     return (
       <Link to={`/lectures/${data.LectureId}`}>
@@ -126,7 +129,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
               <Text fontWeight="600">({data.reviews_num})</Text>
             </HStack>
             <Text fontSize="16" fontWeight="600">
-              ₩10,000
+              ₩{formattedFee}
             </Text>
           </CardBody>
         </Card>

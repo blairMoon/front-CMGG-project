@@ -28,3 +28,13 @@ export const userState = atom({
     name: "",
   },
 });
+
+export const addressState = atom<string>({
+  key: "address",
+  default: "",
+});
+
+export const stockMenuState = atom<{ name: string; value: string }>({
+  key: "stockSelectMenu",
+  default: { name: "newStudentsRatio", value: "신규수강률" },
+});

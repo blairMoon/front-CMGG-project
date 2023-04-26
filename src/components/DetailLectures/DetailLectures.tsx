@@ -153,10 +153,9 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
       {data && (
         <Grid
           w="1300px"
-          pt="20"
-          pb="10"
-          px="4"
-          gap="1"
+          pt="5"
+          pb="5"
+          px="5"
           mx="auto"
           templateAreas={`"info"
                   "contents"

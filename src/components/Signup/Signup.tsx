@@ -4,7 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Select, useColorMode } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
-
+import { useRecoilState } from "recoil";
+import { addressState } from "../../atoms";
 import css from "../Signup/Signup.module.scss";
 
 import { signUpUser, instanceNotLogin } from "../../services/api";
@@ -42,12 +43,13 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const [signUpSuccess, setSignUpSuccess] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
-  const { colorMode, toggleColorMode } = useColorMode();
-  const [popup, setPopup] = useState<boolean>(false);
+  const { colorMode } = useColorMode();
+  // const [popup, setPopup] = useState<boolean>(false);
   const [addressBtn, setAddressBtn] = useState<boolean>(false);
-  const [enroll_company, setEnroll_company] = useState({
+  const [enroll_myAddress, setEnroll_myAddress] = useState({
     address: "",
   });
+  const [address, setaddress] = useRecoilState<string>(addressState);
 
   const mutation = useMutation<UserData, unknown, UserData>(
     (data: UserData) => signUpUser(data),
@@ -59,7 +61,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
       onSuccess: () => {
         console.log("API CALL success...");
         setShowModal(true);
-        setModalContent("You have successfully registered as a member><><");
+        setModalContent("회원가입에 성공하셨습니당당><><");
         setSignUpSuccess(true);
       },
       onError: () => {
@@ -106,9 +108,6 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
   const usernameRegisterOptions: RegisterOptions = {
     required: true,
     pattern: /^[a-z0-9]{5,20}$/i,
-    validate: {
-      // unique: () => idChecked,
-    },
   };
 
   const submitForm = (data: UserData) => {
@@ -118,17 +117,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
       alert("아이디 중복확인을 해주세용.");
     }
   };
-  const handleComplete = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setPopup(!popup);
-    setAddressBtn(true);
-  };
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(enroll_company);
-    setEnroll_company({
-      ...enroll_company,
-      [e.target.name]: e.target.value,
-    });
+    setaddress(e.target.value);
   };
   return (
     <div>
@@ -299,33 +289,19 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <div className={css.buttonflex}>
                 <input
                   type={"text"}
-                  value={enroll_company.address}
+                  value={address}
                   placeholder="주소를 입력해주세용"
                   className={colorMode === "light" ? css.Input : css.DarkInput}
                   {...register("address", { required: true })}
                   onChange={handleInput}
                 />
 
-                <button
-                  type="button"
-                  name="address"
-                  onClick={handleComplete}
-                  className={
-                    colorMode === "light"
-                      ? css.checkButton
-                      : css.darkCheckButton
-                  }
-                >
-                  주소 <br />
-                  찾기
-                </button>
-              </div>
-              {popup && (
                 <Post
-                  company={enroll_company}
-                  setcompany={setEnroll_company}
+                  myAddress={enroll_myAddress}
+                  setmyAddress={setEnroll_myAddress}
                 ></Post>
-              )}
+              </div>
+
               {errors.address && (
                 <p className={css.errors}>주소는 필수 입력값입니다.</p>
               )}
@@ -338,33 +314,6 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               <h6 className={css.h6Under}>
                 선택 입력 사항이지만 입력하시면 마이페이지를 꾸며드립니다.
               </h6>
-              <label className={css.label}>유입경로</label>
-              <div className={css.flexSelectContainer}>
-                <div className={css.selectContainer}>
-                  <div className={css.selectlabel}>
-                    {/* <label htmlFor="funnel">
-                      CrazyForm을 어떤경로로 알게되셨나요?
-                    </label> */}
-                  </div>
-                  <div>
-                    <Select
-                      placeholder="엄마가 시켜서"
-                      size="md"
-                      width="400px"
-                      marginTop="30px"
-                      marginBottom="30px"
-                      {...register("funnel", { required: false })}
-                    >
-                      <option value="option1">Option 1</option>
-                      <option value="option2">Option 2</option>
-                      <option value="option3">Option 3</option>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-              {errors.funnel && (
-                <p className={css.errors}>유입경로 필수 입력값입니다.</p>
-              )}
 
               <label className={css.label}>
                 선호 개발 포지션 (중복선택 가능)

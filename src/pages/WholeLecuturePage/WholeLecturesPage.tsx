@@ -30,10 +30,9 @@ const WholeLecturePage: React.FC<Props> = (props: Props) => {
         // gridTemplateRows={'100px 1fr'}
         gridTemplateColumns={"220px 1fr"}
         w="1300px"
-        pt="20"
-        pb="10"
+        pt="5"
+        pb="5"
         px="4"
-        gap="1"
         mx="auto"
       >
         <GridItem area={"nav"}>

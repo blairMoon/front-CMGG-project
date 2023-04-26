@@ -52,7 +52,7 @@ export const data: Data = {
     4: {
       5: [
         {
-          id: "average user",
+          id: "평균유저",
           data: [
             { x: "일", y: 2 },
             { x: "월", y: 2 },
@@ -254,9 +254,10 @@ const DayChart: React.FC<Props> = () => {
           color="#3d3d3d"
           fontWeight="600"
           pb="30px"
+          style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
         >
           <HStack justifyContent="space-between">
-            <Box>주간학습</Box>
+            <Box>주간 학습</Box>
             <HStack>
               <Button
                 variant="ghost"
@@ -330,7 +331,7 @@ const DayChart: React.FC<Props> = () => {
                     textAnchor="middle"
                     dominantBaseline="middle"
                     style={{
-                      fontSize: 13,
+                      fontSize: 12,
                       fontWeight: isToday ? "900" : "normal",
                       fill: isToday
                         ? "#003c93"

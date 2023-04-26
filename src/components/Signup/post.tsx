@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
+import { useDaumPostcodePopup } from "react-daum-postcode";
+import css from "../Signup/Signup.module.scss";
+import { useColorMode } from "@chakra-ui/react";
+import { useRecoilState } from "recoil";
+import { addressState } from "../../atoms";
 
 interface PostProps {
-  company: {
+  myAddress: {
     address: string;
   };
-  setcompany: (company: { address: string }) => void;
+  setmyAddress: (myAddress: { address: string }) => void;
 }
 
 interface Address {
@@ -16,7 +21,13 @@ interface Address {
 }
 
 const Post: React.FC<PostProps> = (props) => {
-  const complete = (data: Address) => {
+  const { colorMode } = useColorMode();
+  const [address, setaddress] = useRecoilState<string>(addressState);
+  const open = useDaumPostcodePopup(
+    "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+  );
+
+  const handleComplete = (data: Address) => {
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -31,16 +42,30 @@ const Post: React.FC<PostProps> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    props.setcompany({
-      ...props.company,
+    console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+
+    props.setmyAddress({
+      ...props.myAddress,
       address: fullAddress,
     });
+
+    setaddress(fullAddress);
+  };
+
+  const handleClick = () => {
+    open({ onComplete: handleComplete });
   };
 
   return (
-    <div>
-      <DaumPostcode className="postmodal" autoClose onComplete={complete} />
-    </div>
+    <button
+      type="button"
+      name="address"
+      onClick={handleClick}
+      className={colorMode === "light" ? css.checkButton : css.darkCheckButton}
+    >
+      주소 <br />
+      찾기
+    </button>
   );
 };
 

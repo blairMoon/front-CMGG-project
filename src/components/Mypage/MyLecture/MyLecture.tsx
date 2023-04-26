@@ -5,6 +5,8 @@ import MylectureCard from "../MyLectureCard/MyLectureCard";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLectureInfo } from "../../../services/api";
+import { skeletonArray } from "../../../constant";
+import SkeletonCard from "../../WholeLectures/LectureCard/SkeletonCard";
 
 interface CalculatedLectureItem {
   id: string;
@@ -15,6 +17,7 @@ interface CalculatedLectureItem {
     lectureDescription: string;
     lectureTitle: string;
     targetAudience: string;
+    lectureFee: number;
     instructor: {
       username: string;
     };
@@ -43,20 +46,27 @@ const MyLecture: React.FC = () => {
       <Grid>
         <GridItem mx="auto">
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
-            {data?.calculatedLecture?.map((item: CalculatedLectureItem) => (
-              <GridItem key={item.lecture.LectureId} mx="auto">
-                <MylectureCard
-                  lectureNumber={item.lecture.LectureId}
-                  key={item.id}
-                  img={item.lecture.thumbnail}
-                  lectureDescription={item.lecture.lectureDescription}
-                  lectureTitle={item.lecture.lectureTitle}
-                  targetAudience={item.lecture.targetAudience}
-                  instructor={item.lecture.instructor.username}
-                  rating={data.ratings[item.lecture.lectureTitle]}
-                />
-              </GridItem>
-            ))}
+            {!isLoading
+              ? data?.calculatedLecture?.map((item: CalculatedLectureItem) => (
+                  <GridItem key={item.lecture.LectureId} mx="auto">
+                    <MylectureCard
+                      lectureNumber={item.lecture.LectureId}
+                      key={item.id}
+                      img={item.lecture.thumbnail}
+                      lectureDescription={item.lecture.lectureDescription}
+                      lectureTitle={item.lecture.lectureTitle}
+                      targetAudience={item.lecture.targetAudience}
+                      instructor={item.lecture.instructor.username}
+                      rating={data.ratings[item.lecture.lectureTitle]}
+                      lectureFee={item.lecture.lectureFee}
+                    />
+                  </GridItem>
+                ))
+              : skeletonArray.map((_: number, idx: number) => (
+                  <GridItem key={idx} mx="auto">
+                    <SkeletonCard />
+                  </GridItem>
+                ))}
           </Grid>
         </GridItem>
       </Grid>

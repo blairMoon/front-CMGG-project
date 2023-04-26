@@ -29,6 +29,9 @@
 
   box-sizing: border-box;
   resize: none;
+  &::placeholder {
+    color: rgba(2, 7, 85, 0.466);
+  }
 }
 .TextArea:focus {
   outline-color: #003c93;
@@ -38,7 +41,7 @@
   @extend .TextArea;
   color: rgb(49, 49, 49);
   &::placeholder {
-    color: rgb(49, 49, 49);
+    color: rgba(41, 41, 41, 0.65);
   }
 }
 

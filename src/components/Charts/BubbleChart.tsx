@@ -41,7 +41,7 @@ const PackedBubbleChart: React.FC<PackedBubbleChartProps> = ({ id, data }) => {
   const options: Highcharts.Options = {
     chart: {
       type: "packedbubble",
-      height: "100%",
+      height: "80%",
       backgroundColor: "transparent",
     },
     title: {
