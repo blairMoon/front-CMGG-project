@@ -23,8 +23,15 @@ import { c } from "msw/lib/glossary-de6278a9";
 interface Props {}
 
 const User: React.FC<Props> = (props: Props) => {
+  // const onMouseOver2 = (e: any) => {
+  //   console.log(e.clientX);
+  // };
   return (
-    <div className={css.UserContainer} style={{ display: "flex" }}>
+    <div
+      className={css.UserContainer}
+      style={{ display: "flex" }}
+      // onMouseOver={onMouseOver2}
+    >
       <div
         style={{
           width: "50%",

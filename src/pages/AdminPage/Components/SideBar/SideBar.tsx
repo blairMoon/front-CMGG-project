@@ -57,24 +57,24 @@ interface LinkItemProps {
 }
 
 const LinkItems: LinkItemProps[] = [
-  {
-    name: "Dashboard",
-    icon: AiOutlineUser,
-    subItems: {
-      sub1: { title: "Subitem 1", url: "/admin/sub1" },
-      sub2: { title: "Subitem 2", url: "/admin/sub2" },
-      sub3: { title: "Subitem 3", url: "/admin/sub3" },
-    },
-    url: "/admin",
-  },
+  // {
+  //   name: "Dashboard",
+  //   icon: AiOutlineUser,
+  //   subItems: {
+  //     sub1: { title: "Subitem 1", url: "/admin/sub1" },
+  //     sub2: { title: "Subitem 2", url: "/admin/2" },
+  //     sub3: { title: "Subitem 3", url: "/admin/sub3" },
+  //   },
+  //   url: "/admin",
+  // },
   {
     name: "User",
     icon: AiOutlineUser,
     subItems: {
-      sub1: { title: "Subitem 1", url: "/admin/user/sub1" },
-      sub2: { title: "Subitem 2", url: "/admin/user/sub2" },
+      sub1: { title: "Subitem 1", url: "/admin/user/1" },
+      sub2: { title: "Subitem 2", url: "/admin/user/2" },
     },
-    url: "/admin/user",
+    url: "/admin/user/1",
   },
   {
     name: "Lecture",
@@ -85,6 +85,15 @@ const LinkItems: LinkItemProps[] = [
       sub3: { title: "Subitem 3", url: "/admin/lecture/sub3" },
     },
     url: "/admin/lecture",
+  },
+  {
+    name: "Instructor",
+    icon: AiOutlineUser,
+    subItems: {
+      sub1: { title: "강사신청", url: "/admin/instructor/1" },
+      sub2: { title: "Subitem 2", url: "/admin/instructor/2" },
+    },
+    url: "/admin/instructor/1",
   },
   {
     name: "Pay",
@@ -178,7 +187,7 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const handleMouseEnter = (name: string) => {
     setIsHovered(true);
-    if (name === "Dashboard") {
+    if (name === "Pay") {
       setIsOpen(false);
     } else {
       setIsOpen(true);
@@ -227,7 +236,7 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
           {name}
         </Text>
         <Spacer />
-        {name !== "Dashboard" && Object.keys(subItems).length > 0 && (
+        {name !== "Pay" && Object.keys(subItems).length > 0 && (
           <IconButton
             color="black"
             _hover={{
@@ -255,9 +264,9 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
           {...rest}
         >
           {Object.keys(subItems).map((subItemKey, idx) => (
-            <Link key={idx} href={subItems[subItemKey]["url"]}>
+            <Link key={idx} href={subItems[subItemKey]["url"]} w="100%">
               <Button
-                w="120%"
+                w="90%"
                 bg="white"
                 p="4"
                 mx="4"

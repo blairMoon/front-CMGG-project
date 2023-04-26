@@ -284,6 +284,7 @@ function LectureRegister(): React.ReactElement {
           )}
         </FormControl>
         <Divider my="5" mt="10" />
+        {/* //// */}
         <FormControl isInvalid={!!errors["img"]} id={"img"} my="8">
           <FormLabel fontWeight={"bold"} id={"img"}>
             대표 이미지 올리기
@@ -313,6 +314,7 @@ function LectureRegister(): React.ReactElement {
                 <MyErrorText message="대표 이미지를 등록해주세요" />
               )}
         </FormControl>
+        {/* //// */}
         <Divider my="5" />
         <FormControl isInvalid={!!errors["videos"]} id={"videos"} my="8">
           <FormLabel fontWeight={"bold"} id={"videos"}>
