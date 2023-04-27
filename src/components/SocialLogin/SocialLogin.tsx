@@ -4,23 +4,20 @@ import Cookie from "js-cookie";
 
 const SocialLogin = () => {
   const kakaoParams = {
-    client_id: "0ee0a4111ed87512f2f0dfb62ebd7ae5",
-    redirect_uri: "http://127.0.0.1:3000/accounts/login/kakao/callback",
+    client_id: "bb66478dd52ba99cc7ade2f8d07abb6c",
+    redirect_uri: "http://127.0.0.1:3000/social/kakao",
     response_type: "code",
   };
-  const paramsKakao = new URLSearchParams(kakaoParams).toString();
+
+  const params = new URLSearchParams(kakaoParams).toString();
 
   const naverParams = {
     response_type: "code",
-    client_id: "1Vm0j0Ggt3_VZer8jmHA",
-    redirect_uri:
-      process.env.NODE_ENV === "development"
-        ? "http://127.0.0.1:3000/social/naver"
-        : "https://bangsam.site/social/naver",
-    state: "OzCoding",
+    client_id: "QaPk9sXFWYjRU4R3qk_J",
+    state: "test",
+    redirect_uri: "http://127.0.0.1:3000/social/naver",
   };
-
-  const paramsNaver = new URLSearchParams(naverParams).toString();
+  const naver_params = new URLSearchParams(naverParams).toString();
 
   return (
     <VStack width={"100%"} spacing={"3"}>
@@ -38,7 +35,7 @@ const SocialLogin = () => {
       </HStack>
       <Button
         as="a"
-        href={`https://nid.naver.com/oauth2.0/authorize?${paramsNaver}`}
+        href={`https://nid.naver.com/oauth2.0/authorize?${naver_params}`}
         width={"100%"}
         backgroundColor="rgb(3, 199, 90)"
         color={"white"}
@@ -50,7 +47,7 @@ const SocialLogin = () => {
       </Button>
       <Button
         as="a"
-        href={`https://kauth.kakao.com/oauth/authorize?${paramsKakao}`}
+        href={`https://kauth.kakao.com/oauth/authorize?${params}`}
         width={"100%"}
         colorScheme={"yellow"}
         leftIcon={<FaComment />}

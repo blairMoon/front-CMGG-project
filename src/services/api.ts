@@ -181,14 +181,11 @@ export const kakaoLogin = async ({ code }: { code: string }) => {
       "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/accounts/login/kakao/callback",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ code }),
-      }
-    );
+    const response = await fetch("http://127.0.0.1:8000/api/v1/users/kakao,", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ code }),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -214,14 +211,11 @@ export const naverLogin = async ({
       "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/accounts/naver/login/",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ code, state }),
-      }
-    );
+    const response = await fetch("http://127.0.0.1:8000/api/v1/users/naver", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ code, state }),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

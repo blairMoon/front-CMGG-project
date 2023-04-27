@@ -140,21 +140,18 @@ export default function WithSubnavigation() {
                   color={useColorModeValue("gray.800", "white")}
                 > */}
                 <a href="/" className={css.a}>
-                  <img
-                    className={css.img}
-                    src="https://statics.goorm.io/logo/edu/goormedu-public.svg"
-                  />
+                  <img src="/images/LOGO2.png" width="350" />
                 </a>
                 {/* </Text> */}
 
-                <InputGroup w="150%">
+                <InputGroup>
                   <Input
-                    w="100%"
+                    w="370px"
                     placeholder="보고싶은 강의를 검색하세용"
                     fontSize="13px"
                     // borderRadius="100%"
                     type="text"
-                    className="Input"
+                    className="input"
                     border="none"
                     backgroundColor={
                       colorMode === "light"

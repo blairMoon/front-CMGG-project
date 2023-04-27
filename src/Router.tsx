@@ -25,6 +25,8 @@ import User from "./pages/AdminPage/Components/User/User";
 import User2 from "./pages/AdminPage/Components/User2/User2";
 import Register from "./pages/AdminPage/Components/Instructor/Register/Register";
 import InstructorChart from "./pages/AdminPage/Components/Instructor/InstrouctorChart/InstructorChart";
+import KakaoConfirm from "./components/SocialLogin/KakaoConfirm";
+import NaverConfirm from "./components/SocialLogin/NaverConfirm";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -86,6 +88,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+
       {
         path: "instructor",
         element: <InstructorPage />,
@@ -115,6 +118,19 @@ const router = createBrowserRouter([
       {
         path: "lectureplay/:lectureId/:num",
         element: <LecturePlayerPage />,
+      },
+      {
+        path: "social",
+        children: [
+          {
+            path: "kakao",
+            element: <KakaoConfirm />,
+          },
+          {
+            path: "naver",
+            element: <NaverConfirm />,
+          },
+        ],
       },
     ],
   },
