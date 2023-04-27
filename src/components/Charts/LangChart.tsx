@@ -37,7 +37,7 @@ export const data: LangChartData[] = [
   {
     id: "django",
     label: "django",
-    value: 6,
+    value: 5,
     category: "backend",
   },
   {
