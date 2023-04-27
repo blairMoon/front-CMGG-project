@@ -140,6 +140,7 @@ export const data: Data = {
 };
 
 const todayDayOfWeek = new Date().toLocaleString("ko-KR", { weekday: "short" });
+
 const DayChart: React.FC<Props> = () => {
   const [currentYear, setCurrentYear] = useState<number>(
     new Date().getFullYear()
@@ -148,6 +149,8 @@ const DayChart: React.FC<Props> = () => {
   const [currentMonth, setCurrentMonth] = useState<number>(
     new Date().getMonth() + 1
   );
+
+  // const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 
   const goToPreviousMonth = () => {
     if (currentMonth === 1) {
