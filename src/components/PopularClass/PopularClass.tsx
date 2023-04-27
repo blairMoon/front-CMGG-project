@@ -32,6 +32,9 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 
+import { skeletonArray } from "../../constant";
+import SkeletonCard from "../WholeLectures/LectureCard/SkeletonCard";
+
 interface ArrowProps {
   className?: string;
   style?: React.CSSProperties;
@@ -41,9 +44,54 @@ interface ArrowProps {
 function PopularLecture() {
   const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 
+<<<<<<< HEAD
+=======
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          backgroundColor: "transparent",
+          top: "47%",
+
+          transform: "translateY(-50%)",
+          zIndex: 1,
+        }}
+        onClick={onClick}
+      >
+        <svg fill="black" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
+        </svg>
+      </div>
+    );
+  };
+  const PrevArrow = (props: ArrowProps) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: "block",
+          backgroundColor: "transparent",
+          top: "47%",
+          right: "5%",
+          transform: "translateY(-50%)",
+          zIndex: 1,
+        }}
+        onClick={onClick}
+      >
+        <svg fill="red" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M15.41 16.58L10.83 12l4.58-4.58L14 6l-6 6 6 6z"></path>
+        </svg>
+      </div>
+    );
+  };
+>>>>>>> 4733dcd6a856e0e23a47bd8e85ab781d6e8a458d
   const sliderSettings = {
     dots: false,
-    arrows: true,
+    arrows: false,
     autoplay: true,
     infinite: true,
     speed: 300,
@@ -54,22 +102,29 @@ function PopularLecture() {
   };
 
   return (
-    <>
-      <Box w="100%" h="100%" textAlign="center">
-        <Heading size="lg" mt={10} mb={10}>
-          POPULAR CLASS
-        </Heading>
-        <Container as="section" maxW={"6xl"} py={10} mb={10}>
+    <div>
+      {!isLoading ? (
+        <Container as="section" maxW={"6xl"}>
           <Slider {...sliderSettings}>
             {data?.data?.map((lecture: ILectureData) => (
-              <GridItem key={lecture.LectureId} mx="auto" ml={7} mt={3}>
+              <GridItem key={lecture.LectureId} ml="20px">
                 <LectureCard data={lecture} />
               </GridItem>
             ))}
           </Slider>
         </Container>
-      </Box>
-    </>
+      ) : (
+        <Container as="section" maxW={"6xl"}>
+          <Slider {...sliderSettings}>
+            {skeletonArray.map((_: number, idx: number) => (
+              <GridItem key={idx} ml="20px">
+                <SkeletonCard />
+              </GridItem>
+            ))}
+          </Slider>
+        </Container>
+      )}
+    </div>
   );
 }
 
