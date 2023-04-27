@@ -11,8 +11,9 @@ import {
   Progress,
   useColorMode,
   Image,
+  Tooltip,
 } from "@chakra-ui/react";
-import { HiOutlineChevronRight } from "react-icons/hi";
+import { BsQuestionCircle } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -31,6 +32,20 @@ const RecommendCard: React.FC = () => {
           >
             추천 강의
           </Box>
+          <Tooltip
+            hasArrow
+            label="수강한 강의 기반으로 추천드려요!"
+            placement="top"
+            fontSize="12px"
+            bg="#2f2f30"
+            color="white"
+            p="8px 12px"
+            borderRadius="lg"
+          >
+            <Box color="#858585">
+              <BsQuestionCircle />
+            </Box>
+          </Tooltip>
         </HStack>
         <Stack>
           <Image
