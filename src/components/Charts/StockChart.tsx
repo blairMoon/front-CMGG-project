@@ -45,7 +45,7 @@ const StockChart: React.FC<StockProps> = ({ names, data }) => {
 
   useEffect(() => {
     const seriesOptions: SeriesLineOptions[] = [];
-    const colors = ["rgb(254,215,0)", "rgb(10,246,213)", "rgb(190,20,248)"];
+    const colors = ["rgb(180,60,120)", "rgb(100,190,230)", "rgb(180,190,48)"];
     const success = (name: string, data: any) => {
       const i = names.indexOf(name);
       seriesOptions[i] = {

@@ -22,7 +22,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
   const hslaColor: HslColor = parseToHsl(bgColor);
   const darkerColor = hsl({
     ...hslaColor,
-    lightness: hslaColor.lightness - 0.25,
+    lightness: hslaColor.lightness - 0.2,
   });
 
   return (
@@ -36,7 +36,9 @@ const DashboardCard: React.FC<DashboardCardProps> = ({
       boxShadow={boxShadow ? boxShadow : "none"}
     >
       <VStack>
-        <Text fontWeight="bold">{title}</Text>
+        <Text fontWeight="bold" fontSize="xl">
+          {title}
+        </Text>
         <Text fontSize="2xl">{getAddCommas(value)}</Text>
       </VStack>
     </Box>

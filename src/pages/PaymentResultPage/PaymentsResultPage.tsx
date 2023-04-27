@@ -61,6 +61,7 @@ import { BsCheckCircle } from "react-icons/bs";
 
 import { getAllLectures } from "../../services/api";
 import SkeletonCard from "../../components/WholeLectures/LectureCard/SkeletonCard";
+import Seo from "../../components/SEO/Seo";
 
 interface CalculatedLectureItem {
   img: string;
@@ -104,6 +105,7 @@ const PaymentsResultPage: React.FC = () => {
 
   return (
     <div>
+      <Seo title="구매 완료" />
       <Divider />
       {!isLoading ? (
         <Grid>

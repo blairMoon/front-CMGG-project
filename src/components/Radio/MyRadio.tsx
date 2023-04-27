@@ -7,7 +7,7 @@ interface MyRadioProps extends RadioProps {
 
 export const MyRadio = forwardRef<HTMLInputElement, MyRadioProps>(
   ({ testId, children, ...props }, ref) => {
-    const { colorMode, toggleColorMode } = useColorMode();
+    const { colorMode } = useColorMode();
 
     return (
       <div data-testid={testId} style={{ width: "calc(100% / 4)" }}>
