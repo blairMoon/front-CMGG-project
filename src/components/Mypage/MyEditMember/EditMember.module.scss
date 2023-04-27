@@ -49,6 +49,14 @@
   box-sizing: border-box;
   // max-width: 0px;
 }
+.DarkInput {
+  @extend .Input;
+  color: rgb(49, 49, 49);
+  &::placeholder {
+    color: rgb(119, 119, 119);
+  }
+}
+
 .Input:focus {
   outline-color: #003c93;
 }

@@ -4,6 +4,7 @@ import {
   Box,
   Circle,
   Flex,
+  Heading,
   Image,
   Input,
   InputGroup,
@@ -12,25 +13,30 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { FaCrown } from "react-icons/fa";
+import { GiQueenCrown } from "react-icons/gi";
 interface Props {}
 
 const HighPeople: React.FC<Props> = (props: Props) => {
   return (
     <div className={css.div}>
-      <FaCrown
-        color="pink"
+      <Heading position="absolute" top="7%" left="4%" fontSize="26px">
+        Top 3
+      </Heading>
+      <GiQueenCrown
+        color="black"
         className={css.crown}
         size="50px"
-        style={{ position: "absolute", top: "19%", left: "29%" }}
+        style={{ position: "absolute", top: "22%", left: "22%" }}
       />
       <Box>
         <Circle
-          size="180px"
-          bg="blue.500"
+          bg="black"
+          size="130px"
           position="absolute"
           top="40%"
           left="50%"
           transform="translate(-50%, -50%)"
+          shadow={"lg"}
         >
           <Image
             src="https://ifh.cc/g/t42vxY.jpg"
@@ -40,10 +46,11 @@ const HighPeople: React.FC<Props> = (props: Props) => {
           />
         </Circle>
         <Circle
-          size="180px"
-          bg="blue.500"
+          bg="black"
+          shadow={"lg"}
+          size="130px"
           position="absolute"
-          bottom="10%"
+          bottom="25%"
           left="5%"
         >
           {/* <span>2등</span> */}
@@ -55,10 +62,10 @@ const HighPeople: React.FC<Props> = (props: Props) => {
           />
         </Circle>
         <Circle
-          size="180px"
-          bg="blue.500"
+          size="130px"
+          bg="black"
           position="absolute"
-          bottom="10%"
+          bottom="25%"
           right="5%"
         >
           {/* <span>3등</span> */}

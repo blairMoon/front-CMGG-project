@@ -43,7 +43,7 @@ export const data: LangChartData[] = [
   {
     id: "React",
     label: "react",
-    value: 6,
+    value: 7,
     category: "frontend",
   },
   {
@@ -55,7 +55,7 @@ export const data: LangChartData[] = [
   {
     id: "JS",
     label: "javascript",
-    value: 5,
+    value: 6,
     category: "frontend",
   },
 ];
@@ -163,7 +163,7 @@ const LangChart: React.FC<Props> = () => {
           />
           <Box>
             <Text textAlign="center" p={1} fontWeight={600}>
-              열심히 학습중 (●'◡'●)
+              열심히 학습중
             </Text>
             <Text
               textAlign="center"
