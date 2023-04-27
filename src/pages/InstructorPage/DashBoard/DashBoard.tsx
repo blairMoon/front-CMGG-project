@@ -9,6 +9,7 @@ import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
 import { useRecoilValue } from "recoil";
 import { stockMenuState } from "../../../atoms";
+import Seo from "../../../components/SEO/Seo";
 
 const Dashboard: React.FC = () => {
   const stockMenuItem = useRecoilValue(stockMenuState);
@@ -150,6 +151,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <Box>
+      <Seo title="대시보드" />
       <Navbar />
       <Box padding="2rem">
         <Grid templateColumns="repeat(3, 1fr)" gap={6} mb="2rem">
