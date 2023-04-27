@@ -7,8 +7,10 @@ import { useColorMode, Text, Flex, VStack, Box } from "@chakra-ui/react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import HighchartsNetworkgraph from "highcharts/modules/networkgraph";
+import accessibility from "highcharts/modules/accessibility";
 
 HighchartsNetworkgraph(Highcharts);
+accessibility(Highcharts);
 
 interface NetWorkData {
   from: string;
@@ -140,12 +142,12 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
             if (color === "red") {
               hiUserIcon = `
                   <svg ${props} width="33" height="33"> 
-                     <path d="${iconPathData}" fill="${color}" scale="20"/>
+                     <path d="${iconPathData}" fill="${color}"/>
                   </svg>`;
             } else {
               hiUserIcon = `
                   <svg ${props} width="23" height="23"> 
-                     <path d="${iconPathData}" fill="${color}" scale="20"/>
+                     <path d="${iconPathData}" fill="${color}"/>
                   </svg>`;
             }
 

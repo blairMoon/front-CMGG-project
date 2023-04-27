@@ -11,8 +11,9 @@ import {
   Progress,
   useColorMode,
   Image,
+  Tooltip,
 } from "@chakra-ui/react";
-import { HiOutlineChevronRight } from "react-icons/hi";
+import { BsQuestionCircle } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -31,6 +32,20 @@ const EmploymentCard: React.FC = () => {
           >
             추천 채용
           </Box>
+          <Tooltip
+            hasArrow
+            label="수강한 강의 기반으로 추천드려요!"
+            placement="top"
+            fontSize="12px"
+            bg="#2f2f30"
+            color="white"
+            p="8px 12px"
+            borderRadius="lg"
+          >
+            <Box color="#858585">
+              <BsQuestionCircle />
+            </Box>
+          </Tooltip>
         </HStack>
         <Stack>
           <Image
@@ -42,7 +57,7 @@ const EmploymentCard: React.FC = () => {
         </Stack>
         <Box fontSize="12px">
           <Text>에이피알</Text>
-          <Text fontSize="14px" fontWeight="600">
+          <Text fontSize="14px" fontWeight="600" noOfLines={1}>
             주니어 프론트 개발자(React)
           </Text>
           <Text color="#858585">Redux MobX HTML/CSS</Text>

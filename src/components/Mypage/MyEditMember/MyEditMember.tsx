@@ -23,6 +23,8 @@ import {
   HStack,
   Text,
   Input,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 interface UserData {
@@ -41,6 +43,7 @@ interface UserData {
 }
 
 const MyEditMember: React.FC = () => {
+  const { colorMode } = useColorMode();
   const [click, setClick] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -139,7 +142,6 @@ const MyEditMember: React.FC = () => {
                         p="3"
                         borderRadius="base"
                         _hover={{
-                          color: "white",
                           bg: "#012f70",
                         }}
                       >
@@ -228,7 +230,7 @@ const MyEditMember: React.FC = () => {
                     placeholder="비밀번호를 입력해주세용"
                     type="password"
                     autoComplete="off"
-                    className={css.Input}
+                    className={useColorModeValue(css.Input, css.DarkInput)}
                     {...register("password", {
                       required: true,
                       pattern:
@@ -251,7 +253,7 @@ const MyEditMember: React.FC = () => {
                     placeholder="비밀번호를 한번 더 치세용"
                     type="password"
                     autoComplete="off"
-                    className={css.Input}
+                    className={useColorModeValue(css.Input, css.DarkInput)}
                     {...register("passwordCheck", {
                       required: true,
                       validate: {
@@ -278,7 +280,7 @@ const MyEditMember: React.FC = () => {
                   <input
                     placeholder="이름을 입력해주세용"
                     defaultValue={data?.name}
-                    className={css.Input}
+                    className={useColorModeValue(css.Input, css.DarkInput)}
                     {...register("name", { required: true })}
                   />
                   {errors.name && (
@@ -290,7 +292,7 @@ const MyEditMember: React.FC = () => {
                   <input
                     defaultValue={data?.dateBirth}
                     type="date"
-                    className={css.Input}
+                    className={useColorModeValue(css.Input, css.DarkInput)}
                     {...register("dateBirth", { required: true })}
                   />
                   {errors.dateBirth && (
@@ -307,7 +309,7 @@ const MyEditMember: React.FC = () => {
                     placeholder="전화번호를 입력해주세용"
                     defaultValue={data?.phoneNumber}
                     type="tel"
-                    className={css.Input}
+                    className={useColorModeValue(css.Input, css.DarkInput)}
                     {...register("phoneNumber", { required: true })}
                   />
                   {errors.phoneNumber && (
@@ -324,7 +326,7 @@ const MyEditMember: React.FC = () => {
                     defaultValue={data?.email}
                     placeholder="이메일를 입력해주세용"
                     type="text"
-                    className={css.Input}
+                    className={useColorModeValue(css.Input, css.DarkInput)}
                     {...register("email", {
                       required: true,
                       pattern: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,

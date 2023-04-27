@@ -65,6 +65,7 @@
     "react-slick": "^0.29.0",
     "react-tooltip": "^5.11.1",
     "recoil": "^0.7.7",
+    "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.61.0",
     "scss-reset": "^1.2.2",
     "slick-carousel": "^1.8.1",
@@ -123,6 +124,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "jest-environment-jsdom": "^29.5.0",
+    "jest-fetch-mock": "^3.0.3",
     "msw": "^1.2.1",
     "ts-jest": "^29.1.0"
   },

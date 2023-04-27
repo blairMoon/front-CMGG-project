@@ -3,7 +3,9 @@ import { hsl, parseToHsl } from "polished";
 import { HslColor } from "polished/lib/types/color";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import accessibility from "highcharts/modules/accessibility";
 
+accessibility(Highcharts);
 interface DashboardCardProps {
   title: string;
   value: string;
@@ -30,9 +32,6 @@ const DashboardChartCard: React.FC<DashboardCardProps> = ({
   const lineColor = Number(data[2][1]) > Number(data[3][1]) ? "blue" : "red";
 
   const options: Highcharts.Options = {
-    title: {
-      text: undefined,
-    },
     chart: {
       type: "area",
       backgroundColor: "transparent",
@@ -40,6 +39,9 @@ const DashboardChartCard: React.FC<DashboardCardProps> = ({
       margin: [2, 0, 2, 0],
       height: 20,
       width: 30,
+    },
+    title: {
+      text: undefined,
     },
     series: [
       {
@@ -83,6 +85,7 @@ const DashboardChartCard: React.FC<DashboardCardProps> = ({
       borderRadius="lg"
       padding="1rem"
       minWidth="200px"
+      data-testid="dashboard-chart-card"
       bgColor={colorMode === "light" ? bgColor : darkerColor}
       color={colorMode === "light" ? "black" : "white"}
       boxShadow={boxShadow ? boxShadow : "none"}
