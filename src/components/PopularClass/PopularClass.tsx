@@ -32,6 +32,9 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 
+import { skeletonArray } from "../../constant";
+import SkeletonCard from "../WholeLectures/LectureCard/SkeletonCard";
+
 interface ArrowProps {
   className?: string;
   style?: React.CSSProperties;
@@ -79,7 +82,7 @@ function PopularLecture() {
         }}
         onClick={onClick}
       >
-        <svg fill="black" width="24" height="24" viewBox="0 0 24 24">
+        <svg fill="red" width="24" height="24" viewBox="0 0 24 24">
           <path d="M15.41 16.58L10.83 12l4.58-4.58L14 6l-6 6 6 6z"></path>
         </svg>
       </div>
@@ -87,7 +90,7 @@ function PopularLecture() {
   };
   const sliderSettings = {
     dots: false,
-    arrows: true,
+    arrows: false,
     autoplay: true,
     infinite: true,
     speed: 300,
@@ -99,22 +102,29 @@ function PopularLecture() {
   };
 
   return (
-    <>
-      <Box w="100%" h="100%" textAlign="center">
-        <Heading size="lg" mt={10} mb={10}>
-          POPULAR CLASS
-        </Heading>
-        <Container as="section" maxW={"6xl"} py={10} mb={10}>
+    <div>
+      {!isLoading ? (
+        <Container as="section" maxW={"6xl"}>
           <Slider {...sliderSettings}>
             {data?.data?.map((lecture: ILectureData) => (
-              <GridItem key={lecture.LectureId} mx="auto" ml={7} mt={3}>
+              <GridItem key={lecture.LectureId} ml="20px">
                 <LectureCard data={lecture} />
               </GridItem>
             ))}
           </Slider>
         </Container>
-      </Box>
-    </>
+      ) : (
+        <Container as="section" maxW={"6xl"}>
+          <Slider {...sliderSettings}>
+            {skeletonArray.map((_: number, idx: number) => (
+              <GridItem key={idx} ml="20px">
+                <SkeletonCard />
+              </GridItem>
+            ))}
+          </Slider>
+        </Container>
+      )}
+    </div>
   );
 }
 
