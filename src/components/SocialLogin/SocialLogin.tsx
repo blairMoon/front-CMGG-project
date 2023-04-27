@@ -4,25 +4,11 @@ import Cookie from "js-cookie";
 
 const SocialLogin = () => {
   const kakaoParams = {
-    client_id: "bb66478dd52ba99cc7ade2f8d07abb6c",
-    redirect_uri: "http://127.0.0.1:3000/social/kakao",
+    client_id: "0ee0a4111ed87512f2f0dfb62ebd7ae5",
+    redirect_uri: "http://127.0.0.1:3000/accounts/login/kakao/callback",
     response_type: "code",
   };
   const paramsKakao = new URLSearchParams(kakaoParams).toString();
-
-  // const googleParams = {
-  //   client_id: "69ba16ba77556c01d4a4ea9911fc06ad",
-  //   redirect_uri: "https://bangsam.site/social/kakao",
-  //   response_type: "code",
-  // };
-  // const paramsGoogle = new URLSearchParams(googleParams).toString();
-
-  // const githubParams = {
-  //   client_id: "69ba16ba77556c01d4a4ea9911fc06ad",
-  //   redirect_uri: "https://bangsam.site/social/kakao",
-  //   response_type: "code",
-  // };
-  // const ParamsGithub = new URLSearchParams(githubParams).toString();
 
   const naverParams = {
     response_type: "code",
@@ -33,11 +19,6 @@ const SocialLogin = () => {
         : "https://bangsam.site/social/naver",
     state: "OzCoding",
   };
-  // https://nid.naver.com/oauth2.0/authorize
-  // ?response_type=code&
-  // client_id=CLIENT_ID&
-  // state=STATE_STRING&
-  // redirect_uri=CALLBACK_URL
 
   const paramsNaver = new URLSearchParams(naverParams).toString();
 

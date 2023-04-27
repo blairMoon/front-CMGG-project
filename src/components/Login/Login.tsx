@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import css from "./Login.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { isLoggedInVar } from "../../services/apollo";
 import { getAccessToken, getRefreshToken } from "../../services/Token";
 import { userNameLogin } from "../../services/api";
@@ -10,7 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import {
   Box,
   Button,
-  Divider,
   HStack,
   Text,
   VStack,
@@ -151,6 +150,17 @@ const Login: React.FC = () => {
               >
                 로그인
               </Button>
+              <HStack
+                fontSize={"sm"}
+                pt={3}
+                pl={3}
+                w={"100%"}
+                justifyContent={"center"}
+              >
+                <Link to={"/find/id"}>아이디 찾기</Link>
+                <Text>|</Text>
+                <Link to={"/find/password"}>비밀번호 찾기</Link>
+              </HStack>
             </form>
             <SocialLogin />
           </div>

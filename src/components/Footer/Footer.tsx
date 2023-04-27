@@ -223,7 +223,7 @@ export default function LargeWithLogoCentered() {
             ml: 8,
           }}
         >
-          <img src="/images/whitelogo.png" alt="logo" width="120" />
+          <img src="/images/whiteLOGO2.png" alt="logo" width="120" />
         </Flex>
         <Text pt={3} fontSize={"sm"} textAlign={"center"} color="white">
           © 2023 CrazyLab. All rights reserved

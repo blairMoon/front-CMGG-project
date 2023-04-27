@@ -12,11 +12,13 @@ import {
   MenuButton,
   MenuList,
 } from "@chakra-ui/react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { stockMenuState } from "../../atoms";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import accessibility from "highcharts/modules/accessibility";
+import axios from "axios";
 
+accessibility(Highcharts);
 interface StockProps {
   names: string[];
   data?: [];
@@ -112,13 +114,11 @@ const StockChart: React.FC<StockProps> = ({ names, data }) => {
     };
 
     names.forEach((name) => {
-      fetch(
-        `https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/${name.toLowerCase()}-c.json`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          return success(name, data);
-        });
+      axios
+        .get(
+          `https://cdn.jsdelivr.net/gh/highcharts/highcharts@v7.0.0/samples/data/${name.toLowerCase()}-c.json`
+        )
+        .then((response) => success(name, response.data));
     });
   }, [colorMode]);
 
