@@ -1,13 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Stack, HStack, Flex, Text, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  HStack,
+  Flex,
+  Text,
+  Button,
+  useColorMode,
+} from "@chakra-ui/react";
 import { HiArrowRight } from "react-icons/hi";
 interface Props {}
 const GoDashBoard: React.FC<Props> = (props: Props) => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   return (
     <div>
-      <Stack justifyContent="center" textAlign="center" spacing="8">
+      <Stack justifyContent="center" textAlign="center" spacing="10" pt="100px">
         <Box
           fontSize="30px"
           fontWeight="600"
@@ -23,7 +32,10 @@ const GoDashBoard: React.FC<Props> = (props: Props) => {
           <Text>우리는 함께 창조하고, 혁신하고, 영감을 줍니다.</Text>
         </Box>
         <Box>
-          <Text fontSize="18px" color="#656669">
+          <Text
+            fontSize="18px"
+            color={colorMode === "light" ? "#656669" : "#c7c7c7"}
+          >
             CORDING GARDEN에서 우리의 잠재력은 더 커질 수 있습니다.
           </Text>
         </Box>
