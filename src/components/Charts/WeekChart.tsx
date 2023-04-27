@@ -380,9 +380,9 @@ const DayChart: React.FC<Props> = () => {
               >
                 <div>{point.id.split(/[0-9.]+/).join("")}</div>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <div>{point.data.x.toString()} :</div>
+                  <div> 완료강의 :</div>
                   <div style={{ marginLeft: "3px" }}>
-                    {point.data.y.toString()} 개
+                    {point.data.y.toString()}개
                   </div>
                 </div>
               </div>
