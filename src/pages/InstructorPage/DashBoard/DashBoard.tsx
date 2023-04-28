@@ -9,6 +9,7 @@ import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
 import { useRecoilValue } from "recoil";
 import { stockMenuState } from "../../../atoms";
+import Seo from "../../../components/SEO/Seo";
 
 const Dashboard: React.FC = () => {
   const stockMenuItem = useRecoilValue(stockMenuState);
@@ -150,33 +151,37 @@ const Dashboard: React.FC = () => {
 
   return (
     <Box>
+      <Seo title="대시보드" />
       <Navbar />
       <Box padding="2rem">
         <Grid templateColumns="repeat(3, 1fr)" gap={6} mb="2rem">
           <GridItem>
             <div data-testid={"dashboard-card"}>
               <DashboardCard
-                title="총 수강생"
                 value={1023}
-                bgColor="rgb(254,215,215)"
-              />
-            </div>
-          </GridItem>
-          <GridItem>
-            <div data-testid={"dashboard-card"}>
-              <DashboardCard
-                title="총 수입"
-                value={52620000}
+                title="총 수강생"
                 bgColor="rgb(190,227,248)"
+                boxShadow="md"
               />
             </div>
           </GridItem>
           <GridItem>
             <div data-testid={"dashboard-card"}>
               <DashboardCard
-                title="신규 수강생"
+                value={52620000}
+                title="총 수입"
+                bgColor="rgb(190,227,248)"
+                boxShadow="md"
+              />
+            </div>
+          </GridItem>
+          <GridItem>
+            <div data-testid={"dashboard-card"}>
+              <DashboardCard
                 value={250}
-                bgColor="rgb(198,246,213)"
+                title="신규 수강생"
+                bgColor="rgb(190,227,248)"
+                boxShadow="md"
               />
             </div>
           </GridItem>
@@ -197,9 +202,7 @@ const Dashboard: React.FC = () => {
             </div>
           </GridItem>
         </Grid>
-        {/* <div data-testid={"stock-chart"}> */}
         <StockChart names={stockNames} />
-        {/* </div> */}
         <Grid templateColumns="repeat(4, 1fr)" gap={6} marginTop="5rem">
           <GridItem>
             <div data-testid={`dashboard-chart-card-1`}>
@@ -272,7 +275,7 @@ const Dashboard: React.FC = () => {
               <DashboardChartCard
                 title="내 강의의 유령회원"
                 value="4011"
-                bgColor="rgb(160,160,160)"
+                bgColor="rgb(210,210,220)"
                 data={[
                   [1, 12],
                   [2, 23],
@@ -288,7 +291,7 @@ const Dashboard: React.FC = () => {
               <DashboardChartCard
                 title="월 신규 수강생"
                 value="2401"
-                bgColor="rgb(160,160,160)"
+                bgColor="rgb(210,210,220)"
                 data={[
                   [1, 12],
                   [2, 323],

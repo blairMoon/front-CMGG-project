@@ -28,8 +28,8 @@ interface RadarChartProps {
 const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   const { colorMode } = useColorMode();
   const customColors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"];
-  const lightAreaColors = ["rgb(44, 160, 44,0.5)", "rgb(255, 127, 14,0.7)"];
-  const darkAreaColors = ["rgb(195,100,190)", "rgb(160,255,55)"];
+  const lightAreaColors = ["rgb(25,25,255,0.4)", "rgb(215, 77, 255,0.5)"];
+  const darkAreaColors = ["rgb(115,115,255)", "rgb(210,210,255)"];
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {

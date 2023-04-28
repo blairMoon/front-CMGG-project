@@ -46,7 +46,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
       text = text.slice(0, MAX_LENGTH) + "...";
     }
 
-    const MAX_LENGTH2 = 37;
+    const MAX_LENGTH2 = 35;
     let textTitle = data.lectureTitle;
 
     if (textTitle.length > MAX_LENGTH2) {
@@ -86,7 +86,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
             padding="10px"
           >
             <Stack>
-              <Heading fontSize="14" color="white" pb="5px">
+              <Heading fontSize="14" color="white" pb="10px">
                 {textTitle}
               </Heading>
               <Text
@@ -119,7 +119,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
             <Text
               fontSize="14px"
               fontWeight="600"
-              color={colorMode === "light" ? "#666666" : "#bbb"}
+              color={colorMode === "light" ? "#474747" : "#bbb"}
             >
               {data.instructor.username}
             </Text>
@@ -128,7 +128,7 @@ const LectureCard: React.FC<Props> = ({ data }) =>
               <StarRating rating={data.rating} />
               <Text fontWeight="600">({data.reviews_num})</Text>
             </HStack>
-            <Text fontSize="16" fontWeight="600">
+            <Text fontSize="14px" fontWeight="600">
               ₩{formattedFee}
             </Text>
           </CardBody>

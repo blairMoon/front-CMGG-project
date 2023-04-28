@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import {
-  Heading,
   VStack,
   HStack,
   Text,
   Divider,
   Checkbox,
   Flex,
-  Box,
-  Stack,
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { useQuery } from "@tanstack/react-query";
@@ -21,6 +18,7 @@ import { RequestPayment } from "./components/RequestPay";
 import { ILecture } from "../../../../typings/PaymentResult";
 import CartItem from "./components/CartItem";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
+import Seo from "../../../components/SEO/Seo";
 
 const MyCart: React.FC = () => {
   const [initSelectedItems, setInitSelectedItems] = useState<SelectCartItems>({
@@ -64,8 +62,6 @@ const MyCart: React.FC = () => {
       });
     },
   });
-
-  console.log(1);
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -119,6 +115,7 @@ const MyCart: React.FC = () => {
 
   return (
     <VStack pb="8vh" overflowX="hidden" minW="800px">
+      <Seo title="장바구니" />
       {!isLoading ? (
         <VStack
           w="100%"
@@ -130,9 +127,11 @@ const MyCart: React.FC = () => {
         >
           <VStack w="100%" alignItems="flex-start" pb={15} textAlign="center">
             <Checkbox
-              fontSize="10px"
               size="sm"
+              role="checkbox"
+              fontSize="10px"
               borderColor="gray"
+              aria-label="Select All"
               colorScheme={mainColor}
               isChecked={isAllCheck()}
               onChange={handleCheckboxChange}
