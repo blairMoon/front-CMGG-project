@@ -43,7 +43,7 @@ export const data: LangChartData[] = [
   {
     id: "React",
     label: "react",
-    value: 7,
+    value: 6,
     category: "mobile",
   },
   {
