@@ -18,8 +18,8 @@ const Category: React.FC<Props> = (props: Props) => {
   return (
     <div>
       <Stack
-        pt="100px"
-        pb="100px"
+        pt="120px"
+        pb="140px"
         justifyContent="center"
         alignItems="center" // Add this line to center the child elements vertically
         textAlign="center"
@@ -32,7 +32,7 @@ const Category: React.FC<Props> = (props: Props) => {
         >
           배우고, 나누고, 성장하세요
         </Box>
-        <Box w="500px" mx="auto" pb="10">
+        <Box w="600px" mx="auto" pb="10">
           <SearchBar />
         </Box>
         <Box

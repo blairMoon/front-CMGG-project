@@ -196,13 +196,13 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   };
 
   return (
-    <div style={{ height: "400px", width: "350px" }}>
+    <div style={{ height: "310px", width: "350px" }}>
       <ResponsiveRadar
         data={data}
         keys={keys}
         indexBy={indexBy}
         maxValue="auto"
-        margin={{ right: 80, bottom: 40, left: 80 }}
+        margin={{ right: 80, top: 20, left: 80 }}
         curve="linearClosed"
         gridLevels={5}
         gridShape="circular"
