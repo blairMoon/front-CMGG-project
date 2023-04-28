@@ -8,6 +8,7 @@ import {
   InputGroup,
   InputLeftElement,
   useColorModeValue,
+  HStack,
   VStack,
   Text,
   Card,
@@ -60,8 +61,8 @@ const SearchCard: React.FC<Props> = (props: Props) => {
         height="380px"
         width="640px"
       >
-        <Flex h="300px">
-          <Box w="600px">
+        <Flex>
+          <Box>
             <Flex>
               <Text
                 // fontFamily="monospace"
@@ -81,15 +82,13 @@ const SearchCard: React.FC<Props> = (props: Props) => {
               </Text>
             </Flex>
             <Image
-              mb="20px"
-              marginTop="5px"
               // borderRadius="13px"
               boxSize="180px"
               src="https://ifh.cc/g/hTWR7n.jpg"
             />
 
             <Box display="flex" flexDirection="column" borderRadius="20px">
-              <Table variant="simple" w="180px" borderRadius="20px">
+              <Table variant="simple" borderRadius="20px">
                 <Tbody fontSize="12px" borderRadius="20px">
                   <Tr p={5}>
                     <Th p={2}>생년월일</Th>
@@ -108,7 +107,7 @@ const SearchCard: React.FC<Props> = (props: Props) => {
             </Box>
           </Box>
 
-          <Box w="450px">
+          <Box>
             <Text
               // fontWeight="600"
               // pt="15px"
@@ -131,6 +130,77 @@ const SearchCard: React.FC<Props> = (props: Props) => {
             />
           </Box>
         </Flex>
+      </Card>
+      <Card
+        borderRadius="20px"
+        display="flex"
+        px="8"
+        py="6"
+        boxShadow="lg"
+        bg="#ddebf7"
+        mt="60px"
+        height="380px"
+        width="640px"
+      >
+        <HStack
+          justifyContent="space-between"
+          pb="4"
+          fontWeight="600"
+          color="#02327b"
+          fontSize="14px"
+          alignItems="flex-start"
+        >
+          <Box fontSize="18px">이승아</Box>
+          <Box>강사능력차트</Box>
+        </HStack>
+        <HStack
+          // h="280px"
+          spacing={0}
+        >
+          <Box w="45%" h="100%">
+            <Box pb="4">
+              <Image boxSize="160px" src="https://ifh.cc/g/hTWR7n.jpg" />
+            </Box>
+            <Box display="flex" flexDirection="column">
+              <Table variant="simple" borderRadius="20px">
+                <Tbody fontSize="12px" borderRadius="20px">
+                  <Tr>
+                    <Th px={0} py={2}>
+                      생년월일
+                    </Th>
+                    <Td px={0} py={2}>
+                      1990.1.1
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Th px={0} py={2}>
+                      성별
+                    </Th>
+                    <Td px={0} py={2}>
+                      여
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Th px={0} py={2}>
+                      강의분야
+                    </Th>
+                    <Td px={0} py={2}>
+                      프론트엔드
+                    </Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </Box>
+          </Box>
+
+          <Box w="55%" h="100%">
+            <AdminRadarCart
+              data={radarData}
+              keys={radarKeys}
+              indexBy={radarIndexBy}
+            />
+          </Box>
+        </HStack>
       </Card>
     </div>
   );

@@ -29,8 +29,9 @@ const SearchBar: React.FC<Props> = (props: Props) => {
     <div>
       <InputGroup>
         <Input
-          placeholder="배우고싶은 기술스택을 입력해보세요"
-          fontSize="13px"
+          height="60px"
+          placeholder="배우고싶은 기술스택을 입력해보세요."
+          fontSize="16px"
           // borderRadius="100%"
           type="text"
           border="none"
@@ -47,7 +48,7 @@ const SearchBar: React.FC<Props> = (props: Props) => {
                   color: "rgb(155, 155, 155)",
                 }
           }
-          borderRadius="2xl"
+          borderRadius="full"
           onChange={(e) => {
             setContext(e.target.value);
           }}
@@ -63,20 +64,21 @@ const SearchBar: React.FC<Props> = (props: Props) => {
           justifyContent="center"
           alignItems="center"
           display="flex"
+          pr="6"
         >
           <Button
-            borderRadius="50%"
+            borderRadius="full"
             type="button"
             className="Button"
             border="none"
             backgroundColor="#003c93;"
-            size="sm"
+            size="lg"
             width="30px"
             onClick={() => {
               gotoLectures();
             }}
           >
-            <span style={{ display: "inline-block", fontSize: "16px" }}>
+            <span style={{ display: "inline-block", fontSize: "30px" }}>
               <AiOutlineSearch color="white" />
             </span>
           </Button>

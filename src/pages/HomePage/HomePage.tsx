@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { isLoggedInVar } from "../../services/apollo";
 import { removeAccessToken } from "../../services/Token";
 import GoDashBoard from "../../components/Home/GoDashBoard";
-import Employment from "../../components/Home/Employment";
+import CardContainer from "../../components/Home/CardContainer";
 import Category from "../../components/Home/Category";
 import PopularLecture from "../../components/PopularClass/PopularClass";
 import NewLecture from "../../components/NewClass/NewClass";
@@ -68,7 +68,7 @@ function HomePage(): React.ReactElement {
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <Employment />
+      <CardContainer />
     </div>
   );
 }
