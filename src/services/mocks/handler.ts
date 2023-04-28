@@ -19,9 +19,9 @@ const registerHandler = rest.post("/register", (req, res, ctx) => {
 });
 
 const warningHandlers = [
-  rest.get("/favicon.ico", (req, res, ctx) => {
-    return res(ctx.status(200));
-  }),
+  // rest.get("/favicon.ico", (req, res, ctx) => {
+  //   return res(ctx.status(200));
+  // }),
   rest.get("/logo192.png", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
