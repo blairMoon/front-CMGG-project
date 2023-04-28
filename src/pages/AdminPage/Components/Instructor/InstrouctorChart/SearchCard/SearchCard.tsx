@@ -15,6 +15,8 @@ import {
   Tr,
   Th,
   Td,
+  Thead,
+  Tbody,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import AdminRadarCart from "../SearchCard/Chart/AdminRaderChart";
@@ -52,21 +54,76 @@ const SearchCard: React.FC<Props> = (props: Props) => {
         display="flex"
         // alignItems="center"
         p={4}
-        boxShadow="md"
-        mt={"30px"}
+        boxShadow="lg"
+        bg="#ddebf7"
+        mt="60px"
         height="380px"
-        width="600px"
+        width="640px"
       >
         <Flex h="300px">
-          <Box mr={10} w="300px">
-            <Text>이승아</Text>
+          <Box w="600px">
+            <Flex>
+              <Text
+                // fontFamily="monospace"
+                fontSize="23px"
+                fontWeight="600"
+                color="#02327b"
+                // bg="#5f8abf"
+                // borderRadius="10px"
+                // borderBottom="1px solid black"
+                // border="1px solid black"
+                // textAlign="center"
+                // display="flex"
+                // justifyContent="center"
+                alignItems="center"
+              >
+                이승아
+              </Text>
+            </Flex>
             <Image
-              borderRadius="20px"
-              boxSize="220px"
+              mb="20px"
+              marginTop="5px"
+              // borderRadius="13px"
+              boxSize="180px"
               src="https://ifh.cc/g/hTWR7n.jpg"
             />
+
+            <Box display="flex" flexDirection="column" borderRadius="20px">
+              <Table variant="simple" w="180px" borderRadius="20px">
+                <Tbody fontSize="12px" borderRadius="20px">
+                  <Tr p={5}>
+                    <Th p={2}>생년월일</Th>
+                    <Td p={2}>1990.1.1</Td>
+                  </Tr>
+                  <Tr>
+                    <Th p={2}>성별</Th>
+                    <Td p={2}>여</Td>
+                  </Tr>
+                  <Tr>
+                    <Th p={2}>강의분야</Th>
+                    <Td p={2}>프론트엔드</Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </Box>
           </Box>
-          <Box w="420px">
+
+          <Box w="450px">
+            <Text
+              // fontWeight="600"
+              // pt="15px"
+
+              // pb="10px"
+              color="#02327b"
+              // border="1px solid black"
+              display="flex"
+              fontWeight="400"
+              fontSize="13px"
+              justifyContent="flex-end"
+              // paddingRight="120px"
+            >
+              강사능력차트
+            </Text>
             <AdminRadarCart
               data={radarData}
               keys={radarKeys}

@@ -17,13 +17,15 @@ interface Props {}
 
 const InstructorChart: React.FC<Props> = (props: Props) => {
   return (
-    <Box>
-      <Flex w="100%" justifyContent="space-between" h="670px" ml="30px">
+    <Box w="100%" height="100%" p={0}>
+      <Flex w="100%" justifyContent="space-between" h="550px" ml="30px">
         <Box
-          // bg="#ddebf8"
+          // border="1px solid black"
+          mt="40px"
+          // bg="gray.100"
           borderRadius="20px"
           position="relative"
-          w="30%"
+          w="38%"
           h="100%"
           display="flex"
           alignItems="center"
@@ -31,7 +33,7 @@ const InstructorChart: React.FC<Props> = (props: Props) => {
         >
           <HighPeople />
         </Box>
-        <Box w="70%" display="flex" justifyContent="center" pt="4%">
+        <Box w="62%" display="flex" justifyContent="center" pt="4%">
           <SearchCard />
         </Box>
       </Flex>

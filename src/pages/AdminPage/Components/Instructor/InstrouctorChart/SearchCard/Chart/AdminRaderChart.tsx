@@ -27,7 +27,7 @@ interface RadarChartProps {
 const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   const { colorMode } = useColorMode();
   const customColors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"];
-  const lightAreaColors = ["#9ecae2", "#003c93"];
+  const lightAreaColors = ["red", "blue"];
   const darkAreaColors = ["rgb(195,100,190)", "rgb(160,255,55)"];
 
   const getOffSet = (index: number) => {
@@ -90,8 +90,8 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
           const key = index as string;
           const angle = angleStep * i - Math.PI / 2;
           const labelRadius = radiusScale(1);
-          const x = centerX + Math.cos(angle) * (labelRadius - 28);
-          const y = centerY + Math.sin(angle) * (labelRadius - 28);
+          const x = centerX + Math.cos(angle) * (labelRadius - 40);
+          const y = centerY + Math.sin(angle) * (labelRadius - 40);
 
           const offset = getOffSet(i);
 
@@ -107,7 +107,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
               dominantBaseline="central"
               fill={colorMode === "light" ? "black" : "white"}
               style={{
-                fontSize: 11,
+                fontSize: 12,
               }}
             >
               {key}
@@ -196,13 +196,13 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   };
 
   return (
-    <div style={{ height: "400px" }}>
+    <div style={{ height: "400px", width: "350px" }}>
       <ResponsiveRadar
         data={data}
         keys={keys}
         indexBy={indexBy}
         maxValue="auto"
-        margin={{ top: 20, right: 80, bottom: 40, left: 80 }}
+        margin={{ right: 80, bottom: 40, left: 80 }}
         curve="linearClosed"
         gridLevels={5}
         gridShape="circular"
