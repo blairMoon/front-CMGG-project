@@ -78,7 +78,7 @@ export const data: Data = {
       ],
       6: [
         {
-          id: "average user",
+          id: "평균유저",
           data: [
             { x: "일", y: 1 },
             { x: "월", y: 2 },

@@ -35,60 +35,9 @@ import {
 import { skeletonArray } from "../../constant";
 import SkeletonCard from "../WholeLectures/LectureCard/SkeletonCard";
 
-interface ArrowProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-}
-
 function PopularLecture() {
   const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 
-<<<<<<< HEAD
-=======
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: "block",
-          backgroundColor: "transparent",
-          top: "47%",
-
-          transform: "translateY(-50%)",
-          zIndex: 1,
-        }}
-        onClick={onClick}
-      >
-        <svg fill="black" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path>
-        </svg>
-      </div>
-    );
-  };
-  const PrevArrow = (props: ArrowProps) => {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{
-          ...style,
-          display: "block",
-          backgroundColor: "transparent",
-          top: "47%",
-          right: "5%",
-          transform: "translateY(-50%)",
-          zIndex: 1,
-        }}
-        onClick={onClick}
-      >
-        <svg fill="red" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M15.41 16.58L10.83 12l4.58-4.58L14 6l-6 6 6 6z"></path>
-        </svg>
-      </div>
-    );
-  };
->>>>>>> 4733dcd6a856e0e23a47bd8e85ab781d6e8a458d
   const sliderSettings = {
     dots: false,
     arrows: false,

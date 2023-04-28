@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
 import { FieldValues } from "react-hook-form";
 import { QueryFunctionContext } from "@tanstack/react-query";
+
 export interface UserNameLoginParams {
   username: string;
   password: string;
@@ -297,6 +298,7 @@ export async function postRefreshToken(
     return null;
   }
 }
+
 export const findId = (data: FormIdData) =>
   instance
     .post("users/find/id", data, {
@@ -305,6 +307,7 @@ export const findId = (data: FormIdData) =>
       },
     })
     .then((response) => response.data);
+
 export const findPassword = (data: string) =>
   instance
     .post("users/find/password", data, {
@@ -313,6 +316,7 @@ export const findPassword = (data: string) =>
       },
     })
     .then((response) => response.data);
+
 export const newPassword = (data: string) =>
   instance
     .put("users/new-password", data, {
@@ -321,6 +325,7 @@ export const newPassword = (data: string) =>
       },
     })
     .then((response) => response.data);
+
 export const changePassword = (data: string) =>
   instance
     .put("users/changepassword/", data, {
@@ -329,6 +334,7 @@ export const changePassword = (data: string) =>
       },
     })
     .then((res) => res.status);
+
 export const signUpUser = (data: UserData) => {
   return instanceNotLogin.post("users/", data).then((res) => res.data);
 };
@@ -336,9 +342,11 @@ export const signUpUser = (data: UserData) => {
 export const getMyProfile = () => {
   return instance.get("users/myprofile").then((res) => res.data);
 };
+
 export const changeProfileUser = (data: UserData) => {
   return instance.put("users/myprofile", data).then((res) => res.data);
 };
+
 export const getLectureInfo = () => {
   return instance.get(`users/myprofile`).then((res) => res.data);
 };
@@ -369,6 +377,7 @@ export const getLectureDetail = async (page: number) => {
 export const postReview = ({ lectureNum, data }: PostReviewParams) => {
   return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
 };
+
 export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
   return instance
     .post(`reviews/${lectureNum}/${reviewNum}`, data)

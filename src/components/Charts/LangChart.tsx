@@ -44,19 +44,19 @@ export const data: LangChartData[] = [
     id: "React",
     label: "react",
     value: 7,
-    category: "frontend",
+    category: "mobile",
   },
   {
     id: "Swift",
     label: "swift",
     value: 2,
-    category: "backend",
+    category: "mobile",
   },
   {
     id: "JS",
     label: "javascript",
     value: 6,
-    category: "frontend",
+    category: "mobile",
   },
 ];
 
@@ -71,12 +71,14 @@ const LangChart: React.FC<Props> = () => {
   const frontendPercentage = getCategoryPercentage("frontend");
   const backendPercentage = getCategoryPercentage("backend");
   const fullstackPercentage = getCategoryPercentage("fullstack");
+  const mobilePercentage = getCategoryPercentage("mobile");
 
   const getMaxCategory = () => {
     const categories = [
       { name: "프론트엔드", percentage: frontendPercentage },
       { name: "백엔드", percentage: backendPercentage },
       { name: "풀스택", percentage: fullstackPercentage },
+      { name: "모바일", percentage: mobilePercentage },
     ];
 
     const maxCategory = categories.reduce((prev, current) =>
@@ -171,7 +173,7 @@ const LangChart: React.FC<Props> = () => {
               fontWeight={600}
               color="#b2b2b2"
             >
-              곧 {maxCategory.name} 개발자가 될 수 있어요!
+              곧 {maxCategory.name} 개발자가 될 수 있어요!!
             </Text>
           </Box>
         </GridItem>

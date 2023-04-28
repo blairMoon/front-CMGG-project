@@ -55,7 +55,12 @@ import {
 import css from "./Header.module.scss";
 import { removeAccessToken } from "../../services/Token";
 import ModalRegister from "./ModalRegister/ModalResister";
+import useUser from "../../components/Mypage/MyEditMember/UseUser";
+import { useRecoilValue } from "recoil";
+import { avatarState } from "../../atoms";
 export default function WithSubnavigation() {
+  const avatar = useRecoilValue(avatarState);
+  const { user, isLoggedIn, userLoading } = useUser();
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
   const [isOpenToggle, setIsOpenToggle] = useState(false);
@@ -279,9 +284,9 @@ export default function WithSubnavigation() {
                     >
                       <a href="/mypage">
                         <Avatar
-                          bg="#003c93"
                           icon={<RiHomeHeartLine size={20} />}
                           style={{ width: "32px", height: "32px" }}
+                          src={avatar}
                         />
                       </a>
                     </MenuButton>
