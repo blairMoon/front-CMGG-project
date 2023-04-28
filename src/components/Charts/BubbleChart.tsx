@@ -91,7 +91,13 @@ const PackedBubbleChart: React.FC<PackedBubbleChartProps> = ({ id, data }) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        border: "1.5px solid rgb(170,170,170,0.6)",
+        padding: "5px",
+        borderRadius: "10px",
+      }}
+    >
       <HighchartsReact
         highcharts={Highcharts}
         options={options}

@@ -116,7 +116,7 @@ const LangChart: React.FC<Props> = () => {
         <GridItem area={"langchart"}>
           <ResponsivePie
             data={data}
-            margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+            margin={{ top: 10, right: 20, bottom: 20, left: 20 }}
             innerRadius={0.5}
             padAngle={2}
             cornerRadius={4}

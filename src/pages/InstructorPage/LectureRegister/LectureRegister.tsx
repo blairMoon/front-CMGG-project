@@ -31,6 +31,7 @@ import { postMockLecture } from "../../../services/mocks/api";
 import { MyRadio } from "../../../components/Radio/MyRadio";
 import { MyErrorText } from "../../../components/Text/MyErrorText";
 import { getFormData } from "../../../utils/getLectureFormData";
+import Seo from "../../../components/SEO/Seo";
 //import { ILectureFormData } from "../../../../typings/LectureRegister";
 
 function LectureRegister(): React.ReactElement {
@@ -202,6 +203,7 @@ function LectureRegister(): React.ReactElement {
 
   return (
     <VStack alignItems={"flex-start"} ml="10">
+      <Seo title="강의 올리기" />
       <Text fontWeight={"bold"} fontSize={"35px"} mb="10">
         강의 등록
       </Text>

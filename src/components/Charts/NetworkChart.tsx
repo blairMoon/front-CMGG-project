@@ -174,7 +174,16 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        border: "1.5px solid rgb(170,170,170,0.6)",
+        padding: "5px",
+        borderRadius: "10px",
+      }}
+    >
       <VStack
         style={{
           position: "absolute",
@@ -188,17 +197,15 @@ const HighchartsNetwork: React.FC<HighchartsNetworkProps> = ({
           zIndex: "10",
           backgroundColor: hoveredNode
             ? colorMode === "light"
-              ? "rgba(40, 40, 40, 0.8)"
+              ? "rgba(200, 200, 200, 0.3)"
               : "rgba(240, 240, 240, 0.9)"
             : "transparent",
           color:
-            colorMode === "light"
-              ? "rgba(240, 240, 240, 0.9)"
-              : "rgb(40, 40, 40)",
+            colorMode === "light" ? "rgba(40, 40, 40, 0.9)" : "rgb(40, 40, 40)",
         }}
       >
         {hoveredNode ? (
-          <Box bgColor={"transoarent"}>
+          <Box bgColor={"transparent"}>
             <Flex alignItems="center" justifyContent="space-around" w="100%">
               <Text fontSize="md" fontWeight="bold">
                 {hoveredNode.id}

@@ -9,6 +9,7 @@ import {
   Button,
   Flex,
   Divider,
+  Heading,
 } from "@chakra-ui/react";
 
 import React from "react";
@@ -29,7 +30,6 @@ const CartItem: React.FC<Cart> = ({
   const [selectedItems, setSelectedItems] = useRecoilState(cartSelectAllState);
 
   const handleItemDelete = () => {
-    console.log(LectureId);
     delMockCarts({ LectureId });
   };
   const mainColor = "#003c93;";
@@ -57,8 +57,8 @@ const CartItem: React.FC<Cart> = ({
       if (e.target.checked) {
         selectedItemsId.push(LectureId);
         selectedItemsName.push(lectureTitle);
-        selectedItemsThumbnail.push(lectureTitle);
-        selectedItemsInstructor.push(lectureTitle);
+        selectedItemsThumbnail.push(thumbnail);
+        selectedItemsInstructor.push(instructor.username);
 
         if (isSelectedItem < 0) {
           nextTotalPrice += lectureFee;
@@ -83,7 +83,7 @@ const CartItem: React.FC<Cart> = ({
     selectedItems.id.includes(LectureId) ? true : false;
 
   return (
-    <div>
+    <Box>
       <Box w="100%" key={LectureId} paddingBottom="30px" margin="0">
         <HStack
           key={LectureId}
@@ -100,20 +100,31 @@ const CartItem: React.FC<Cart> = ({
             isChecked={isCheck()}
             onChange={handleCheckboxChange}
           />
-          <div className={css.card}>
-            <Image src={thumbnail} alt="Card Image" className={css.img} />
+          <Box w="900px" overflow={"hidden"} display={"flex"}>
+            <Image
+              src={thumbnail}
+              alt="Card Image"
+              ml="10px"
+              borderRadius={"7px"}
+              w="240px"
+              h="150px"
+            />
             <HStack w="100%" justifyContent="space-between">
-              <div className={css.cardCenter}>
-                <h3 className={css.cardTitle}>{lectureTitle}</h3>
-                <p className={css.cardDescription}>{lectureDifficulty}</p>
-                <Text fontSize="md">
-                  <Flex>
-                    <Text fontWeight="700">{lectureFee}</Text>원
-                  </Flex>
-                </Text>
-              </div>
-
-              <div className={css.cardRight}>
+              <Box pl="20px">
+                <Heading fontWeight={"600"} fontSize={"16px"} mb="8px">
+                  {lectureTitle}
+                </Heading>
+                <Heading fontSize={"13px"} color="#666" mb="16px">
+                  {lectureDifficulty}
+                </Heading>
+                <Flex>
+                  <Text fontSize="md" fontWeight="700" mr="1">
+                    {lectureFee}
+                  </Text>
+                  원
+                </Flex>
+              </Box>
+              <Box display={"flex"} alignItems={"flex-start"} h="100%">
                 <Button
                   size={"lg"}
                   backgroundColor="transparent"
@@ -124,13 +135,13 @@ const CartItem: React.FC<Cart> = ({
                 >
                   <TbLetterX />
                 </Button>
-              </div>
+              </Box>
             </HStack>
-          </div>
+          </Box>
         </HStack>
       </Box>
       <Divider color="rgb(226 232 241)" />
-    </div>
+    </Box>
   );
 };
 

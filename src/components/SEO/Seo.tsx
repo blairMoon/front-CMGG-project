@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet";
-
 interface SeoType {
   title: string;
 }
@@ -7,7 +6,7 @@ interface SeoType {
 export default function Seo({ title }: SeoType) {
   return (
     <Helmet>
-      <title>{title} | CodeMagicians' Growth Garden</title>
+      <title>{title} | Coding Garden</title>
     </Helmet>
   );
 }
