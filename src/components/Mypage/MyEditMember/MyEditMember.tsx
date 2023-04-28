@@ -42,6 +42,7 @@ interface UserData {
   position: string;
   skill: string;
   termsOfUse: String;
+  avatar: string;
 }
 
 const MyEditMember: React.FC = () => {
@@ -83,6 +84,7 @@ const MyEditMember: React.FC = () => {
       position: "",
       skill: "",
       termsOfUse: "",
+      avatar: "",
     },
   });
   const mutation = useMutation(changeProfileUser, {
@@ -140,11 +142,11 @@ const MyEditMember: React.FC = () => {
       </HStack>
     );
   });
-  const onAvatarChange = () => {
-    if (_img) {
-      setAvatar(_img);
-    }
-  };
+  // const onAvatarChange = () => {
+  //   if (_img) {
+  //     setAvatar(_img);
+  //   }
+  // };
 
   useEffect(() => {
     if (data) {
@@ -179,7 +181,10 @@ const MyEditMember: React.FC = () => {
                       />
                     </Box> */}
                     <Box {...getImgRootProps()} className={css.dropzone}>
-                      <input {...getImgInputProps()} />
+                      <input
+                        {...getImgInputProps()}
+                        {...register("avatar", { required: true })}
+                      />
                       <Avatar
                         size="2xl"
                         bg="#CED4DA"
@@ -193,7 +198,7 @@ const MyEditMember: React.FC = () => {
                     </Box>
                     <Box pl="3">
                       <Button
-                        onClick={onAvatarChange}
+                        // onClick={onAvatarChange}
                         bg="#003c93"
                         color="white"
                         fontSize="14"
