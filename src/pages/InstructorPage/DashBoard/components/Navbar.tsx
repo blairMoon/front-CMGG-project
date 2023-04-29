@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
 import { RepeatIcon } from "@chakra-ui/icons";
 import { Box, Flex, Text, Spacer, IconButton } from "@chakra-ui/react";
-import { FaSistrix, FaBell } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 
 const Navbar: React.FC = () => {
   return (
