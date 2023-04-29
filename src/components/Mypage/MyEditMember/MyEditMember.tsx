@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-
+import { useRecoilState } from "recoil";
+import { avatarState } from "../../../atoms";
 import css from "./EditMember.module.scss";
 import { useNavigate } from "react-router-dom";
-
+import useUser from "../../Mypage/MyEditMember/UseUser";
 import { useQuery } from "@tanstack/react-query";
-
+import { useDropzone } from "react-dropzone";
 import {
   getMyProfile,
   changeProfileUser,
@@ -13,13 +14,15 @@ import {
 } from "../../../services/api";
 // import ModalBasic from "../../components/Modal/ModalBasic";
 import { useMutation } from "@tanstack/react-query";
-
+import { imgTypes } from "../../../constant";
 import { RiHomeHeartLine } from "react-icons/ri";
+import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import {
   Box,
   Avatar,
   Button,
   Stack,
+  Image as ChakraImg,
   HStack,
   Text,
   Input,
@@ -39,10 +42,13 @@ interface UserData {
   position: string;
   skill: string;
   termsOfUse: String;
-  funnel: string;
+  avatar: string;
 }
 
 const MyEditMember: React.FC = () => {
+  const [avatar, setAvatar] = useRecoilState(avatarState);
+
+  const [_img, setImg] = useState<string>("");
   const { colorMode } = useColorMode();
   const [click, setClick] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -78,7 +84,7 @@ const MyEditMember: React.FC = () => {
       position: "",
       skill: "",
       termsOfUse: "",
-      funnel: "",
+      avatar: "",
     },
   });
   const mutation = useMutation(changeProfileUser, {
@@ -94,6 +100,11 @@ const MyEditMember: React.FC = () => {
       console.log("API CALL error...");
     },
   });
+  useEffect(() => {
+    if (_img) {
+      setAvatar(_img);
+    }
+  }, [_img, setAvatar]);
 
   const submitForm: SubmitHandler<FieldValues> = (data) => {
     const userData: UserData = data as UserData;
@@ -101,6 +112,41 @@ const MyEditMember: React.FC = () => {
   };
   const password = useRef<string>("");
   password.current = watch("password");
+
+  const {
+    acceptedFiles: imgFile,
+    getRootProps: getImgRootProps,
+    getInputProps: getImgInputProps,
+  } = useDropzone({
+    maxFiles: 1,
+    accept: { "image/*": imgTypes },
+    onDrop: (acceptedFiles: File[]) => {
+      const isRightType = acceptedFiles
+        .map((file: File) => file.type.replace("image/", ""))
+        .some((elem) => imgTypes.includes("." + elem));
+    },
+  });
+
+  const img = imgFile.map((file: File, idx: number) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImg(getSecureImgFile(reader.result));
+    };
+    reader.readAsDataURL(file);
+    return (
+      <HStack alignItems={"flex-start"} key={idx}>
+        <ChakraImg w="150px" h="100px" src={_img} />
+        <Text>
+          {file.name} - {file.size} bytes
+        </Text>
+      </HStack>
+    );
+  });
+  // const onAvatarChange = () => {
+  //   if (_img) {
+  //     setAvatar(_img);
+  //   }
+  // };
 
   useEffect(() => {
     if (data) {
@@ -127,15 +173,32 @@ const MyEditMember: React.FC = () => {
                   </Box>
 
                   <HStack w="100%" h="100%" pb="8">
-                    <Box>
+                    {/* <Box>
                       <Avatar
                         size="2xl"
                         bg="#CED4DA"
                         icon={<RiHomeHeartLine size={90} />}
                       />
+                    </Box> */}
+                    <Box {...getImgRootProps()} className={css.dropzone}>
+                      <input
+                        {...getImgInputProps()}
+                        {...register("avatar", { required: true })}
+                      />
+                      <Avatar
+                        size="2xl"
+                        bg="#CED4DA"
+                        src={_img || ""}
+                        icon={
+                          _img === "" ? (
+                            <RiHomeHeartLine size={90} />
+                          ) : undefined
+                        }
+                      />
                     </Box>
                     <Box pl="3">
                       <Button
+                        // onClick={onAvatarChange}
                         bg="#003c93"
                         color="white"
                         fontSize="14"

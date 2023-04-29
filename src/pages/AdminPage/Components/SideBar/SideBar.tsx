@@ -71,27 +71,18 @@ const LinkItems: LinkItemProps[] = [
     name: "User",
     icon: AiOutlineUser,
     subItems: {
-      sub1: { title: "Subitem 1", url: "/admin/user/1" },
-      sub2: { title: "Subitem 2", url: "/admin/user/2" },
+      sub1: { title: "User Info", url: "/admin/user/1" },
+      sub2: { title: "User Chart", url: "/admin/user/2" },
     },
     url: "/admin/user/1",
   },
-  {
-    name: "Lecture",
-    icon: MdPersonalVideo,
-    subItems: {
-      sub1: { title: "Subitem 1", url: "/admin/lecture/sub1" },
-      sub2: { title: "Subitem 2", url: "/admin/lecture/sub2" },
-      sub3: { title: "Subitem 3", url: "/admin/lecture/sub3" },
-    },
-    url: "/admin/lecture",
-  },
+
   {
     name: "Instructor",
     icon: AiOutlineUser,
     subItems: {
-      sub1: { title: "강사신청", url: "/admin/instructor/1" },
-      sub2: { title: "Subitem 2", url: "/admin/instructor/2" },
+      sub1: { title: "Application ", url: "/admin/instructor/1" },
+      sub2: { title: "Ability Score", url: "/admin/instructor/2" },
     },
     url: "/admin/instructor/1",
   },
@@ -113,7 +104,7 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={useColorModeValue("gray.50", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -157,8 +148,8 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+        <Text fontSize="22px" fontFamily="monospace" fontWeight="bold">
+          Admin
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>

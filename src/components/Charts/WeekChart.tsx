@@ -78,7 +78,7 @@ export const data: Data = {
       ],
       6: [
         {
-          id: "average user",
+          id: "평균유저",
           data: [
             { x: "일", y: 1 },
             { x: "월", y: 2 },
@@ -140,6 +140,7 @@ export const data: Data = {
 };
 
 const todayDayOfWeek = new Date().toLocaleString("ko-KR", { weekday: "short" });
+
 const DayChart: React.FC<Props> = () => {
   const [currentYear, setCurrentYear] = useState<number>(
     new Date().getFullYear()
@@ -148,6 +149,8 @@ const DayChart: React.FC<Props> = () => {
   const [currentMonth, setCurrentMonth] = useState<number>(
     new Date().getMonth() + 1
   );
+
+  // const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 
   const goToPreviousMonth = () => {
     if (currentMonth === 1) {
@@ -377,9 +380,9 @@ const DayChart: React.FC<Props> = () => {
               >
                 <div>{point.id.split(/[0-9.]+/).join("")}</div>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <div>{point.data.x.toString()} :</div>
+                  <div> 완료강의 :</div>
                   <div style={{ marginLeft: "3px" }}>
-                    {point.data.y.toString()} 개
+                    {point.data.y.toString()}개
                   </div>
                 </div>
               </div>

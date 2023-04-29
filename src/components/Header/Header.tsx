@@ -55,7 +55,12 @@ import {
 import css from "./Header.module.scss";
 import { removeAccessToken } from "../../services/Token";
 import ModalRegister from "./ModalRegister/ModalResister";
+import useUser from "../../components/Mypage/MyEditMember/UseUser";
+import { useRecoilValue } from "recoil";
+import { avatarState } from "../../atoms";
 export default function WithSubnavigation() {
+  const avatar = useRecoilValue(avatarState);
+  const { user, isLoggedIn, userLoading } = useUser();
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
   const [isOpenToggle, setIsOpenToggle] = useState(false);
@@ -140,21 +145,18 @@ export default function WithSubnavigation() {
                   color={useColorModeValue("gray.800", "white")}
                 > */}
                 <a href="/" className={css.a}>
-                  <img
-                    className={css.img}
-                    src="https://statics.goorm.io/logo/edu/goormedu-public.svg"
-                  />
+                  <img src="/images/LOGO2.png" width="350" />
                 </a>
                 {/* </Text> */}
 
-                <InputGroup w="150%">
+                <InputGroup>
                   <Input
-                    w="100%"
+                    w="370px"
                     placeholder="보고싶은 강의를 검색하세용"
                     fontSize="13px"
                     // borderRadius="100%"
                     type="text"
-                    className="Input"
+                    className="input"
                     border="none"
                     backgroundColor={
                       colorMode === "light"
@@ -282,9 +284,9 @@ export default function WithSubnavigation() {
                     >
                       <a href="/mypage">
                         <Avatar
-                          bg="#003c93"
                           icon={<RiHomeHeartLine size={20} />}
                           style={{ width: "32px", height: "32px" }}
+                          src={avatar}
                         />
                       </a>
                     </MenuButton>
