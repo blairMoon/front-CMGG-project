@@ -89,7 +89,9 @@ const Login: React.FC = () => {
       <div className={css.Container}>
         <div className={css.Wrapper}>
           <div className={css.TopBox}>
-            <img src="/images/CGLOGO.png" alt="logo" width="200" />
+            <div className={css.Logo}>
+              <img src="/images/CGLOGO.png" alt="logo" width="200" />
+            </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className={css.Form}>
               {/* <form className={css.Form}> */}

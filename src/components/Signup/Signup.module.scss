@@ -17,14 +17,15 @@
   }
 }
 
+
 .h1 {
-  margin: 0;
+  
   font-weight: 600;
   font-size: 25px;
   color: black;
   text-align: center;
   padding-bottom: 10px;
-  margin-top: 10px;
+  margin-top: 25px;
 }
 
 .darkH1 {
@@ -32,16 +33,7 @@
   color: white;
 }
 
-.h2 {
-  margin: 0;
-  padding-top: 50px;
-  font-size: 30px;
-  color: #003c93;
-  text-align: center;
-  padding-bottom: 10px;
-  margin-top: 10px;
-  font-weight: 600;
-}
+
 
 .Form {
   display: flex;
@@ -288,7 +280,7 @@ input[type="checkbox"]:checked {
   font-size: 16px;
 }
 .h6 {
-  margin-top: 30px;
+  margin-top: 25px;
   font-size: 12px;
 }
 .h6Under {
