@@ -50,7 +50,7 @@ type Data = {
 export const data: Data = {
   2023: {
     4: {
-      5: [
+      4: [
         {
           id: "평균유저",
           data: [
@@ -76,37 +76,33 @@ export const data: Data = {
           ],
         },
       ],
-      6: [
+    },
+    5: {
+      1: [
         {
           id: "평균유저",
           data: [
-            { x: "일", y: 1 },
-            { x: "월", y: 2 },
-            { x: "화", y: 4 },
-            { x: "수", y: 7 },
-            { x: "목", y: 3 },
-            { x: "금", y: 5 },
+            { x: "일", y: 3 },
+            { x: "월", y: 1 },
+            { x: "화", y: 1 },
+            { x: "수", y: 6 },
+            { x: "목", y: 2 },
+            { x: "금", y: 6 },
             { x: "토", y: 2 },
           ],
         },
         {
           id: "IT'S ME",
           data: [
-            { x: "일", y: 7 },
-            { x: "월", y: 3 },
-            { x: "화", y: 4 },
-            { x: "수", y: 6 },
+            { x: "일", y: 6 },
+            { x: "월", y: 2 },
+            { x: "화", y: 5 },
+            { x: "수", y: 4 },
             { x: "목", y: 5 },
-            { x: "금", y: 3 },
+            { x: "금", y: 4 },
             { x: "토", y: 4 },
           ],
         },
-      ],
-      // ... 다른 주 데이터를 추가 ...
-    },
-    2: {
-      1: [
-        // ... 2021년 2월 1주차 데이터 ...
       ],
       2: [
         // ... 2021년 2월 2주차 데이터 ...
@@ -188,20 +184,35 @@ const DayChart: React.FC<Props> = () => {
     }
   };
   const getWeeksInMonth = (month: number, year: number) => {
+    const firstDayOfMonth = new Date(year, month - 1, 1);
     const lastDayOfMonth = new Date(year, month, 0);
     const lastDateOfMonth = lastDayOfMonth.getDate();
     const lastDayOfWeek = lastDayOfMonth.getDay();
-    const days = lastDateOfMonth + (6 - lastDayOfWeek);
-    return Math.ceil(days / 7);
+    const firstDayOfWeek = firstDayOfMonth.getDay();
+
+    const offset = firstDayOfWeek >= 3 ? 1 : 0; // 수요일 이후라면 오프셋을 1로 설정
+    const days = lastDateOfMonth + (4 - lastDayOfWeek);
+    return Math.ceil(days / 7) - offset;
   };
   const getCurrentMonthAndWeek = () => {
     const now = new Date();
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const firstDayOfWeek = firstDayOfMonth.getDay();
+
+    const offset = firstDayOfWeek >= 3 ? 1 : 0; // 수요일 이후라면 오프셋을 1로 설정
     const pastDaysOfMonth =
       (now.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
-    const currentWeekNumber = Math.ceil(
-      (pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7
+    let currentWeekNumber =
+      Math.ceil((pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7) - offset;
+
+    const weeksInCurrentMonth = getWeeksInMonth(
+      now.getMonth() + 1,
+      now.getFullYear()
     );
+    if (currentWeekNumber > weeksInCurrentMonth) {
+      currentWeekNumber = weeksInCurrentMonth;
+    }
+
     return { month: now.getMonth() + 1, week: currentWeekNumber };
   };
 
