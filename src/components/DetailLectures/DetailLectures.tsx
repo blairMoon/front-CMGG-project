@@ -23,14 +23,11 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import ModalLecture from "../../components/Modal/ModalLecture";
-// import StartButton from "../../components/Button/StartButton";
 import { useNavigate } from "react-router-dom";
-import VideoList from "../../components/DetailLectures/VideoIndex/VideoIndex";
 import { hsl, parseToHsl, rgb } from "polished";
 import { HslColor } from "polished/lib/types/color";
-
-interface Props {}
+import VideoList from "../../components/DetailLectures/VideoIndex/VideoIndex";
+import DetailSkeleton from "./Loading/DetailSkeleton";
 
 interface Instructor {
   username: string;
@@ -83,7 +80,7 @@ interface VideoData {
   videoLength: number;
 }
 
-const DetailLectures: React.FC<Props> = (props: Props) => {
+const DetailLectures: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   // const [registerLectureClick, setRegisterLectureClick] = useState(false);
   const [loginCheck, setLoginCheck] = useState(true);
@@ -148,9 +145,7 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      {isLoading && <div>Loading...</div>}
-      {/* {isError && <div>Error: {error}</div>} */}
-      {data && (
+      {!isLoading ? (
         <Grid
           w="1300px"
           pt="5"
@@ -308,6 +303,8 @@ const DetailLectures: React.FC<Props> = (props: Props) => {
             </Stack>
           </GridItem>
         </Grid>
+      ) : (
+        <DetailSkeleton />
       )}
       {/* {!data.is_enrolled && registerLectureClick && loginCheck ? (
         <ModalLecture
