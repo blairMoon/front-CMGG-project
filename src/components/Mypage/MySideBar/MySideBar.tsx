@@ -8,9 +8,9 @@ import {
   Avatar,
   useColorModeValue,
 } from "@chakra-ui/react";
-
+import { useRecoilValue } from "recoil";
 import { FiSettings } from "react-icons/fi";
-
+import { avatarState } from "../../../atoms";
 import { RiHomeHeartLine } from "react-icons/ri";
 import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
@@ -18,6 +18,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgDanger } from "react-icons/cg";
 
 const MySideBar: React.FC = () => {
+  const avatar = useRecoilValue(avatarState);
   const navigate = useNavigate();
   const location = useLocation();
   const pathSegments = location.pathname.split("/");
@@ -167,7 +168,11 @@ const MySideBar: React.FC = () => {
         </HStack>
         <HStack pt="20">
           <Box>
-            <Avatar bg="#CED4DA" icon={<RiHomeHeartLine size={35} />} />
+            <Avatar
+              bg="#CED4DA"
+              icon={<RiHomeHeartLine size={35} />}
+              src={avatar}
+            />
           </Box>
           <Stack pl="2" spacing={0}>
             <Box fontSize="16">blairMoon</Box>

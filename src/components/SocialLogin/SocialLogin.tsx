@@ -13,7 +13,7 @@ const SocialLogin = () => {
 
   const naverParams = {
     response_type: "code",
-    client_id: "QaPk9sXFWYjRU4R3qk_J",
+    client_id: "ofNjUGXrDlgmWpoZDx40",
     state: "test",
     redirect_uri: "http://127.0.0.1:3000/social/naver",
   };
