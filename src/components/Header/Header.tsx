@@ -48,34 +48,46 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import css from "./Header.module.scss";
+import { useRecoilState } from "recoil";
 import { removeAccessToken } from "../../services/Token";
 import ModalRegister from "./ModalRegister/ModalResister";
 import useUser from "../../components/Mypage/MyEditMember/UseUser";
 import { useRecoilValue } from "recoil";
-import { avatarState } from "../../atoms";
+import { avatarState, headerSizeState } from "../../atoms";
 
 import { SiHtml5, SiCss3, SiSpring } from "react-icons/si";
 import { FaReact, FaVuejs } from "react-icons/fa";
 import { DiDjango } from "react-icons/di";
 import { GrSwift } from "react-icons/gr";
 import { AiOutlineAndroid } from "react-icons/ai";
+import { RiFolderUploadLine } from "react-icons/ri";
 
 export default function WithSubnavigation() {
   const avatar = useRecoilValue(avatarState);
-  const menuRef = React.useRef();
+  const headerRef = React.useRef<HTMLDivElement>(null);
   const { user, isLoggedIn, userLoading } = useUser();
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
-  const {
-    isOpen: flagMenuOpen,
-    onOpen: menuOpen,
-    onClose: menuClose,
-  } = useDisclosure();
+  const { onOpen: menuOpen, onClose: menuClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const [context, setContext] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpenToggle, setIsOpenToggle] = useState(false);
+  const [headerSize, setHeaderSize] = useRecoilState(headerSizeState);
   const dividerColor = useColorModeValue("gray.300", "gray.700");
+
+  console.log(user);
+
+  useEffect(() => {
+    const headerEl = headerRef.current;
+    if (headerEl) {
+      setHeaderSize({
+        height: headerEl.offsetHeight,
+        width: headerEl.offsetWidth,
+      });
+    }
+  }, [headerRef]);
+
   const handleMouseEnter = () => {
     setIsOpenToggle(true);
   };
@@ -115,16 +127,22 @@ export default function WithSubnavigation() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        position: "fixed",
+        zIndex: "1000",
+        width: "100%",
+      }}
+      ref={headerRef}
+    >
       <div className={css.headerContainer}>
         <Box>
           <Flex
             bg={useColorModeValue("white", "gray.800")}
             color={useColorModeValue("gray.600", "white")}
             minH={"60px"}
-            pt="2"
             px={{ base: 4 }}
-            align={"center"}
+            alignItems={"center"}
           >
             <Flex
               flex={{ base: 1, md: "auto" }}
@@ -304,7 +322,6 @@ export default function WithSubnavigation() {
                         />
                       </a>
                     </MenuButton>
-
                     <MenuList
                       onMouseEnter={handleMouseEnter}
                       onMouseLeave={handleMouseLeave}
@@ -397,6 +414,57 @@ export default function WithSubnavigation() {
                           </Link>
                         </MenuGroup>
                         <MenuDivider color={dividerColor} />
+                        {!userLoading && user?.isInstructor ? (
+                          <MenuGroup title="강사" fontSize="15px">
+                            <Link
+                              href="/instructor"
+                              style={{ textDecoration: "none", border: "none" }}
+                            >
+                              <MenuItem
+                                fontSize="15px"
+                                fontWeight="500"
+                                padding="10px 10px"
+                              >
+                                <BsFileEarmarkText
+                                  style={{ marginRight: "10px" }}
+                                />
+                                대시 보드
+                              </MenuItem>
+                            </Link>
+                            <Link
+                              href="/instructor/lecture"
+                              style={{ textDecoration: "none", border: "none" }}
+                            >
+                              <MenuItem
+                                fontSize="15px"
+                                fontWeight="500"
+                                padding="10px 10px"
+                              >
+                                <RiFolderUploadLine
+                                  style={{ marginRight: "10px" }}
+                                />
+                                업로드한 강의
+                              </MenuItem>
+                            </Link>
+                            <Link
+                              href="/instructor/lecture/register"
+                              style={{ textDecoration: "none", border: "none" }}
+                            >
+                              <MenuItem
+                                fontSize="15px"
+                                fontWeight="500"
+                                padding="10px 10px"
+                              >
+                                <RiFolderUploadLine
+                                  style={{ marginRight: "10px" }}
+                                />
+                                강의 업로드
+                              </MenuItem>
+                            </Link>
+                          </MenuGroup>
+                        ) : null}
+
+                        <MenuDivider color={dividerColor} />
                         <MenuGroup title="회원정보" fontSize="15px">
                           <Link
                             href="/mypage/editMember"
@@ -411,21 +479,6 @@ export default function WithSubnavigation() {
                               정보수정
                             </MenuItem>
                           </Link>
-                          {/* 
-                          <MenuItem
-                            fontSize="15px"
-                            fontWeight="500"
-                            padding="10px 10px"
-                          >
-                            {/* <BiRegistered style={{ marginRight: "10px" }} /> */}
-                          {/* 강사 신청 */}
-                          {/* <ModalRegister /> */}
-                          {/* </MenuItem>  */}
-
-                          {/* <Link
-                            href="/"
-                            style={{ textDecoration: "none", border: "none" }}
-                          > */}
                           <MenuItem
                             fontSize="15px"
                             fontWeight="500"
@@ -580,7 +633,7 @@ const MenuNav = () => {
                     onClick={() => navigate(child.href ?? "#")}
                     pl="0"
                   >
-                    <Flex pl="0" ml="0" w="100px" alignItems={"center"}>
+                    <Flex pl="0" ml="0" w="70%" alignItems={"center"}>
                       <Box
                         as={icons[idx]}
                         size="30px"

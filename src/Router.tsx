@@ -27,6 +27,7 @@ import Register from "./pages/AdminPage/Components/Instructor/Register/Register"
 import InstructorChart from "./pages/AdminPage/Components/Instructor/InstrouctorChart/InstructorChart";
 import KakaoConfirm from "./components/SocialLogin/KakaoConfirm";
 import NaverConfirm from "./components/SocialLogin/NaverConfirm";
+
 const router = createBrowserRouter([
   {
     path: "/",

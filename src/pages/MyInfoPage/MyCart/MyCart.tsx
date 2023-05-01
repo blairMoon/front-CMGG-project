@@ -19,6 +19,7 @@ import { ILecture } from "../../../../typings/PaymentResult";
 import CartItem from "./components/CartItem";
 import { useDidMountEffect } from "../../../hooks/useDidMountEffect";
 import Seo from "../../../components/SEO/Seo";
+import SkeletonCartItem from "./components/SkeletonCartItem";
 
 const MyCart: React.FC = () => {
   const [initSelectedItems, setInitSelectedItems] = useState<SelectCartItems>({
@@ -116,59 +117,72 @@ const MyCart: React.FC = () => {
   return (
     <VStack pb="8vh" overflowX="hidden" minW="800px">
       <Seo title="장바구니" />
-      {!isLoading ? (
-        <VStack
-          w="100%"
-          maxW="1300px"
-          alignItems="flex-start"
-          p="10"
-          px="20"
-          pos="relative"
-        >
-          <VStack w="100%" alignItems="flex-start" pb={15} textAlign="center">
-            <Checkbox
-              size="sm"
-              role="checkbox"
-              fontSize="10px"
-              borderColor="gray"
-              aria-label="Select All"
-              colorScheme={mainColor}
-              isChecked={isAllCheck()}
-              onChange={handleCheckboxChange}
-            >
-              전체 선택 ({selectedItems?.id.length})
-            </Checkbox>
-            <Divider />
-          </VStack>
-          <HStack justifyContent="space-between" w="100%">
-            <VStack spacing={6} w="100%" mt="5">
-              {cartItems?.data.map((item: Cart) => (
-                <CartItem key={item.LectureId} {...item} />
-              ))}
-            </VStack>
-          </HStack>
-          <VStack w="100%" padding="20px 0px">
-            <HStack
-              px="20"
-              pl="45"
-              minW="100%" // 수정된 부분
-            >
-              <Flex justifyContent="space-between" minW="800px" padding="20px">
-                <Flex>
-                  <Text fontWeight="bold" fontSize="20px" paddingRight="10px">
-                    총 결제 금액:
-                  </Text>
-                  <Text fontWeight="bold" fontSize="20px">
-                    {selectedItems.total_price}원
-                  </Text>
-                </Flex>
-                <RequestPayment {...getPaymentData()} />
-              </Flex>
-            </HStack>
-          </VStack>
-          <Divider color="rgb(226 232 241)" />
+
+      <VStack
+        w="100%"
+        maxW="1300px"
+        alignItems="flex-start"
+        p="10"
+        px="20"
+        pos="relative"
+      >
+        <VStack w="100%" alignItems="flex-start" pb={15} textAlign="center">
+          <Checkbox
+            size="sm"
+            role="checkbox"
+            fontSize="10px"
+            borderColor="gray"
+            aria-label="Select All"
+            colorScheme={mainColor}
+            isChecked={isAllCheck()}
+            onChange={handleCheckboxChange}
+          >
+            전체 선택 ({selectedItems ? selectedItems?.id.length : null})
+          </Checkbox>
+          <Divider />
         </VStack>
-      ) : null}
+        {!isLoading ? (
+          <VStack>
+            <HStack justifyContent="space-between" w="100%">
+              <VStack spacing={6} w="100%" mt="5">
+                {cartItems?.data.map((item: Cart) => (
+                  <CartItem key={item.LectureId} {...item} />
+                ))}
+              </VStack>
+            </HStack>
+            <VStack w="100%" padding="20px 0px">
+              <HStack
+                px="20"
+                pl="45"
+                minW="100%" // 수정된 부분
+              >
+                <Flex
+                  justifyContent="space-between"
+                  minW="800px"
+                  padding="20px"
+                >
+                  <Flex>
+                    <Text fontWeight="bold" fontSize="20px" paddingRight="10px">
+                      총 결제 금액:
+                    </Text>
+                    <Text fontWeight="bold" fontSize="20px">
+                      {selectedItems.total_price}원
+                    </Text>
+                  </Flex>
+                  <RequestPayment {...getPaymentData()} />
+                </Flex>
+              </HStack>
+            </VStack>
+            <Divider color="rgb(226 232 241)" />
+          </VStack>
+        ) : (
+          <VStack spacing={6} w="100%" mt="5">
+            {[1, 2, 3, 4, 5].map((item: number) => (
+              <SkeletonCartItem key={item} id={item} />
+            ))}
+          </VStack>
+        )}
+      </VStack>
     </VStack>
   );
 };
