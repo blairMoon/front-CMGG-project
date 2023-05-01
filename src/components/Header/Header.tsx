@@ -140,7 +140,7 @@ export default function WithSubnavigation() {
                   )}
                 />
               </Link>
-              <Button
+              {/* <Button
                 borderRadius="50%"
                 type="button"
                 className="Button"
@@ -155,7 +155,7 @@ export default function WithSubnavigation() {
                 <span style={{ display: "inline-block", fontSize: "16px" }}>
                   <FaRegListAlt color="white" />
                 </span>
-              </Button>
+              </Button> */}
             </Flex>
             <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
               <Flex
