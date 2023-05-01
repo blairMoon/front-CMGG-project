@@ -1,3 +1,5 @@
+import { useRecoilValue } from "recoil";
+import { useQuery } from "@tanstack/react-query";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import DashboardCard from "../../../components/Card/DashboardCard";
@@ -7,12 +9,14 @@ import HighchartsNetwork from "../../../components/Charts/NetworkChart";
 import StockChart from "../../../components/Charts/StockChart";
 import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
-import { useRecoilValue } from "recoil";
 import { stockMenuState } from "../../../atoms";
 import Seo from "../../../components/SEO/Seo";
+import { getAllLectures } from "../../../services/api";
 
 const Dashboard: React.FC = () => {
   const stockMenuItem = useRecoilValue(stockMenuState);
+
+  const { isLoading, data, refetch } = useQuery(["dashboard", getAllLectures]);
 
   const issues = [
     {
@@ -152,7 +156,7 @@ const Dashboard: React.FC = () => {
   return (
     <Box>
       <Seo title="대시보드" />
-      <Navbar />
+      <Navbar refetch={refetch} />
       <Box padding="2rem">
         <Grid templateColumns="repeat(3, 1fr)" gap={6} mb="2rem">
           <GridItem>
