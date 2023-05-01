@@ -194,28 +194,26 @@ const DayChart: React.FC<Props> = () => {
     const days = lastDateOfMonth + (4 - lastDayOfWeek);
     return Math.ceil(days / 7) - offset;
   };
-  const getCurrentMonthAndWeek = () => {
-    const now = new Date();
-    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const getCurrentMonthAndWeek = (date = new Date()) => {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     const firstDayOfWeek = firstDayOfMonth.getDay();
 
-    const offset = firstDayOfWeek >= 3 ? 1 : 0; // 수요일 이후라면 오프셋을 1로 설정
+    const offset = firstDayOfWeek >= 3 ? 1 : 0;
     const pastDaysOfMonth =
-      (now.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
+      (date.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
     let currentWeekNumber =
       Math.ceil((pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7) - offset;
 
     const weeksInCurrentMonth = getWeeksInMonth(
-      now.getMonth() + 1,
-      now.getFullYear()
+      date.getMonth() + 1,
+      date.getFullYear()
     );
     if (currentWeekNumber > weeksInCurrentMonth) {
       currentWeekNumber = weeksInCurrentMonth;
     }
 
-    return { month: now.getMonth() + 1, week: currentWeekNumber };
+    return { month: date.getMonth() + 1, week: currentWeekNumber };
   };
-
   const today = () => {
     const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     const dayIndex = dayNames.indexOf(todayDayOfWeek);
@@ -227,7 +225,9 @@ const DayChart: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    const { month, week } = getCurrentMonthAndWeek();
+    // 원하는 날짜를 기준으로 설정 (예: 2023년 5월 1일)
+    const targetDate = new Date(2023, 4, 1); // 주의: 월은 0부터 시작하기 때문에 4로 설정합니다.
+    const { month, week } = getCurrentMonthAndWeek(targetDate);
     setCurrentMonth(month);
     setCurrentWeek(week);
   }, []);
@@ -253,7 +253,7 @@ const DayChart: React.FC<Props> = () => {
   };
 
   const { colorMode } = useColorMode();
-  const currentData = data[currentYear]?.[currentMonth]?.[currentWeek] || [];
+  const currentData = data[currentYear]?.[currentMonth]?.[currentWeek] ?? [];
   return (
     <div>
       <Grid

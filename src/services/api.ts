@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
 import { FieldValues } from "react-hook-form";
 import { QueryFunctionContext } from "@tanstack/react-query";
-
+import { useNavigate } from "react-router-dom";
 export interface UserNameLoginParams {
   username: string;
   password: string;
@@ -79,8 +79,8 @@ export interface WatchedLectures80Params {
   lastPlayed?: number;
 }
 
-type AccessToken = string;
-type RefreshToken = string;
+type accessToken = string;
+type refreshToken = string;
 
 interface UserData {
   username: string;
@@ -132,6 +132,7 @@ export const getLectureAndCategoryAndSearch = ({
       .then((res) => res.data);
   }
 };
+
 instance.interceptors.response.use(
   (response) => {
     return response;
@@ -139,35 +140,38 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (!originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = Cookies.get("refresh");
-      const accessToken = Cookies.get("access");
+      try {
+        const refreshToken = Cookies.get("refresh");
 
-      if (refreshToken && accessToken) {
-        const newAccessToken = await postRefreshToken(
-          refreshToken,
-          accessToken
-        );
+        if (refreshToken) {
+          const newAccessToken = await postRefreshToken(refreshToken);
+          console.log(newAccessToken);
+          if (newAccessToken) {
+            Cookies.set("access", newAccessToken);
 
-        if (newAccessToken) {
-          Cookies.set("access", newAccessToken);
+            instance.defaults.headers["Authorization"] =
+              "Bearer " + newAccessToken;
+            originalRequest.headers["Authorization"] =
+              "Bearer " + newAccessToken;
 
-          instance.defaults.headers["Authorization"] =
-            "Bearer " + newAccessToken;
-          originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
-
-          return instance(originalRequest);
+            return instance(originalRequest);
+          } else {
+            const navigate = useNavigate();
+            navigate("/login");
+            return Promise.reject(error);
+          }
         } else {
-          window.location.href =
-            "https://crazyform.store/api/v1/users/jwt-token-auth/";
+          const navigate = useNavigate();
+          navigate("/login");
           return Promise.reject(error);
         }
-      } else {
-        window.location.href =
-          "https://crazyform.store/api/v1/users/jwt-token-auth/";
-        return Promise.reject(error);
+      } catch (refreshError) {
+        const navigate = useNavigate();
+        navigate("/login");
+        return Promise.reject(refreshError);
       }
     }
 
@@ -281,15 +285,13 @@ export async function userNameLogin(
 }
 
 export async function postRefreshToken(
-  refresh: RefreshToken,
-  access: AccessToken
+  refresh: string
 ): Promise<string | null> {
   try {
     const response = await axios.post(
       "https://crazyform.store/api/v1/users/jwt-token-auth/refresh/",
       {
         refresh,
-        access,
       }
     );
     return response.data.access;
