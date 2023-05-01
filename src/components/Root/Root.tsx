@@ -1,12 +1,16 @@
 import { Box } from "@chakra-ui/react";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
-import Abc from "../Header/Header";
+import Header from "../Header/Header";
+import { useRecoilValue } from "recoil";
+import { headerSizeState } from "../../atoms";
+
 export default function Root() {
+  const headerSize = useRecoilValue(headerSizeState);
   return (
     <Box>
-      <Abc />
+      <Header />
+      <Box height={`${headerSize.height}px`} />
       <Outlet />
       <Footer />
     </Box>

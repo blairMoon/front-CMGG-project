@@ -12,21 +12,8 @@ const InstructorSideBar: React.FC = () => {
   return (
     <div>
       <Stack w="100%" fontWeight="600">
-        <HStack
-          px="5"
-          py="2"
-          fontSize="18px"
-          // cursor="pointer"
-          // _hover={{
-          //   borderRadius: "lg",
-          //   color: "white",
-          //   bg: "#003C93",
-          // }}
-          // onClick={() => {
-          //   navigate("");
-          // }}
-        >
-          <Box>마이 페이지</Box>
+        <HStack px="5" py="2" fontSize="18px">
+          <Box>강사 페이지</Box>
         </HStack>
         <Divider />
         <HStack
