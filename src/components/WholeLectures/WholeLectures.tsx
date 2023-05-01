@@ -121,7 +121,9 @@ const WholeLectures: React.FC<Props> = () => {
     <div>
       <Seo
         title={
-          smallCategory === "all"
+          searchName
+            ? searchName
+            : smallCategory === "all"
             ? `${categoriesNames[bigCategory ?? ""]} `
             : `${categoriesNames[smallCategory ?? ""]} `
         }
