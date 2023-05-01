@@ -29,6 +29,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Seo from "../../SEO/Seo";
 
 interface UserData {
   username: string;
@@ -49,8 +50,6 @@ const MyEditMember: React.FC = () => {
   const [avatar, setAvatar] = useRecoilState(avatarState);
 
   const [_img, setImg] = useState<string>("");
-  const { colorMode } = useColorMode();
-  const [click, setClick] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
   const { isLoading, data, isError } = useQuery<UserData>(
@@ -61,7 +60,6 @@ const MyEditMember: React.FC = () => {
     }
   );
   if (isError) {
-    // console.log("hello");
     navigate("/notfound");
   }
   const {
@@ -154,18 +152,13 @@ const MyEditMember: React.FC = () => {
     }
   }, [data, reset]);
 
-  // console.log('data', data);
-  // if (data) {
-  //   console.log(data);
   return (
     <>
       <div className={css.Container}>
+        <Seo title="정보수정" />
         <div className={css.Wrapper}>
           <div className={css.TopBox}>
             <form className={css.Form} onSubmit={handleSubmit(submitForm)}>
-              {/* <h6 className={`${css.h6} ${css.bottomborder}`}>
-                모든 값은 필수입력 값입니다.
-              </h6> */}
               <HStack>
                 <Box w="50%" h="230px">
                   <Box>
@@ -212,7 +205,10 @@ const MyEditMember: React.FC = () => {
                       </Button>
                       <Box
                         fontSize="12px"
-                        color="blackAlpha.500"
+                        color={useColorModeValue(
+                          "blackAlpha.500",
+                          "whiteAlpha.700"
+                        )}
                         fontWeight="700"
                         pt="2"
                       >
@@ -425,13 +421,7 @@ const MyEditMember: React.FC = () => {
                 </p>
               )}
               <div className={css.buttonContainer}>
-                <button
-                  type="submit"
-                  className={css.Button}
-                  onClick={() => {
-                    setClick(true);
-                  }}
-                >
+                <button type="submit" className={css.Button}>
                   회원정보 수정
                 </button>
               </div>
@@ -440,12 +430,12 @@ const MyEditMember: React.FC = () => {
         </div>
       </div>
       {/* 
-        {success && click && (
+        {success && (
           <ModalBasic
             isOpen={true}
             successContent={'회원 정보 수정되었습니다아아아~~~'}
             onClose={() => {
-              setClick(false);
+              setSuccess(false);
             }}
           />
         )} */}

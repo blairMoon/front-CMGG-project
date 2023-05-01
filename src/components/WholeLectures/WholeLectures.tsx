@@ -31,6 +31,7 @@ import { css } from "@emotion/react";
 import path from "path";
 import { skeletonArray } from "../../constant";
 import SkeletonCard from "./LectureCard/SkeletonCard";
+import Seo from "../SEO/Seo";
 
 interface Props {}
 interface CategoriesNames {
@@ -67,14 +68,14 @@ const WholeLectures: React.FC<Props> = () => {
     frontend: "프론트엔드",
     backend: "백엔드",
     mobile: "모바일",
-    react: "프론트엔드/react",
-    vue: "프론트엔드/vue.js",
-    html: "기초코딩/html",
-    spring: "백엔드/spring",
-    django: "백엔드/django",
-    swift: "모바일/swift",
-    css: "기초코딩/css",
-    android: "모바일/android",
+    react: "프론트엔드/React",
+    vue: "프론트엔드/Vue.js",
+    html: "기초코딩/Html",
+    spring: "백엔드/Spring",
+    django: "백엔드/Django",
+    swift: "모바일/Swift",
+    css: "기초코딩/CSS",
+    android: "모바일/Android",
   };
   useEffect(() => {
     setTags(["입문", "초급", "중급", "고급"]);
@@ -118,6 +119,13 @@ const WholeLectures: React.FC<Props> = () => {
 
   return (
     <div>
+      <Seo
+        title={
+          smallCategory === "all"
+            ? `${categoriesNames[bigCategory ?? ""]} `
+            : `${categoriesNames[smallCategory ?? ""]} `
+        }
+      />
       <HStack
         justify="space-between"
         mx="auto"
