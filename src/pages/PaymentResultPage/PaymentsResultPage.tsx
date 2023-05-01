@@ -62,6 +62,8 @@ import { BsCheckCircle } from "react-icons/bs";
 import { getAllLectures } from "../../services/api";
 import SkeletonCard from "../../components/WholeLectures/LectureCard/SkeletonCard";
 import Seo from "../../components/SEO/Seo";
+import { skeletonArray } from "../../constant";
+import SkeletonPurchasedCard from "../../components/WholeLectures/LectureCard/SkeletonPurchasedCard";
 
 interface CalculatedLectureItem {
   img: string;
@@ -107,61 +109,60 @@ const PaymentsResultPage: React.FC = () => {
     <div>
       <Seo title="구매 완료" />
       <Divider />
-      {!isLoading ? (
-        <Grid>
-          <Container maxW="container.xl" pt={12}>
-            <VStack
-              bg={bg}
-              borderRadius="md"
-              boxShadow="base"
-              p={8}
-              spacing={5}
-              textAlign="center"
-              width="100%"
-            >
-              <BsCheckCircle fill="#9AE6E4" size={58} />
-              <Heading as="h1" size={"2xl"}>
-                구매가 완료되었습니다!
-              </Heading>
-              <Text fontSize="xl">
-                Thank you for your purchase. You can check the courses you have
-                purchased to your mypage.
-              </Text>
-            </VStack>
-            <VStack bg={bg} pb="5" mb="5">
-              <HStack mt="6">
-                <Button colorScheme="green" onClick={onMyPage}>
-                  마이페이지
-                </Button>
-                <Button colorScheme="green" onClick={onWholeLectures}>
-                  강의 더 찾아보기
-                </Button>
-              </HStack>
-            </VStack>
-          </Container>
-          <GridItem mx="auto">
-            <Grid
-              templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]}
-              gap="5"
-            >
-              {data?.data?.map((lecture: CalculatedLectureItem) => (
-                <GridItem key={lecture.LectureId} mx="auto">
-                  <MylectureCard
-                    lectureNumber={lecture.LectureId}
-                    img={lecture.thumbnail}
-                    lectureDescription={lecture.lectureDescription}
-                    lectureTitle={lecture.lectureTitle}
-                    targetAudience={lecture.targetAudience}
-                    instructor={lecture.instructor.username}
-                    isInstructor={true}
-                    // rating={lecture.rating}
-                  />
-                </GridItem>
-              ))}
-            </Grid>
-          </GridItem>
-        </Grid>
-      ) : null}
+      <Grid>
+        <Container maxW="container.xl" pt={12}>
+          <VStack
+            bg={bg}
+            borderRadius="md"
+            boxShadow="base"
+            p={8}
+            spacing={5}
+            textAlign="center"
+            width="100%"
+          >
+            <BsCheckCircle fill="#9AE6E4" size={58} />
+            <Heading as="h1" size={"2xl"}>
+              구매가 완료되었습니다!
+            </Heading>
+            <Text fontSize="xl">
+              Thank you for your purchase. You can check the courses you have
+              purchased to your mypage.
+            </Text>
+          </VStack>
+          <VStack bg={bg} pb="5" mb="5">
+            <HStack mt="6">
+              <Button colorScheme="green" onClick={onMyPage}>
+                마이페이지
+              </Button>
+              <Button colorScheme="green" onClick={onWholeLectures}>
+                강의 더 찾아보기
+              </Button>
+            </HStack>
+          </VStack>
+        </Container>
+        <GridItem mx="auto">
+          <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
+            {!isLoading
+              ? data?.data?.map((lecture: CalculatedLectureItem) => (
+                  <GridItem key={lecture.LectureId} mx="auto">
+                    <MylectureCard
+                      lectureNumber={lecture.LectureId}
+                      img={lecture.thumbnail}
+                      lectureDescription={lecture.lectureDescription}
+                      lectureTitle={lecture.lectureTitle}
+                      targetAudience={lecture.targetAudience}
+                      instructor={lecture.instructor.username}
+                      isInstructor={true}
+                      // rating={lecture.rating}
+                    />
+                  </GridItem>
+                ))
+              : skeletonArray.map((_: number, idx: number) => (
+                  <SkeletonPurchasedCard key={idx} />
+                ))}
+          </Grid>
+        </GridItem>
+      </Grid>
     </div>
   );
 };

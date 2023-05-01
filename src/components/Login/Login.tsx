@@ -27,9 +27,8 @@ type FormData = {
 };
 
 const Login: React.FC = () => {
-  const [failLogin, setFailLogin] = useState<boolean | null>(null);
-  const [click, setClick] = useState<boolean>(false);
-  const { colorMode, toggleColorMode } = useColorMode();
+  const [successLogin, setSuccessLogin] = useState<boolean | null>(null);
+  const { colorMode } = useColorMode();
   const [user, setUser] = useRecoilState(userState);
   const navigate = useNavigate();
   const mutation = useMutation(userNameLogin, {
@@ -38,15 +37,14 @@ const Login: React.FC = () => {
     },
     onSuccess: () => {
       console.log("API CALL success...");
-      setFailLogin(true);
+      setSuccessLogin(true);
       isLoggedInVar(true);
       setUser(user);
 
       navigate("/");
-      window.location.reload();
     },
     onError: (e: Error) => {
-      setFailLogin(false);
+      setSuccessLogin(false);
       console.log(e);
       console.log("API CALL error...");
     },
@@ -84,6 +82,7 @@ const Login: React.FC = () => {
       console.error("login error", error);
     }
   };
+
   return (
     <>
       <div className={css.Container}>
@@ -94,7 +93,6 @@ const Login: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className={css.Form}>
-              {/* <form className={css.Form}> */}
               <div>
                 <input
                   className={
@@ -145,9 +143,6 @@ const Login: React.FC = () => {
                   bg: "#012f70",
                 }}
                 className={css.Button}
-                onClick={() => {
-                  setClick(true);
-                }}
                 isLoading={mutation.isLoading}
               >
                 로그인
@@ -167,17 +162,13 @@ const Login: React.FC = () => {
             <SocialLogin />
           </div>
         </div>
-        {click && failLogin != null && !failLogin ? (
+        {successLogin != null && !successLogin ? (
           <ModalBasic
-            isOpen={!failLogin}
+            isOpen={!successLogin}
             successContent={"아이디랑 비밀번호를 확인해주세요"}
-            onClose={() => {
-              setClick(false);
-            }}
+            onClose={() => setSuccessLogin(true)}
           />
-        ) : (
-          ""
-        )}
+        ) : null}
       </div>
     </>
   );

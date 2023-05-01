@@ -160,7 +160,7 @@ const Dashboard: React.FC = () => {
               <DashboardCard
                 value={1023}
                 title="총 수강생"
-                bgColor="rgb(190,227,248)"
+                bgColor="rgb(118,157,214,0.5)"
                 boxShadow="md"
               />
             </div>
@@ -170,7 +170,7 @@ const Dashboard: React.FC = () => {
               <DashboardCard
                 value={52620000}
                 title="총 수입"
-                bgColor="rgb(190,227,248)"
+                bgColor="rgb(118,157,214,0.5)"
                 boxShadow="md"
               />
             </div>
@@ -180,7 +180,7 @@ const Dashboard: React.FC = () => {
               <DashboardCard
                 value={250}
                 title="신규 수강생"
-                bgColor="rgb(190,227,248)"
+                bgColor="rgb(118,157,214,0.5)"
                 boxShadow="md"
               />
             </div>
@@ -275,14 +275,14 @@ const Dashboard: React.FC = () => {
               <DashboardChartCard
                 title="내 강의의 유령회원"
                 value="4011"
-                bgColor="rgb(210,210,220)"
+                bgColor="rgb(200,200,200, 0.5)"
                 data={[
                   [1, 12],
                   [2, 23],
                   [3, 215],
                   [4, 128],
                 ]}
-                boxShadow="md"
+                boxShadow="lg"
               />
             </div>
           </GridItem>
@@ -291,14 +291,14 @@ const Dashboard: React.FC = () => {
               <DashboardChartCard
                 title="월 신규 수강생"
                 value="2401"
-                bgColor="rgb(210,210,220)"
+                bgColor="rgb(200,200,200, 0.5)"
                 data={[
                   [1, 12],
                   [2, 323],
                   [3, 215],
                   [4, 428],
                 ]}
-                boxShadow="md"
+                boxShadow="lg"
               />
             </div>
           </GridItem>

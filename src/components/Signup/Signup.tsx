@@ -3,7 +3,6 @@ import { useForm, RegisterOptions } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Select, useColorMode } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { addressState } from "../../atoms";
 import css from "../Signup/Signup.module.scss";
