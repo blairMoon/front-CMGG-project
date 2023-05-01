@@ -34,7 +34,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
 }) => {
   const colorScale = getOrdinalColorScale(colors, "category10");
   return (
-    <div style={{ height: "280px", width: "50%" }}>
+    <div style={{ height: "280px", width: "450px" }}>
       <ResponsivePie
         data={data}
         {...rest}
@@ -77,12 +77,12 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
         ]}
         fill={[
           {
-            match: { id: "men" },
-            id: "#f47560",
-          },
-          {
             match: { id: "women" },
             id: "#6baed6",
+          },
+          {
+            match: { id: "men" },
+            id: "#f47560",
           },
         ]}
         legends={[
@@ -90,7 +90,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
             anchor: "bottom",
             direction: "row",
             justify: false,
-            translateX: 0,
+            translateX: 32,
             translateY: 56,
             itemsSpacing: 0,
             itemWidth: 100,

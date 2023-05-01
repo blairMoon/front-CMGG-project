@@ -63,7 +63,7 @@ const MyResponsiveBar: React.FC<MyResponsiveStickProps> = ({ data }) => (
     padding={0.5}
     valueScale={{ type: "linear" }}
     indexScale={{ type: "band", round: true }}
-    // colors={{ scheme: "nivo" }}
+    colors={["#fc585e", "#fd897b", "#fdb89e", "#efd164", "#3abbc2", "#88cdc2"]}
     // fill={[
     //   {
     //     match: {

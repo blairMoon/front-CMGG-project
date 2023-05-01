@@ -10,7 +10,7 @@ interface PieChartData {
 
 interface MyResponsivePieProps {
   data: PieChartData[];
-  colors: string[] | { scheme: string };
+  colors: string[];
 }
 export const dataAge: PieChartData[] = [
   {
@@ -39,10 +39,11 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
   colors,
   ...rest
 }) => (
-  <div style={{ height: "280px", width: "50%" }}>
+  <div style={{ height: "280px", width: "450px" }}>
     <ResponsivePie
       {...rest}
       data={data}
+      colors={colors}
       margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
       innerRadius={0.5}
       padAngle={0.7}
@@ -100,7 +101,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
           anchor: "bottom",
           direction: "row",
           justify: false,
-          translateX: 0,
+          translateX: 30,
           translateY: 56,
           itemsSpacing: -25,
           itemWidth: 100,
@@ -120,6 +121,32 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
           ],
         },
       ]}
+      tooltip={({ datum }) => {
+        const totalValue = data.reduce((acc, item) => acc + item.value, 0);
+
+        const percentage = ((datum.data.value / totalValue) * 100).toFixed(2);
+
+        return (
+          <div
+            style={{
+              // color: colorMode === "light" ? "black" : "black",
+              backgroundColor: "white",
+              padding: "8px",
+              fontSize: "12px",
+              borderRadius: "4px",
+              boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.24)",
+              lineHeight: "1.6",
+              fontWeight: "600",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div>
+                {datum.data.id} : {percentage}%
+              </div>
+            </div>
+          </div>
+        );
+      }}
     />
   </div>
 );

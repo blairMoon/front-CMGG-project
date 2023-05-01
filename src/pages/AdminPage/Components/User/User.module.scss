@@ -2,14 +2,16 @@
   width: 120%;
 }
 .h1 {
+  font-size: 18px;
   color: gray;
   font-weight: 700;
   padding: 5px;
   // margin-top: 20px;
-  border-bottom: 1.5px solid gray;
+  // border-bottom: 1.5px solid gray;
 }
 .userContainer {
   width: 100%;
+  border: "1px solid black";
 }
 .tooltip {
   background-color: #333;
@@ -19,4 +21,17 @@
   border-radius: 5px;
   border: none;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.addition {
+  color: gray;
+  padding-left: 4px;
+  margin-top: 7px;
+  font-size: 13px;
+}
+
+.additionPie {
+  color: gray;
+  padding-left: 4px;
+  margin-top: 2px;
+  font-size: 13px;
 }

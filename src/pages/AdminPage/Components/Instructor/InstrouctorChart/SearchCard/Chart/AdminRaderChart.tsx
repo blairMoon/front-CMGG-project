@@ -27,7 +27,7 @@ interface RadarChartProps {
 const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   const { colorMode } = useColorMode();
   const customColors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF"];
-  const lightAreaColors = ["red", "blue"];
+  const lightAreaColors = ["#6baed6", "#023076 "];
   const darkAreaColors = ["rgb(195,100,190)", "rgb(160,255,55)"];
 
   const getOffSet = (index: number) => {
@@ -90,8 +90,8 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
           const key = index as string;
           const angle = angleStep * i - Math.PI / 2;
           const labelRadius = radiusScale(1);
-          const x = centerX + Math.cos(angle) * (labelRadius - 40);
-          const y = centerY + Math.sin(angle) * (labelRadius - 40);
+          const x = centerX + Math.cos(angle) * (labelRadius - 46);
+          const y = centerY + Math.sin(angle) * (labelRadius - 46);
 
           const offset = getOffSet(i);
 
@@ -107,7 +107,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
               dominantBaseline="central"
               fill={colorMode === "light" ? "black" : "white"}
               style={{
-                fontSize: 12,
+                fontSize: 11,
               }}
             >
               {key}
@@ -154,7 +154,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
                   r={5}
                   stroke={
                     colorMode === "light"
-                      ? "rgb(50,50,50,0.5)"
+                      ? "rgb(50,50,50,0.5)" //동그라미 색상
                       : "rgb(215,215,215,0.9)"
                   }
                   fill="transparent"
@@ -164,7 +164,7 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
                   dy={textOffsetY}
                   textAnchor="middle"
                   dominantBaseline="central"
-                  fill={colorMode === "light" ? "black" : "white"}
+                  fill={colorMode === "light" ? "black" : "black"}
                   fontSize={10}
                   fontWeight={600}
                 >
@@ -196,7 +196,15 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
   };
 
   return (
-    <div style={{ height: "310px", width: "350px" }}>
+    <div
+      style={{
+        height: "280px",
+        width: "100%",
+        backgroundColor: "white",
+        // paddingLeft: "10px",
+        borderRadius: "5px",
+      }}
+    >
       <ResponsiveRadar
         data={data}
         keys={keys}
@@ -205,13 +213,13 @@ const RadarChart: React.FC<RadarChartProps> = ({ data, keys, indexBy }) => {
         margin={{ right: 80, top: 20, left: 80 }}
         curve="linearClosed"
         gridLevels={5}
-        gridShape="circular"
+        gridShape="linear"
         gridLabel={() => null}
-        enableDots={true}
+        enableDots={false}
         dotSize={10}
         dotColor={dotColorFunction}
         dotBorderWidth={2}
-        enableDotLabel={true}
+        enableDotLabel={false}
         dotLabel="value"
         dotLabelYOffset={-12}
         colors={colorMode === "light" ? lightAreaColors : darkAreaColors}
