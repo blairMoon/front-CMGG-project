@@ -53,6 +53,13 @@ import ModalRegister from "./ModalRegister/ModalResister";
 import useUser from "../../components/Mypage/MyEditMember/UseUser";
 import { useRecoilValue } from "recoil";
 import { avatarState } from "../../atoms";
+
+import { SiHtml5, SiCss3, SiSpring } from "react-icons/si";
+import { FaReact, FaVuejs } from "react-icons/fa";
+import { DiDjango } from "react-icons/di";
+import { GrSwift } from "react-icons/gr";
+import { AiOutlineAndroid } from "react-icons/ai";
+
 export default function WithSubnavigation() {
   const avatar = useRecoilValue(avatarState);
   const menuRef = React.useRef();
@@ -140,22 +147,6 @@ export default function WithSubnavigation() {
                   )}
                 />
               </Link>
-              {/* <Button
-                borderRadius="50%"
-                type="button"
-                className="Button"
-                border="none"
-                backgroundColor="#003c93;"
-                size="sm"
-                width="30px"
-                onClick={() => {
-                  gotoLectures();
-                }}
-              >
-                <span style={{ display: "inline-block", fontSize: "16px" }}>
-                  <FaRegListAlt color="white" />
-                </span>
-              </Button> */}
             </Flex>
             <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
               <Flex
@@ -501,6 +492,7 @@ export default function WithSubnavigation() {
             flex={{ base: 1, md: "auto" }}
             ml={{ base: -2 }}
             display={{ base: "flex", md: "none" }}
+            zIndex={1000}
           >
             <Menu
               placement="bottom-end"
@@ -549,9 +541,19 @@ const MenuNav = () => {
   const navigate = useNavigate();
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverBgColor = useColorModeValue("gray.100", "whiteAlpha.200");
-
+  const icons = [
+    SiHtml5,
+    SiCss3,
+    FaReact,
+    FaVuejs,
+    SiSpring,
+    DiDjango,
+    GrSwift,
+    AiOutlineAndroid,
+  ];
+  let idx = -1;
   return (
-    <MenuList minWidth="240px">
+    <MenuList width="150px">
       {NAV_ITEMS.map((navItem) => (
         <MenuOptionGroup
           key={navItem.label}
@@ -566,20 +568,31 @@ const MenuNav = () => {
         >
           {navItem.children && (
             <Stack>
-              {navItem.children.map((child) => (
-                <MenuItemOption
-                  key={child.label}
-                  p={4}
-                  rounded={"xl"}
-                  minW={"sm"}
-                  _hover={{
-                    bgColor: linkHoverBgColor,
-                  }}
-                  onClick={() => navigate(child.href ?? "#")}
-                >
-                  {child.label}
-                </MenuItemOption>
-              ))}
+              {navItem.children.map((child: any) => {
+                idx += 1;
+                return (
+                  <MenuItemOption
+                    key={child.label}
+                    rounded={"xl"}
+                    _hover={{
+                      bgColor: linkHoverBgColor,
+                    }}
+                    onClick={() => navigate(child.href ?? "#")}
+                    pl="0"
+                  >
+                    <Flex pl="0" ml="0" w="100px" alignItems={"center"}>
+                      <Box
+                        as={icons[idx]}
+                        size="30px"
+                        transition="transform 0.3s ease-in-out"
+                        mx="auto"
+                        ml="0"
+                      />
+                      <Text>{child.label}</Text>
+                    </Flex>
+                  </MenuItemOption>
+                );
+              })}
             </Stack>
           )}
           <MenuDivider borderColor={"rgb(190,190,190)"} />
@@ -591,7 +604,6 @@ const MenuNav = () => {
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
