@@ -135,7 +135,7 @@ export default function WithSubnavigation() {
                     )}
                   />
                 </Link>
-                <InputGroup w="40vw">
+                <InputGroup w="40vw" maxW="350px">
                   <Input
                     w="100%"
                     placeholder="보고싶은 강의를 검색하세용"
