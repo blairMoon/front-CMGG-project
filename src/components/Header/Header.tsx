@@ -24,6 +24,8 @@ import {
   MenuGroup,
   MenuList,
   useColorMode,
+  MenuOptionGroup,
+  MenuItemOption,
 } from "@chakra-ui/react";
 import { FiSettings } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
@@ -36,7 +38,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoCartOutline } from "react-icons/io5";
-
+import { FaRegListAlt } from "react-icons/fa";
 import { isLoggedInVar } from "../../../src/services/apollo";
 import { getAccessToken } from "../../../src/services/Token";
 import {
@@ -53,19 +55,35 @@ import { useRecoilValue } from "recoil";
 import { avatarState } from "../../atoms";
 export default function WithSubnavigation() {
   const avatar = useRecoilValue(avatarState);
+  const menuRef = React.useRef();
   const { user, isLoggedIn, userLoading } = useUser();
   const navigate = useNavigate();
   const { isOpen, onToggle } = useDisclosure();
-  const [isOpenToggle, setIsOpenToggle] = useState(false);
-  const [context, setContext] = useState("");
-  const dividerColor = useColorModeValue("gray.300", "gray.700");
+  const {
+    isOpen: flagMenuOpen,
+    onOpen: menuOpen,
+    onClose: menuClose,
+  } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [context, setContext] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpenToggle, setIsOpenToggle] = useState(false);
+  const dividerColor = useColorModeValue("gray.300", "gray.700");
   const handleMouseEnter = () => {
     setIsOpenToggle(true);
   };
 
   const handleMouseLeave = () => {
     setIsOpenToggle(false);
+  };
+
+  const handleMenuClick = () => {
+    setIsMenuOpen((prevIsOpen) => !prevIsOpen);
+  };
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+    menuClose();
   };
 
   // 검색 기능
@@ -105,19 +123,39 @@ export default function WithSubnavigation() {
               flex={{ base: 1, md: "auto" }}
               ml={{ base: -2 }}
               display={{ base: "flex", md: "none" }}
+              alignItems={"center"}
             >
-              <IconButton
-                onClick={onToggle}
-                icon={
-                  isOpen ? (
-                    <CloseIcon w={3} h={3} />
-                  ) : (
-                    <HamburgerIcon w={5} h={5} />
-                  )
-                }
-                variant="ghost"
-                aria-label="Toggle Navigation"
-              />
+              <Link
+                href="/"
+                width="120px"
+                minW="120px"
+                h="60px"
+                pl="15px"
+                mr="30px"
+              >
+                <Image
+                  src={useColorModeValue(
+                    "/images/CGLOGO.png",
+                    "/images/WhiteLOGO2.png"
+                  )}
+                />
+              </Link>
+              <Button
+                borderRadius="50%"
+                type="button"
+                className="Button"
+                border="none"
+                backgroundColor="#003c93;"
+                size="sm"
+                width="30px"
+                onClick={() => {
+                  gotoLectures();
+                }}
+              >
+                <span style={{ display: "inline-block", fontSize: "16px" }}>
+                  <FaRegListAlt color="white" />
+                </span>
+              </Button>
             </Flex>
             <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
               <Flex
@@ -464,18 +502,23 @@ export default function WithSubnavigation() {
             ml={{ base: -2 }}
             display={{ base: "flex", md: "none" }}
           >
-            <IconButton
-              onClick={onToggle}
-              icon={
-                isOpen ? (
-                  <CloseIcon w={3} h={3} />
-                ) : (
-                  <HamburgerIcon w={5} h={5} />
-                )
-              }
-              variant={"ghost"}
-              aria-label={"Toggle Navigation"}
-            />
+            <Menu
+              placement="bottom-end"
+              closeOnSelect={false}
+              isOpen={isMenuOpen}
+              onClose={handleMenuClose}
+              // initialFocusRef={menuRef ?? null}
+            >
+              <MenuButton
+                as={IconButton}
+                onClick={handleMenuClick}
+                icon={<HamburgerIcon w={5} h={5} />}
+                variant={"ghost"}
+                aria-label={"Toggle Navigation"}
+                // ref={menuRef ?? null}
+              />
+              <MenuNav />
+            </Menu>
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
             <Flex
@@ -501,6 +544,50 @@ export default function WithSubnavigation() {
     </div>
   );
 }
+
+const MenuNav = () => {
+  const navigate = useNavigate();
+  const linkColor = useColorModeValue("gray.600", "gray.200");
+  const linkHoverBgColor = useColorModeValue("gray.100", "whiteAlpha.200");
+
+  return (
+    <MenuList minWidth="240px">
+      {NAV_ITEMS.map((navItem) => (
+        <MenuOptionGroup
+          key={navItem.label}
+          fontSize="md"
+          fontWeight={500}
+          color={linkColor}
+          defaultValue="asc"
+          title={navItem.label}
+          type="radio"
+          cursor="pointer"
+          onClick={() => navigate(navItem.href ?? "#")}
+        >
+          {navItem.children && (
+            <Stack>
+              {navItem.children.map((child) => (
+                <MenuItemOption
+                  key={child.label}
+                  p={4}
+                  rounded={"xl"}
+                  minW={"sm"}
+                  _hover={{
+                    bgColor: linkHoverBgColor,
+                  }}
+                  onClick={() => navigate(child.href ?? "#")}
+                >
+                  {child.label}
+                </MenuItemOption>
+              ))}
+            </Stack>
+          )}
+          <MenuDivider borderColor={"rgb(190,190,190)"} />
+        </MenuOptionGroup>
+      ))}
+    </MenuList>
+  );
+};
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
