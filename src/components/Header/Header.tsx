@@ -5,18 +5,16 @@ import {
   IconButton,
   Button,
   Stack,
-  Collapse,
   Icon,
   Link,
   Popover,
   PopoverTrigger,
   PopoverContent,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
   Input,
   InputGroup,
-  InputRightAddon,
+  Image,
   InputRightElement,
   Avatar,
   Menu,
@@ -27,22 +25,17 @@ import {
   MenuList,
   useColorMode,
 } from "@chakra-ui/react";
-import { BsFillPersonVcardFill } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { FiLogOut } from "react-icons/fi";
 import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { CgDanger } from "react-icons/cg";
 import { BsPlay } from "react-icons/bs";
 import { RiHomeHeartLine } from "react-icons/ri";
-import { IconContext } from "react-icons";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoCartOutline } from "react-icons/io5";
-import { BsPersonVideo3 } from "react-icons/bs";
-import { BiRegistered } from "react-icons/bi";
 
 import { isLoggedInVar } from "../../../src/services/apollo";
 import { getAccessToken } from "../../../src/services/Token";
@@ -130,31 +123,23 @@ export default function WithSubnavigation() {
               <Flex
                 display={{ base: "none", md: "flex" }}
                 ml={10}
-                w="50%"
+                w="60vw"
                 mt={2}
+                alignItems={"center"}
               >
-                {/* <Text
-                  mr="120px"
-                  pt="5px"
-                  pl="60px"
-                  // pt={0}
-                  // py={{ base: 2 }}
-                  px={{ base: 4 }}
-                  // textAlign={useBreakpointValue({ base: "center", md: "left" })}
-                  fontFamily="heading"
-                  color={useColorModeValue("gray.800", "white")}
-                > */}
-                <a href="/" className={css.a}>
-                  <img src="/images/LOGO2.png" width="350" />
-                </a>
-                {/* </Text> */}
-
-                <InputGroup>
+                <Link href="/" width="230px" minW="230px" pl="15px" mr="30px">
+                  <Image
+                    src={useColorModeValue(
+                      "/images/LOGO2.png",
+                      "/images/LOGOw.png"
+                    )}
+                  />
+                </Link>
+                <InputGroup w="40vw">
                   <Input
-                    w="370px"
+                    w="100%"
                     placeholder="보고싶은 강의를 검색하세용"
                     fontSize="13px"
-                    // borderRadius="100%"
                     type="text"
                     className="input"
                     border="none"
