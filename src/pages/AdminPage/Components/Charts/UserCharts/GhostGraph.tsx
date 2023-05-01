@@ -152,7 +152,7 @@ const MyResponsiveLine: React.FC<MyResponsiveLineProps> = ({ data }) => (
       legendOffset: -40,
       legendPosition: "middle",
     }}
-    colors={{ scheme: "paired" }}
+    colors={["#c7ccb8", "black"]}
     pointSize={10}
     pointColor={{ theme: "background" }}
     pointBorderWidth={2}

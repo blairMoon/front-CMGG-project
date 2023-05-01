@@ -39,7 +39,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
       <ResponsivePie
         data={data}
         {...rest}
-        colors={["#f47560", "#6baed6"]}
+        colors={["#9a9d8d", "#b2de21"]}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
@@ -47,7 +47,7 @@ const MyResponsivePie: React.FC<MyResponsivePieProps> = ({
         activeOuterRadiusOffset={8}
         borderColor={{
           from: "color",
-          modifiers: [["darker", 0.2]],
+          modifiers: [["darker", 0.9]],
         }}
         arcLinkLabelsSkipAngle={160}
         arcLinkLabelsTextColor="#333333"

@@ -9,18 +9,29 @@ import {
   InputGroup,
   InputLeftElement,
   useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
 interface Props {}
 
 const PayDescription: React.FC<Props> = (props: Props) => {
   return (
     <div>
-      <Flex>
-        <Box w="50%" border="1px solid black" h="300px">
-          아러알
+      <Flex justify="space-around">
+        <Box w="40%" border="1px solid black" borderRadius="20px" h="100px">
+          <Text textAlign="center" mt="20px">
+            결제 총 금액
+          </Text>
+          <Text textAlign="center" pt="5px" fontWeight="700" fontSize="18px">
+            2000000000원
+          </Text>
         </Box>
-        <Box w="50%" border="1px solid black">
-          아러알
+        <Box w="40%" border="1px solid black" borderRadius="20px">
+          <Text textAlign="center" mt="20px">
+            결제 총 건
+          </Text>
+          <Text textAlign="center" pt="5px" fontSize="18px" fontWeight="700">
+            133건
+          </Text>
         </Box>
       </Flex>
     </div>

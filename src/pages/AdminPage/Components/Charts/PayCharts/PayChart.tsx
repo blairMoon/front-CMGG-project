@@ -124,7 +124,7 @@ export const dataPay: DataType[] = [
 const MyResponsiveLine: React.FC<MyResponsiveLineProps> = ({ data }) => (
   <ResponsiveLine
     data={data}
-    margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+    margin={{ top: 50, right: 130, bottom: 50, left: 100 }}
     xScale={{ type: "point" }}
     yScale={{
       type: "linear",
@@ -141,7 +141,7 @@ const MyResponsiveLine: React.FC<MyResponsiveLineProps> = ({ data }) => (
       tickPadding: 5,
       tickRotation: 0,
       legend: "transportation",
-      legendOffset: 36,
+      legendOffset: 45,
       legendPosition: "middle",
     }}
     axisLeft={{
@@ -149,7 +149,7 @@ const MyResponsiveLine: React.FC<MyResponsiveLineProps> = ({ data }) => (
       tickPadding: 5,
       tickRotation: 0,
       legend: "count",
-      legendOffset: -40,
+      legendOffset: -50,
       legendPosition: "middle",
     }}
     colors={{ scheme: "paired" }}

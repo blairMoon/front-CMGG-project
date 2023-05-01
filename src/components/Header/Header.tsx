@@ -217,7 +217,7 @@ export default function WithSubnavigation() {
                 </InputGroup>
                 <button
                   onClick={() =>
-                    window.open("http://localhost:3000/admin", "_blank")
+                    window.open("http://localhost:3000/admin/user/1", "_blank")
                   }
                 >
                   AdminPage
