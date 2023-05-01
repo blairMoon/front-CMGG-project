@@ -26,7 +26,7 @@ const DashboardChartCard: React.FC<DashboardCardProps> = ({
 
   const darkerColor = hsl({
     ...hslaColor,
-    lightness: hslaColor.lightness - 0.3,
+    lightness: hslaColor.lightness - 0.24,
   });
 
   const lineColor = Number(data[2][1]) > Number(data[3][1]) ? "blue" : "red";

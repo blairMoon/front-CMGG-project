@@ -52,12 +52,12 @@ const ModalBasic: React.FC<ModalBasicProps> = ({
       <ModalContent>
         <Flex direction="column" alignItems="center">
           <img
-            src="/images/logo.png"
+            src="/images/CGLOGO.png"
             alt="logo"
-            width="150"
+            width="180"
             style={{ marginTop: "20px" }}
           />
-          <ModalHeader marginTop={5}>{successContent}</ModalHeader>
+          <ModalHeader marginTop={1}>{successContent}</ModalHeader>
         </Flex>
         <ModalCloseButton onClick={handleModalClose} />
         <ModalBody></ModalBody>

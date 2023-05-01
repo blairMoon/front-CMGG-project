@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { getAccessToken } from "./Token";
 import { FieldValues } from "react-hook-form";
 import { QueryFunctionContext } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 export interface UserNameLoginParams {
   username: string;
   password: string;
@@ -78,8 +79,8 @@ export interface WatchedLectures80Params {
   lastPlayed?: number;
 }
 
-type AccessToken = string;
-type RefreshToken = string;
+type accessToken = string;
+type refreshToken = string;
 
 interface UserData {
   username: string;
@@ -131,6 +132,7 @@ export const getLectureAndCategoryAndSearch = ({
       .then((res) => res.data);
   }
 };
+
 instance.interceptors.response.use(
   (response) => {
     return response;
@@ -138,35 +140,38 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (!originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = Cookies.get("refresh");
-      const accessToken = Cookies.get("access");
+      try {
+        const refreshToken = Cookies.get("refresh");
 
-      if (refreshToken && accessToken) {
-        const newAccessToken = await postRefreshToken(
-          refreshToken,
-          accessToken
-        );
+        if (refreshToken) {
+          const newAccessToken = await postRefreshToken(refreshToken);
+          console.log(newAccessToken);
+          if (newAccessToken) {
+            Cookies.set("access", newAccessToken);
 
-        if (newAccessToken) {
-          Cookies.set("access", newAccessToken);
+            instance.defaults.headers["Authorization"] =
+              "Bearer " + newAccessToken;
+            originalRequest.headers["Authorization"] =
+              "Bearer " + newAccessToken;
 
-          instance.defaults.headers["Authorization"] =
-            "Bearer " + newAccessToken;
-          originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
-
-          return instance(originalRequest);
+            return instance(originalRequest);
+          } else {
+            const navigate = useNavigate();
+            navigate("/login");
+            return Promise.reject(error);
+          }
         } else {
-          window.location.href =
-            "https://crazyform.store/api/v1/users/jwt-token-auth/";
+          const navigate = useNavigate();
+          navigate("/login");
           return Promise.reject(error);
         }
-      } else {
-        window.location.href =
-          "https://crazyform.store/api/v1/users/jwt-token-auth/";
-        return Promise.reject(error);
+      } catch (refreshError) {
+        const navigate = useNavigate();
+        navigate("/login");
+        return Promise.reject(refreshError);
       }
     }
 
@@ -181,20 +186,25 @@ export const kakaoLogin = async ({ code }: { code: string }) => {
       "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/accounts/login/kakao/callback",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ code }),
-      }
-    );
+    const response = await fetch("http://127.0.0.1:8000/api/v1/users/kakao", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ code }),
+    });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.ok) {
+      const data = await response.json();
+      const refresh = data.token.refresh;
+      const access = data.token.access;
+
+      Cookies.set("access", access);
+      Cookies.set("refresh", refresh);
+
+      return true;
+    } else {
+      const { message } = await response.json();
+      throw new Error(message);
     }
-
-    return response.status;
   } catch (error) {
     console.error(error);
     throw error;
@@ -214,20 +224,25 @@ export const naverLogin = async ({
       "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/accounts/naver/login/",
-      {
-        method: "POST",
-        headers,
-        body: JSON.stringify({ code, state }),
-      }
-    );
+    const response = await fetch("http://127.0.0.1:8000/api/v1/users/naver", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ code, state }),
+    });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.ok) {
+      const data = await response.json();
+      const refresh = data.token.refresh;
+      const access = data.token.access;
+
+      Cookies.set("access", access);
+      Cookies.set("refresh", refresh);
+
+      return true;
+    } else {
+      const { message } = await response.json();
+      throw new Error(message);
     }
-
-    return response.status;
   } catch (error) {
     console.error(error);
     throw error;
@@ -270,15 +285,13 @@ export async function userNameLogin(
 }
 
 export async function postRefreshToken(
-  refresh: RefreshToken,
-  access: AccessToken
+  refresh: string
 ): Promise<string | null> {
   try {
     const response = await axios.post(
       "https://crazyform.store/api/v1/users/jwt-token-auth/refresh/",
       {
         refresh,
-        access,
       }
     );
     return response.data.access;
@@ -287,6 +300,7 @@ export async function postRefreshToken(
     return null;
   }
 }
+
 export const findId = (data: FormIdData) =>
   instance
     .post("users/find/id", data, {
@@ -295,6 +309,7 @@ export const findId = (data: FormIdData) =>
       },
     })
     .then((response) => response.data);
+
 export const findPassword = (data: string) =>
   instance
     .post("users/find/password", data, {
@@ -303,6 +318,7 @@ export const findPassword = (data: string) =>
       },
     })
     .then((response) => response.data);
+
 export const newPassword = (data: string) =>
   instance
     .put("users/new-password", data, {
@@ -311,6 +327,7 @@ export const newPassword = (data: string) =>
       },
     })
     .then((response) => response.data);
+
 export const changePassword = (data: string) =>
   instance
     .put("users/changepassword/", data, {
@@ -319,6 +336,7 @@ export const changePassword = (data: string) =>
       },
     })
     .then((res) => res.status);
+
 export const signUpUser = (data: UserData) => {
   return instanceNotLogin.post("users/", data).then((res) => res.data);
 };
@@ -326,9 +344,11 @@ export const signUpUser = (data: UserData) => {
 export const getMyProfile = () => {
   return instance.get("users/myprofile").then((res) => res.data);
 };
+
 export const changeProfileUser = (data: UserData) => {
   return instance.put("users/myprofile", data).then((res) => res.data);
 };
+
 export const getLectureInfo = () => {
   return instance.get(`users/myprofile`).then((res) => res.data);
 };
@@ -359,6 +379,7 @@ export const getLectureDetail = async (page: number) => {
 export const postReview = ({ lectureNum, data }: PostReviewParams) => {
   return instance.post(`reviews/${lectureNum}`, data).then((res) => res.data);
 };
+
 export const postReply = ({ lectureNum, reviewNum, data }: PostReplyParams) => {
   return instance
     .post(`reviews/${lectureNum}/${reviewNum}`, data)

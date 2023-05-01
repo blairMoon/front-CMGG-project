@@ -3,7 +3,6 @@ import { useForm, RegisterOptions } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Select, useColorMode } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { addressState } from "../../atoms";
 import css from "../Signup/Signup.module.scss";
@@ -125,9 +124,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
       <div className={css.Container}>
         <div className={css.Wrapper}>
           <div className={css.TopBox}>
-            <h2 className={css.h2}>
-              <img src="/images/logo.png" alt="logo" width="200" />
-            </h2>
+            <img src="/images/CGLOGO.png" alt="logo" width="220" />
 
             <h1 className={colorMode === "light" ? css.h1 : css.darkH1}>
               회원가입
@@ -306,7 +303,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 <p className={css.errors}>주소는 필수 입력값입니다.</p>
               )}
 
-              <Divider
+              {/* <Divider
                 orientation="horizontal"
                 marginTop="40px"
                 // marginBottom="30px"
@@ -352,8 +349,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                     <label className={css.Devlabel} htmlFor="fullstack">
                       풀스택
                     </label>
-                  </div>
-                  {/* <div className={css.DevContainer}>
+                  </div> */}
+              {/* <div className={css.DevContainer}>
                     <input
                       id="game"
                       type="checkbox"
@@ -364,7 +361,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                       게임
                     </label>
                   </div> */}
-                </div>
+              {/* </div>
                 <div>
                   <div className={css.DevContainer}>
                     <input
@@ -601,7 +598,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
               </div>
               {errors.skill && (
                 <p className={css.errors}>내 개발수준 은 필수 입력값입니다.</p>
-              )}
+              )} */}
               <label className={`${css.label} ${css.question}`}>
                 이용약관 문의
               </label>

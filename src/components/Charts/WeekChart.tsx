@@ -50,7 +50,7 @@ type Data = {
 export const data: Data = {
   2023: {
     4: {
-      5: [
+      4: [
         {
           id: "평균유저",
           data: [
@@ -76,37 +76,33 @@ export const data: Data = {
           ],
         },
       ],
-      6: [
+    },
+    5: {
+      1: [
         {
-          id: "average user",
+          id: "평균유저",
           data: [
-            { x: "일", y: 1 },
-            { x: "월", y: 2 },
-            { x: "화", y: 4 },
-            { x: "수", y: 7 },
-            { x: "목", y: 3 },
-            { x: "금", y: 5 },
+            { x: "일", y: 3 },
+            { x: "월", y: 1 },
+            { x: "화", y: 1 },
+            { x: "수", y: 6 },
+            { x: "목", y: 2 },
+            { x: "금", y: 6 },
             { x: "토", y: 2 },
           ],
         },
         {
           id: "IT'S ME",
           data: [
-            { x: "일", y: 7 },
-            { x: "월", y: 3 },
-            { x: "화", y: 4 },
-            { x: "수", y: 6 },
+            { x: "일", y: 6 },
+            { x: "월", y: 2 },
+            { x: "화", y: 5 },
+            { x: "수", y: 4 },
             { x: "목", y: 5 },
-            { x: "금", y: 3 },
+            { x: "금", y: 4 },
             { x: "토", y: 4 },
           ],
         },
-      ],
-      // ... 다른 주 데이터를 추가 ...
-    },
-    2: {
-      1: [
-        // ... 2021년 2월 1주차 데이터 ...
       ],
       2: [
         // ... 2021년 2월 2주차 데이터 ...
@@ -140,6 +136,7 @@ export const data: Data = {
 };
 
 const todayDayOfWeek = new Date().toLocaleString("ko-KR", { weekday: "short" });
+
 const DayChart: React.FC<Props> = () => {
   const [currentYear, setCurrentYear] = useState<number>(
     new Date().getFullYear()
@@ -148,6 +145,8 @@ const DayChart: React.FC<Props> = () => {
   const [currentMonth, setCurrentMonth] = useState<number>(
     new Date().getMonth() + 1
   );
+
+  // const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 
   const goToPreviousMonth = () => {
     if (currentMonth === 1) {
@@ -185,23 +184,36 @@ const DayChart: React.FC<Props> = () => {
     }
   };
   const getWeeksInMonth = (month: number, year: number) => {
+    const firstDayOfMonth = new Date(year, month - 1, 1);
     const lastDayOfMonth = new Date(year, month, 0);
     const lastDateOfMonth = lastDayOfMonth.getDate();
     const lastDayOfWeek = lastDayOfMonth.getDay();
-    const days = lastDateOfMonth + (6 - lastDayOfWeek);
-    return Math.ceil(days / 7);
-  };
-  const getCurrentMonthAndWeek = () => {
-    const now = new Date();
-    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const pastDaysOfMonth =
-      (now.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
-    const currentWeekNumber = Math.ceil(
-      (pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7
-    );
-    return { month: now.getMonth() + 1, week: currentWeekNumber };
-  };
+    const firstDayOfWeek = firstDayOfMonth.getDay();
 
+    const offset = firstDayOfWeek >= 3 ? 1 : 0; // 수요일 이후라면 오프셋을 1로 설정
+    const days = lastDateOfMonth + (4 - lastDayOfWeek);
+    return Math.ceil(days / 7) - offset;
+  };
+  const getCurrentMonthAndWeek = (date = new Date()) => {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const firstDayOfWeek = firstDayOfMonth.getDay();
+
+    const offset = firstDayOfWeek >= 3 ? 1 : 0;
+    const pastDaysOfMonth =
+      (date.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
+    let currentWeekNumber =
+      Math.ceil((pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7) - offset;
+
+    const weeksInCurrentMonth = getWeeksInMonth(
+      date.getMonth() + 1,
+      date.getFullYear()
+    );
+    if (currentWeekNumber > weeksInCurrentMonth) {
+      currentWeekNumber = weeksInCurrentMonth;
+    }
+
+    return { month: date.getMonth() + 1, week: currentWeekNumber };
+  };
   const today = () => {
     const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     const dayIndex = dayNames.indexOf(todayDayOfWeek);
@@ -213,7 +225,9 @@ const DayChart: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    const { month, week } = getCurrentMonthAndWeek();
+    // 원하는 날짜를 기준으로 설정 (예: 2023년 5월 1일)
+    const targetDate = new Date(2023, 4, 1); // 주의: 월은 0부터 시작하기 때문에 4로 설정합니다.
+    const { month, week } = getCurrentMonthAndWeek(targetDate);
     setCurrentMonth(month);
     setCurrentWeek(week);
   }, []);
@@ -239,7 +253,7 @@ const DayChart: React.FC<Props> = () => {
   };
 
   const { colorMode } = useColorMode();
-  const currentData = data[currentYear]?.[currentMonth]?.[currentWeek] || [];
+  const currentData = data[currentYear]?.[currentMonth]?.[currentWeek] ?? [];
   return (
     <div>
       <Grid
@@ -377,9 +391,9 @@ const DayChart: React.FC<Props> = () => {
               >
                 <div>{point.id.split(/[0-9.]+/).join("")}</div>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <div>{point.data.x.toString()} :</div>
+                  <div> 완료강의 :</div>
                   <div style={{ marginLeft: "3px" }}>
-                    {point.data.y.toString()} 개
+                    {point.data.y.toString()}개
                   </div>
                 </div>
               </div>
