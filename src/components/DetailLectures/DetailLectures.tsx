@@ -28,6 +28,7 @@ import { hsl, parseToHsl, rgb } from "polished";
 import { HslColor } from "polished/lib/types/color";
 import VideoList from "../../components/DetailLectures/VideoIndex/VideoIndex";
 import DetailSkeleton from "./Loading/DetailSkeleton";
+import Seo from "../SEO/Seo";
 
 interface Instructor {
   username: string;
@@ -150,6 +151,7 @@ const DetailLectures: React.FC = () => {
                   "contents"
                   "reviews"`}
           >
+            <Seo title={data.lecture_data.lectureTitle} />
             <GridItem
               bgColor={colorMode === "light" ? rgb(240, 245, 252) : darkerColor}
               borderRadius="3xl"

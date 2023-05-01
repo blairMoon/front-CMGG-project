@@ -10,6 +10,7 @@ import {
   Th,
   Td,
 } from "@chakra-ui/react";
+import Seo from "../../SEO/Seo";
 
 const MyPayment: React.FC = () => {
   const purchases = [
@@ -35,12 +36,14 @@ const MyPayment: React.FC = () => {
 
   return (
     <Box p={6}>
+      <Seo title="결제 내역" />
+
       <Text fontSize="3xl" fontWeight="bold" mb={6}>
-        구매 내역
+        결제 내역
       </Text>
 
       <Stack direction="row" mb={6}>
-        <Text fontWeight="bold">총 구매 강의:</Text>
+        <Text fontWeight="bold">총 결제 강의:</Text>
         <Text>{purchases.length}</Text>
       </Stack>
 

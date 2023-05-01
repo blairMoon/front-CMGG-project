@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLectureInfo } from "../../../services/api";
 import { skeletonArray } from "../../../constant";
 import SkeletonCard from "../../WholeLectures/LectureCard/SkeletonCard";
+import Seo from "../../SEO/Seo";
 
 interface CalculatedLectureItem {
   id: string;
@@ -44,6 +45,8 @@ const MyLecture: React.FC = () => {
   return (
     <div>
       <Grid>
+        <Seo title="수강중인 강의" />
+
         <GridItem mx="auto">
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
             {!isLoading

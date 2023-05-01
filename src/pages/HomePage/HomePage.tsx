@@ -15,6 +15,7 @@ import {
   TabPanel,
   useColorMode,
 } from "@chakra-ui/react";
+import Seo from "../../components/SEO/Seo";
 
 function HomePage(): React.ReactElement {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -25,6 +26,7 @@ function HomePage(): React.ReactElement {
 
   return (
     <div>
+      <Seo title="Home" />
       <GoDashBoard />
       <Category />
       <Tabs
