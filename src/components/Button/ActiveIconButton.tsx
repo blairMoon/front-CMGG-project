@@ -1,4 +1,4 @@
-import { IconButton, IconButtonProps, Circle } from "@chakra-ui/react";
+import { IconButton, IconButtonProps, Circle, Tooltip } from "@chakra-ui/react";
 
 interface ActiveIconButtonProps extends IconButtonProps {
   testId: string;
@@ -25,7 +25,9 @@ export const ActiveIconButton: React.FC<ActiveIconButtonProps> = ({
           zIndex="2"
         />
       )}
-      <IconButton {...props} />
+      <Tooltip label={isActive ? "새로운 데이터가 있습니다!" : ""}>
+        <IconButton {...props} />
+      </Tooltip>
     </div>
   );
 };

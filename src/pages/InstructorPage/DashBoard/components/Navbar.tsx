@@ -18,6 +18,8 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = ({ refetch }: Props) => {
+  const isActive = true;
+
   return (
     <Flex
       as="nav"
@@ -47,7 +49,7 @@ const Navbar: React.FC<Props> = ({ refetch }: Props) => {
           aria-label="Notifications"
           testId="notiBtn"
           activeColor={useColorModeValue("rgb(255,70,40)", "yellow")}
-          isActive={true}
+          isActive={isActive}
         />
         <Spacer />
       </Flex>
