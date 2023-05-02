@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-
+import { atomFamily } from "recoil";
 export interface SelectCartItems {
   id: number[];
   name: string[];
@@ -43,3 +43,19 @@ export const avatarState = atom({
   key: "avatarState",
   default: "",
 });
+
+export const booleanOpenState = atom({
+  key: "booleanAcceptState",
+  default: false,
+});
+type AcceptState = boolean | null;
+
+export const booleanAcceptState = atom<AcceptState>({
+  key: "booleanAcceptState",
+  default: null,
+});
+
+// export const isDoneAtomFamily = atomFamily<boolean | null, number>({
+//   key: "isDoneAtomFamily",
+//   default: null,
+// });
