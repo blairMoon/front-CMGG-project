@@ -21,6 +21,7 @@ import {
   Progress,
   Tooltip,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
 // import LectureHeader from "../../components/LectureHeader/LectureHeader";
@@ -68,6 +69,7 @@ const LecturePlayer: React.FC = () => {
   const [isCompleted, setIsCompleted] = useState(false);
 
   const navigate = useNavigate();
+  const { colorMode } = useColorMode();
 
   const playerRef = useRef<ReactPlayer | null>(null);
 
@@ -355,10 +357,18 @@ const LecturePlayer: React.FC = () => {
                   <Box fontSize="16">
                     {videoList.url.calculatedLecture.lectureTitle}
                   </Box>
-                  <Box fontSize="14" color="#525252" paddingTop="2">
+                  <Box
+                    fontSize="14"
+                    color={colorMode === "light" ? "#525252" : "#bfbdbd"}
+                    paddingTop="2"
+                  >
                     수강 기한 : 무제한
                   </Box>
-                  <Box fontSize="14" color="#525252" paddingBottom="5">
+                  <Box
+                    fontSize="14"
+                    color={colorMode === "light" ? "#525252" : "#bfbdbd"}
+                    paddingBottom="5"
+                  >
                     진도율 : {completedCount}강/{videoList.list.length}강 (
                     {progressPercent}%)
                   </Box>
