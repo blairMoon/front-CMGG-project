@@ -109,11 +109,6 @@ export default function WithSubnavigation() {
   const gotoLectures = () => {
     if (context === "") {
       navigate("/lectures/all/all?page=1");
-    } else if (context === "열려라 참깨") {
-      window.open("http://localhost:3000/admin/user/1", "_blank");
-      window.location.reload();
-
-      // navigate("/");
     } else {
       let url = "/lectures/all/all?page=1&search=" + context;
       navigate(url);
@@ -146,8 +141,6 @@ export default function WithSubnavigation() {
             bg={useColorModeValue("white", "gray.800")}
             color={useColorModeValue("gray.600", "white")}
             minH={"60px"}
-            mx={"auto"}
-            maxW={"1400px"}
             px={{ base: 4 }}
             alignItems={"center"}
           >
@@ -256,6 +249,13 @@ export default function WithSubnavigation() {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                <button
+                  onClick={() =>
+                    window.open("http://localhost:3000/admin/user/1", "_blank")
+                  }
+                >
+                  AdminPage
+                </button>
               </Flex>
             </Flex>
 
@@ -533,8 +533,6 @@ export default function WithSubnavigation() {
         <Flex
           bg={useColorModeValue("white", "gray.800")}
           color={useColorModeValue("gray.600", "white")}
-          mx={"auto"}
-          maxW={"1400px"}
           minH={"50px"}
           py={{ base: 2 }}
           px={{ base: 4 }}
@@ -608,13 +606,7 @@ const MenuNav = () => {
   ];
   let idx = -1;
   return (
-    <MenuList
-      width="150px"
-      boxShadow={"md"}
-      pt="1"
-      pb="3"
-      border={"1px solid rgb(220,220,220)"}
-    >
+    <MenuList width="150px">
       {NAV_ITEMS.map((navItem) => (
         <MenuOptionGroup
           key={navItem.label}
@@ -656,9 +648,7 @@ const MenuNav = () => {
               })}
             </Stack>
           )}
-          {navItem.label === "Mobile" ? null : (
-            <MenuDivider borderColor={"rgb(190,190,190)"} />
-          )}
+          <MenuDivider borderColor={"rgb(190,190,190)"} />
         </MenuOptionGroup>
       ))}
     </MenuList>
