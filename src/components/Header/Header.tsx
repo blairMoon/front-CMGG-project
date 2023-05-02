@@ -141,6 +141,8 @@ export default function WithSubnavigation() {
             bg={useColorModeValue("white", "gray.800")}
             color={useColorModeValue("gray.600", "white")}
             minH={"60px"}
+            mx={"auto"}
+            maxW={"1400px"}
             px={{ base: 4 }}
             alignItems={"center"}
           >
@@ -533,6 +535,8 @@ export default function WithSubnavigation() {
         <Flex
           bg={useColorModeValue("white", "gray.800")}
           color={useColorModeValue("gray.600", "white")}
+          mx={"auto"}
+          maxW={"1400px"}
           minH={"50px"}
           py={{ base: 2 }}
           px={{ base: 4 }}
