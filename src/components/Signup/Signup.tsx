@@ -34,7 +34,7 @@ interface UserData {
   address: string;
 }
 
-const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
+const Signup: React.FC<SignupProps> = ({ initialValues }) => {
   const navigate = useNavigate();
   const [idCheck, setIdCheck] = useState<string>("");
   const [idChecked, setIdChecked] = useState<boolean | null>(null);
@@ -299,7 +299,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues, onSubmit }) => {
                 ></Post>
               </div>
 
-              {errors.address && (
+              {errors.address && !address && (
                 <p className={css.errors}>주소는 필수 입력값입니다.</p>
               )}
 

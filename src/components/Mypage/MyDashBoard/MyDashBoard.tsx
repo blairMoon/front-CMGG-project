@@ -6,10 +6,25 @@ import RecentLectureCard from "../../Card/RecentLectureCard";
 import EmploymentCard from "../../Card/EmploymentCard";
 import RecommendCard from "../../Card/RecommendCard";
 import { Grid, GridItem, Text, Box, HStack } from "@chakra-ui/react";
+import { UserData } from "../../../../typings/LectureData";
+import { useNavigate } from "react-router-dom";
+import { getMyProfile } from "../../../services/api";
+import { useQuery } from "@tanstack/react-query";
 import { HiOutlineChevronRight } from "react-icons/hi";
 import Seo from "../../SEO/Seo";
 
 const MyDashBoard: React.FC = () => {
+  const navigate = useNavigate();
+  const { isLoading, data, isError } = useQuery<UserData>(
+    ["myprofile"],
+    getMyProfile,
+    {
+      retry: false,
+    }
+  );
+  if (isError) {
+    navigate("/notfound");
+  }
   return (
     <div>
       <Seo title="대시보드" />
@@ -26,7 +41,7 @@ const MyDashBoard: React.FC = () => {
       >
         <GridItem area={"header"} fontSize="20px">
           <HStack spacing="1">
-            <Box fontWeight="600">Rami Su</Box>
+            <Box fontWeight="600">{data?.name}</Box>
             <Box>님</Box>
             <Box color="#3d3d3d">
               <HiOutlineChevronRight />

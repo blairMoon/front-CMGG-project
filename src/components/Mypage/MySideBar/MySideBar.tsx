@@ -8,6 +8,8 @@ import {
   Avatar,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { getMyProfile } from "../../../services/api";
 import { useRecoilValue } from "recoil";
 import { FiSettings } from "react-icons/fi";
 import { avatarState } from "../../../atoms";
@@ -16,10 +18,21 @@ import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { CgDanger } from "react-icons/cg";
+import { UserData } from "../../../../typings/LectureData";
 
 const MySideBar: React.FC = () => {
-  const avatar = useRecoilValue(avatarState);
   const navigate = useNavigate();
+  const { isLoading, data, isError } = useQuery<UserData>(
+    ["myprofile"],
+    getMyProfile,
+    {
+      retry: false,
+    }
+  );
+  if (isError) {
+    navigate("/notfound");
+  }
+  const avatar = useRecoilValue(avatarState);
   const location = useLocation();
   const pathSegments = location.pathname.split("/");
   const lastSegment = pathSegments[pathSegments.length - 1];
@@ -175,9 +188,9 @@ const MySideBar: React.FC = () => {
             />
           </Box>
           <Stack pl="2" spacing={0}>
-            <Box fontSize="16">blairMoon</Box>
+            <Box fontSize="16">{data?.name}</Box>
             <Box fontSize="14" color="#707070">
-              Student
+              student
             </Box>
           </Stack>
         </HStack>

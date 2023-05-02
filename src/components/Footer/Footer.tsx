@@ -10,7 +10,7 @@ import {
 
 export default function LargeWithLogoCentered() {
   return (
-    <Box bg="#262C33" marginTop="20" w={window.screen.width} h="30vh">
+    <Box bg="#262C33" h="30vh">
       <Container as={Stack} maxW={"6xl"} px={8}>
         <SimpleGrid
           columns={{ base: 1, sm: 2, md: 4 }}
