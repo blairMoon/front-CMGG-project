@@ -29,7 +29,6 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Seo from "../../SEO/Seo";
 
 interface UserData {
   username: string;
@@ -50,6 +49,8 @@ const MyEditMember: React.FC = () => {
   const [avatar, setAvatar] = useRecoilState(avatarState);
 
   const [_img, setImg] = useState<string>("");
+  const { colorMode } = useColorMode();
+  const [click, setClick] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
   const { isLoading, data, isError } = useQuery<UserData>(
@@ -60,6 +61,7 @@ const MyEditMember: React.FC = () => {
     }
   );
   if (isError) {
+    // console.log("hello");
     navigate("/notfound");
   }
   const {
@@ -131,17 +133,18 @@ const MyEditMember: React.FC = () => {
       setImg(getSecureImgFile(reader.result));
     };
     reader.readAsDataURL(file);
-    return (
-      <HStack alignItems={"flex-start"} key={idx}>
-        <ChakraImg w="150px" h="100px" src={_img} />
-        <Text>
-          {file.name} - {file.size} bytes
-        </Text>
-      </HStack>
-    );
+    // return (
+    //   <HStack alignItems={"flex-start"} key={idx}>
+    //     <ChakraImg w="150px" h="100px" src={_img} />
+    //     <Text>
+    //       {file.name} - {file.size} bytes
+    //     </Text>
+    //   </HStack>
+    // );
   });
-  // const onAvatarChange = () => {
+  //const onAvatarChange = async () => {
   //   if (_img) {
+  //     await saveAvatar(_img);
   //     setAvatar(_img);
   //   }
   // };
@@ -152,13 +155,18 @@ const MyEditMember: React.FC = () => {
     }
   }, [data, reset]);
 
+  // console.log('data', data);
+  // if (data) {
+  //   console.log(data);
   return (
     <>
       <div className={css.Container}>
-        <Seo title="정보수정" />
         <div className={css.Wrapper}>
           <div className={css.TopBox}>
             <form className={css.Form} onSubmit={handleSubmit(submitForm)}>
+              {/* <h6 className={`${css.h6} ${css.bottomborder}`}>
+                모든 값은 필수입력 값입니다.
+              </h6> */}
               <HStack>
                 <Box w="50%" h="230px">
                   <Box>
@@ -166,13 +174,6 @@ const MyEditMember: React.FC = () => {
                   </Box>
 
                   <HStack w="100%" h="100%" pb="8">
-                    {/* <Box>
-                      <Avatar
-                        size="2xl"
-                        bg="#CED4DA"
-                        icon={<RiHomeHeartLine size={90} />}
-                      />
-                    </Box> */}
                     <Box {...getImgRootProps()} className={css.dropzone}>
                       <input
                         {...getImgInputProps()}
@@ -189,32 +190,36 @@ const MyEditMember: React.FC = () => {
                         }
                       />
                     </Box>
-                    <Box pl="3">
-                      <Button
-                        // onClick={onAvatarChange}
-                        bg="#003c93"
-                        color="white"
-                        fontSize="14"
-                        p="3"
-                        borderRadius="base"
-                        _hover={{
-                          bg: "#012f70",
-                        }}
+                    <Stack>
+                      <Box
+                        mt={4}
+                        {...getImgRootProps()}
+                        className={css.dropzone}
+                        pl={1}
                       >
-                        변경
-                      </Button>
+                        <input {...getImgInputProps()} />
+                        <Button
+                          onClick={getImgInputProps}
+                          bg="#003c93"
+                          color="white"
+                          fontSize="14"
+                          p="3"
+                          borderRadius="base"
+                          _hover={{
+                            bg: "#012f70",
+                          }}
+                        >
+                          변경
+                        </Button>
+                      </Box>
                       <Box
                         fontSize="12px"
-                        color={useColorModeValue(
-                          "blackAlpha.500",
-                          "whiteAlpha.700"
-                        )}
+                        color="blackAlpha.500"
                         fontWeight="700"
-                        pt="2"
                       >
                         확장자: png, jpg, jpeg / 용량: 1MB 이하
                       </Box>
-                    </Box>
+                    </Stack>
                   </HStack>
                 </Box>
                 <Box w="50%" h="100%">
@@ -421,7 +426,13 @@ const MyEditMember: React.FC = () => {
                 </p>
               )}
               <div className={css.buttonContainer}>
-                <button type="submit" className={css.Button}>
+                <button
+                  type="submit"
+                  className={css.Button}
+                  onClick={() => {
+                    setClick(true);
+                  }}
+                >
                   회원정보 수정
                 </button>
               </div>
@@ -430,12 +441,12 @@ const MyEditMember: React.FC = () => {
         </div>
       </div>
       {/* 
-        {success && (
+        {success && click && (
           <ModalBasic
             isOpen={true}
             successContent={'회원 정보 수정되었습니다아아아~~~'}
             onClose={() => {
-              setSuccess(false);
+              setClick(false);
             }}
           />
         )} */}

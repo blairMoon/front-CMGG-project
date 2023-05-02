@@ -3,12 +3,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Box, HStack, Stack, Divider, Avatar } from "@chakra-ui/react";
 import { FiSettings } from "react-icons/fi";
 import { RiHomeHeartLine, RiFolderUploadLine } from "react-icons/ri";
+import { useQuery } from "@tanstack/react-query";
+import { getMyProfile } from "../../../../services/api";
 import { BsPlayCircle, BsFileEarmarkText } from "react-icons/bs";
 import { MdPayment } from "react-icons/md";
 import { CgDanger } from "react-icons/cg";
+import { UserData } from "../../../../../typings/LectureData";
 
 const InstructorSideBar: React.FC = () => {
   const navigate = useNavigate();
+  const { isLoading, data, isError } = useQuery<UserData>(
+    ["myprofile"],
+    getMyProfile,
+    {
+      retry: false,
+    }
+  );
+  if (isError) {
+    navigate("/notfound");
+  }
   return (
     <div>
       <Stack w="100%" fontWeight="600">
@@ -154,7 +167,7 @@ const InstructorSideBar: React.FC = () => {
             <Avatar bg="#CED4DA" icon={<RiHomeHeartLine size={35} />} />
           </Box>
           <Stack pl="2" spacing={0}>
-            <Box fontSize="16">blairMoon</Box>
+            <Box fontSize="16">{data?.name}</Box>
             <Box fontSize="14" color="#707070">
               Instructor
             </Box>

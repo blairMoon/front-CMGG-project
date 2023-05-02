@@ -57,4 +57,5 @@ interface UserData {
   termsOfUse: String;
   funnel: string;
   isInstructor: boolean;
+  avatar: string;
 }
