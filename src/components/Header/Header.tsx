@@ -606,7 +606,13 @@ const MenuNav = () => {
   ];
   let idx = -1;
   return (
-    <MenuList width="150px">
+    <MenuList
+      width="150px"
+      boxShadow={"md"}
+      pt="1"
+      pb="3"
+      border={"1px solid rgb(220,220,220)"}
+    >
       {NAV_ITEMS.map((navItem) => (
         <MenuOptionGroup
           key={navItem.label}
@@ -648,7 +654,9 @@ const MenuNav = () => {
               })}
             </Stack>
           )}
-          <MenuDivider borderColor={"rgb(190,190,190)"} />
+          {navItem.label === "Mobile" ? null : (
+            <MenuDivider borderColor={"rgb(190,190,190)"} />
+          )}
         </MenuOptionGroup>
       ))}
     </MenuList>
