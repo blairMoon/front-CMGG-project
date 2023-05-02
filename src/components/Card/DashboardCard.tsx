@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Text, VStack, useColorMode, HStack } from "@chakra-ui/react";
+import { Box, Text, VStack, useColorMode } from "@chakra-ui/react";
 import { hsl, parseToHsl } from "polished";
 import { HslColor } from "polished/lib/types/color";
 import getAddCommas from "../../utils/getAddCommas";
@@ -9,6 +9,7 @@ interface DashboardCardProps {
   value: number;
   bgColor: string;
   boxShadow?: string;
+  isDarkActive?: boolean;
 }
 
 const DashboardCard: React.FC<DashboardCardProps> = ({

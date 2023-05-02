@@ -31,36 +31,34 @@ const RankingCard: React.FC<RankingCardProps> = ({
     //   padding="10px"
     // >
     <div>
-      <Flex w="400px" mb="20px">
+      <Flex w="400px">
         <Img
-          width={120}
-          height={120}
+          width="50px"
+          height="40px"
           // border="1px solid black"
-          padding={6}
+          // padding={6}
           src={rank}
         ></Img>
         <Box>
           <Image
             src={imageSrc}
             alt={name}
-            width={130}
-            height={110}
+            width="100px"
+            height="90px"
             objectFit="cover"
-            borderRadius="20px"
+            borderRadius="10px"
             // className={css.image}
           />
         </Box>
         <Box
           w="200px"
           textAlign="center"
-          p="10%"
+          // p="10%"
           fontWeight={500}
           fontSize="20px"
         >
           {name}
-          <Text fontSize="11px" marginTop="10px">
-            {comment}
-          </Text>
+          <Text fontSize="11px">{comment}</Text>
         </Box>
       </Flex>
     </div>

@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import ModalRegister from "./ModalRegisterAdmin/ModalRegisterAdmin";
+import ModalSuccess from "./ModalSuccess/ModalSuccess";
 type Data = {
   id: number;
   title: string;
@@ -59,8 +60,9 @@ const Board = () => {
     setSelectedData(data);
     setIsOpen(true);
   };
-
+  const [isOpenSucess, setIsOpenSucess] = useState(false);
   const handleCloseModal = () => {
+    setIsOpenSucess(false);
     setIsOpen(false);
     setSelectedData(null);
   };
@@ -105,8 +107,8 @@ const Board = () => {
                 <Td>{row.date}</Td>
 
                 <Td>
-                  <Button colorScheme="blue" marginRight="10px" size={"sm"}>
-                    수락
+                  <Button colorScheme="gray" marginRight="10px" size={"sm"}>
+                    미처리
                   </Button>
                 </Td>
               </Tr>
@@ -114,13 +116,28 @@ const Board = () => {
           </Tbody>
         </Table>
       </Flex>
-      <Button bg="gray" color="white" _hover={{ bg: "red" }}>
+      <Button
+        bg="gray"
+        color="white"
+        _hover={{ bg: "red" }}
+        onClick={() => {
+          setIsOpenSucess(true);
+        }}
+      >
         심사 처리
       </Button>
       <ModalRegister
         isOpen={isOpen}
         data={selectedData}
         onClose={handleCloseModal}
+      />
+      <ModalSuccess
+        isOpen={isOpenSucess}
+        onClose={handleCloseModal}
+        onConfirm={() => {
+          setIsOpenSucess(false);
+          alert("심사처리완료");
+        }}
       />
     </VStack>
   );

@@ -7,10 +7,12 @@ import EmploymentCard from "../../Card/EmploymentCard";
 import RecommendCard from "../../Card/RecommendCard";
 import { Grid, GridItem, Text, Box, HStack } from "@chakra-ui/react";
 import { HiOutlineChevronRight } from "react-icons/hi";
+import Seo from "../../SEO/Seo";
 
 const MyDashBoard: React.FC = () => {
   return (
     <div>
+      <Seo title="대시보드" />
       <Grid
         templateAreas={`"header header header"
                   "item1 item2 item3"

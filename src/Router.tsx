@@ -20,13 +20,14 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import FindId from "./components/Find/FindId";
 import FindPassword from "./components/Find/FindPassword";
 import InstructorLecture from "./pages/InstructorPage/MyLecture/MyLecture";
-
+import Pay from "./pages/AdminPage/Components/Pay/Pay";
 import User from "./pages/AdminPage/Components/User/User";
 import User2 from "./pages/AdminPage/Components/User2/User2";
 import Register from "./pages/AdminPage/Components/Instructor/Register/Register";
 import InstructorChart from "./pages/AdminPage/Components/Instructor/InstrouctorChart/InstructorChart";
 import KakaoConfirm from "./components/SocialLogin/KakaoConfirm";
 import NaverConfirm from "./components/SocialLogin/NaverConfirm";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -144,7 +145,7 @@ const router = createBrowserRouter([
       { path: "instructor/2", element: <InstructorChart /> },
       { path: "lectures", element: <User /> },
 
-      { path: "pay", element: <User /> },
+      { path: "pay", element: <Pay /> },
     ],
   },
 ]);

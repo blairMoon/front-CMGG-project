@@ -18,9 +18,11 @@ import {
   Td,
   Thead,
   Tbody,
+  Img,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import AdminRadarCart from "../SearchCard/Chart/AdminRaderChart";
+import { RiNumber1 } from "react-icons/ri";
 interface Props {}
 const radarData = [
   { category: "수입률", 나: 30, 평균: 10 },
@@ -36,7 +38,7 @@ const radarIndexBy = "category";
 const SearchCard: React.FC<Props> = (props: Props) => {
   return (
     <div>
-      <InputGroup w="400px" h="50px">
+      <InputGroup w="380px" h="50px">
         <InputLeftElement
           pointerEvents="none"
           children={<SearchIcon color="gray.300" />}
@@ -50,141 +52,75 @@ const SearchCard: React.FC<Props> = (props: Props) => {
           border="1px solid transparent"
         />
       </InputGroup>
+
       <Card
-        borderRadius="20px"
-        display="flex"
-        // alignItems="center"
-        p={4}
-        boxShadow="lg"
-        bg="#ddebf7"
-        mt="60px"
-        height="380px"
-        width="640px"
-      >
-        <Flex>
-          <Box>
-            <Flex>
-              <Text
-                // fontFamily="monospace"
-                fontSize="23px"
-                fontWeight="600"
-                color="#02327b"
-                // bg="#5f8abf"
-                // borderRadius="10px"
-                // borderBottom="1px solid black"
-                // border="1px solid black"
-                // textAlign="center"
-                // display="flex"
-                // justifyContent="center"
-                alignItems="center"
-              >
-                이승아
-              </Text>
-            </Flex>
-            <Image
-              // borderRadius="13px"
-              boxSize="180px"
-              src="https://ifh.cc/g/hTWR7n.jpg"
-            />
-
-            <Box display="flex" flexDirection="column" borderRadius="20px">
-              <Table variant="simple" borderRadius="20px">
-                <Tbody fontSize="12px" borderRadius="20px">
-                  <Tr p={5}>
-                    <Th p={2}>생년월일</Th>
-                    <Td p={2}>1990.1.1</Td>
-                  </Tr>
-                  <Tr>
-                    <Th p={2}>성별</Th>
-                    <Td p={2}>여</Td>
-                  </Tr>
-                  <Tr>
-                    <Th p={2}>강의분야</Th>
-                    <Td p={2}>프론트엔드</Td>
-                  </Tr>
-                </Tbody>
-              </Table>
-            </Box>
-          </Box>
-
-          <Box>
-            <Text
-              // fontWeight="600"
-              // pt="15px"
-
-              // pb="10px"
-              color="#02327b"
-              // border="1px solid black"
-              display="flex"
-              fontWeight="400"
-              fontSize="13px"
-              justifyContent="flex-end"
-              // paddingRight="120px"
-            >
-              강사능력차트
-            </Text>
-            <AdminRadarCart
-              data={radarData}
-              keys={radarKeys}
-              indexBy={radarIndexBy}
-            />
-          </Box>
-        </Flex>
-      </Card>
-      <Card
-        borderRadius="20px"
+        // borderRadius="20px"
         display="flex"
         px="8"
         py="6"
         boxShadow="lg"
-        bg="#ddebf7"
+        style={{ opacity: 0.9 }}
+        bg="#04204f"
         mt="60px"
         height="380px"
-        width="640px"
+        width="550px"
       >
         <HStack
-          justifyContent="space-between"
-          pb="4"
+          // justifyContent="space-between"
+          pb="8"
           fontWeight="600"
           color="#02327b"
           fontSize="14px"
-          alignItems="flex-start"
+          alignItems="center"
+          justifyContent="center"
         >
-          <Box fontSize="18px">이승아</Box>
-          <Box>강사능력차트</Box>
+          <Img
+            src="https://ifh.cc/g/YRYGQP.png"
+            w="230px"
+            h="20px"
+            display="flex"
+            justifyContent="center"
+          />
+          {/* <Box>강사능력차트</Box> */}
         </HStack>
         <HStack
           // h="280px"
           spacing={0}
         >
-          <Box w="45%" h="100%">
+          <Box w="35%" h="100%">
             <Box pb="4">
-              <Image boxSize="160px" src="https://ifh.cc/g/hTWR7n.jpg" />
+              <Image
+                width="130px"
+                height="145px"
+                src="https://ifh.cc/g/hTWR7n.jpg"
+                borderRadius="5px"
+              />
             </Box>
             <Box display="flex" flexDirection="column">
-              <Table variant="simple" borderRadius="20px">
-                <Tbody fontSize="12px" borderRadius="20px">
+              <Table variant="simple" border="none" marginTop="10px">
+                <Tbody fontSize="14px" color="white">
                   <Tr>
-                    <Th px={0} py={2}>
+                    <Th px={0} py={2} color="white" border="none">
+                      이름
+                    </Th>
+                    <Td px={0} py={2} color="white" border="none">
+                      이승아
+                    </Td>
+                  </Tr>
+                  <Tr>
+                    <Th px={0} py={2} color="white" border="none">
                       생년월일
                     </Th>
-                    <Td px={0} py={2}>
+                    <Td px={0} py={2} color="white" border="none">
                       1990.1.1
                     </Td>
                   </Tr>
+
                   <Tr>
-                    <Th px={0} py={2}>
-                      성별
-                    </Th>
-                    <Td px={0} py={2}>
-                      여
-                    </Td>
-                  </Tr>
-                  <Tr>
-                    <Th px={0} py={2}>
+                    <Th px={0} py={2} color="white" border="none">
                       강의분야
                     </Th>
-                    <Td px={0} py={2}>
+                    <Td px={0} py={2} border="none">
                       프론트엔드
                     </Td>
                   </Tr>
@@ -193,7 +129,7 @@ const SearchCard: React.FC<Props> = (props: Props) => {
             </Box>
           </Box>
 
-          <Box w="55%" h="100%">
+          <Box w="75%" h="100%">
             <AdminRadarCart
               data={radarData}
               keys={radarKeys}

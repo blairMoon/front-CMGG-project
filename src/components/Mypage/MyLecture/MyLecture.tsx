@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getLectureInfo } from "../../../services/api";
 import { skeletonArray } from "../../../constant";
 import SkeletonCard from "../../WholeLectures/LectureCard/SkeletonCard";
+import Seo from "../../SEO/Seo";
 
 interface CalculatedLectureItem {
   id: string;
@@ -44,10 +45,13 @@ const MyLecture: React.FC = () => {
   return (
     <div>
       <Grid>
+        <Seo title="수강중인 강의" />
+
         <GridItem mx="auto">
           <Grid templateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]} gap="5">
-            {!isLoading
-              ? data?.calculatedLecture?.map((item: CalculatedLectureItem) => (
+            {!isLoading ? (
+              data.calculatedLecture?.length > 0 ? (
+                data.calculatedLecture?.map((item: CalculatedLectureItem) => (
                   <GridItem key={item.lecture.LectureId} mx="auto">
                     <MylectureCard
                       lectureNumber={item.lecture.LectureId}
@@ -62,11 +66,25 @@ const MyLecture: React.FC = () => {
                     />
                   </GridItem>
                 ))
-              : skeletonArray.map((_: number, idx: number) => (
-                  <GridItem key={idx} mx="auto">
-                    <SkeletonCard />
-                  </GridItem>
-                ))}
+              ) : (
+                <Box
+                  h="60vh"
+                  w="70vw"
+                  my={8}
+                  borderRadius="md"
+                  fontSize="xl"
+                  fontWeight="semibold"
+                >
+                  구매한 강의가 없습니다!
+                </Box>
+              )
+            ) : (
+              skeletonArray.map((_: number, idx: number) => (
+                <GridItem key={idx} mx="auto">
+                  <SkeletonCard />
+                </GridItem>
+              ))
+            )}
           </Grid>
         </GridItem>
       </Grid>

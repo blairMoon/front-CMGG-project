@@ -1,3 +1,5 @@
+import { useRecoilValue } from "recoil";
+import { useQuery } from "@tanstack/react-query";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import DashboardCard from "../../../components/Card/DashboardCard";
@@ -7,12 +9,14 @@ import HighchartsNetwork from "../../../components/Charts/NetworkChart";
 import StockChart from "../../../components/Charts/StockChart";
 import PackedBubbleChart from "../../../components/Charts/BubbleChart";
 import DashboardChartCard from "../../../components/Card/DashboardChartCard";
-import { useRecoilValue } from "recoil";
 import { stockMenuState } from "../../../atoms";
 import Seo from "../../../components/SEO/Seo";
+import { getAllLectures } from "../../../services/api";
 
 const Dashboard: React.FC = () => {
   const stockMenuItem = useRecoilValue(stockMenuState);
+
+  const { isLoading, data, refetch } = useQuery(["dashboard", getAllLectures]);
 
   const issues = [
     {
@@ -152,7 +156,7 @@ const Dashboard: React.FC = () => {
   return (
     <Box>
       <Seo title="대시보드" />
-      <Navbar />
+      <Navbar refetch={refetch} />
       <Box padding="2rem">
         <Grid templateColumns="repeat(3, 1fr)" gap={6} mb="2rem">
           <GridItem>
@@ -160,7 +164,7 @@ const Dashboard: React.FC = () => {
               <DashboardCard
                 value={1023}
                 title="총 수강생"
-                bgColor="rgb(190,227,248)"
+                bgColor="rgb(118,157,214,0.5)"
                 boxShadow="md"
               />
             </div>
@@ -170,7 +174,7 @@ const Dashboard: React.FC = () => {
               <DashboardCard
                 value={52620000}
                 title="총 수입"
-                bgColor="rgb(190,227,248)"
+                bgColor="rgb(118,157,214,0.5)"
                 boxShadow="md"
               />
             </div>
@@ -180,7 +184,7 @@ const Dashboard: React.FC = () => {
               <DashboardCard
                 value={250}
                 title="신규 수강생"
-                bgColor="rgb(190,227,248)"
+                bgColor="rgb(118,157,214,0.5)"
                 boxShadow="md"
               />
             </div>
@@ -275,14 +279,14 @@ const Dashboard: React.FC = () => {
               <DashboardChartCard
                 title="내 강의의 유령회원"
                 value="4011"
-                bgColor="rgb(210,210,220)"
+                bgColor="rgb(200,200,200, 0.5)"
                 data={[
                   [1, 12],
                   [2, 23],
                   [3, 215],
                   [4, 128],
                 ]}
-                boxShadow="md"
+                boxShadow="lg"
               />
             </div>
           </GridItem>
@@ -291,14 +295,14 @@ const Dashboard: React.FC = () => {
               <DashboardChartCard
                 title="월 신규 수강생"
                 value="2401"
-                bgColor="rgb(210,210,220)"
+                bgColor="rgb(200,200,200, 0.5)"
                 data={[
                   [1, 12],
                   [2, 323],
                   [3, 215],
                   [4, 428],
                 ]}
-                boxShadow="md"
+                boxShadow="lg"
               />
             </div>
           </GridItem>

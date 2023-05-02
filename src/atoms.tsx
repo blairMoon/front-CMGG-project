@@ -43,3 +43,13 @@ export const avatarState = atom({
   key: "avatarState",
   default: "",
 });
+
+interface HeaderProps {
+  height: number;
+  width: number;
+}
+
+export const headerSizeState = atom<HeaderProps>({
+  key: "header",
+  default: { height: 0, width: 0 },
+});
