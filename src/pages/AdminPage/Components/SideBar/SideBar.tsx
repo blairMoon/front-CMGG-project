@@ -103,6 +103,8 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.50", "gray.900")}>
       <SidebarContent
@@ -137,24 +139,32 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const bgColor = useColorModeValue("gray.50", "gray.900");
+
   return (
     <Box
-      bg={useColorModeValue("white", "gray.900")}
+      color={useColorModeValue("gray.900", "gray.100")}
+      bg={useColorModeValue("white", "gray.100")}
       borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      borderRightColor={useColorModeValue("gray.200", "gray.100")}
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="22px" fontFamily="monospace" fontWeight="bold">
+        <Text
+          fontSize="22px"
+          fontFamily="monospace"
+          fontWeight="bold"
+          color={useColorModeValue("gray.900", "gray.900")}
+        >
           Coding Gardon
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <Link href={link.url} _hover={{ outline: "none" }}>
+        <Link href={link.url} _hover={{ outline: "none" }} color={bgColor}>
           <Box key={link.name}>
             <NavItem icon={link.icon} name={link.name} subItems={link.subItems}>
               {link.name}
