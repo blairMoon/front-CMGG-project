@@ -94,7 +94,7 @@ const LinkItems: LinkItemProps[] = [
       sub2: { title: "Subitem 2", url: "/admin/pay/sub2" },
       sub3: { title: "Subitem 3", url: "/admin/pay/sub3" },
     },
-    url: "/admin/pay",
+    url: "/admin/pay/1",
   },
 ];
 
@@ -149,7 +149,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="22px" fontFamily="monospace" fontWeight="bold">
-          Admin
+          Coding Gardon
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>

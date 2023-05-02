@@ -61,6 +61,33 @@ const Board = () => {
         "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
       isDone: null,
     },
+    {
+      id: 4,
+      title: "타스",
+      author: "과녈",
+      date: "2023-04-23",
+      introduction:
+        "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
+    },
+    {
+      id: 5,
+      title: "타스",
+      author: "과녈",
+      date: "2023-04-23",
+      introduction:
+        "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
+    },
+    {
+      id: 6,
+      title: "타스",
+      author: "과녈",
+      date: "2023-04-23",
+      introduction:
+        "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
+    },
   ];
 
   const [booleanOpen, setBooleanOpen] = useRecoilState(booleanOpenState);
@@ -106,18 +133,30 @@ const Board = () => {
         <Table
           ml="100px"
           variant="simple"
-          width="100%"
-
+          width="900px"
+          // color="rgb(40,40,40)"
+          // display="flex"
           // alignItems="center"
           // justifyContent="center"
         >
-          <Thead textAlign="center">
-            <Tr>
-              <Th>ID</Th>
-              <Th>신청분야</Th>
-              <Th>작성자</Th>
-              <Th>날짜</Th>
-              <Th>현재 상태</Th>
+          <Thead>
+            <Tr bg="#c6dbef">
+              <Th w="10%" color="rgb(100,100,100)">
+                ID
+              </Th>
+              <Th w="15%" color="rgb(100,100,100)">
+                신청분야
+              </Th>
+              <Th w="15%" color="rgb(100,100,100)">
+                작성자
+              </Th>
+
+              <Th w="20%" color="rgb(100,100,100)">
+                날짜
+              </Th>
+              <Th w="15%" color="rgb(100,100,100)">
+                현재 상태
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -132,24 +171,19 @@ const Board = () => {
                 <Td>{row.author}</Td>
                 <Td>{row.date}</Td>
                 <Td>
-                  {/* <Button colorScheme="gray" marginRight="10px" size={"sm"}>
-                    미처리
-                  </Button> */}
-                  <Td>
-                    {row.isDone === null ? (
-                      <Button colorScheme="gray" marginRight="10px" size={"sm"}>
-                        미처리
-                      </Button>
-                    ) : row.isDone === true ? (
-                      <Button colorScheme="blue" marginLeft="10px" size={"sm"}>
-                        수락
-                      </Button>
-                    ) : (
-                      <Button colorScheme="red" marginLeft="10px" size={"sm"}>
-                        거부
-                      </Button>
-                    )}
-                  </Td>
+                  {row.isDone === null ? (
+                    <Button colorScheme="gray" marginRight="10px" size={"sm"}>
+                      미처리
+                    </Button>
+                  ) : row.isDone === true ? (
+                    <Button colorScheme="blue" marginLeft="0px" size={"sm"}>
+                      수락
+                    </Button>
+                  ) : (
+                    <Button colorScheme="red" marginLeft="0px" size={"sm"}>
+                      거부
+                    </Button>
+                  )}
                 </Td>
               </Tr>
             ))}

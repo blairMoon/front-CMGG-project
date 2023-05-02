@@ -109,6 +109,11 @@ export default function WithSubnavigation() {
   const gotoLectures = () => {
     if (context === "") {
       navigate("/lectures/all/all?page=1");
+    } else if (context === "열려라 참깨") {
+      window.open("http://localhost:3000/admin/user/1", "_blank");
+      window.location.reload();
+
+      // navigate("/");
     } else {
       let url = "/lectures/all/all?page=1&search=" + context;
       navigate(url);
@@ -249,13 +254,6 @@ export default function WithSubnavigation() {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                <button
-                  onClick={() =>
-                    window.open("http://localhost:3000/admin/user/1", "_blank")
-                  }
-                >
-                  AdminPage
-                </button>
               </Flex>
             </Flex>
 

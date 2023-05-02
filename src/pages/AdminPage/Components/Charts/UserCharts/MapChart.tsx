@@ -10,6 +10,7 @@ const KoreaMap: React.FC<Props> = () => {
   const [tooltipContent, setTooltipContent] = useState("");
   const [originalColor, setOriginalColor] = useState<string | null>("#a8d9c8");
   const [tooltipColor, setTooltipColor] = useState("");
+  const [fontColor, setFontColor] = useState("");
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [tooltipLocaiton, setTooltipLocaiton] = useState("");
   // const colorScale = scaleLinear().domain([0, 100]).range(["#FFF", "#06F"]);
@@ -228,18 +229,23 @@ const KoreaMap: React.FC<Props> = () => {
     if (e.target instanceof Element && e.target.id) {
       const city = e.target.id;
       let color = "#a8d9c8";
+      let fontColor = "black";
       if (cityMapData[city].totalNum > 200) {
         color = "#3b6db5" || "#a8d9c8";
+        setFontColor("white");
         setTooltipColor("#3b6db5");
       } else if (cityMapData[city].totalNum > 100) {
         color = "#6f99d1" || "gray";
+        setFontColor("white");
         setTooltipColor("#6f99d1");
       } else if (cityMapData[city].totalNum > 10) {
         color = "#9dc3f0" || "gray";
+        setFontColor("black");
         setTooltipColor("#9dc3f0");
       } else {
         color = "#d1e5f7" || "gray";
         setTooltipColor("#d1e5f7");
+        setFontColor("#4f5861");
       }
       // 해당 지역의 색상 값을 가져옴
       const targetElement = e.target as SVGPathElement;
@@ -264,7 +270,7 @@ const KoreaMap: React.FC<Props> = () => {
         id="tooltip"
         w="140px"
         height="120px"
-        color="white"
+        color={fontColor}
         background={tooltipColor}
         border="1px solid "
         borderColor={tooltipColor}
@@ -295,7 +301,7 @@ const KoreaMap: React.FC<Props> = () => {
         data-html={true}
         data-for="korea"
       />
-      <Box position="absolute" left="460px" bottom="00px" fontSize="12px">
+      <Box position="absolute" left="460px" bottom="20px" fontSize="12px">
         <Flex mb="3px">
           <Circle
             backgroundColor="#3b6db5"

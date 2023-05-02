@@ -31,10 +31,16 @@ const RankingCard: React.FC<RankingCardProps> = ({
     //   padding="10px"
     // >
     <div>
-      <Flex w="400px">
+      <Flex w="400px" justify="center" marginBottom="30px">
         <Img
-          width="50px"
-          height="40px"
+          // display="flex"
+          // flexDirection="column"
+          // justifyContent="center"
+          // alignItems="center"
+          mr="30px"
+          mt="10px"
+          width="65px"
+          height="65px"
           // border="1px solid black"
           // padding={6}
           src={rank}
@@ -46,19 +52,26 @@ const RankingCard: React.FC<RankingCardProps> = ({
             width="100px"
             height="90px"
             objectFit="cover"
-            borderRadius="10px"
+            borderRadius="8px"
             // className={css.image}
           />
         </Box>
         <Box
           w="200px"
-          textAlign="center"
+          paddingLeft="50px"
+          paddingTop="20px"
+          textAlign="left"
           // p="10%"
-          fontWeight={500}
-          fontSize="20px"
+          fontWeight={700}
+          display="flex"
+          flexDirection="column"
+          // alignItems="center"
+          fontSize="17px"
         >
           {name}
-          <Text fontSize="11px">{comment}</Text>
+          <Text fontSize="11px" pt="5px">
+            {comment}
+          </Text>
         </Box>
       </Flex>
     </div>

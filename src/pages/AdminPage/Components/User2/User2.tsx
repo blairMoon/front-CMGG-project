@@ -15,24 +15,43 @@ const User2: React.FC<Props> = (props: Props) => {
     <div>
       <div style={{ height: "290px", width: "100%" }}>
         <span className={css.h1}>New user count in the last 6 months</span>
+        <span
+          style={{
+            display: "block",
+            paddingTop: "5px",
+            paddingLeft: "10px",
+            fontSize: "14px",
+            color: "#595959",
+          }}
+        >
+          최근 6개월간 신규 회원 수
+        </span>
         <NewMemberChart data={dataNewMember} />
       </div>
-      <div style={{ display: "flex", width: "100%" }}>
-        <div style={{ marginTop: "15px", height: "300px", width: "800px" }}>
+      <div style={{ display: "flex", width: "100%", marginTop: "50px" }}>
+        <div style={{ height: "300px", width: "800px" }}>
           <span className={css.h1}>Ghost member Chart</span>
           <span
-            style={{ display: "block", marginTop: "10px", paddingLeft: "10px" }}
+            style={{
+              display: "block",
+              marginTop: "5px",
+              paddingLeft: "15px",
+              fontSize: "14px",
+              color: "#595959",
+            }}
           >
             현재 유령 회원 비율
           </span>
           <GhostChart data={dataGhost} colors={["pink", "blue"]} />
         </div>
-        <div style={{ marginTop: "40px", height: "290px", width: "1500px" }}>
+        <div style={{ marginTop: "30px", height: "290px", width: "1500px" }}>
           <span
             style={{
               display: "block",
-              paddingTop: "20px",
-              paddingRight: "10px",
+              paddingTop: "5px",
+              paddingLeft: "30px",
+              fontSize: "14px",
+              color: "#595959",
             }}
           >
             연간 유령 회원 비율 추이

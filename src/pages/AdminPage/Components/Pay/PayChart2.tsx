@@ -11,7 +11,7 @@ interface CountryData {
 interface MyResponsiveStickProps {
   data: CountryData[];
 }
-export const dataPay: CountryData[] = [
+export const dataPay2: CountryData[] = [
   {
     id: "1",
     country: "1월",
@@ -118,18 +118,18 @@ const MyResponsiveBar: React.FC<MyResponsiveStickProps> = ({ data }) => (
     valueScale={{ type: "linear" }}
     indexScale={{ type: "band", round: true }}
     colors={[
-      "#8eb5dc",
-      "#8cc0e6",
-      "#89cdf3",
-      "#8ccfde",
-      "#8dcdcf",
-      "#90cdc4",
-      "#93cdb5",
-      "#95caa7",
-      "#a9d1a6",
-      "#bdd8a9",
-      "#d0deaa",
-      "#e4e8a6",
+      "#f5efa6",
+      "#f5dea0",
+      "#f3d197",
+      "#f2c194",
+      "#efb38f",
+      "#e69a82",
+      "#e9a390",
+      "#eda2a0",
+      "#eea3ac",
+      "#eba5c5",
+      "#eba5c5",
+      "#d7a2c2",
     ]}
     // fill={[
     //   {
