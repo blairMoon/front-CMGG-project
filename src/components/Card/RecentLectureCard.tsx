@@ -73,7 +73,7 @@ const RecentLectureCard: React.FC = () => {
           <HStack justifyContent="space-between" fontSize="12px" pb="1">
             <Box>진도율: 14/18강 (77.78%)</Box>
             <Box color="#bababa" fontWeight="600">
-              2달 전
+              1일 전
             </Box>
           </HStack>
           <Box>

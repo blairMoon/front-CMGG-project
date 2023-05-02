@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, HStack, useColorMode } from "@chakra-ui/react";
 
 import { BsCheckCircleFill, BsFillPlayCircleFill } from "react-icons/bs";
 
@@ -26,6 +26,7 @@ const VideoList: React.FC<VideoListProps> = ({
   resetCompleted,
 }) => {
   const navigate = useNavigate();
+  const { colorMode } = useColorMode();
 
   const minutes = Math.floor(videoLength / 60); // 분
   const seconds = videoLength % 60; // 초
@@ -39,6 +40,7 @@ const VideoList: React.FC<VideoListProps> = ({
         p="2"
         borderRadius="lg"
         bg={numColor}
+        color={colorMode === "light" ? "#383838" : "#383838"}
         _hover={{ cursor: "pointer", background: "#dfe8f5" }}
         onClick={() => {
           navigate(`/lectureplay/${lectureId}/${index}`);
