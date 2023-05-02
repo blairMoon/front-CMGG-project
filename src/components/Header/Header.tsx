@@ -137,135 +137,356 @@ export default function WithSubnavigation() {
         position: "fixed",
         zIndex: "1000",
         width: "100%",
+        // margin: "0 auto",
       }}
       ref={headerRef}
     >
       <div className={css.headerContainer}>
-        <Box>
+        <Flex
+          bg={useColorModeValue("white", "gray.800")}
+          color={useColorModeValue("gray.600", "white")}
+          minH={"60px"}
+          mx={"auto"}
+          maxW={"1400px"}
+          px={{ base: 4 }}
+          justify="space-between"
+          alignItems={"end"}
+        >
+          <Box
+            flex={{ base: 1, md: "auto" }}
+            ml={{ base: -2 }}
+            display={{ base: "flex", md: "none" }}
+          >
+            <Link
+              href="/"
+              width="120px"
+              minW="120px"
+              h="60px"
+              pl="15px"
+              mr="30px"
+            >
+              <Image
+                src={useColorModeValue(
+                  "/images/CGLOGO.png",
+                  "/images/WhiteLOGO2.png"
+                )}
+              />
+            </Link>
+          </Box>
+
           <Flex
-            bg={useColorModeValue("white", "gray.800")}
-            color={useColorModeValue("gray.600", "white")}
-            minH={"60px"}
-            mx={"auto"}
-            maxW={"1400px"}
-            px={{ base: 4 }}
+            display={{ base: "none", md: "flex" }}
+            ml={10}
+            w="60vw"
+            mt={2}
             alignItems={"center"}
           >
-            <Flex
-              flex={{ base: 1, md: "auto" }}
-              ml={{ base: -2 }}
-              display={{ base: "flex", md: "none" }}
-              alignItems={"center"}
-            >
-              <Link
-                href="/"
-                width="120px"
-                minW="120px"
-                h="60px"
-                pl="15px"
-                mr="30px"
-              >
-                <Image
-                  src={useColorModeValue(
-                    "/images/CGLOGO.png",
-                    "/images/WhiteLOGO2.png"
-                  )}
-                />
-              </Link>
-            </Flex>
-            <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-              <Flex
-                display={{ base: "none", md: "flex" }}
-                ml={10}
-                w="60vw"
-                mt={2}
-                alignItems={"center"}
-              >
-                <Link href="/" width="230px" minW="230px" pl="15px" mr="30px">
-                  <Image
-                    src={useColorModeValue(
-                      "/images/LOGO2.png",
-                      "/images/LOGOw.png"
-                    )}
-                  />
-                </Link>
-                <InputGroup w="40vw" maxW="350px">
-                  <Input
-                    w="100%"
-                    placeholder="보고싶은 강의를 검색하세용"
-                    fontSize="13px"
-                    type="text"
-                    className="input"
-                    border="none"
-                    backgroundColor={
-                      colorMode === "light"
-                        ? "rgb(247 247 250)"
-                        : "rgb(247 247 250)"
-                    }
-                    color={
-                      colorMode === "light"
-                        ? "blackAlpha.800"
-                        : "blackAlpha.800"
-                    }
-                    _placeholder={
-                      colorMode === "light"
-                        ? {
-                            color: "rgb(155, 155, 155)",
-                          }
-                        : {
-                            color: "rgb(155, 155, 155)",
-                          }
-                    }
-                    _focus={{ outline: "none" }}
-                    borderRadius="2xl"
-                    onChange={(e) => {
-                      setContext(e.target.value);
-                    }}
-                    onKeyDown={(
-                      event: React.KeyboardEvent<HTMLInputElement>
-                    ) => {
-                      if (event.keyCode === 13) {
-                        gotoLectures();
+            <Link href="/" width="230px" minW="230px" pl="15px" mr="30px">
+              <Image
+                src={useColorModeValue(
+                  "/images/LOGO2.png",
+                  "/images/LOGOw.png"
+                )}
+              />
+            </Link>
+            <InputGroup w="40vw" maxW="350px">
+              <Input
+                w="100%"
+                placeholder="보고싶은 강의를 검색하세용"
+                fontSize="13px"
+                type="text"
+                className="input"
+                border="none"
+                backgroundColor={
+                  colorMode === "light"
+                    ? "rgb(247 247 250)"
+                    : "rgb(247 247 250)"
+                }
+                color={
+                  colorMode === "light" ? "blackAlpha.800" : "blackAlpha.800"
+                }
+                _placeholder={
+                  colorMode === "light"
+                    ? {
+                        color: "rgb(155, 155, 155)",
                       }
-                    }}
-                  />
+                    : {
+                        color: "rgb(155, 155, 155)",
+                      }
+                }
+                _focus={{ outline: "none" }}
+                borderRadius="2xl"
+                onChange={(e) => {
+                  setContext(e.target.value);
+                }}
+                onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {
+                  if (event.keyCode === 13) {
+                    gotoLectures();
+                  }
+                }}
+              />
 
-                  <InputRightElement
-                    height="100%"
-                    justifyContent="center"
-                    alignItems="center"
-                    display="flex"
-                  >
-                    <Button
-                      borderRadius="50%"
-                      type="button"
-                      className="Button"
-                      border="none"
-                      backgroundColor="#003c93;"
-                      size="sm"
-                      width="30px"
-                      onClick={() => {
-                        gotoLectures();
-                      }}
-                    >
-                      <span
-                        style={{ display: "inline-block", fontSize: "16px" }}
+              <InputRightElement
+                height="100%"
+                justifyContent="center"
+                alignItems="center"
+                display="flex"
+              >
+                <Button
+                  borderRadius="50%"
+                  type="button"
+                  className="Button"
+                  border="none"
+                  backgroundColor="#003c93;"
+                  size="sm"
+                  width="30px"
+                  onClick={() => {
+                    gotoLectures();
+                  }}
+                >
+                  <span style={{ display: "inline-block", fontSize: "16px" }}>
+                    <AiOutlineSearch color="white" />
+                  </span>
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </Flex>
+
+          {token ? (
+            <Box display="flex">
+              <IconButton
+                mr="15px"
+                icon={
+                  colorMode === "light" ? (
+                    <div>🌙&nbsp; Dark</div>
+                  ) : (
+                    <div>🌞&nbsp; Light</div>
+                  )
+                }
+                px="3"
+                fontSize="13px"
+                aria-label="Toggle color mode"
+                onClick={toggleColorMode}
+                marginLeft="1rem"
+                _hover={
+                  colorMode === "light"
+                    ? { backgroundColor: "#333", color: "#eee" }
+                    : { backgroundColor: "#eee", color: "#333" }
+                }
+              />
+              <BsPlay
+                style={{
+                  fontSize: 33,
+                  marginRight: 14,
+                }}
+              />
+              <a href="/mypage/cart">
+                <IoCartOutline
+                  style={{
+                    fontSize: 30,
+                    marginRight: 20,
+                  }}
+                />
+              </a>
+              {/* <BsPersonVideo3 style={{ fontSize: 30, color: "#003c93" }} /> */}
+              <Menu
+                isOpen={isOpenToggle}
+                onClose={() => setIsOpenToggle(false)}
+                placement="bottom-start"
+              >
+                <MenuButton
+                  as="span"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={() => handleButtonClick()}
+                  style={{ cursor: "pointer" }}
+                >
+                  <a href="/mypage">
+                    <Avatar
+                      icon={<RiHomeHeartLine size={20} />}
+                      style={{ width: "32px", height: "32px" }}
+                      src={avatar}
+                    />
+                  </a>
+                </MenuButton>
+                <MenuList
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  css={{
+                    position: "absolute",
+                    top: "calc(100% + -8px)",
+                    right: "-70px",
+                    boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
+                    border: `1px solid ${dividerColor}`,
+                    borderRadius: "14px",
+                    overflow: "hidden",
+                    "::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: "-10px",
+                      left: "20px",
+                      width: "20px",
+                      height: "20px",
+                      transform: "skew(-45deg)",
+                      background: "white",
+                      border: `1px solid ${dividerColor}`,
+                      borderBottom: "none",
+                      borderTop: "none",
+                    },
+                  }}
+                >
+                  <div style={{ border: `1px solid ${dividerColor}` }}>
+                    <MenuGroup title="대시보드" fontSize="15px">
+                      <Link
+                        href="/mypage"
+                        style={{ textDecoration: "none", border: "none" }}
                       >
-                        <AiOutlineSearch color="white" />
-                      </span>
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </Flex>
-            </Flex>
+                        <MenuItem
+                          fontSize="15px"
+                          fontWeight="500"
+                          padding="10px 10px"
+                        >
+                          <BsFileEarmarkText style={{ marginRight: "10px" }} />
+                          학습 관리
+                        </MenuItem>
+                      </Link>
+                    </MenuGroup>
+                    <MenuDivider color={dividerColor} />
+                    <MenuGroup title="수강강의" fontSize="15px">
+                      <Link
+                        href="/mypage/lecture"
+                        style={{ textDecoration: "none", border: "none" }}
+                      >
+                        <MenuItem
+                          fontSize="15px"
+                          fontWeight="500"
+                          padding="10px 10px"
+                        >
+                          <BsPlayCircle style={{ marginRight: "10px" }} />
+                          수강중인 강의
+                        </MenuItem>
+                      </Link>
+                    </MenuGroup>
+                    <MenuDivider color={dividerColor} />
+                    <MenuGroup title="수강신청 관리" fontSize="15px">
+                      <Link
+                        href="/mypage/payment"
+                        style={{ textDecoration: "none", border: "none" }}
+                      >
+                        <MenuItem
+                          fontSize="15px"
+                          fontWeight="500"
+                          padding="10px 10px"
+                        >
+                          <MdPayment style={{ marginRight: "10px" }} />
+                          결제 내역
+                        </MenuItem>
+                      </Link>
+                      <Link
+                        href="/mypage/cart"
+                        style={{ textDecoration: "none", border: "none" }}
+                      >
+                        <MenuItem
+                          fontSize="15px"
+                          fontWeight="500"
+                          padding="10px 10px"
+                        >
+                          <AiOutlineShoppingCart
+                            style={{ marginRight: "10px" }}
+                          />
+                          수강바구니
+                        </MenuItem>
+                      </Link>
+                    </MenuGroup>
+                    <MenuDivider color={dividerColor} />
+                    {!userLoading && user?.isInstructor ? (
+                      <MenuGroup title="강사" fontSize="15px">
+                        <Link
+                          href="/instructor"
+                          style={{ textDecoration: "none", border: "none" }}
+                        >
+                          <MenuItem
+                            fontSize="15px"
+                            fontWeight="500"
+                            padding="10px 10px"
+                          >
+                            <BsFileEarmarkText
+                              style={{ marginRight: "10px" }}
+                            />
+                            대시 보드
+                          </MenuItem>
+                        </Link>
+                        <Link
+                          href="/instructor/lecture"
+                          style={{ textDecoration: "none", border: "none" }}
+                        >
+                          <MenuItem
+                            fontSize="15px"
+                            fontWeight="500"
+                            padding="10px 10px"
+                          >
+                            <RiFolderUploadLine
+                              style={{ marginRight: "10px" }}
+                            />
+                            업로드한 강의
+                          </MenuItem>
+                        </Link>
+                        <Link
+                          href="/instructor/lecture/register"
+                          style={{ textDecoration: "none", border: "none" }}
+                        >
+                          <MenuItem
+                            fontSize="15px"
+                            fontWeight="500"
+                            padding="10px 10px"
+                          >
+                            <RiFolderUploadLine
+                              style={{ marginRight: "10px" }}
+                            />
+                            강의 업로드
+                          </MenuItem>
+                        </Link>
+                      </MenuGroup>
+                    ) : null}
 
-            <Stack
-              pr="30px"
-              flex={{ base: 1, md: 0 }}
-              justify="flex-end"
-              direction="row"
-              spacing={6}
-            >
+                    <MenuDivider color={dividerColor} />
+                    <MenuGroup title="회원정보" fontSize="15px">
+                      <Link
+                        href="/mypage/editMember"
+                        style={{ textDecoration: "none", border: "none" }}
+                      >
+                        <MenuItem
+                          fontSize="15px"
+                          fontWeight="500"
+                          padding="10px 10px"
+                        >
+                          <FiSettings style={{ marginRight: "10px" }} />
+                          정보수정
+                        </MenuItem>
+                      </Link>
+                      <MenuItem
+                        fontSize="15px"
+                        fontWeight="500"
+                        padding="10px 10px"
+                        onClick={() => {
+                          removeAccessToken();
+                        }}
+                      >
+                        <FiLogOut
+                          size={16}
+                          style={{ marginRight: "10px" }}
+                          onClick={handleLogout}
+                        />
+                        로그아웃
+                      </MenuItem>
+                      {/* </Link> */}
+                    </MenuGroup>
+                  </div>
+                </MenuList>
+              </Menu>
+            </Box>
+          ) : (
+            <>
               <IconButton
                 icon={
                   colorMode === "light" ? (
@@ -285,249 +506,30 @@ export default function WithSubnavigation() {
                     : { backgroundColor: "#eee", color: "#333" }
                 }
               />
-              {token ? (
-                <Flex>
-                  <BsPlay
-                    style={{
-                      fontSize: 33,
-                      marginRight: 14,
-                    }}
-                  />
-                  <a href="/mypage/cart">
-                    <IoCartOutline
-                      style={{
-                        fontSize: 30,
-                        marginRight: 20,
-                      }}
-                    />
-                  </a>
-                  {/* <BsPersonVideo3 style={{ fontSize: 30, color: "#003c93" }} /> */}
-                  <Menu
-                    isOpen={isOpenToggle}
-                    onClose={() => setIsOpenToggle(false)}
-                    placement="bottom-start"
-                  >
-                    <MenuButton
-                      as="span"
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      onClick={() => handleButtonClick()}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <a href="/mypage">
-                        <Avatar
-                          icon={<RiHomeHeartLine size={20} />}
-                          style={{ width: "32px", height: "32px" }}
-                          src={avatar}
-                        />
-                      </a>
-                    </MenuButton>
-                    <MenuList
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      css={{
-                        position: "absolute",
-                        top: "calc(100% + -8px)",
-                        right: "-70px",
-                        boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.5)",
-                        border: `1px solid ${dividerColor}`,
-                        borderRadius: "14px",
-                        overflow: "hidden",
-                        "::before": {
-                          content: '""',
-                          position: "absolute",
-                          top: "-10px",
-                          left: "20px",
-                          width: "20px",
-                          height: "20px",
-                          transform: "skew(-45deg)",
-                          background: "white",
-                          border: `1px solid ${dividerColor}`,
-                          borderBottom: "none",
-                          borderTop: "none",
-                        },
-                      }}
-                    >
-                      <div style={{ border: `1px solid ${dividerColor}` }}>
-                        <MenuGroup title="대시보드" fontSize="15px">
-                          <Link
-                            href="/mypage"
-                            style={{ textDecoration: "none", border: "none" }}
-                          >
-                            <MenuItem
-                              fontSize="15px"
-                              fontWeight="500"
-                              padding="10px 10px"
-                            >
-                              <BsFileEarmarkText
-                                style={{ marginRight: "10px" }}
-                              />
-                              학습 관리
-                            </MenuItem>
-                          </Link>
-                        </MenuGroup>
-                        <MenuDivider color={dividerColor} />
-                        <MenuGroup title="수강강의" fontSize="15px">
-                          <Link
-                            href="/mypage/lecture"
-                            style={{ textDecoration: "none", border: "none" }}
-                          >
-                            <MenuItem
-                              fontSize="15px"
-                              fontWeight="500"
-                              padding="10px 10px"
-                            >
-                              <BsPlayCircle style={{ marginRight: "10px" }} />
-                              수강중인 강의
-                            </MenuItem>
-                          </Link>
-                        </MenuGroup>
-                        <MenuDivider color={dividerColor} />
-                        <MenuGroup title="수강신청 관리" fontSize="15px">
-                          <Link
-                            href="/mypage/payment"
-                            style={{ textDecoration: "none", border: "none" }}
-                          >
-                            <MenuItem
-                              fontSize="15px"
-                              fontWeight="500"
-                              padding="10px 10px"
-                            >
-                              <MdPayment style={{ marginRight: "10px" }} />
-                              결제 내역
-                            </MenuItem>
-                          </Link>
-                          <Link
-                            href="/mypage/cart"
-                            style={{ textDecoration: "none", border: "none" }}
-                          >
-                            <MenuItem
-                              fontSize="15px"
-                              fontWeight="500"
-                              padding="10px 10px"
-                            >
-                              <AiOutlineShoppingCart
-                                style={{ marginRight: "10px" }}
-                              />
-                              수강바구니
-                            </MenuItem>
-                          </Link>
-                        </MenuGroup>
-                        <MenuDivider color={dividerColor} />
-                        {!userLoading && user?.isInstructor ? (
-                          <MenuGroup title="강사" fontSize="15px">
-                            <Link
-                              href="/instructor"
-                              style={{ textDecoration: "none", border: "none" }}
-                            >
-                              <MenuItem
-                                fontSize="15px"
-                                fontWeight="500"
-                                padding="10px 10px"
-                              >
-                                <BsFileEarmarkText
-                                  style={{ marginRight: "10px" }}
-                                />
-                                대시 보드
-                              </MenuItem>
-                            </Link>
-                            <Link
-                              href="/instructor/lecture"
-                              style={{ textDecoration: "none", border: "none" }}
-                            >
-                              <MenuItem
-                                fontSize="15px"
-                                fontWeight="500"
-                                padding="10px 10px"
-                              >
-                                <RiFolderUploadLine
-                                  style={{ marginRight: "10px" }}
-                                />
-                                업로드한 강의
-                              </MenuItem>
-                            </Link>
-                            <Link
-                              href="/instructor/lecture/register"
-                              style={{ textDecoration: "none", border: "none" }}
-                            >
-                              <MenuItem
-                                fontSize="15px"
-                                fontWeight="500"
-                                padding="10px 10px"
-                              >
-                                <RiFolderUploadLine
-                                  style={{ marginRight: "10px" }}
-                                />
-                                강의 업로드
-                              </MenuItem>
-                            </Link>
-                          </MenuGroup>
-                        ) : null}
-
-                        <MenuDivider color={dividerColor} />
-                        <MenuGroup title="회원정보" fontSize="15px">
-                          <Link
-                            href="/mypage/editMember"
-                            style={{ textDecoration: "none", border: "none" }}
-                          >
-                            <MenuItem
-                              fontSize="15px"
-                              fontWeight="500"
-                              padding="10px 10px"
-                            >
-                              <FiSettings style={{ marginRight: "10px" }} />
-                              정보수정
-                            </MenuItem>
-                          </Link>
-                          <MenuItem
-                            fontSize="15px"
-                            fontWeight="500"
-                            padding="10px 10px"
-                            onClick={() => {
-                              removeAccessToken();
-                            }}
-                          >
-                            <FiLogOut
-                              size={16}
-                              style={{ marginRight: "10px" }}
-                              onClick={handleLogout}
-                            />
-                            로그아웃
-                          </MenuItem>
-                          {/* </Link> */}
-                        </MenuGroup>
-                      </div>
-                    </MenuList>
-                  </Menu>
-                </Flex>
-              ) : (
-                <>
-                  <Button
-                    as="a"
-                    fontSize="sm"
-                    fontWeight={600}
-                    variant="link"
-                    href="/login"
-                    _hover={{ textDecoration: "none", color: "#003c93" }}
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    color="#003c93"
-                    as="a"
-                    fontSize="sm"
-                    fontWeight={600}
-                    variant="link"
-                    href="/signup"
-                    _hover={{ textDecoration: "none", fontWeight: "700" }}
-                  >
-                    Sign Up
-                  </Button>
-                </>
-              )}
-            </Stack>
-          </Flex>
-        </Box>
+              <Button
+                as="a"
+                fontSize="sm"
+                fontWeight={600}
+                variant="link"
+                href="/login"
+                _hover={{ textDecoration: "none", color: "#003c93" }}
+              >
+                Login
+              </Button>
+              <Button
+                color="#003c93"
+                as="a"
+                fontSize="sm"
+                fontWeight={600}
+                variant="link"
+                href="/signup"
+                _hover={{ textDecoration: "none", fontWeight: "700" }}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
+        </Flex>
       </div>
       <Box h="20">
         <Flex
