@@ -345,6 +345,19 @@ export const getMyProfile = () => {
   return instance.get("users/myprofile").then((res) => res.data);
 };
 
+// export const saveavartar = (data: UserData) =>
+//   instance
+//     .post("users/saveavartar", data, {
+//       headers: {
+//         "X-CSRFToken": Cookies.get("csrftoken"),
+//       },
+//     })
+//     .then((response) => response.data);
+
+// export const getavartar = () => {
+//   return instance.get(`users/getavartar`).then((res) => res.data);
+// };
+
 export const changeProfileUser = (data: UserData) => {
   return instance.put("users/myprofile", data).then((res) => res.data);
 };
