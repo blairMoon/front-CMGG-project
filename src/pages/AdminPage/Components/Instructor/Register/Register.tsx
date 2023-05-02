@@ -16,15 +16,21 @@ import {
   IconButton,
   Flex,
 } from "@chakra-ui/react";
+import { RecoilState, atom } from "recoil";
 import { SearchIcon } from "@chakra-ui/icons";
 import ModalRegister from "./ModalRegisterAdmin/ModalRegisterAdmin";
 import ModalSuccess from "./ModalSuccess/ModalSuccess";
+import { booleanOpenState } from "./../../../../../../src/atoms";
+
+import { useRecoilState, useRecoilValue } from "recoil";
+
 type Data = {
   id: number;
   title: string;
   author: string;
   date: string;
   introduction: string;
+  isDone: null | boolean;
 };
 const Board = () => {
   const data = [
@@ -35,6 +41,7 @@ const Board = () => {
       date: "2023-04-25",
       introduction:
         "안녕하세요 저는 뚜니입니다 저는 프론트엔드개발자이며 리액트를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
     },
     {
       id: 2,
@@ -43,6 +50,7 @@ const Board = () => {
       date: "2023-04-24",
       introduction:
         "안녕하세요 저는 현수입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
     },
     {
       id: 3,
@@ -51,19 +59,64 @@ const Board = () => {
       date: "2023-04-23",
       introduction:
         "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
+    },
+    {
+      id: 4,
+      title: "타스",
+      author: "과녈",
+      date: "2023-04-23",
+      introduction:
+        "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
+    },
+    {
+      id: 5,
+      title: "타스",
+      author: "과녈",
+      date: "2023-04-23",
+      introduction:
+        "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
+    },
+    {
+      id: 6,
+      title: "타스",
+      author: "과녈",
+      date: "2023-04-23",
+      introduction:
+        "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
+      isDone: null,
     },
   ];
 
+  const [booleanOpen, setBooleanOpen] = useRecoilState(booleanOpenState);
   const [selectedData, setSelectedData] = useState<Data | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [data1, setData1] = useState<Data[]>(data);
   const handleOpenModal = (data: Data) => {
     setSelectedData(data);
-    setIsOpen(true);
+    setBooleanOpen(true);
   };
+  const [accept, setAccept] = useState<null | boolean>(null);
+
+  const handleAccept = (id: number, accept: boolean | null) => {
+    const newData = data1.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          isDone: accept,
+        };
+      } else {
+        return item;
+      }
+    });
+    setData1(newData);
+  };
+
   const [isOpenSucess, setIsOpenSucess] = useState(false);
   const handleCloseModal = () => {
     setIsOpenSucess(false);
-    setIsOpen(false);
+    setBooleanOpen(false);
     setSelectedData(null);
   };
   return (
@@ -80,22 +133,34 @@ const Board = () => {
         <Table
           ml="100px"
           variant="simple"
-          width="100%"
-
+          width="900px"
+          // color="rgb(40,40,40)"
+          // display="flex"
           // alignItems="center"
           // justifyContent="center"
         >
-          <Thead textAlign="center">
-            <Tr>
-              <Th>ID</Th>
-              <Th>신청분야</Th>
-              <Th>작성자</Th>
-              <Th>날짜</Th>
-              <Th>현재 상태</Th>
+          <Thead>
+            <Tr bg="#c6dbef">
+              <Th w="10%" color="rgb(100,100,100)">
+                ID
+              </Th>
+              <Th w="15%" color="rgb(100,100,100)">
+                신청분야
+              </Th>
+              <Th w="15%" color="rgb(100,100,100)">
+                작성자
+              </Th>
+
+              <Th w="20%" color="rgb(100,100,100)">
+                날짜
+              </Th>
+              <Th w="15%" color="rgb(100,100,100)">
+                현재 상태
+              </Th>
             </Tr>
           </Thead>
           <Tbody>
-            {data.map((row) => (
+            {data1.map((row) => (
               <Tr
                 key={row.id}
                 onClick={() => handleOpenModal(row)}
@@ -105,11 +170,20 @@ const Board = () => {
                 <Td>{row.title}</Td>
                 <Td>{row.author}</Td>
                 <Td>{row.date}</Td>
-
                 <Td>
-                  <Button colorScheme="gray" marginRight="10px" size={"sm"}>
-                    미처리
-                  </Button>
+                  {row.isDone === null ? (
+                    <Button colorScheme="gray" marginRight="10px" size={"sm"}>
+                      미처리
+                    </Button>
+                  ) : row.isDone === true ? (
+                    <Button colorScheme="blue" marginLeft="0px" size={"sm"}>
+                      수락
+                    </Button>
+                  ) : (
+                    <Button colorScheme="red" marginLeft="0px" size={"sm"}>
+                      거부
+                    </Button>
+                  )}
                 </Td>
               </Tr>
             ))}
@@ -127,9 +201,14 @@ const Board = () => {
         심사 처리
       </Button>
       <ModalRegister
-        isOpen={isOpen}
+        isOpen={booleanOpen}
         data={selectedData}
         onClose={handleCloseModal}
+        handleAccept={(id: number, accept: boolean | null) => {
+          if (selectedData) {
+            handleAccept(selectedData.id, accept);
+          }
+        }}
       />
       <ModalSuccess
         isOpen={isOpenSucess}

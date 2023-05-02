@@ -27,7 +27,7 @@ import Register from "./pages/AdminPage/Components/Instructor/Register/Register"
 import InstructorChart from "./pages/AdminPage/Components/Instructor/InstrouctorChart/InstructorChart";
 import KakaoConfirm from "./components/SocialLogin/KakaoConfirm";
 import NaverConfirm from "./components/SocialLogin/NaverConfirm";
-
+import Pay2 from "./../src/pages/AdminPage/Components/Pay/Pay2";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -145,7 +145,8 @@ const router = createBrowserRouter([
       { path: "instructor/2", element: <InstructorChart /> },
       { path: "lectures", element: <User /> },
 
-      { path: "pay", element: <Pay /> },
+      { path: "pay/1", element: <Pay /> },
+      { path: "pay/2", element: <Pay2 /> },
     ],
   },
 ]);

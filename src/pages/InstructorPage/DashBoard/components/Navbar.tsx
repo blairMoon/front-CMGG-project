@@ -37,10 +37,11 @@ const Navbar: React.FC<Props> = ({ refetch }: Props) => {
       <Flex alignItems="center">
         <Tooltip label="Refetch">
           <IconButton
+            mx={1}
             onClick={refetch}
             icon={<RepeatIcon />}
-            mx={1}
             aria-label="refresh"
+            variant={"ghost"}
           />
         </Tooltip>
         <ActiveIconButton
@@ -48,8 +49,10 @@ const Navbar: React.FC<Props> = ({ refetch }: Props) => {
           mx={3}
           aria-label="Notifications"
           testId="notiBtn"
-          activeColor={useColorModeValue("rgb(255,70,40)", "yellow")}
+          activeBgColor={useColorModeValue("rgb(100,110,255)", "yellow")}
+          activeColor={useColorModeValue("white", "black")}
           isActive={isActive}
+          variant={"ghost"}
         />
         <Spacer />
       </Flex>
