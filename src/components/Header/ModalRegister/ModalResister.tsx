@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useForm, RegisterOptions } from "react-hook-form";
 import {
   Modal,
   ModalOverlay,
@@ -21,6 +22,7 @@ import {
   VStack,
   ColorMode,
 } from "@chakra-ui/react";
+import css from "../ModalRegister/ModalResister.module.scss";
 import { BiRegistered } from "react-icons/bi";
 import { imgTypes } from "../../../constant";
 import { useDropzone } from "react-dropzone";
@@ -28,6 +30,20 @@ import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 
 import { AiOutlineCheckCircle } from "react-icons/ai";
 interface Props {}
+
+interface instructorpProps {
+  initialValues: {
+    introduce: string;
+    applicationField: string;
+    image: File | null;
+  };
+  onSubmit: (data: FormData) => void;
+}
+interface InstructorData {
+  introduce: string;
+  applicationField: string;
+  image: File | null;
+}
 
 const ModalRegister: React.FC<Props> = (props: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,6 +57,28 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   const [inputStyle, setInputStyle] = useState({});
   const nameRef = useRef(null);
   const fieldRef = useRef(null);
+  const initialValues = {
+    introduce: "",
+    applicationField: "",
+    image: null,
+  };
+
+  const {
+    getValues,
+    register,
+    setValue,
+    handleSubmit,
+    watch,
+    trigger,
+    formState: { errors },
+  } = useForm<InstructorData>({
+    defaultValues: initialValues,
+  });
+
+  const usernameRegisterOptions: RegisterOptions = {
+    required: true,
+    pattern: /^[a-z0-9]{5,20}$/i,
+  };
 
   const {
     acceptedFiles: imgFile,
@@ -56,10 +94,17 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
 
       if (!isRightType || acceptedFiles.length > 1) {
         alert("이미지 파일 하나만 등록이 가능합니다! \n(jpg, png, jpeg, webp)");
+      } else {
+        setValue("image", acceptedFiles[0]); // 이미지 파일을 폼 데이터로 설정
       }
     },
   });
-
+  const onSubmit = (data: InstructorData) => {
+    console.log("Submitted data:", data);
+  };
+  const getImgInputPropsMerged = getImgInputProps({
+    ...register("image", { required: true }),
+  });
   const img = imgFile.map((file: File, idx: number) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -75,6 +120,11 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
       </HStack>
     );
   });
+  useEffect(() => {
+    if (imgFile.length > 0) {
+      setValue("image", imgFile[0]); // 이미지 파일을 폼 데이터로 설정
+    }
+  }, [imgFile, setValue]);
   return (
     <div>
       <Button
@@ -100,7 +150,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
           <ModalHeader>강사 신청</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb="0">
@@ -108,17 +158,29 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
               <FormLabel>자기 소개</FormLabel>
               <Input
                 height="100px"
-                ref={nameRef}
                 placeholder="Introduce"
+                {...register("introduce", {
+                  required: true,
+                })}
                 // onBlur={() => setInputStyle({})}
               />
+              {errors.introduce && errors.introduce.type === "required" && (
+                <p className={css.errors}>자기 소개는 필수 입력값입니다.</p>
+              )}
             </FormControl>
             <FormControl mt={4}>
               <FormLabel>신청 분야</FormLabel>
               <Input
                 placeholder="Application Field"
+                {...register("applicationField", {
+                  required: true,
+                })}
                 // onBlur={() => setInputStyle({})}
               />
+              {errors.applicationField &&
+                errors.applicationField.type === "required" && (
+                  <p className={css.errors}>신청 분야는 필수 입력값입니다.</p>
+                )}
             </FormControl>
 
             {/* <FormControl mt={4}>
@@ -136,7 +198,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
                 p="7"
                 {...getImgRootProps({ className: "dropzone" })}
               >
-                <input {...getImgInputProps()} aria-labelledby="img" />
+                <input {...getImgInputPropsMerged} aria-labelledby="img" />
                 <p style={{ color: "#777" }}>
                   이미지는 클릭 또는 드래그해서 올려주세요 <br />
                   (jpg, png, jpeg, webp)
@@ -148,11 +210,19 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
                 </Text>
                 {img}
               </aside>
+              {errors.image && errors.image.type === "required" && (
+                <p className={css.errors}>이미지는 필수 입력값입니다.</p>
+              )}
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button backgroundColor="#003c93" mr={3} color="white">
+            <Button
+              backgroundColor="#003c93"
+              mr={3}
+              color="white"
+              onClick={handleSubmit(onSubmit)}
+            >
               신청하기
             </Button>
             <Button onClick={onClose}>취소</Button>

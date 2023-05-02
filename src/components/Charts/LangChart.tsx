@@ -44,19 +44,19 @@ export const data: LangChartData[] = [
     id: "React",
     label: "react",
     value: 6,
-    category: "mobile",
+    category: "frontend",
   },
   {
     id: "Swift",
     label: "swift",
-    value: 2,
+    value: 3,
     category: "mobile",
   },
   {
     id: "JS",
     label: "javascript",
-    value: 6,
-    category: "mobile",
+    value: 5,
+    category: "frontend",
   },
 ];
 

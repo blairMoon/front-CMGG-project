@@ -147,7 +147,7 @@ const Login: React.FC = () => {
               >
                 로그인
               </Button>
-              <HStack
+              {/* <HStack
                 fontSize={"sm"}
                 pt={3}
                 pl={3}
@@ -157,7 +157,7 @@ const Login: React.FC = () => {
                 <Link to={"/find/id"}>아이디 찾기</Link>
                 <Text>|</Text>
                 <Link to={"/find/password"}>비밀번호 찾기</Link>
-              </HStack>
+              </HStack> */}
             </form>
             <SocialLogin />
           </div>
