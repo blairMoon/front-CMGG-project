@@ -56,6 +56,7 @@ import css from "./Header.module.scss";
 import { removeAccessToken } from "../../services/Token";
 import ModalRegister from "./ModalRegister/ModalResister";
 import useUser from "../../components/Mypage/MyEditMember/UseUser";
+import { useQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { avatarState } from "../../atoms";
 export default function WithSubnavigation() {
@@ -95,6 +96,13 @@ export default function WithSubnavigation() {
   function handleCallback() {
     console.log("Callback called");
   }
+  // const { data: avatarData, isError: avatarError } = useQuery(
+  //   ["userAvatar", token],
+  //   () => getavatar(token),
+  //   {
+  //     enabled: !!token, // 토큰이 있을 때만 쿼리를 실행합니다.
+  //   }
+  // );
 
   return (
     <div>

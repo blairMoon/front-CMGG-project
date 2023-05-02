@@ -142,8 +142,9 @@ const MyEditMember: React.FC = () => {
       </HStack>
     );
   });
-  // const onAvatarChange = () => {
+  //const onAvatarChange = async () => {
   //   if (_img) {
+  //     await saveAvatar(_img);
   //     setAvatar(_img);
   //   }
   // };
@@ -173,13 +174,6 @@ const MyEditMember: React.FC = () => {
                   </Box>
 
                   <HStack w="100%" h="100%" pb="8">
-                    {/* <Box>
-                      <Avatar
-                        size="2xl"
-                        bg="#CED4DA"
-                        icon={<RiHomeHeartLine size={90} />}
-                      />
-                    </Box> */}
                     <Box {...getImgRootProps()} className={css.dropzone}>
                       <input
                         {...getImgInputProps()}
@@ -196,29 +190,36 @@ const MyEditMember: React.FC = () => {
                         }
                       />
                     </Box>
-                    <Box pl="3">
-                      <Button
-                        // onClick={onAvatarChange}
-                        bg="#003c93"
-                        color="white"
-                        fontSize="14"
-                        p="3"
-                        borderRadius="base"
-                        _hover={{
-                          bg: "#012f70",
-                        }}
+                    <Stack>
+                      <Box
+                        mt={4}
+                        {...getImgRootProps()}
+                        className={css.dropzone}
+                        pl={1}
                       >
-                        변경
-                      </Button>
+                        <input {...getImgInputProps()} />
+                        <Button
+                          onClick={getImgInputProps}
+                          bg="#003c93"
+                          color="white"
+                          fontSize="14"
+                          p="3"
+                          borderRadius="base"
+                          _hover={{
+                            bg: "#012f70",
+                          }}
+                        >
+                          변경
+                        </Button>
+                      </Box>
                       <Box
                         fontSize="12px"
                         color="blackAlpha.500"
                         fontWeight="700"
-                        pt="2"
                       >
                         확장자: png, jpg, jpeg / 용량: 1MB 이하
                       </Box>
-                    </Box>
+                    </Stack>
                   </HStack>
                 </Box>
                 <Box w="50%" h="100%">
