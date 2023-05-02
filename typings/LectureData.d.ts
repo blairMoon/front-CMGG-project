@@ -56,4 +56,5 @@ interface UserData {
   skill: string;
   termsOfUse: String;
   funnel: string;
+  isInstructor: boolean;
 }

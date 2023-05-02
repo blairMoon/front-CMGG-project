@@ -59,3 +59,12 @@ export const booleanAcceptState = atom<AcceptState>({
 //   key: "isDoneAtomFamily",
 //   default: null,
 // });
+interface HeaderProps {
+  height: number;
+  width: number;
+}
+
+export const headerSizeState = atom<HeaderProps>({
+  key: "header",
+  default: { height: 0, width: 0 },
+});
