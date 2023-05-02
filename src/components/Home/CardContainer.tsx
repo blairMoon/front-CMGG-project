@@ -8,10 +8,13 @@ import {
   Flex,
   Text,
   Button,
+  useColorMode,
 } from "@chakra-ui/react";
 import { HiArrowRight } from "react-icons/hi";
+import EmploymentCard from "../Card/EmploymentCard";
 interface Props {}
 const CardContainer: React.FC<Props> = (props: Props) => {
+  const { colorMode } = useColorMode();
   return (
     <div>
       <Grid
@@ -20,12 +23,13 @@ const CardContainer: React.FC<Props> = (props: Props) => {
         gridTemplateColumns={"2fr 1fr"}
         h="600px"
         color="blackAlpha.700"
-        fontWeight="bold"
-        maxW="1100px"
+        maxW="1080px"
         mx="auto"
+        gap="10"
       >
         <GridItem
           bg="#F7F7FA"
+          borderRadius="xl"
           area={"register"}
           display="flex"
           justifyContent="center"
@@ -34,13 +38,16 @@ const CardContainer: React.FC<Props> = (props: Props) => {
           <Box>강의 신청 카드</Box>
         </GridItem>
         <GridItem
-          bg="#769dd6"
+          borderRadius="xl"
+          bg={colorMode === "light" ? "#F7F7FA" : "#c1c1c9"}
           area={"recommend"}
           display="flex"
           justifyContent="center"
           alignItems="center"
         >
-          <Box>추천 채용 공고 카드</Box>
+          <Box w="280px">
+            <EmploymentCard />
+          </Box>
         </GridItem>
       </Grid>
     </div>

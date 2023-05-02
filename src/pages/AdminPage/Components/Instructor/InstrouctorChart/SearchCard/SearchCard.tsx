@@ -38,18 +38,21 @@ const radarIndexBy = "category";
 const SearchCard: React.FC<Props> = (props: Props) => {
   return (
     <div>
-      <InputGroup w="380px" h="50px">
+      <InputGroup w="550px">
         <InputLeftElement
+          mt="5px"
+          // marginTop="5px"
           pointerEvents="none"
           children={<SearchIcon color="gray.300" />}
         />
         <Input
           bg="transparent"
           type="search"
-          fontSize="16px"
+          fontSize="17px"
           placeholder=" 이곳에 이름을 입력해주세요"
           w="100%"
-          border="1px solid transparent"
+          h="50px"
+          border="1px solid #cbd5e1"
         />
       </InputGroup>
 

@@ -22,19 +22,19 @@ const InstructorChart: React.FC<Props> = (props: Props) => {
         <Box
           // border="1px solid black"
           // border="1px solid black"
-          mt="40px"
+          mt="50px"
           // bg="gray.100"
-          borderRadius="20px"
+          borderRadius="10px"
           position="relative"
-          w="35%"
-          h="100%"
+          w="40%"
+          h="490px"
           display="flex"
-          alignItems="center"
+          // alignItems="center"
           justifyContent="center"
         >
           <HighPeople />
         </Box>
-        <Box w="65%" display="flex" justifyContent="center" pt="4%">
+        <Box w="60%" display="flex" justifyContent="center" pt="4%">
           <SearchCard />
         </Box>
       </Flex>

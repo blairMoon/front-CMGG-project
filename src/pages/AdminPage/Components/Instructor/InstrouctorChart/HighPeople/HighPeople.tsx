@@ -27,15 +27,17 @@ interface RankingCardProps {
 
 const HighPeople: React.FC<Props> = (props: Props) => {
   return (
-    <div className={css.div}>
+    <Box p={5} borderRadius="10px" bg="white" border="0.5px solid gray">
       <Heading
-        fontFamily="monospace"
+        // fontFamily="monospace"
         textAlign="center"
-        pt="50px"
-        pb="50px"
-        fontSize="23px"
+        // pt="50px"
+        pb="45px"
+        fontSize="27px"
+        fontWeight={700}
+        color="gray.600"
       >
-        Ranking Top3
+        Instructor Top 3
       </Heading>
       {/* <GiQueenCrown
           color="black"
@@ -60,25 +62,25 @@ const HighPeople: React.FC<Props> = (props: Props) => {
         ></Img> */}
         <RankingCard
           comment="불굴의 8주 연속 1위"
-          rank="https://ifh.cc/g/VrFggs.png"
+          rank="https://ifh.cc/g/sM1l3d.png"
           imageSrc="https://ifh.cc/g/t42vxY.jpg"
           name="남욱김"
         />
         <RankingCard
           comment="코딩가든의 신흥 강자"
-          rank="https://ifh.cc/g/C8gRNS.png"
+          rank="https://ifh.cc/g/pxkal7.png"
           imageSrc="https://ifh.cc/g/wQ8m88.jpg"
           name="관열백"
         />
         <RankingCard
           comment="코딩가든의 얼굴마담"
-          rank="https://ifh.cc/g/cH0TXk.png"
+          rank="https://ifh.cc/g/vJzFTL.png"
           imageSrc="https://ifh.cc/g/cJCznM.jpg"
           name="오뚜니"
         />
         {/* </Flex> */}
       </Box>
-    </div>
+    </Box>
   );
 };
 
