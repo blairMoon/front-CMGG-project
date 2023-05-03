@@ -27,7 +27,7 @@ interface RankingCardProps {
 
 const HighPeople: React.FC<Props> = (props: Props) => {
   return (
-    <Box p={5} borderRadius="10px" bg="white" border="0.5px solid gray">
+    <Box p={5} borderRadius="10px" bg="white">
       <Heading
         // fontFamily="monospace"
         textAlign="center"

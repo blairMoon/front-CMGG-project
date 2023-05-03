@@ -159,7 +159,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
           fontWeight="bold"
           color={useColorModeValue("gray.900", "gray.900")}
         >
-          Coding Gardon
+          Coding Garden
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
@@ -225,14 +225,19 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
             _groupHover={{
               color: "white",
             }}
+            color="black"
             as={icon}
           />
         )}
         <Text
-          _hover={{
+          color="gray.700"
+          _groupHover={{
             color: "white",
-            outline: "none",
           }}
+          // _hover={{
+          //   color: "white",
+          //   outline: "none",
+          // }}
         >
           {name}
         </Text>
@@ -241,7 +246,7 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
           <IconButton
             color="black"
             _hover={{
-              color: "black",
+              color: "gray.700",
               bg: "none",
             }}
             bg="none"
@@ -271,6 +276,7 @@ const NavItem = ({ icon, name, subItems, ...rest }: NavItemProps) => {
                 bg="white"
                 p="4"
                 mx="4"
+                color="black"
                 fontWeight="400"
                 textAlign="left"
                 _hover={{ bg: "rgb(236 243 253)", outLine: "none" }}
@@ -342,6 +348,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               py={2}
               transition="all 0.3s"
               _focus={{ boxShadow: "none" }}
+              mr="20px"
             >
               <HStack>
                 <Avatar size={"md"} src={"https://ifh.cc/g/6FHysR.jpg"} />
@@ -358,12 +365,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                     관리자
                   </Text>
                 </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
+                {/* <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
-                </Box>
+                </Box> */}
               </HStack>
             </MenuButton>
-            <MenuList
+            {/* <MenuList
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
@@ -372,7 +379,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
-            </MenuList>
+            </MenuList> */}
           </Menu>
         </Flex>
       </HStack>
