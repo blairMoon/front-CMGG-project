@@ -17,7 +17,6 @@ import {
   useColorModeValue,
   Image as ChakraImg,
   HStack,
-  Box,
   Text,
   VStack,
   ColorMode,
