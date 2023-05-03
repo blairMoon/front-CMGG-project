@@ -176,7 +176,7 @@ const SearchCard: React.FC<Props> = (props: Props) => {
                           생년월일
                         </Th>
                         <Td px={0} py={2} color="white" border="none">
-                          {data ? data.username : "????-??-??"}
+                          {data ? data.dateBirth : "????-??-??"}
                         </Td>
                       </Tr>
 

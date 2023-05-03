@@ -37,65 +37,10 @@ type Data = {
   date: string;
   introduction: string;
   isDone: null | boolean;
+  img: string;
 };
 
 const Board = () => {
-  // const data: Data[] = [
-  //   {
-  //     id: 1,
-  //     title: "리액트",
-  //     author: "뚜니",
-  //     date: "2023-04-25",
-  //     introduction:
-  //       "안녕하세요 저는 뚜니입니다 저는 프론트엔드개발자이며 리액트를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
-  //     isDone: null,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "파이썬",
-  //     author: "현수",
-  //     date: "2023-04-24",
-  //     introduction:
-  //       "안녕하세요 저는 현수입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
-  //     isDone: null,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "타스",
-  //     author: "과녈",
-  //     date: "2023-04-23",
-  //     introduction:
-  //       "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
-  //     isDone: null,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "타스",
-  //     author: "과녈",
-  //     date: "2023-04-23",
-  //     introduction:
-  //       "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
-  //     isDone: null,
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "타스",
-  //     author: "과녈",
-  //     date: "2023-04-23",
-  //     introduction:
-  //       "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
-  //     isDone: null,
-  //   },
-  //   {
-  //     id: 6,
-  //     title: "타스",
-  //     author: "과녈",
-  //     date: "2023-04-23",
-  //     introduction:
-  //       "안녕하세요 저는 과녈입니다 저는 백개발자이며 파이썬를 상당히 잘 다루는 사람이기 때문에 자신있게 가르칠 수 있습니다",
-  //     isDone: null,
-  //   },
-  // ];
   interface DD {
     isLoading: boolean;
     data: Data[];
@@ -180,16 +125,8 @@ const Board = () => {
       // alignItems="center"
     >
       <Heading fontSize="30px">강사신청</Heading>
-      <Flex justifyContent="space-between" width="100%">
-        <Table
-          ml="100px"
-          variant="simple"
-          width="900px"
-          // color="rgb(40,40,40)"
-          // display="flex"
-          // alignItems="center"
-          // justifyContent="center"
-        >
+      <Flex>
+        <Table ml="100px" variant="simple" width="900px" margin={"0 auto"}>
           <Thead>
             <Tr bg="#c6dbef">
               <Th w="10%" color="rgb(100,100,100)">
