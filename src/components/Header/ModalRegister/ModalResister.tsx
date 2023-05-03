@@ -63,10 +63,16 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
     handleSubmit,
     control,
     trigger,
+    reset,
     formState: { errors },
   } = useForm<InstructorData>({
     defaultValues: initialValues,
   });
+
+  const handleCloseModal = () => {
+    reset(); // 모달 닫을 때 폼 초기화
+    onClose();
+  };
 
   const onDrop = (acceptedFiles: File[]) => {
     const isRightType = acceptedFiles
@@ -76,7 +82,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
     if (!isRightType || acceptedFiles.length > 1) {
       alert("Only one image file can be registered! \n(jpg, png, jpeg, webp)");
     } else {
-      setValue("image", acceptedFiles[0], { shouldValidate: true }); // 이미지 파일을 폼 데이터로 설정 및 shouldValidate 옵션 추가
+      setValue("image", acceptedFiles[0], { shouldValidate: true });
     }
   };
 
@@ -113,8 +119,8 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   });
   useEffect(() => {
     if (imgFile.length > 0) {
-      setValue("image", imgFile[0]); // 이미지 파일을 폼 데이터로 설정
-      trigger("image"); // 이미지 파일이 변경될 때마다 유효성 검사를 다시 실행합니다.
+      setValue("image", imgFile[0]);
+      trigger("image");
     }
   }, [imgFile, setValue, trigger]);
 
@@ -140,7 +146,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={handleCloseModal}
       >
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onSubmit)}>
