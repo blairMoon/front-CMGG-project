@@ -91,9 +91,9 @@ const LecturePlayer: React.FC = () => {
     }
   ); // 로딩때 전 내용이 보이고 끔뻑이던 문제 해결
 
-  // if (isError) {
-  //   navigate("/notlogin");
-  // }
+  if (isError) {
+    navigate("/notlogin");
+  }
   const handleDuration = (duration: number) => {
     // console.log('영상길이', duration);
   };

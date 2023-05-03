@@ -28,11 +28,14 @@ import InstructorChart from "./pages/AdminPage/Components/Instructor/Instrouctor
 import KakaoConfirm from "./components/SocialLogin/KakaoConfirm";
 import NaverConfirm from "./components/SocialLogin/NaverConfirm";
 import Pay2 from "./../src/pages/AdminPage/Components/Pay/Pay2";
+import NotFound from "./components/ErrorPage/NotFound/NotFound";
+import NotLogin from "./components/ErrorPage/NotLogin/NotLogin";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    // errorElement: <NotFound />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "",
@@ -148,6 +151,11 @@ const router = createBrowserRouter([
       { path: "pay/1", element: <Pay /> },
       { path: "pay/2", element: <Pay2 /> },
     ],
+  },
+
+  {
+    path: "/notlogin",
+    element: <NotLogin />,
   },
 ]);
 

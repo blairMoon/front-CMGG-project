@@ -213,11 +213,14 @@ export const kakaoLogin = async ({ code }: { code: string }) => {
       "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-    const response = await fetch("http://127.0.0.1:8000/api/v1/users/kakao", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ code }),
-    });
+    const response = await fetch(
+      "https://www.crazyform.store/api/v1/users/login/kakao",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ code }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
@@ -251,11 +254,14 @@ export const naverLogin = async ({
       "X-CSRFToken": Cookies.get("csrftoken") || "",
     });
 
-    const response = await fetch("http://127.0.0.1:8000/api/v1/users/naver", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ code, state }),
-    });
+    const response = await fetch(
+      "https://www.crazyform.store/api/v1/users/login/naver",
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ code, state }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();

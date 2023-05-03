@@ -180,68 +180,59 @@ const Board = () => {
       // alignItems="center"
     >
       <Heading fontSize="30px">강사신청</Heading>
-      <Flex justifyContent="space-between" width="100%">
-        <Table
-          ml="100px"
-          variant="simple"
-          width="900px"
-          // color="rgb(40,40,40)"
-          // display="flex"
-          // alignItems="center"
-          // justifyContent="center"
-        >
-          <Thead>
-            <Tr bg="#c6dbef">
-              <Th w="10%" color="rgb(100,100,100)">
-                ID
-              </Th>
-              <Th w="15%" color="rgb(100,100,100)">
-                신청분야
-              </Th>
-              <Th w="15%" color="rgb(100,100,100)">
-                작성자
-              </Th>
 
-              <Th w="20%" color="rgb(100,100,100)">
-                날짜
-              </Th>
-              <Th w="15%" color="rgb(100,100,100)">
-                현재 상태
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {!isLoading &&
-              data1?.map((row: any) => (
-                <Tr
-                  key={row.id}
-                  onClick={() => handleOpenModal(row)}
-                  style={{ cursor: "pointer", fontWeight: "600" }}
-                >
-                  <Td>{row.id}</Td>
-                  <Td>{row.title}</Td>
-                  <Td>{row.author}</Td>
-                  <Td>{row.date}</Td>
-                  <Td>
-                    {row.isDone === null ? (
-                      <Button colorScheme="gray" marginRight="10px" size={"sm"}>
-                        미처리
-                      </Button>
-                    ) : row.isDone === true ? (
-                      <Button colorScheme="blue" marginLeft="0px" size={"sm"}>
-                        수락
-                      </Button>
-                    ) : (
-                      <Button colorScheme="red" marginLeft="0px" size={"sm"}>
-                        거부
-                      </Button>
-                    )}
-                  </Td>
-                </Tr>
-              ))}
-          </Tbody>
-        </Table>
-      </Flex>
+      <Table ml="100px" variant="simple" width="900px" margin="0 auto">
+        <Thead>
+          <Tr bg="#c6dbef">
+            <Th w="10%" color="rgb(100,100,100)">
+              ID
+            </Th>
+            <Th w="15%" color="rgb(100,100,100)">
+              신청분야
+            </Th>
+            <Th w="15%" color="rgb(100,100,100)">
+              작성자
+            </Th>
+            <Th w="20%" color="rgb(100,100,100)">
+              날짜
+            </Th>
+            <Th w="15%" color="rgb(100,100,100)">
+              현재 상태
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {!isLoading &&
+            data1?.map((row: any) => (
+              <Tr
+                key={row.id}
+                onClick={() => handleOpenModal(row)}
+                style={{ cursor: "pointer", fontWeight: "600" }}
+              >
+                <Td>{row.id}</Td>
+                <Td>{row.title}</Td>
+                <Td>{row.author}</Td>
+                <Td>{row.date}</Td>
+                <Td>
+                  {row.isDone === null ? (
+                    <Button colorScheme="gray" marginRight="10px" size={"sm"}>
+                      미처리
+                    </Button>
+                  ) : row.isDone === true ? (
+                    <Button colorScheme="blue" marginLeft="0px" size={"sm"}>
+                      수락
+                    </Button>
+                  ) : (
+                    <Button colorScheme="red" marginLeft="0px" size={"sm"}>
+                      거부
+                    </Button>
+                  )}
+                </Td>
+              </Tr>
+            ))}
+        </Tbody>
+      </Table>
+
       <Button
         bg="gray"
         color="white"

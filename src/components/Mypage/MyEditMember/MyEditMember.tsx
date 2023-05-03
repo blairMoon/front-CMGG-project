@@ -62,7 +62,7 @@ const MyEditMember: React.FC = () => {
   );
   if (isError) {
     // console.log("hello");
-    navigate("/notfound");
+    navigate("/notlogin");
   }
   const {
     register,
