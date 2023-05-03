@@ -42,6 +42,7 @@ const Login: React.FC = () => {
       setUser(user);
 
       navigate("/");
+      window.location.reload();
     },
     onError: (e: Error) => {
       setSuccessLogin(false);
