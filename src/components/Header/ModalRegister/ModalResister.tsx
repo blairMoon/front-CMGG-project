@@ -29,7 +29,10 @@ import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { useMutation } from "@tanstack/react-query";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { postApplication } from "../../../../src/services/api";
-interface Props {}
+interface Props {
+  openState: boolean;
+  onClose: () => void;
+}
 interface InstructorData {
   introduce: string;
   applicationField: string;
@@ -60,6 +63,9 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   const inputFocusColor = useColorModeValue("#003c93", "#81E6D9");
   const [inputStyle, setInputStyle] = useState({});
   const nameRef = useRef(null);
+  const [internalOpenState, setInternalOpenState] = useState<boolean>(
+    props.openState
+  );
   const fieldRef = useRef(null);
 
   const initialValues = {
@@ -102,7 +108,8 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
 
   const handleCloseModal = () => {
     reset(); // 모달 닫을 때 폼 초기화
-    onClose();
+    props.onClose();
+    setInternalOpenState(false);
   };
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -157,7 +164,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      <Button
+      {/* <Button
         display="flex"
         alignItems="center"
         fontSize="15px"
@@ -172,11 +179,11 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
         leftIcon={<AiOutlineCheckCircle />}
       >
         강사 신청
-      </Button>
+      </Button> */}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
-        isOpen={isOpen}
+        isOpen={props.openState}
         onClose={handleCloseModal}
       >
         <ModalOverlay />
@@ -273,7 +280,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
             >
               신청하기
             </Button>
-            <Button onClick={onClose}>취소</Button>
+            <Button onClick={handleCloseModal}>취소</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
