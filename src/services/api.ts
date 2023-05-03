@@ -98,6 +98,9 @@ export interface WatchedLectures80Params {
   is_completed: boolean;
   lastPlayed?: number;
 }
+export interface CartData {
+  id: string;
+}
 
 type accessToken = string;
 type refreshToken = string;
@@ -467,10 +470,8 @@ export const deleteReply = async ({
   );
 };
 
-export const registerLecture = (lectureNum: number) => {
-  return instance
-    .put(`users/calculated-lectures/${lectureNum}/`, "")
-    .then((res) => res.status);
+export const registerCart = (data: CartData) => {
+  return instance.put("cart/", data).then((res) => res.data);
 };
 
 export const fetchVideoList = async ({

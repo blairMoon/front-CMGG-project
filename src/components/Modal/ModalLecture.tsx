@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -14,9 +15,12 @@ interface ModalConfirmProps {
   onClose: () => void;
   onSubmit: () => void;
 }
-import React, { useState, useEffect } from "react";
 
-const ModalLecture: React.FC<ModalConfirmProps> = ({ isOpen, onClose ,onSubmit }) => {
+const ModalLecture: React.FC<ModalConfirmProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
   const [modalClick, setModalClick] = useState(true);
 
   const handleModalClose = () => {
@@ -48,7 +52,7 @@ const ModalLecture: React.FC<ModalConfirmProps> = ({ isOpen, onClose ,onSubmit }
         <ModalFooter>
           <Button
             variant="ghost"
-            colorScheme="pink"
+            colorScheme="facebook"
             mr={3}
             onClick={handleModalRegister}
           >
@@ -56,7 +60,7 @@ const ModalLecture: React.FC<ModalConfirmProps> = ({ isOpen, onClose ,onSubmit }
           </Button>
           <Button
             variant="ghost"
-            colorScheme="blue"
+            colorScheme="gray"
             mr={3}
             onClick={handleModalClose}
           >
