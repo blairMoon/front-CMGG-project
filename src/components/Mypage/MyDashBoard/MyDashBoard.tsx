@@ -22,9 +22,9 @@ const MyDashBoard: React.FC = () => {
       retry: false,
     }
   );
-  if (isError) {
-    navigate("/notfound");
-  }
+  // if (isError) {
+  //   navigate("/notfound");
+  // }
   return (
     <div>
       <Seo title="대시보드" />

@@ -29,9 +29,9 @@ const MySideBar: React.FC = () => {
       retry: false,
     }
   );
-  if (isError) {
-    navigate("/notfound");
-  }
+  // if (isError) {
+  //   navigate("/notfound");
+  // }
   const avatar = useRecoilValue(avatarState);
   const location = useLocation();
   const pathSegments = location.pathname.split("/");

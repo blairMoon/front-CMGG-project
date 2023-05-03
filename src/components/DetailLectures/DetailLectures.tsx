@@ -95,9 +95,9 @@ const DetailLectures: React.FC = () => {
     }
   );
 
-  if (isError || !data) {
-    navigate("/notfound");
-  }
+  // if (isError || !data) {
+  //   navigate("/notfound");
+  // }
 
   // const queryClient = useQueryClient();
   // const { mutate } = useMutation(registerLecture, {
