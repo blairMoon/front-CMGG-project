@@ -18,7 +18,13 @@ const Register: React.FC = () => {
   return (
     <div>
       <Box>
-        <Stack pt="12" fontSize="10px" fontWeight="600" spacing="4">
+        <Stack
+          pt="12"
+          fontSize="10px"
+          fontWeight="600"
+          spacing="4"
+          color={colorMode === "light" ? "#858585" : "#cccccc"}
+        >
           <HStack spacing="10">
             <HStack w="100%" spacing="10">
               <Box
