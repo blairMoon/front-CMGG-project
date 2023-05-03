@@ -51,7 +51,7 @@ const WholeLectures: React.FC<Props> = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const searchName: any = params.get("search") || "";
+  const searchName: string = params.get("search") || "";
   const pageNum: number = Number(params.get("page"));
   const [tags, setTags] = useState<string[]>(["입문", "초급", "중급", "고급"]);
   const { isLoading, data } = useQuery(

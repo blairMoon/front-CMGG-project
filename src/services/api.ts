@@ -523,3 +523,12 @@ export const RegisterInstrutor = (
     .post("admins/application/approval/", data)
     .then((res) => res.data);
 };
+export const ApplyInstrutor = () => {
+  return instance.get("admins/application/list/").then((res) => res.data);
+};
+export const SearchInstrutor = (name: string) => {
+  // console.log(name);
+  if (name) {
+    return instance.get(`users/teachers/${name}`).then((res) => res.data);
+  }
+};
