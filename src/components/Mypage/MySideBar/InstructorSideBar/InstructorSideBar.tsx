@@ -1,6 +1,13 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, HStack, Stack, Divider, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Stack,
+  Divider,
+  Avatar,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { FiSettings } from "react-icons/fi";
 import { RiHomeHeartLine, RiFolderUploadLine } from "react-icons/ri";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +18,8 @@ import { CgDanger } from "react-icons/cg";
 import { UserData } from "../../../../../typings/LectureData";
 
 const InstructorSideBar: React.FC = () => {
+  const dividerColor = useColorModeValue("gray.300", "gray.700");
+
   const navigate = useNavigate();
   const { isLoading, data, isError } = useQuery<UserData>(
     ["myprofile"],
@@ -28,7 +37,7 @@ const InstructorSideBar: React.FC = () => {
         <HStack px="5" py="2" fontSize="18px">
           <Box>강사 페이지</Box>
         </HStack>
-        <Divider />
+        <Divider color={dividerColor} />;
         <HStack
           px="5"
           py="2"
@@ -61,8 +70,7 @@ const InstructorSideBar: React.FC = () => {
           <BsFileEarmarkText />
           <Box>학습 관리</Box>
         </HStack>
-
-        <Divider />
+        <Divider color={dividerColor} />;
         <HStack
           px="5"
           py="2"
@@ -112,7 +120,7 @@ const InstructorSideBar: React.FC = () => {
           <RiFolderUploadLine />
           <Box>강의 업로드</Box>
         </HStack>
-        <Divider />
+        <Divider color={dividerColor} />;
         <HStack
           px="5"
           py="2"

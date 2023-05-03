@@ -17,11 +17,15 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { RecoilState, atom } from "recoil";
+import { useMutation } from "@tanstack/react-query";
 import { SearchIcon } from "@chakra-ui/icons";
 import ModalRegister from "./ModalRegisterAdmin/ModalRegisterAdmin";
 import ModalSuccess from "./ModalSuccess/ModalSuccess";
 import { booleanOpenState } from "./../../../../../../src/atoms";
-
+import {
+  RegisterInstrutor,
+  DataAcceptInstructor,
+} from "./../../../../../services/api";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 type Data = {
@@ -32,8 +36,9 @@ type Data = {
   introduction: string;
   isDone: null | boolean;
 };
+
 const Board = () => {
-  const data = [
+  const data: Data[] = [
     {
       id: 1,
       title: "리액트",
@@ -100,7 +105,7 @@ const Board = () => {
   const [accept, setAccept] = useState<null | boolean>(null);
 
   const handleAccept = (id: number, accept: boolean | null) => {
-    const newData = data1.map((item) => {
+    const newData = data1.map((item: Data) => {
       if (item.id === id) {
         return {
           ...item,
@@ -118,6 +123,35 @@ const Board = () => {
     setIsOpenSucess(false);
     setBooleanOpen(false);
     setSelectedData(null);
+  };
+
+  const mutation = useMutation<
+    DataAcceptInstructor,
+    unknown,
+    DataAcceptInstructor[]
+  >((data: DataAcceptInstructor[]) => RegisterInstrutor(data), {
+    onMutate: (data: DataAcceptInstructor[]) => {
+      console.log("mutation start...");
+      console.log(data);
+    },
+    onSuccess: () => {
+      console.log("API CALL success...");
+      alert("처리완료");
+    },
+    onError: () => {
+      console.log("API CALL error...");
+    },
+  });
+  const onConfirm = () => {
+    // Extract only the id and isDone properties from each item in data1
+    const reducedData = data1.map((item) => ({
+      id: item.id,
+      isDone: item.isDone,
+    }));
+
+    // Explicitly cast reducedData to DataAcceptInstructor[]
+    mutation.mutateAsync(reducedData as unknown as DataAcceptInstructor[]);
+    setIsOpenSucess(false);
   };
   return (
     <VStack
@@ -213,10 +247,8 @@ const Board = () => {
       <ModalSuccess
         isOpen={isOpenSucess}
         onClose={handleCloseModal}
-        onConfirm={() => {
-          setIsOpenSucess(false);
-          alert("심사처리완료");
-        }}
+        onConfirm={onConfirm}
+        data={data1}
       />
     </VStack>
   );

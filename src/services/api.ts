@@ -12,7 +12,14 @@ export interface UserNameLoginParams {
     "X-Refresh-Token": string;
   };
 }
-
+export interface RegisterData {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  introduction: string;
+  isDone: null | boolean;
+}
 export interface FormIdData {
   name: string;
   email: string;
@@ -72,6 +79,19 @@ export interface SavePlayedSecondsParams {
   lastPlayed: number;
 }
 
+export interface DataAcceptInstructor {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  introduction: string;
+  isDone: null | boolean;
+}
+export interface DataAcceptInstructorCut {
+  id: number;
+
+  isDone: null | boolean;
+}
 export interface WatchedLectures80Params {
   lectureId: string;
   num: string;
@@ -95,7 +115,11 @@ interface UserData {
   skill: string;
   termsOfUse: String;
 }
-
+interface InstructorData {
+  introduce: string;
+  applicationField: string;
+  image: File | null;
+}
 export const instance: AxiosInstance = axios.create({
   baseURL: "https://crazyform.store/api/v1/",
   headers: {
@@ -481,4 +505,20 @@ export const postVideoTest = ({ thumbnail }: FieldValues) => {
   return instance.post("images/test", {
     file: thumbnail,
   });
+};
+export const postApplication = (data: InstructorData) => {
+  const formData = new FormData();
+  formData.append("introduce", data.introduce);
+  formData.append("applicationField", data.applicationField);
+  if (data.image) {
+    formData.append("image", data.image, data.image.name);
+  }
+  return instance.post("admins/application/", formData).then((res) => res.data);
+};
+export const RegisterInstrutor = (
+  data: { id: number; isDone: boolean | null }[]
+) => {
+  return instance
+    .post("admins/application/approval/", data)
+    .then((res) => res.data);
 };

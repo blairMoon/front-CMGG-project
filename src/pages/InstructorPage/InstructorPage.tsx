@@ -10,11 +10,10 @@ const InstructorPage: React.FC<Props> = (props: Props) => {
       <Grid
         templateAreas={`"nav main"`}
         gridTemplateColumns={"220px 1fr"}
-        w="1150px"
-        h="100%"
-        py="10"
+        w="1300px"
+        pt="5"
+        pb="5"
         px="4"
-        gap="1"
         mx="auto"
       >
         <GridItem area={"nav"}>
