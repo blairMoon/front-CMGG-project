@@ -8,27 +8,30 @@ import {
   Button,
   useColorMode,
 } from "@chakra-ui/react";
-import ModalRegister from "./../../../src/components/Header/ModalRegister/ModalResister";
+import ModalRegister from "../Header/ModalRegister/ModalResister";
 import { HiArrowRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
-import { getAccessToken } from "../../../src/services/Token";
+import { getAccessToken } from "../../services/Token";
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
   const { colorMode } = useColorMode();
   const [openModalState, setOpenModalState] = useState(false);
+
+  const token = getAccessToken();
+
   const OpenModal = () => {
-    setOpenModalState(true);
     if (token) {
       setOpenModalState(true);
     } else {
       navigate("/login");
     }
   };
-  const token = getAccessToken();
+
   const CloseModal = () => {
     setOpenModalState(false);
   };
+
   return (
     <div>
       <Box>
@@ -117,10 +120,8 @@ const Register: React.FC = () => {
               <HiArrowRight size="14px" />
             </Button>
           </Box>
-          {openModalState && token ? (
+          {openModalState && (
             <ModalRegister openState={openModalState} onClose={CloseModal} />
-          ) : (
-            ""
           )}
         </Stack>
       </Box>
