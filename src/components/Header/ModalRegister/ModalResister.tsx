@@ -27,10 +27,15 @@ import { BiRegistered } from "react-icons/bi";
 import { imgTypes } from "../../../constant";
 import { useDropzone } from "react-dropzone";
 import { getSecureImgFile } from "../../../utils/getSecureImgFile";
-
+import { useMutation } from "@tanstack/react-query";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { postApplication } from "../../../../src/services/api";
 interface Props {}
-
+interface InstructorData {
+  introduce: string;
+  applicationField: string;
+  image: File | null;
+}
 interface instructorpProps {
   initialValues: {
     introduce: string;
@@ -62,7 +67,23 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
     applicationField: "",
     image: null,
   };
-
+  const mutation = useMutation<InstructorData, unknown, InstructorData>(
+    (data: InstructorData) => postApplication(data),
+    {
+      onMutate: (data: InstructorData) => {
+        console.log("mutation start...");
+        console.log(data);
+      },
+      onSuccess: () => {
+        onClose();
+        alert("강사신청 완료! 코딩 가든에서 꿈을 펼쳐보세요!");
+        console.log("API CALL success...");
+      },
+      onError: () => {
+        console.log("API CALL error...");
+      },
+    }
+  );
   const {
     getValues,
     register,
@@ -74,7 +95,9 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   } = useForm<InstructorData>({
     defaultValues: initialValues,
   });
-
+  // const onSubmit = (data: InstructorData) => {
+  //   console.log("Submitted data:", data);
+  // };
   const usernameRegisterOptions: RegisterOptions = {
     required: true,
     pattern: /^[a-z0-9]{5,20}$/i,
@@ -99,11 +122,12 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
       }
     },
   });
+
   const onSubmit = (data: InstructorData) => {
-    console.log("Submitted data:", data);
+    mutation.mutate(data);
   };
   const getImgInputPropsMerged = getImgInputProps({
-    ...register("image", { required: true }),
+    ...register("image", { required: false }),
   });
   const img = imgFile.map((file: File, idx: number) => {
     const reader = new FileReader();
@@ -112,7 +136,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
     };
     reader.readAsDataURL(file);
     return (
-      <HStack alignItems={"flex-start"} key={idx}>
+      <HStack alignItems="flex-start" key={idx}>
         <ChakraImg w="150px" h="100px" src={_img} />
         <Text>
           {file.name} - {file.size} bytes
