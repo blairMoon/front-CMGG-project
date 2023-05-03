@@ -8,13 +8,27 @@ import {
   Button,
   useColorMode,
 } from "@chakra-ui/react";
-
+import ModalRegister from "./../../../src/components/Header/ModalRegister/ModalResister";
 import { HiArrowRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { getAccessToken } from "../../../src/services/Token";
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const { colorMode } = useColorMode();
-
+  const [openModalState, setOpenModalState] = useState(false);
+  const OpenModal = () => {
+    setOpenModalState(true);
+    if (token) {
+      setOpenModalState(true);
+    } else {
+      navigate("/login");
+    }
+  };
+  const token = getAccessToken();
+  const CloseModal = () => {
+    setOpenModalState(false);
+  };
   return (
     <div>
       <Box>
@@ -89,9 +103,7 @@ const Register: React.FC = () => {
               borderRadius="lg"
               boxShadow="md"
               padding="20px"
-              onClick={() => {
-                // 여기에 넣으면 됨.
-              }}
+              onClick={OpenModal}
             >
               <Text pr="2" fontSize="16px" fontWeight="400">
                 강사 신청하기
@@ -99,6 +111,11 @@ const Register: React.FC = () => {
               <HiArrowRight size="14px" />
             </Button>
           </Box>
+          {openModalState && token ? (
+            <ModalRegister openState={openModalState} onClose={CloseModal} />
+          ) : (
+            ""
+          )}
         </Stack>
       </Box>
     </div>

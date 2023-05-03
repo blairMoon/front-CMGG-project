@@ -605,22 +605,26 @@ export default function WithSubnavigation() {
             direction={"row"}
             spacing={6}
           >
-            <Button
-              display="flex"
-              alignItems="center"
-              fontSize="15px"
-              fontWeight="500"
-              // padding="10px 10px 0px 0px"
-              mr="16px"
-              size={"md"}
-              onClick={onOpenModal}
-              backgroundColor="transparent"
-              _hover={{ backgroundColor: "transparent" }}
-              width="100px"
-              leftIcon={<AiOutlineCheckCircle />}
-            >
-              강사 신청
-            </Button>
+            {token ? (
+              <Button
+                display="flex"
+                alignItems="center"
+                fontSize="15px"
+                fontWeight="500"
+                // padding="10px 10px 0px 0px"
+                mr="16px"
+                size={"md"}
+                onClick={onOpenModal}
+                backgroundColor="transparent"
+                _hover={{ backgroundColor: "transparent" }}
+                width="100px"
+                leftIcon={<AiOutlineCheckCircle />}
+              >
+                강사 신청
+              </Button>
+            ) : (
+              ""
+            )}
             {onModalOpenState ? (
               <ModalRegister
                 openState={onModalOpenState}
