@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useForm, RegisterOptions } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {
   Modal,
   ModalOverlay,
@@ -31,14 +31,6 @@ import { getSecureImgFile } from "../../../utils/getSecureImgFile";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 interface Props {}
 
-interface instructorpProps {
-  initialValues: {
-    introduce: string;
-    applicationField: string;
-    image: File | null;
-  };
-  onSubmit: (data: FormData) => void;
-}
 interface InstructorData {
   introduce: string;
   applicationField: string;
@@ -57,6 +49,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   const [inputStyle, setInputStyle] = useState({});
   const nameRef = useRef(null);
   const fieldRef = useRef(null);
+
   const initialValues = {
     introduce: "",
     applicationField: "",
@@ -68,16 +61,23 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
     register,
     setValue,
     handleSubmit,
-    watch,
+    control,
     trigger,
     formState: { errors },
   } = useForm<InstructorData>({
     defaultValues: initialValues,
   });
 
-  const usernameRegisterOptions: RegisterOptions = {
-    required: true,
-    pattern: /^[a-z0-9]{5,20}$/i,
+  const onDrop = (acceptedFiles: File[]) => {
+    const isRightType = acceptedFiles
+      .map((file: File) => file.type.replace("image/", ""))
+      .some((elem) => imgTypes.includes("." + elem));
+
+    if (!isRightType || acceptedFiles.length > 1) {
+      alert("Only one image file can be registered! \n(jpg, png, jpeg, webp)");
+    } else {
+      setValue("image", acceptedFiles[0], { shouldValidate: true }); // 이미지 파일을 폼 데이터로 설정 및 shouldValidate 옵션 추가
+    }
   };
 
   const {
@@ -87,18 +87,9 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   } = useDropzone({
     maxFiles: 1,
     accept: { "image/*": imgTypes },
-    onDrop: (acceptedFiles: File[]) => {
-      const isRightType = acceptedFiles
-        .map((file: File) => file.type.replace("image/", ""))
-        .some((elem) => imgTypes.includes("." + elem));
-
-      if (!isRightType || acceptedFiles.length > 1) {
-        alert("이미지 파일 하나만 등록이 가능합니다! \n(jpg, png, jpeg, webp)");
-      } else {
-        setValue("image", acceptedFiles[0]); // 이미지 파일을 폼 데이터로 설정
-      }
-    },
+    onDrop,
   });
+
   const onSubmit = (data: InstructorData) => {
     console.log("Submitted data:", data);
   };
@@ -123,8 +114,10 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (imgFile.length > 0) {
       setValue("image", imgFile[0]); // 이미지 파일을 폼 데이터로 설정
+      trigger("image"); // 이미지 파일이 변경될 때마다 유효성 검사를 다시 실행합니다.
     }
-  }, [imgFile, setValue]);
+  }, [imgFile, setValue, trigger]);
+
   return (
     <div>
       <Button
@@ -191,28 +184,46 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
               <FormLabel fontWeight={"bold"} id={"img"}>
                 관련 분야 자격증 올리기
               </FormLabel>
-              <VStack
-                backgroundColor={"#fafafa"}
-                border="1px dashed gray"
-                cursor="pointer"
-                p="7"
-                {...getImgRootProps({ className: "dropzone" })}
-              >
-                <input {...getImgInputPropsMerged} aria-labelledby="img" />
-                <p style={{ color: "#777" }}>
-                  이미지는 클릭 또는 드래그해서 올려주세요 <br />
-                  (jpg, png, jpeg, webp)
-                </p>
-              </VStack>
+              <Controller
+                control={control}
+                name="image"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <VStack
+                    backgroundColor={"#fafafa"}
+                    border="1px dashed gray"
+                    cursor="pointer"
+                    p="7"
+                    {...getImgRootProps({ className: "dropzone" })}
+                  >
+                    <input
+                      {...getImgInputPropsMerged}
+                      {...field}
+                      value={undefined}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        if (e.target.files && e.target.files.length > 0) {
+                          setValue("image", e.target.files[0]);
+                        }
+                      }}
+                      aria-labelledby="img"
+                    />
+                    <p style={{ color: "#777" }}>
+                      이미지는 클릭 또는 드래그해서 올려주세요 <br />
+                      (jpg, png, jpeg, webp)
+                    </p>
+                  </VStack>
+                )}
+              />
+              {errors.image && errors.image.type === "required" && (
+                <p className={css.errors}>이미지는 필수 입력값입니다.</p>
+              )}
               <aside>
                 <Text fontWeight={"bold"} mt="6" mb="2">
                   이미지파일
                 </Text>
                 {img}
               </aside>
-              {errors.image && errors.image.type === "required" && (
-                <p className={css.errors}>이미지는 필수 입력값입니다.</p>
-              )}
             </FormControl>
           </ModalBody>
 
