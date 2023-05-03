@@ -166,7 +166,7 @@ const Login: React.FC = () => {
         {successLogin != null && !successLogin ? (
           <ModalBasic
             isOpen={!successLogin}
-            successContent={"아이디랑 비밀번호를 확인해주세요"}
+            successContent={"아이디랑 비밀번호를 확인해주세용"}
             onClose={() => setSuccessLogin(true)}
           />
         ) : null}

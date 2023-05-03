@@ -4,7 +4,7 @@ import Cookie from "js-cookie";
 
 const SocialLogin = () => {
   const kakaoParams = {
-    client_id: "bb66478dd52ba99cc7ade2f8d07abb6c",
+    client_id: "0ee0a4111ed87512f2f0dfb62ebd7ae5",
     redirect_uri: "http://127.0.0.1:3000/social/kakao",
     response_type: "code",
   };
@@ -15,7 +15,7 @@ const SocialLogin = () => {
     response_type: "code",
     client_id: "ofNjUGXrDlgmWpoZDx40",
     state: "test",
-    redirect_uri: "http://127.0.0.1:3000/social/naver",
+    redirect_uri: "http://localhost:3000/social/naver",
   };
   const naver_params = new URLSearchParams(naverParams).toString();
 

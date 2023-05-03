@@ -31,11 +31,11 @@ const MyLecture: React.FC = () => {
     },
   });
   if (isError) {
-    navigate("/notfound");
+    navigate("/notlogin");
   }
   useEffect(() => {
     if (isError) {
-      navigate("/notfound");
+      navigate("/notlogin");
     }
   }, [isError, navigate]);
 

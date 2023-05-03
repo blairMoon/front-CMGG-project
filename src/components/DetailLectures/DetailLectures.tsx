@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
-import { getLectureDetail, registerLecture } from "../../services/api";
-// import ModalConfirm from "../../components/Modal/ModalConfirm";
+import { getLectureDetail, registerCart } from "../../services/api";
+import ModalConfirm from "../Modal/ModalConfirm";
+import ModalLecture from "../Modal/ModalLecture";
 import StarRating from "../../components/WholeLectures/StarRating/StarRating";
 import Review from "../../components/Reviews/Review";
 import ReviewForm from "../../components/Reviews/ReviewForm";
@@ -29,6 +30,7 @@ import { HslColor } from "polished/lib/types/color";
 import VideoList from "../../components/DetailLectures/VideoIndex/VideoIndex";
 import DetailSkeleton from "./Loading/DetailSkeleton";
 import Seo from "../SEO/Seo";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 interface Instructor {
   username: string;
@@ -82,8 +84,8 @@ interface VideoData {
 }
 
 const DetailLectures: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  // const [registerLectureClick, setRegisterLectureClick] = useState(false);
+  const { id = "" } = useParams<{ id?: string }>();
+  const [registerCartClick, setregisterCartClick] = useState(false);
   const [loginCheck, setLoginCheck] = useState(true);
   const navigate = useNavigate();
   const { isLoading, error, data, isError } = useQuery(
@@ -95,18 +97,19 @@ const DetailLectures: React.FC = () => {
     }
   );
 
-  if (isError || !data) {
-    navigate("/notfound");
-  }
+  // if (isError || !data) {
+  //   navigate("/notfound");
+  // }
 
-  // const queryClient = useQueryClient();
-  // const { mutate } = useMutation(registerLecture, {
-  //   onMutate: (d) => console.log("mutate", d),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries(["lectureInfo"]);
-  //     navigate("/userinfo");
-  //   },
-  // });
+  const queryClient = useQueryClient();
+  const cartData = { id, lectures: [id] };
+  const { mutate } = useMutation(registerCart, {
+    // onMutate: (d) => console.log("mutate", d),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["lectureInfo", id]);
+      navigate("/mypage/cart");
+    },
+  });
   const [loadMoreCount, setLoadMoreCount] = useState(0);
   const { colorMode } = useColorMode();
   const hslaColor: HslColor = parseToHsl(rgb(240, 245, 252));
@@ -121,21 +124,23 @@ const DetailLectures: React.FC = () => {
     setLoadMoreCount(loadMoreCount + 1);
   };
   const reviewsToShow = 5 * (loadMoreCount + 1); // 처음 5개, 10개, 15개 이런 식으로 늘어남.
-  // const handleRegisterClick = () => {
-  //   try {
-  //     const token = Cookies.get("access");
+  const handleRegisterClick = () => {
+    // console.log("Button clicked");
+    const token = Cookies.get("access");
 
-  //     if (!token) throw new Error("No token found");
-  //     // use the access token here
-  //     setRegisterLectureClick(true);
-  //   } catch (error) {
-  //     setLoginCheck(false);
-  //   }
-  // };
-  // const onSubmit = () => {
-  //   console.log("onSubmit");
-  //   mutate(id);
-  // };
+    if (token) {
+      setregisterCartClick(true);
+    } else {
+      setLoginCheck(false);
+    }
+  };
+
+  console.log("id", id);
+  const onSubmit = () => {
+    mutate(cartData);
+    console.log("cartData", cartData);
+  };
+  // console.log("enroll", data?.is_enrolled);
 
   return (
     <div>
@@ -190,15 +195,17 @@ const DetailLectures: React.FC = () => {
                     </Box>
                     <Box>
                       <Stack direction="row" spacing={4}>
-                        <Button
-                          colorScheme="black"
-                          variant="outline"
-                          w="150px"
-                          // onClick={handleRegisterClick}
-                        >
-                          <RiHomeHeartLine size={20} /> &nbsp;&nbsp;
-                          {data.is_enrolled ? "수강중" : "수강하기"}
-                        </Button>
+                        {data && !isLoading && (
+                          <Button
+                            colorScheme="black"
+                            variant="outline"
+                            w="150px"
+                            onClick={handleRegisterClick}
+                          >
+                            <RiHomeHeartLine size={20} />
+                            {data.is_enrolled ? "수강중" : "강의담기"}
+                          </Button>
+                        )}
                         <Button colorScheme="black" variant="outline" w="150px">
                           <BsShare /> &nbsp;&nbsp;공유하기
                         </Button>
@@ -303,19 +310,21 @@ const DetailLectures: React.FC = () => {
       ) : (
         <DetailSkeleton />
       )}
-      {/* {!data.is_enrolled && registerLectureClick && loginCheck ? (
+      {registerCartClick && loginCheck ? (
         <ModalLecture
           onSubmit={onSubmit}
-          isOpen={registerLectureClick && loginCheck}
-          onClose={() => setRegisterLectureClick(false)}
+          isOpen={registerCartClick && loginCheck}
+          onClose={() => setregisterCartClick(false)}
         />
       ) : (
         <ModalConfirm
-          onSubmit={onSubmit}
-          onClose={() => setRegisterLectureClick(false)}
+          onClose={() => {
+            setregisterCartClick(false);
+            setLoginCheck(true);
+          }}
           isOpen={!loginCheck}
         />
-      )} */}
+      )}
     </div>
   );
 };

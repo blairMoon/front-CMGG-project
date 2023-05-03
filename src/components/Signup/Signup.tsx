@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useForm, RegisterOptions } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { Select, useColorMode } from "@chakra-ui/react";
+import { Select, useColorMode, Divider } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { addressState } from "../../atoms";
 import css from "../Signup/Signup.module.scss";
@@ -303,7 +303,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues }) => {
                 <p className={css.errors}>주소는 필수 입력값입니다.</p>
               )}
 
-              {/* <Divider
+              <Divider
                 orientation="horizontal"
                 marginTop="40px"
                 // marginBottom="30px"
@@ -349,19 +349,8 @@ const Signup: React.FC<SignupProps> = ({ initialValues }) => {
                     <label className={css.Devlabel} htmlFor="fullstack">
                       풀스택
                     </label>
-                  </div> */}
-              {/* <div className={css.DevContainer}>
-                    <input
-                      id="game"
-                      type="checkbox"
-                      value="game"
-                      {...register("position", { required: false })}
-                    />
-                    <label className={css.Devlabel} htmlFor="game">
-                      게임
-                    </label>
-                  </div> */}
-              {/* </div>
+                  </div>
+                </div>
                 <div>
                   <div className={css.DevContainer}>
                     <input
@@ -598,7 +587,7 @@ const Signup: React.FC<SignupProps> = ({ initialValues }) => {
               </div>
               {errors.skill && (
                 <p className={css.errors}>내 개발수준 은 필수 입력값입니다.</p>
-              )} */}
+              )}
               <label className={`${css.label} ${css.question}`}>
                 이용약관 문의
               </label>

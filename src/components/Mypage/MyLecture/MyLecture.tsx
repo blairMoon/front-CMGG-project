@@ -32,12 +32,12 @@ const MyLecture: React.FC = () => {
     getLectureInfo()
   );
   if (isError) {
-    navigate("/notfound");
+    navigate("/notlogin");
     console.log("hello");
   }
   useEffect(() => {
     if (isError) {
-      navigate("/notfound");
+      navigate("/notlogin");
     }
   }, [isError, navigate]);
 
