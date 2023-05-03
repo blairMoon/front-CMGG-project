@@ -11,42 +11,75 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { HiArrowRight } from "react-icons/hi";
-import EmploymentCard from "../Card/EmploymentCard";
+import HomeEmploy from "./HomeEmploy";
+import Register from "./Register";
 interface Props {}
 const CardContainer: React.FC<Props> = (props: Props) => {
   const { colorMode } = useColorMode();
   return (
     <div>
       <Grid
-        py="120px"
+        pt="120px"
+        pb="60px"
         templateAreas={`"register recommend"`}
         gridTemplateColumns={"2fr 1fr"}
-        h="600px"
+        h="500px"
         color="blackAlpha.700"
         maxW="1080px"
         mx="auto"
         gap="10"
       >
         <GridItem
-          bg="#F7F7FA"
           borderRadius="xl"
+          border="1px solid #c9c9c9"
           area={"register"}
           display="flex"
           justifyContent="center"
           alignItems="center"
+          position="relative"
         >
-          <Box>강의 신청 카드</Box>
+          <Text
+            color={colorMode === "light" ? "#5e5e5e" : "#c7c7c7"}
+            fontSize="18px"
+            fontWeight="600"
+            position="absolute"
+            top="-10px"
+            left="-20px"
+            bg={colorMode === "light" ? "white" : "#1A202C"}
+            px="20px"
+            paddingBottom="20px"
+          >
+            강사 신청
+          </Text>
+          <Box w="640px">
+            <Register />
+          </Box>
         </GridItem>
         <GridItem
           borderRadius="xl"
-          bg={colorMode === "light" ? "#F7F7FA" : "#c1c1c9"}
+          // bg={colorMode === "light" ? "#F7F7FA" : "#c1c1c9"}
+          border="1px solid #c9c9c9"
           area={"recommend"}
           display="flex"
           justifyContent="center"
           alignItems="center"
+          position="relative"
         >
-          <Box w="280px">
-            <EmploymentCard />
+          <Text
+            color={colorMode === "light" ? "#5e5e5e" : "#c7c7c7"}
+            fontSize="18px"
+            fontWeight="600"
+            position="absolute"
+            top="-10px"
+            left="-20px"
+            bg={colorMode === "light" ? "white" : "#1A202C"}
+            px="20px"
+            paddingBottom="20px"
+          >
+            추천 채용
+          </Text>
+          <Box w="300px">
+            <HomeEmploy />
           </Box>
         </GridItem>
       </Grid>

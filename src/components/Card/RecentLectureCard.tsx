@@ -100,6 +100,9 @@ const RecentLectureCard: React.FC = () => {
             borderRadius="lg"
             boxShadow="md"
             fontSize="14px"
+            onClick={() => {
+              navigate("/mypage/lecture");
+            }}
           >
             바로 학습
           </Button>

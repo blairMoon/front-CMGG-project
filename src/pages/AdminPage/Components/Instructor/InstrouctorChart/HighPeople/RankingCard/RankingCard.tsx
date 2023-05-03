@@ -32,19 +32,7 @@ const RankingCard: React.FC<RankingCardProps> = ({
     // >
     <div>
       <Flex w="400px" justify="center" marginBottom="30px">
-        <Img
-          // display="flex"
-          // flexDirection="column"
-          // justifyContent="center"
-          // alignItems="center"
-          mr="30px"
-          mt="10px"
-          width="65px"
-          height="65px"
-          // border="1px solid black"
-          // padding={6}
-          src={rank}
-        ></Img>
+        <Img mt="10px" width="65px" height="65px" src={rank}></Img>
         <Box>
           <Image
             src={imageSrc}

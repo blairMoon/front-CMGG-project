@@ -55,7 +55,7 @@ import useUser from "../../components/Mypage/MyEditMember/UseUser";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { avatarState, headerSizeState } from "../../atoms";
-
+import { AiOutlineCheckCircle } from "react-icons/ai";
 import { SiHtml5, SiCss3, SiSpring } from "react-icons/si";
 import { FaReact, FaVuejs } from "react-icons/fa";
 import { DiDjango } from "react-icons/di";
@@ -76,7 +76,7 @@ export default function WithSubnavigation() {
   const [isOpenToggle, setIsOpenToggle] = useState(false);
   const [headerSize, setHeaderSize] = useRecoilState(headerSizeState);
   const dividerColor = useColorModeValue("gray.300", "gray.700");
-
+  const [onModalOpenState, setOnModalOpenState] = useState(false);
   console.log(user);
 
   useEffect(() => {
@@ -105,7 +105,12 @@ export default function WithSubnavigation() {
     setIsMenuOpen(false);
     menuClose();
   };
-
+  const onCloseModal = () => {
+    setOnModalOpenState(false);
+  };
+  const onOpenModal = () => {
+    setOnModalOpenState(true);
+  };
   // 검색 기능
   const gotoLectures = () => {
     if (context === "") {
@@ -408,56 +413,58 @@ export default function WithSubnavigation() {
                     </MenuGroup>
                     <MenuDivider color={dividerColor} />
                     {!userLoading && user?.isInstructor ? (
-                      <MenuGroup title="강사" fontSize="15px">
-                        <Link
-                          href="/instructor"
-                          style={{ textDecoration: "none", border: "none" }}
-                        >
-                          <MenuItem
-                            fontSize="15px"
-                            fontWeight="500"
-                            padding="10px 10px"
+                      <>
+                        <MenuGroup title="강사" fontSize="15px">
+                          <Link
+                            href="/instructor"
+                            style={{ textDecoration: "none", border: "none" }}
                           >
-                            <BsFileEarmarkText
-                              style={{ marginRight: "10px" }}
-                            />
-                            대시 보드
-                          </MenuItem>
-                        </Link>
-                        <Link
-                          href="/instructor/lecture"
-                          style={{ textDecoration: "none", border: "none" }}
-                        >
-                          <MenuItem
-                            fontSize="15px"
-                            fontWeight="500"
-                            padding="10px 10px"
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <BsFileEarmarkText
+                                style={{ marginRight: "10px" }}
+                              />
+                              대시 보드
+                            </MenuItem>
+                          </Link>
+                          <Link
+                            href="/instructor/lecture"
+                            style={{ textDecoration: "none", border: "none" }}
                           >
-                            <RiFolderUploadLine
-                              style={{ marginRight: "10px" }}
-                            />
-                            업로드한 강의
-                          </MenuItem>
-                        </Link>
-                        <Link
-                          href="/instructor/lecture/register"
-                          style={{ textDecoration: "none", border: "none" }}
-                        >
-                          <MenuItem
-                            fontSize="15px"
-                            fontWeight="500"
-                            padding="10px 10px"
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <RiFolderUploadLine
+                                style={{ marginRight: "10px" }}
+                              />
+                              업로드한 강의
+                            </MenuItem>
+                          </Link>
+                          <Link
+                            href="/instructor/lecture/register"
+                            style={{ textDecoration: "none", border: "none" }}
                           >
-                            <RiFolderUploadLine
-                              style={{ marginRight: "10px" }}
-                            />
-                            강의 업로드
-                          </MenuItem>
-                        </Link>
-                      </MenuGroup>
+                            <MenuItem
+                              fontSize="15px"
+                              fontWeight="500"
+                              padding="10px 10px"
+                            >
+                              <RiFolderUploadLine
+                                style={{ marginRight: "10px" }}
+                              />
+                              강의 업로드
+                            </MenuItem>
+                          </Link>
+                        </MenuGroup>
+                        <MenuDivider color={dividerColor} />
+                      </>
                     ) : null}
 
-                    <MenuDivider color={dividerColor} />
                     <MenuGroup title="회원정보" fontSize="15px">
                       <Link
                         href="/mypage/editMember"
@@ -495,46 +502,50 @@ export default function WithSubnavigation() {
             </Box>
           ) : (
             <>
-              <IconButton
-                icon={
-                  colorMode === "light" ? (
-                    <div>🌙&nbsp; Dark</div>
-                  ) : (
-                    <div>🌞&nbsp; Light</div>
-                  )
-                }
-                px="3"
-                fontSize="13px"
-                aria-label="Toggle color mode"
-                onClick={toggleColorMode}
-                marginLeft="1rem"
-                _hover={
-                  colorMode === "light"
-                    ? { backgroundColor: "#333", color: "#eee" }
-                    : { backgroundColor: "#eee", color: "#333" }
-                }
-              />
-              <Button
-                as="a"
-                fontSize="sm"
-                fontWeight={600}
-                variant="link"
-                href="/login"
-                _hover={{ textDecoration: "none", color: "#003c93" }}
-              >
-                Login
-              </Button>
-              <Button
-                color="#003c93"
-                as="a"
-                fontSize="sm"
-                fontWeight={600}
-                variant="link"
-                href="/signup"
-                _hover={{ textDecoration: "none", fontWeight: "700" }}
-              >
-                Sign Up
-              </Button>
+              <Box>
+                <IconButton
+                  icon={
+                    colorMode === "light" ? (
+                      <div>🌙&nbsp; Dark</div>
+                    ) : (
+                      <div>🌞&nbsp; Light</div>
+                    )
+                  }
+                  mr="15px"
+                  px="3"
+                  fontSize="13px"
+                  aria-label="Toggle color mode"
+                  onClick={toggleColorMode}
+                  marginLeft="1rem"
+                  _hover={
+                    colorMode === "light"
+                      ? { backgroundColor: "#333", color: "#eee" }
+                      : { backgroundColor: "#eee", color: "#333" }
+                  }
+                />
+                <Button
+                  mr="15px"
+                  as="a"
+                  fontSize="sm"
+                  fontWeight={600}
+                  variant="link"
+                  href="/login"
+                  _hover={{ textDecoration: "none", color: "#003c93" }}
+                >
+                  Login
+                </Button>
+                <Button
+                  color="#003c93"
+                  as="a"
+                  fontSize="sm"
+                  fontWeight={600}
+                  variant="link"
+                  href="/signup"
+                  _hover={{ textDecoration: "none", fontWeight: "700" }}
+                >
+                  Sign Up
+                </Button>
+              </Box>
             </>
           )}
         </Flex>
@@ -594,7 +605,34 @@ export default function WithSubnavigation() {
             direction={"row"}
             spacing={6}
           >
-            <ModalRegister />
+            {token ? (
+              <Button
+                display="flex"
+                alignItems="center"
+                fontSize="15px"
+                fontWeight="500"
+                // padding="10px 10px 0px 0px"
+                mr="16px"
+                size={"md"}
+                onClick={onOpenModal}
+                backgroundColor="transparent"
+                _hover={{ backgroundColor: "transparent" }}
+                width="100px"
+                leftIcon={<AiOutlineCheckCircle />}
+              >
+                강사 신청
+              </Button>
+            ) : (
+              ""
+            )}
+            {onModalOpenState ? (
+              <ModalRegister
+                openState={onModalOpenState}
+                onClose={onCloseModal}
+              />
+            ) : (
+              ""
+            )}
           </Stack>
         </Flex>
       </Box>
