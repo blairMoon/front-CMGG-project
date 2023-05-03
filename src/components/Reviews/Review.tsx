@@ -72,6 +72,7 @@ const Review: React.FC<ReviewProps> = ({
   } = useForm<reviewData>();
 
   const handleReplyButtonClick = () => {
+    reset();
     setShowReplyForm(!showReplyForm);
   };
 
