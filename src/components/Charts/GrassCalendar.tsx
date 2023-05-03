@@ -698,7 +698,7 @@ const GrassCalendar: React.FC<Props> = () => {
                 fontWeight="600"
                 style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
               >
-                14
+                186
               </Box>
             </Stack>
             <Stack spacing={0}>
@@ -711,7 +711,7 @@ const GrassCalendar: React.FC<Props> = () => {
                 fontWeight="600"
                 style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
               >
-                1시간 53분
+                40시간 53분
               </Box>
             </Stack>
             <Stack spacing={0}>
@@ -724,7 +724,7 @@ const GrassCalendar: React.FC<Props> = () => {
                 fontWeight="600"
                 style={{ color: colorMode === "light" ? "#3d3d3d" : " white" }}
               >
-                0
+                8
               </Box>
             </Stack>
           </HStack>
