@@ -31,7 +31,7 @@ export const data: LangChartData[] = [
   {
     id: "Python",
     // label: "python",
-    value: 3,
+    value: 5,
     category: "backend",
   },
   {
@@ -55,7 +55,7 @@ export const data: LangChartData[] = [
   {
     id: "JS",
     label: "javascript",
-    value: 5,
+    value: 4,
     category: "frontend",
   },
 ];
