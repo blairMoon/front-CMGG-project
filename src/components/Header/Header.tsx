@@ -116,7 +116,7 @@ export default function WithSubnavigation() {
     if (context === "") {
       navigate("/lectures/all/all?page=1");
     } else if (context === "열려라 참깨") {
-      window.open("http://localhost:3000/admin/user/1", "_blank");
+      window.open("https://cmgg.store/admin/user/1", "_blank");
       window.location.reload();
 
       // navigate("/");

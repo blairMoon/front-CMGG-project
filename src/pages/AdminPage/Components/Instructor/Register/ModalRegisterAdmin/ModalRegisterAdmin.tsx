@@ -68,8 +68,15 @@ const ModalRegister: React.FC<ModalRegisterAdminProps> = ({
           <p> {data?.date}</p>
           <p className={css.p}>자기소개</p>
           <p> {data?.introduction}</p>
-          <div className={css.imgContainer}>
-            <img className={css.img} src={data?.img} />
+          <div
+            className={css.imgContainer}
+            style={{ width: "400px", height: "300px", overflow: "hidden" }}
+          >
+            <img
+              className={css.img}
+              src={data?.img}
+              style={{ width: "100%" }}
+            />
           </div>
         </ModalBody>
         <ModalFooter>

@@ -143,7 +143,7 @@ const SearchCard: React.FC<Props> = (props: Props) => {
                     <Image
                       width="130px"
                       height="145px"
-                      src="https://ifh.cc/g/hTWR7n.jpg"
+                      src={data.profileImg}
                       borderRadius="5px"
                     />
                   ) : (
@@ -185,7 +185,7 @@ const SearchCard: React.FC<Props> = (props: Props) => {
                           강의분야
                         </Th>
                         <Td px={0} py={2} border="none">
-                          {data ? data.username : "????"}
+                          {data ? data.instructorCareer : "????"}
                         </Td>
                       </Tr>
                     </Tbody>
