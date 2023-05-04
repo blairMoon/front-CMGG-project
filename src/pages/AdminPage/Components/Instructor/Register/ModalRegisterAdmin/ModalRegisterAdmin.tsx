@@ -20,6 +20,7 @@ type Data = {
   date: string;
   introduction: string;
   isDone: boolean | null;
+  img: string;
 };
 
 type ModalRegisterAdminProps = {
@@ -68,10 +69,7 @@ const ModalRegister: React.FC<ModalRegisterAdminProps> = ({
           <p className={css.p}>자기소개</p>
           <p> {data?.introduction}</p>
           <div className={css.imgContainer}>
-            <img
-              className={css.img}
-              src="https://post-phinf.pstatic.net/MjAyMDA1MTRfODYg/MDAxNTg5MzkwNzE4MjM5.J_hN5KlOprOfznBz5RLCgJKOOrjvsDROmmBlash7mbEg.vQACCgltTtPA4Zq48YuOORBS1r_dU1v3JejS_qayngYg.JPEG/%ED%86%A0%EC%9D%B5%EC%8A%A4%ED%94%BC%ED%82%B92.jpg?type=w1200"
-            />
+            <img className={css.img} src={data?.img} />
           </div>
         </ModalBody>
         <ModalFooter>
