@@ -1,5 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  FieldValues,
+  Controller,
+} from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { avatarState } from "../../../atoms";
 import css from "./EditMember.module.scss";
@@ -43,6 +48,7 @@ interface UserData {
   skill: string;
   termsOfUse: String;
   avatar: string;
+  image: File | null;
 }
 
 const MyEditMember: React.FC = () => {
@@ -67,7 +73,10 @@ const MyEditMember: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    trigger,
     watch,
+    control,
     getValues,
     reset,
     formState: { errors },
@@ -113,6 +122,18 @@ const MyEditMember: React.FC = () => {
   const password = useRef<string>("");
   password.current = watch("password");
 
+  const onDrop = (acceptedFiles: File[]) => {
+    const isRightType = acceptedFiles
+      .map((file: File) => file.type.replace("image/", ""))
+      .some((elem) => imgTypes.includes("." + elem));
+
+    if (!isRightType || acceptedFiles.length > 1) {
+      alert("Only one image file can be registered! \n(jpg, png, jpeg, webp)");
+    } else {
+      setValue("image", acceptedFiles[0], { shouldValidate: true });
+    }
+  };
+
   const {
     acceptedFiles: imgFile,
     getRootProps: getImgRootProps,
@@ -120,13 +141,11 @@ const MyEditMember: React.FC = () => {
   } = useDropzone({
     maxFiles: 1,
     accept: { "image/*": imgTypes },
-    onDrop: (acceptedFiles: File[]) => {
-      const isRightType = acceptedFiles
-        .map((file: File) => file.type.replace("image/", ""))
-        .some((elem) => imgTypes.includes("." + elem));
-    },
+    onDrop,
   });
-
+  const getImgInputPropsMerged = getImgInputProps({
+    ...register("image", { required: false }),
+  });
   const img = imgFile.map((file: File, idx: number) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -148,12 +167,21 @@ const MyEditMember: React.FC = () => {
   //     setAvatar(_img);
   //   }
   // };
-
+  const onSubmit = (data: UserData) => {
+    mutation.mutate(data);
+  };
   useEffect(() => {
     if (data) {
       reset(data);
     }
   }, [data, reset]);
+
+  useEffect(() => {
+    if (imgFile.length > 0) {
+      setValue("image", imgFile[0]);
+      trigger("image");
+    }
+  }, [imgFile, setValue, trigger]);
 
   // console.log('data', data);
   // if (data) {
@@ -174,22 +202,37 @@ const MyEditMember: React.FC = () => {
                   </Box>
 
                   <HStack w="100%" h="100%" pb="8">
-                    <Box {...getImgRootProps()} className={css.dropzone}>
-                      <input
-                        {...getImgInputProps()}
-                        {...register("avatar", { required: true })}
-                      />
-                      <Avatar
-                        size="2xl"
-                        bg="#CED4DA"
-                        src={_img || ""}
-                        icon={
-                          _img === "" ? (
-                            <RiHomeHeartLine size={90} />
-                          ) : undefined
-                        }
-                      />
-                    </Box>
+                    <Controller
+                      control={control}
+                      name="image"
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Box {...getImgRootProps()} className={css.dropzone}>
+                          <input
+                            {...getImgInputPropsMerged}
+                            {...field}
+                            value={undefined}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              if (e.target.files && e.target.files.length > 0) {
+                                setValue("image", e.target.files[0]);
+                              }
+                            }}
+                            aria-labelledby="img"
+                          />
+                          <Avatar
+                            size="2xl"
+                            bg="#CED4DA"
+                            src={_img || ""}
+                            icon={
+                              _img === "" ? (
+                                <RiHomeHeartLine size={90} />
+                              ) : undefined
+                            }
+                          />
+                        </Box>
+                      )}
+                    />
                     <Stack>
                       <Box
                         mt={4}
