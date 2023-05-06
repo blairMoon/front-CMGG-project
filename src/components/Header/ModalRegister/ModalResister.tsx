@@ -136,6 +136,7 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
 
   const onSubmit = (data: InstructorData) => {
     mutation.mutate(data);
+    props.onClose();
   };
   const getImgInputPropsMerged = getImgInputProps({
     ...register("image", { required: false }),
@@ -164,22 +165,6 @@ const ModalRegister: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      {/* <Button
-        display="flex"
-        alignItems="center"
-        fontSize="15px"
-        fontWeight="500"
-        // padding="10px 10px 0px 0px"
-        mr="16px"
-        size={"md"}
-        onClick={onOpen}
-        backgroundColor="transparent"
-        _hover={{ backgroundColor: "transparent" }}
-        width="100px"
-        leftIcon={<AiOutlineCheckCircle />}
-      >
-        강사 신청
-      </Button> */}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
