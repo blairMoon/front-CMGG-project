@@ -116,7 +116,8 @@ interface UserData {
   phoneNumber: string;
   position: string;
   skill: string;
-  termsOfUse: String;
+  termsOfUse: string;
+  image: File | null;
 }
 interface InstructorData {
   introduce: string;
@@ -171,30 +172,29 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken = Cookies.get("refresh");
+        // const refreshToken = Cookies.get("refresh");
 
-        if (refreshToken) {
-          const newAccessToken = await postRefreshToken(refreshToken);
-          console.log(newAccessToken);
-          if (newAccessToken) {
-            Cookies.set("access", newAccessToken);
+        // if (refreshToken) {
+        const newAccessToken = await postRefreshToken();
+        // console.log(newAccessToken);
+        if (newAccessToken) {
+          Cookies.set("access", newAccessToken);
 
-            instance.defaults.headers["Authorization"] =
-              "Bearer " + newAccessToken;
-            originalRequest.headers["Authorization"] =
-              "Bearer " + newAccessToken;
+          instance.defaults.headers["Authorization"] =
+            "Bearer " + newAccessToken;
+          originalRequest.headers["Authorization"] = "Bearer " + newAccessToken;
 
-            return instance(originalRequest);
-          } else {
-            const navigate = useNavigate();
-            navigate("/login");
-            return Promise.reject(error);
-          }
+          return instance(originalRequest);
         } else {
           const navigate = useNavigate();
           navigate("/login");
           return Promise.reject(error);
         }
+        // } else {
+        //   const navigate = useNavigate();
+        //   navigate("/login");
+        //   return Promise.reject(error);
+        // }
       } catch (refreshError) {
         const navigate = useNavigate();
         navigate("/login");
@@ -224,11 +224,11 @@ export const kakaoLogin = async ({ code }: { code: string }) => {
 
     if (response.ok) {
       const data = await response.json();
-      const refresh = data.token.refresh;
+      // const refresh = data.token.refresh;
       const access = data.token.access;
 
       Cookies.set("access", access);
-      Cookies.set("refresh", refresh);
+      // Cookies.set("refresh", refresh);
 
       return true;
     } else {
@@ -269,7 +269,7 @@ export const naverLogin = async ({
       const access = data.token.access;
 
       Cookies.set("access", access);
-      Cookies.set("refresh", refresh);
+      // Cookies.set("refresh", refresh);
 
       return true;
     } else {
@@ -290,7 +290,7 @@ export async function userNameLogin(
   }
 ): Promise<boolean> {
   const response = await fetch(
-    "https://crazyform.store/api/v1/users/jwt-token-auth/",
+    "https://crazyform.store/api/v1/users/jwttoken",
     {
       method: "POST",
       headers: {
@@ -308,7 +308,7 @@ export async function userNameLogin(
     const access = data.access;
 
     Cookies.set("access", access);
-    Cookies.set("refresh", refresh);
+    // Cookies.set("refresh", refresh);
 
     return true;
   } else {
@@ -317,15 +317,13 @@ export async function userNameLogin(
   }
 }
 
-export async function postRefreshToken(
-  refresh: string
-): Promise<string | null> {
+export async function postRefreshToken(): Promise<string | null> {
+  // refresh: string
   try {
     const response = await axios.post(
       "https://crazyform.store/api/v1/users/jwt-token-auth/refresh/",
-      {
-        refresh,
-      }
+      {},
+      { withCredentials: true }
     );
     return response.data.access;
   } catch (error) {
@@ -391,8 +389,27 @@ export const getMyProfile = () => {
 //   return instance.get(`users/getavartar`).then((res) => res.data);
 // };
 
-export const changeProfileUser = (data: UserData) => {
-  return instance.put("users/myprofile", data).then((res) => res.data);
+export const changeProfileUser = async (data: UserData) => {
+  const formData = new FormData();
+
+  formData.append("password", data.password);
+
+  if (data.image) {
+    formData.append("image", data.image, data.image.name);
+  }
+
+  try {
+    const response = await instance.put("users/myprofile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    // Handle errors
+    throw error;
+  }
 };
 
 export const getLectureInfo = () => {

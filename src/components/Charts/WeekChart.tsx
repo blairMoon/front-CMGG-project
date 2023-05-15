@@ -429,14 +429,6 @@ export const data: Data = {
 const todayDayOfWeek = new Date().toLocaleString("ko-KR", { weekday: "short" });
 
 const DayChart: React.FC<Props> = () => {
-  const [currentYear, setCurrentYear] = useState<number>(
-    new Date().getFullYear()
-  );
-  const [currentWeek, setCurrentWeek] = useState<number>(1);
-  const [currentMonth, setCurrentMonth] = useState<number>(
-    new Date().getMonth() + 1
-  );
-
   // const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 
   const goToPreviousMonth = () => {
@@ -514,10 +506,27 @@ const DayChart: React.FC<Props> = () => {
     }
     return null;
   };
+  const getSundayOfThisWeek = () => {
+    const now = new Date();
+    const dayOfWeek = now.getDay();
+    const sunday = new Date(now);
+    sunday.setDate(now.getDate() - dayOfWeek);
+    return sunday;
+  };
+
+  const targetDate = getSundayOfThisWeek(); // 이번 주 일요일을 대상으로 설정
+
+  const [currentYear, setCurrentYear] = useState<number>(
+    targetDate.getFullYear()
+  );
+  const [currentWeek, setCurrentWeek] = useState<number>(1);
+  const [currentMonth, setCurrentMonth] = useState<number>(
+    new Date().getMonth() + 1
+  );
 
   useEffect(() => {
-    // 원하는 날짜를 기준으로 설정 (예: 2023년 5월 1일)
-    const targetDate = new Date(2023, 4, 1); // 주의: 월은 0부터 시작하기 때문에 4로 설정합니다.
+    // 원하는 날짜를 기준으로 설정 (예: 2023년 5월 7일)
+    const targetDate = new Date(2023, 4, 7); // 주의: 월은 0부터 시작하기 때문에 4로 설정합니다.
     const { month, week } = getCurrentMonthAndWeek(targetDate);
     setCurrentMonth(month);
     setCurrentWeek(week);

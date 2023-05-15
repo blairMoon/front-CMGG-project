@@ -46,7 +46,7 @@ interface UserData {
   phoneNumber: string;
   position: string;
   skill: string;
-  termsOfUse: String;
+  termsOfUse: string;
   avatar: string;
   image: File | null;
 }
