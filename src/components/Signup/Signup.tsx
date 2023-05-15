@@ -29,9 +29,11 @@ interface UserData {
   phoneNumber: string;
   position: string;
   skill: string;
-  termsOfUse: String;
+  termsOfUse: string;
   funnel: string;
   address: string;
+  avatar: string;
+  image: File | null;
 }
 
 const Signup: React.FC<SignupProps> = ({ initialValues }) => {
