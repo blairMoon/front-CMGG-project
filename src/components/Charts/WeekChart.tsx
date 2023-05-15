@@ -67,7 +67,7 @@ export const data: Data = {
           id: "IT'S ME",
           data: [
             { x: "일", y: 6 },
-            { x: "월", y: 2 },
+            { x: "월", y: 3 },
             { x: "화", y: 5 },
             { x: "수", y: 4 },
             { x: "목", y: 5 },
