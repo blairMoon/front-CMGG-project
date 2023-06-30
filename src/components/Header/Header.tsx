@@ -49,6 +49,7 @@ import {
 } from "@chakra-ui/icons";
 import css from "./Header.module.scss";
 import { useRecoilState } from "recoil";
+import { getMyProfile } from "../../services/api";
 import { removeAccessToken } from "../../services/Token";
 import ModalRegister from "./ModalRegister/ModalResister";
 import useUser from "../../components/Mypage/MyEditMember/UseUser";
@@ -62,8 +63,11 @@ import { DiDjango } from "react-icons/di";
 import { GrSwift } from "react-icons/gr";
 import { AiOutlineAndroid } from "react-icons/ai";
 import { RiFolderUploadLine } from "react-icons/ri";
+import { UserData } from "../../../typings/LectureData";
 
 export default function WithSubnavigation() {
+  const [_img, setImg] = useState<string>("");
+  const [_imgUrl, setImgUrl] = useState<string | null>(null);
   const avatar = useRecoilValue(avatarState);
   const headerRef = React.useRef<HTMLDivElement>(null);
   const { user, isLoggedIn, userLoading } = useUser();
@@ -79,6 +83,10 @@ export default function WithSubnavigation() {
   const [onModalOpenState, setOnModalOpenState] = useState(false);
   console.log(user);
 
+  const { data } = useQuery<UserData>(["myprofile"], getMyProfile, {
+    retry: false,
+  });
+
   useEffect(() => {
     const headerEl = headerRef.current;
     if (headerEl) {
@@ -88,6 +96,15 @@ export default function WithSubnavigation() {
       });
     }
   }, [headerRef]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getMyProfile();
+      if (data && data.profileImg) {
+        setImgUrl(data.profileImg);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleMouseEnter = () => {
     setIsOpenToggle(true);
@@ -136,13 +153,6 @@ export default function WithSubnavigation() {
   function handleCallback() {
     console.log("Callback called");
   }
-  // const { data: avatarData, isError: avatarError } = useQuery(
-  //   ["userAvatar", token],
-  //   () => getavatar(token),
-  //   {
-  //     enabled: !!token, // 토큰이 있을 때만 쿼리를 실행합니다.
-  //   }
-  // );
 
   return (
     <div
@@ -316,9 +326,9 @@ export default function WithSubnavigation() {
                 >
                   <a href="/mypage">
                     <Avatar
-                      icon={<RiHomeHeartLine size={20} />}
+                      // icon={<RiHomeHeartLine size={90} />}
                       style={{ width: "32px", height: "32px" }}
-                      src={avatar}
+                      src={avatar || _imgUrl || ""}
                     />
                   </a>
                 </MenuButton>

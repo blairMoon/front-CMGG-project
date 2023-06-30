@@ -49,12 +49,14 @@ interface UserData {
   termsOfUse: string;
   avatar: string;
   image: File | null;
+  profileImg: File | null;
 }
 
 const MyEditMember: React.FC = () => {
   const [avatar, setAvatar] = useRecoilState(avatarState);
 
   const [_img, setImg] = useState<string>("");
+  const [_imgUrl, setImgUrl] = useState<string | null>(null);
   const { colorMode } = useColorMode();
   const [click, setClick] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -115,6 +117,16 @@ const MyEditMember: React.FC = () => {
     }
   }, [_img, setAvatar]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getMyProfile();
+      if (data && data.profileImg) {
+        setImgUrl(data.profileImg);
+      }
+    };
+    fetchData();
+  }, []);
+
   const submitForm: SubmitHandler<FieldValues> = (data) => {
     const userData: UserData = data as UserData;
     mutation.mutate(userData);
@@ -130,10 +142,17 @@ const MyEditMember: React.FC = () => {
     if (!isRightType || acceptedFiles.length > 1) {
       alert("Only one image file can be registered! \n(jpg, png, jpeg, webp)");
     } else {
-      setValue("image", acceptedFiles[0], { shouldValidate: true });
+      const file = acceptedFiles[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const img = getSecureImgFile(reader.result);
+        setImg(img);
+        setImgUrl(img); // local state update
+        setAvatar(img); // Recoil state update
+      };
+      reader.readAsDataURL(file);
     }
   };
-
   const {
     acceptedFiles: imgFile,
     getRootProps: getImgRootProps,
@@ -223,7 +242,7 @@ const MyEditMember: React.FC = () => {
                           <Avatar
                             size="2xl"
                             bg="#CED4DA"
-                            src={_img || ""}
+                            src={_imgUrl || _img || "" || avatar}
                             icon={
                               _img === "" ? (
                                 <RiHomeHeartLine size={90} />
