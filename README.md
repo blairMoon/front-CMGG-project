@@ -1,8 +1,8 @@
-
+# CMGG
 ![LOGO2](https://github.com/blairMoon/front-CMGG-project/assets/120368569/b1bc6841-8371-4768-85a7-ac1d4444b4f6)
 <br />
 
-## 배포 주소 
+### 배포 주소 
 
 https://cmgg.store
 <br />
