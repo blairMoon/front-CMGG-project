@@ -9,7 +9,6 @@ import { useRecoilState } from "recoil";
 import { avatarState } from "../../../atoms";
 import css from "./EditMember.module.scss";
 import { useNavigate } from "react-router-dom";
-import useUser from "../../Mypage/MyEditMember/UseUser";
 import { useQuery } from "@tanstack/react-query";
 import { useDropzone } from "react-dropzone";
 import {
@@ -17,7 +16,7 @@ import {
   changeProfileUser,
   instance,
 } from "../../../services/api";
-// import ModalBasic from "../../components/Modal/ModalBasic";
+import ModalBasic from "../../Modal/ModalBasic";
 import { useMutation } from "@tanstack/react-query";
 import { imgTypes } from "../../../constant";
 import { RiHomeHeartLine } from "react-icons/ri";
@@ -502,16 +501,16 @@ const MyEditMember: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* 
-        {success && click && (
-          <ModalBasic
-            isOpen={true}
-            successContent={'회원 정보 수정되었습니다아아아~~~'}
-            onClose={() => {
-              setClick(false);
-            }}
-          />
-        )} */}
+
+      {success && click && (
+        <ModalBasic
+          isOpen={true}
+          successContent={"회원 정보 수정되었습니다아아아~~~"}
+          onClose={() => {
+            setClick(false);
+          }}
+        />
+      )}
     </>
   );
 };
