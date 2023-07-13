@@ -45,7 +45,7 @@ export const avatarState = atom({
 });
 
 export const booleanOpenState = atom({
-  key: "booleanAcceptState",
+  key: "booleanOpenState",
   default: false,
 });
 type AcceptState = boolean | null;

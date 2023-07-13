@@ -265,7 +265,7 @@ export const naverLogin = async ({
 
     if (response.ok) {
       const data = await response.json();
-      const refresh = data.token.refresh;
+      // const refresh = data.token.refresh;
       const access = data.token.access;
 
       Cookies.set("access", access);
@@ -304,8 +304,9 @@ export async function userNameLogin(
 
   if (response.ok) {
     const data = await response.json();
-    const refresh = data.refresh;
-    const access = data.access;
+    // const refresh = data.refresh;
+    const access = data.token.access;
+    console.log(data.token.access);
 
     Cookies.set("access", access);
     // Cookies.set("refresh", refresh);

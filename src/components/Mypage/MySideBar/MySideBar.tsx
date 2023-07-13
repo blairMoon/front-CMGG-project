@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   HStack,
+  Text,
   Stack,
   Divider,
   Avatar,
@@ -21,6 +22,8 @@ import { CgDanger } from "react-icons/cg";
 import { UserData } from "../../../../typings/LectureData";
 
 const MySideBar: React.FC = () => {
+  const [_img, setImg] = useState<string>("");
+  const [_imgUrl, setImgUrl] = useState<string | null>(null);
   const navigate = useNavigate();
   const { isLoading, data, isError } = useQuery<UserData>(
     ["myprofile"],
@@ -29,6 +32,16 @@ const MySideBar: React.FC = () => {
       retry: false,
     }
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getMyProfile();
+      if (data && data.profileImg) {
+        setImgUrl(data.profileImg);
+      }
+    };
+    fetchData();
+  }, []);
   // if (isError) {
   //   navigate("/notfound");
   // }
@@ -179,19 +192,19 @@ const MySideBar: React.FC = () => {
           <CgDanger size={16} />
           <Box>회원 탈퇴</Box>
         </HStack>
-        <HStack pt="20">
+        <HStack pt="10" pl="2">
           <Box>
             <Avatar
               bg="#CED4DA"
-              icon={<RiHomeHeartLine size={35} />}
-              src={avatar}
+              src={avatar || _imgUrl || ""}
+              // icon={_imgUrl === "" ? <RiHomeHeartLine size={90} /> : undefined}
             />
           </Box>
-          <Stack pl="2" spacing={0}>
-            <Box fontSize="16">{data?.name}</Box>
-            <Box fontSize="14" color="#707070">
+          <Stack pl="1" spacing={0}>
+            <Text fontSize="16">{data?.name}</Text>
+            <Text fontSize="14" color="#707070">
               student
-            </Box>
+            </Text>
           </Stack>
         </HStack>
       </Stack>

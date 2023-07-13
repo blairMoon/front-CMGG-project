@@ -35,12 +35,6 @@ import {
 import { skeletonArray } from "../../constant";
 import SkeletonCard from "../WholeLectures/LectureCard/SkeletonCard";
 
-interface ArrowProps {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-}
-
 function NewLecture() {
   const { isLoading, data } = useQuery(["lectureInfo"], () => getAllLectures());
 

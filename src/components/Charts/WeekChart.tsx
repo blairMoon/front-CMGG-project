@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useQuery } from "@tanstack/react-query";
 import { useColorMode } from "@chakra-ui/react";
+import { startOfWeek, getWeeksInMonth, getWeek, startOfMonth } from "date-fns";
+
 import {
   FaCheckCircle,
   FaSquare,
@@ -49,7 +51,7 @@ type Data = {
 
 export const data: Data = {
   2023: {
-    4: {
+    5: {
       1: [
         {
           id: "평균유저",
@@ -67,9 +69,9 @@ export const data: Data = {
           id: "IT'S ME",
           data: [
             { x: "일", y: 6 },
-            { x: "월", y: 3 },
+            { x: "월", y: 4 },
             { x: "화", y: 5 },
-            { x: "수", y: 4 },
+            { x: "수", y: 3 },
             { x: "목", y: 5 },
             { x: "금", y: 3 },
             { x: "토", y: 4 },
@@ -155,8 +157,34 @@ export const data: Data = {
           ],
         },
       ],
+      5: [
+        {
+          id: "평균유저",
+          data: [
+            { x: "일", y: 3 },
+            { x: "월", y: 1 },
+            { x: "화", y: 1 },
+            { x: "수", y: 6 },
+            { x: "목", y: 2 },
+            { x: "금", y: 6 },
+            { x: "토", y: 2 },
+          ],
+        },
+        {
+          id: "IT'S ME",
+          data: [
+            { x: "일", y: 6 },
+            { x: "월", y: 4 },
+            { x: "화", y: 5 },
+            { x: "수", y: 3 },
+            { x: "목", y: 5 },
+            { x: "금", y: 3 },
+            { x: "토", y: 4 },
+          ],
+        },
+      ],
     },
-    5: {
+    6: {
       1: [
         {
           id: "평균유저",
@@ -291,7 +319,7 @@ export const data: Data = {
 
       // ... 다른 주 데이터를 추가 ...
     },
-    6: {
+    7: {
       1: [
         {
           id: "평균유저",
@@ -469,34 +497,24 @@ const DayChart: React.FC<Props> = () => {
   const getWeeksInMonth = (month: number, year: number) => {
     const firstDayOfMonth = new Date(year, month - 1, 1);
     const lastDayOfMonth = new Date(year, month, 0);
-    const lastDateOfMonth = lastDayOfMonth.getDate();
-    const lastDayOfWeek = lastDayOfMonth.getDay();
-    const firstDayOfWeek = firstDayOfMonth.getDay();
-
-    const offset = firstDayOfWeek >= 3 ? 1 : 0; // 수요일 이후라면 오프셋을 1로 설정
-    const days = lastDateOfMonth + (4 - lastDayOfWeek);
-    return Math.ceil(days / 7) - offset;
+    const used = firstDayOfMonth.getDay() + lastDayOfMonth.getDate();
+    return Math.ceil(used / 7);
   };
-  const getCurrentMonthAndWeek = (date = new Date()) => {
-    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    const firstDayOfWeek = firstDayOfMonth.getDay();
+  const getCurrentMonthAndWeek = (date?: Date) => {
+    const now = date ? new Date(date.getTime()) : new Date();
 
-    const offset = firstDayOfWeek >= 3 ? 1 : 0;
-    const pastDaysOfMonth =
-      (date.valueOf() - firstDayOfMonth.valueOf()) / 86400000;
-    let currentWeekNumber =
-      Math.ceil((pastDaysOfMonth + firstDayOfMonth.getDay() + 1) / 7) - offset;
+    // 주가 월의 몇 번째 주인지 계산
+    const startOfTheMonth = startOfMonth(now);
+    const weekOfMonth = getWeek(now) - getWeek(startOfTheMonth) + 1;
 
-    const weeksInCurrentMonth = getWeeksInMonth(
-      date.getMonth() + 1,
-      date.getFullYear()
-    );
-    if (currentWeekNumber > weeksInCurrentMonth) {
-      currentWeekNumber = weeksInCurrentMonth;
-    }
-
-    return { month: date.getMonth() + 1, week: currentWeekNumber };
+    return {
+      month: now.getMonth() + 1,
+      week: weekOfMonth,
+    };
   };
+
+  // const { month, week } = getCurrentMonthAndWeek(new Date());
+
   const today = () => {
     const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     const dayIndex = dayNames.indexOf(todayDayOfWeek);
@@ -506,18 +524,18 @@ const DayChart: React.FC<Props> = () => {
     }
     return null;
   };
-  const getSundayOfThisWeek = () => {
-    const now = new Date();
-    const dayOfWeek = now.getDay();
-    const sunday = new Date(now);
-    sunday.setDate(now.getDate() - dayOfWeek);
-    return sunday;
-  };
+  // const getSundayOfThisWeek = () => {
+  //   const now = new Date();
+  //   const dayOfWeek = now.getDay();
+  //   const sunday = new Date(now);
+  //   sunday.setDate(now.getDate() - dayOfWeek);
+  //   return sunday;
+  // };
 
-  const targetDate = getSundayOfThisWeek(); // 이번 주 일요일을 대상으로 설정
+  // const targetDate = getSundayOfThisWeek(); // 이번 주 일요일을 대상으로 설정
 
   const [currentYear, setCurrentYear] = useState<number>(
-    targetDate.getFullYear()
+    new Date().getFullYear()
   );
   const [currentWeek, setCurrentWeek] = useState<number>(1);
   const [currentMonth, setCurrentMonth] = useState<number>(
@@ -525,9 +543,9 @@ const DayChart: React.FC<Props> = () => {
   );
 
   useEffect(() => {
-    // 원하는 날짜를 기준으로 설정 (예: 2023년 5월 7일)
-    const targetDate = new Date(2023, 4, 7); // 주의: 월은 0부터 시작하기 때문에 4로 설정합니다.
-    const { month, week } = getCurrentMonthAndWeek(targetDate);
+    // // 원하는 날짜를 기준으로 설정 (예: 2023년 5월 7일)
+    // const targetDate = new Date(2023, 4, 7); // 주의: 월은 0부터 시작하기 때문에 4로 설정합니다.
+    const { month, week } = getCurrentMonthAndWeek(new Date());
     setCurrentMonth(month);
     setCurrentWeek(week);
   }, []);
